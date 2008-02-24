@@ -18,7 +18,7 @@ class TotalStation:
         
         for line in data:
             try:
-                int(line[0]) and int(line[1])
+                int(line[0]) and int(line[1]) and line[2] == 'X' and float(line[3])
             except ValueError:
                 pass
             else:
