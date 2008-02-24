@@ -1,13 +1,21 @@
 #! /usr/bin/env python2.5
 # -*- coding: utf-8 -*-
+# filename: total.py
 
 from __future__ import with_statement
 
 
-class TotalStation ():
-    """Reads input data from a text file."""
+class TotalStation:
+    """Reads input data from a text file.
+    
+    The input file is the output from the total station, with data on each
+    line. The first lines contain general information, points from 0007 on
+    contain the XYZ coordinates of points, one per line.
+    """
     
     def get_points(self,data):
+        """Gets points coordinates from the valid data lines."""
+        
         for line in data:
             try:
                 int(line[0]) and int(line[1])
