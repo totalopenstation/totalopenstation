@@ -23,9 +23,9 @@ class TotalStation:
                 pass
             else:
                 print "Point %d" % int(line[1])
-                print "%s = %s" % (line[2], line[3])
-                print "%s = %s" % (line[4], line[5])
-                print "%s = %s" % (line[6], line[7])
+                print line[2], "=", line[3].rjust(10)
+                print line[4], "=", line[5].rjust(10)
+                print line[6], "=", line[7].rjust(10)
                 print "-------"
     
     def __init__(self,data):
