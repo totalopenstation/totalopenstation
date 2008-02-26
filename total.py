@@ -4,6 +4,7 @@
 
 from __future__ import with_statement
 
+import serial
 
 class TotalStation:
     """Reads input data from a text file.
@@ -37,4 +38,5 @@ class TotalStation:
 
 if __name__ == "__main__":
     main = TotalStation('prova2')
+
 

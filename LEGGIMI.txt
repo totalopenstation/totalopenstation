@@ -1,0 +1,125 @@
+===============
+ Total Station
+===============
+--------------------------------------------------------------------
+Una interfaccia generica per lo scaricamento dati da stazioni totali
+--------------------------------------------------------------------
+
+Introduzione
+============
+
+Questa applicazione nasce dalla necessità di gestire diversi modelli di
+stazione totale, utilizzati talvolta sullo stesso cantiere, in ambiente
+GNU/Linux.
+
+Il software viene comunque sviluppato secondo criteri standard che lo rendono
+di facile utilizzo anche in ambiente Windows o Mac.
+
+Poiché ogni modello ha caratteristiche peculiari, l'applicazione ha una
+architettura modulare che definisce una interfaccia astratta e implementa
+ciascun modello come una istanza dell'interfaccia base, definendo i parametri
+per la connessione, i dati scaricabili e il formato in cui si presentano.
+
+Modelli
+=======
+
+ZEISS ELTA R55
+--------------
+
+L'interfaccia hardware consiste in un cavo seriale RS232, utilizzabile anche
+con i normali adattatori seriale-USB.
+
+È ancora da definire con precisione la modalità di scaricamento corretto dei
+dati. Con un semplice::
+
+  cat /dev/ttyUSB0 > file
+
+si ottiene un file di testo che ha però una codifica ignota. Modificando
+opportunamente alcuni caratteri, il file è leggibile e decifrabile senza
+particolari problemi, secondo queste indicazioni::
+
+    b7 → 37
+    b4 → 34
+    b2 → 32
+    b1 → 31
+    c3 → 43
+    c5 → 45
+    c9 → 49
+    cc → 4c
+    cf → 4f
+    d2 → 52
+    d4 → 54
+    d8 → 58
+    e8 → 68
+    ed → 6d
+
+Ogni linea termina con un ``8d`` (reverse line feed) e un carattere LF. Gli
+spazi vuoti sono riempiti con il carattere ``a0``.
+
+I codici sono la rappresentazione esadecimale del carattere ASCII. Sembra che
+dal B0 in poi i codici siano errati e spostati in avanti di 80 numeri hex,
+cioè di 128 caratteri. Questo errore potrebbe dipendere dalla modalità di
+scaricamento. Anche i caratteri ``8d`` e ``a0`` sicuramente rientrano in 
+questo errore, visto che::
+
+  \x8d - \x80 = \x0d
+  \xa0 - \x80 = \x20
+
+``0d`` è il carattere CR. CR+LF è il tipico line feed Windows. ``20`` è il
+carattere SPACE.
+
+Per modificare il file si può usare il seguente script::
+
+>>> resd = open("prova3", 'r')
+>>> des = resd.read()
+>>> for i in des:
+...     if ord(i) > 127:
+...         print chr(ord(i)-128)
+...     else:
+...         print chr(ord(i))
+
+
+Il file modificato include le seguenti informazioni:
+
+* ``OR.COOR``: quali sono gli altri possibili valori di questa linea?
+* **punto di origine** definito dalla stringa ``OS`` seguita dalle coordinate
+  ``X``, ``Y``, ``Z``
+* **angolo di orientamento** ``Om``: in che formato è espresso?
+* ``POLAR``: quali sono gli altri possibili valori di questa linea?
+* ``INPUT``: sempre doppio o no?
+
+  * ``th``
+  * ``ih``
+  * ``Z``
+
+* punti espressi come ``N`` a partire da 1, ``X``, ``Y``, ``Z``
+* ``END``: dopo questa linea, occorre terminare la procedura di scaricamento,
+  altrimenti la macchina segnala un errore
+
+Nikon NPL-350
+-------------
+
+Pare che lo scaricamento dati avvenga in formato ASCII.
+
+Già usando il metodo brutale
+
+
+Altri modelli
+-------------
+
+Per ora non abbiamo altri modelli a disposizione. Dovremmo mettere a punto una
+semplice procedura standard per permettere ad altre persone di fornire i
+parametri di altri modelli eseguendo un semplice test e fornendo i risultati.
+
+La procedura più banale è simile a quella che sto seguendo io per la Elta R55,
+ma magari con qualche piccola indicazione il lavoro è più facile, es. usa
+sempre xon/xoff con i modelli Leica, i modelli Nikon hanno i bit 8N1.
+
+Anche conoscere dettagli tecnici sui vari modelli (processore interno, etc)
+può sicuramente essere utile. L'ideale sarebbe avere un wiki in cui si possano
+aggiungere tutte le informazioni su ogni modello.
+
+    È molto importante che i parametri siano ottenuti tramite i manuali degli
+    apparecchi o tramite test e non attraverso altri software, per evitare di
+    incorrere in problemi di copyright. In questo modo la banca dati potrà 
+    essere distribuita liberamente con il software senza problemi.
