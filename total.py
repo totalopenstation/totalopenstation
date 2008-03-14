@@ -37,6 +37,5 @@ class TotalStation:
         self.get_points(self.valid_data)
 
 if __name__ == "__main__":
-    main = TotalStation('prova2')
-
+    main = TotalStation('sample_data/zeiss_elta_r55')
 
