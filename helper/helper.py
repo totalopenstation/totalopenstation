@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import serial
+import base64
 
 from Tkinter import *
 
@@ -36,7 +37,41 @@ class MiaApp:
     self.header_frame = Frame(self.quadro_controllo)
     self.header_frame.pack(side = TOP, expand = NO)
 
-    self.logo = PhotoImage(file = "total-station.gif")
+    self.logo_data = '''R0lGODlhMAAwAOfIAC40NjA2NzY6ODw+O0g8MEBBP09JOVRMO1hPP0N
+        DQk9MQVRWVFhaV1tcW2Rn\nZGZpZm1ubHFzbnV3c3h7dnx+ebw/P8wAAM8NDdEGBtQLC9gN
+        DcUcHM4ZGdMTE98XF9MdHd8ZGc8q\nKtM3N9Y7O+8pKeM7O/A0NJ1QEbV6MM5cAMFeDdBfB
+        cJfEcVgDc1lDtFgA9xqA9BjCtVoCcNhE8hm\nFMVlGtRvHdVyFdJzHeVuAexzAPJ2APV5Af
+        V+CsduJspzLtJ0IMx3M8t4Nd5aWuRJSPFERPFLS+Nc\nXNZ7W990dOJjY+hnZ+Jsa/FgYPF
+        sbON0dPV2dvR5eX6AfL2JPPaDDPaFE/eKFPaGGfeNG/iSHd6B\nJd6DKd2FMtyEPMmRPOmN
+        KPeMJO+XLfeSJPiWIfmZJfWULPmbKumQMOmVPveVNfKcM/mfMfmfOvqg\nLfqkMvmlO/yuP
+        YCCfc+ESNCFSMmZT9WSXPGgRPerQvuuQvGiSPerSvquSfywQ/yySfemVfinV/ev\nU/qsUf
+        uzVPy4VPq1WPy6Xdqhc9yoffmvYvmxZfy+Zfq1avu8beereuiufvu7c/3CbPzDdPzEe/3J
+        \nfYOFgYeIg4qNh46RjJCUkLGOjqmsprW1tb66ut+ehe2Hh+2Li/aWlveYmN+wi+Cvh+Cwi
+        eK3leW9\nnPrHgP3Lgv3Oif3Skv3WnenHrenIrv7apvXTrf7fsfLTuv7gtv7iuMHBwcrKyt
+        ra2u7Vwunazeve\n0/Lf0O3h1+3h2PPg0v7t1Pbp3+Xl5ezs7PHl5fHr6/vs7Pnx6vPz8/z
+        38///////////////////\n////////////////////////////////////////////////
+        ////////////////////////////\n/////////////////////////////////////////
+        ///////////////////////////////////\n//////////////////////////////////
+        ///////////////////yH5BAEAAP8ALAAAAAAwADAA\nAAj+AP8JHEiwoMBYNlIoXJjCRiy
+        DECNKhGjjla+LFx/98WNjoseP/xotlKWqZEkeORim6AKy5cAU      
+        \ns1ylUKWoZk0eM1OhiqQohUuXMOGkiASnaFGcqo6m8fkTZNATCgIEMDAFDs5UR8swbeoRp
+        pcEEyhR\ncDDAC05UR8Fs5SoRJgJKDBIssIQJAc5JadeyhQhTQKUEmxpUuiTg7tErevcWhH
+        lgwgIGEKQ8OICT\nqNUqiRW/nOWlgARKjgfQ0QrpaI/Mmv8FRUFAKoETC0tbxZma76yjtF8
+        qwo1ac9DZKl8U4l3b4G81\nYZIrV2OUR+7iA1fImgXL1SpVqSZFglRoUB8+zl/+QCfoSKV5
+        lY7GRwTAII4mTZciLACgfuIRAPjz\n51dSH+ITT05gYMGAA2LQxBFP9EcQMR+AUgIUEDZhh
+        AkklBBFB8QoKNATn4SiARQkhCiiBlEskaCC\nDIJihAUgihiiBUVcmGF/TxARCgksuvgiCV
+        GUcGJ9TxCYo45CMqEgKVwwwgOLRhDJAyNckNJfMSxE\ngsWSFgxB4AUD8oBFJCwUU18daAT
+        Cgw4zpIAIFWxakcIMOvAQCBp1qNcLDZFQwYMLpqSQCJtUYJGC\nKS7wQAUjNPQynhB5sIGS
+        D6otYsWkgv7jQw48sGGHENC1AoQizrVwS6STWiGGT7e04FwhOLRSXA3+\ngIjBAwxzCJTCI
+        ljkeqpAc8DAgxh61FDbKFsIwsMOKvxiKyNZNGsGU7+osAMPe2gximbFzEBIFTzI\nYMhLj4
+        wh7rMDGSIDD1XsMYOYe9VxxhtnzkBQCo+QYe8aa8HJwxpf1MmWLjQIoief80ZixsFurEUo
+        \nDz3gQYMubAWhhhmPLiZJGxi/odelPIxRRhBcsYJDH6GOOq8kbqSscUGpOufGDaw0VcMbV
+        8Igh3Eo\npyyUQXL4aoUZwrpUyg1uxMvLQMEkncIpbzSNRwpJBzPQLvqacYMoLnVCoBC5/B
+        N10sCkgFZRfKQA\nzNdS4/IDgUi49AEIHSQh0NfA1C22UX2YXfdx1wKNkIEHFrQUjAUZiDD
+        M3FHXHfYpqHB3h95nRy2Q\nMB0IKLVHwNBiQQWc2IJ04sAcEsNCMRyyt+QC2cLJBhbQAsxH
+        wdhiy+sEoZ20BTjafvlAwMi+e23B\nABNCBhycraFEwdSSiQWZ1PL78Qb1TrtiAQEAOw==
+        \n'''
+    self.logo = PhotoImage(data = self.logo_data)
     
     self.logo_canvas = Label(self.header_frame, image=self.logo)
     self.logo_canvas.pack(side = LEFT, expand = NO)
