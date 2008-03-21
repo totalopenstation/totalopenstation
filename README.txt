@@ -18,6 +18,24 @@ that is based on an abstract interface. Each time a new model is added to
 the program, you create a new instance of this base class, with all needed
 data.
 
+This program is licensed under the GNU General Public License version 3.
+
+The application icons are copyright by Lapo Calamandrei 2008.
+
+Helper application
+==================
+
+The helper application is found in the `helper` directory. It is meant as a
+simple tool for retrieving the right serial connection parameters from an
+unknown device. The user can play with the 8 options and see the results
+in a text area. Once the downloaded results look good, we are almost sure that
+we have used the right parameters, and we can add the tested model to the
+program database.
+
+The helper consists of a single python module which can be executed stand-alone
+on any platform. For Windows, a single .exe program will be made available
+through py2exe.
+
 Data
 ====
 
