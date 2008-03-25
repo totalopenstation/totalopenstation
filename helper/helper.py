@@ -6,6 +6,21 @@ import serial
 from Tkinter import *
 import tkSimpleDialog
 
+def scan():
+    """scan for available ports. return a list of tuples (num, name).
+    
+    Part of pySerial (http://pyserial.sf.net)  (C)2002-2003 <cliechti@gmx.net>
+    """
+    available = []
+    for i in range(256):
+        try:
+            s = serial.Serial(i)
+            available.append( (i, s.portstr))
+            s.close()   #explicit close 'cause of delayed GC in java
+        except serial.SerialException:
+            pass
+    return available
+
 # logo GIF image encoded as base64 string
 # this way we don't need external an external image file
 logo_data = '''
@@ -82,11 +97,40 @@ class ConnectDialog(tkSimpleDialog.Dialog):
         Label(master, bitmap="hourglass").pack()
         Label(master, text=title, font=("Helvetica", "16", "bold")).pack()
         Label(master, text=message1).pack()
-        Label(master,
-              text=params,
-              fg="#555",
-              wraplength=300).pack()
+        Text(master,
+             width=80,
+             textvariable=params).pack()
         Label(master, text=message2, fg="red").pack()
+
+
+class ErrorDialog(tkSimpleDialog.Dialog):
+    def __init__(self, parent, message):
+        self.message = message
+        tkSimpleDialog.Dialog.__init__(self, parent)
+    
+    def body(self, master):
+        title="Error"
+        message1="Connection failed with the following error message:\n"
+        message2 = "\nCheck your connection parameters and try again.\n"
+        Label(master, bitmap="error", fg="red").pack()
+        Label(master, text=title, font=("Helvetica", "16", "bold")).pack()
+        Label(master, text=message1).pack()
+        t = Entry(master, width=80)
+        t.insert(END, self.message)
+        t.pack()
+        Label(master, text=message2).pack()
+    
+    def buttonbox(self):
+        box = Frame(self)
+        w = Button(box,
+                   text="Cancel",
+                   width=10,
+                   command=self.cancel,
+                   default=ACTIVE)
+        w.pack(side=LEFT, padx=5, pady=5)
+        self.bind("&lt;Return>", self.cancel)
+        self.bind("&lt;Escape>", self.cancel)
+        box.pack()
 
 
 class TopsHelper:
@@ -131,19 +175,6 @@ class TopsHelper:
         self.buttons_frame = Frame(self.upper_frame)
         self.buttons_frame.pack(side = TOP, expand = NO, fill = Y,
                                   ipadx = 5, ipady = 5)
-
-        self.text_frame = Frame(self.main_frame)
-        self.text_frame.pack(side = BOTTOM, expand = YES, fill = BOTH)
-        
-        self.text_area = Text(self.text_frame, width = 80)
-        self.text_area.insert(END, "Welcome.\nTurn your device on.")
-        self.text_area.pack(side = LEFT, expand = YES, fill = Y)
-        
-        self.scrollY = Scrollbar ( self.text_frame, orient=VERTICAL,
-        command=self.text_area.yview )
-        self.text_area['yscrollcommand'] = self.scrollY.set
-
-        self.scrollY.pack(side = RIGHT,expand = YES, fill = Y, anchor = W)
         
         # control panel
         self.control_panel = Frame(self.main_frame)
@@ -157,11 +188,21 @@ class TopsHelper:
                                    text="Port",
                                    width = 25)
         self.option1_label.pack(side = LEFT)
-        self.option1_value = StringVar()
-        self.option1_value.set("/dev/ttyUSB0")
-        self.option1_entry = Entry(self.option1_frame,
-                                   textvariable=self.option1_value,
-                                   width = 25)
+        self.option1_value = IntVar()
+#        self.option1_entry = Entry(self.option1_frame,
+#                                   textvariable=self.option1_value,
+#                                   width = 25)
+        self.option1_entry = Menubutton(self.option1_frame,
+                                        text="choose a value",
+                                        textvariable=self.option1_value,
+                                        relief = RAISED,
+                                        width = 24)
+        self.option1_entry.menu = Menu( self.option1_entry, tearoff=0 )
+        self.option1_entry["menu"] = self.option1_entry.menu
+        for n,s in scan():
+            self.option1_entry.menu.add_radiobutton ( label=s,
+                                           variable=self.option1_value,
+                                           value = n)
         self.option1_entry.pack(side = LEFT, anchor = W)
         
         # option 2 : baudrate
@@ -179,8 +220,8 @@ class TopsHelper:
                                         textvariable=self.option2_value,
                                         relief = RAISED,
                                         width = 24)
-        self.option2_entry.menu =   Menu ( self.option2_entry, tearoff=0 )
-        self.option2_entry["menu"]  = self.option2_entry.menu
+        self.option2_entry.menu = Menu( self.option2_entry, tearoff=0 )
+        self.option2_entry["menu"] = self.option2_entry.menu
         self.option2_entry.menu.add_radiobutton ( label="9600",
                                        variable=self.option2_value,
                                        value = 9600 )
@@ -205,8 +246,8 @@ class TopsHelper:
                                         textvariable=self.option3_value,
                                         relief = RAISED,
                                         width = 24)
-        self.option3_entry.menu =   Menu ( self.option3_entry, tearoff=0 )
-        self.option3_entry["menu"]  = self.option3_entry.menu
+        self.option3_entry.menu = Menu( self.option3_entry, tearoff=0 )
+        self.option3_entry["menu"] = self.option3_entry.menu
         self.option3_entry.menu.add_radiobutton (label="8",
                                                  variable=self.option3_value,
                                                  value = 8 )
@@ -237,8 +278,8 @@ class TopsHelper:
                                         textvariable=self.option4_value,
                                         relief = RAISED,
                                         width = 24)
-        self.option4_entry.menu =   Menu ( self.option4_entry, tearoff=0 )
-        self.option4_entry["menu"]  = self.option4_entry.menu
+        self.option4_entry.menu = Menu( self.option4_entry, tearoff=0 )
+        self.option4_entry["menu"] = self.option4_entry.menu
         self.option4_entry.menu.add_radiobutton (label="Even",
                                                  variable=self.option4_value,
                                                  value = "E" )
@@ -343,11 +384,11 @@ class TopsHelper:
         self.option8_entry.pack(side = LEFT, anchor = W)
     
         # dictionary for passing options to Serial
-        self.options = {'port':(1,'str'),
+        self.options = {'port':(1,'int'),
                    'baudrate':(2,'int'),
                    'bytesize':(3,'int'),
                    'parity':(4,'str'),
-                   'stopbit':(5,'int'),
+                   'stopbits':(5,'int'),
                    'timeout':(6,'int'),
                    'xonxoff':(7,'bool'),
                    'rtscts':(8,'bool')}
@@ -379,12 +420,25 @@ class TopsHelper:
         self.about_button.pack(side = LEFT, anchor = S)
         self.about_button.bind("<Button-1>", self.about_action)
         self.about_button.bind("<Return>", self.about_action)
-
+        
+        # text frame
+        self.text_frame = Frame(self.main_frame)
+        self.text_frame.pack(side = BOTTOM, expand = YES, fill = BOTH)
+        
+        self.text_area = Text(self.text_frame, width = 80)
+        self.text_area.insert(END, "Welcome.\nTurn your device on.")
+        self.text_area.pack(side = LEFT, expand = YES, fill = Y)
+        
+        self.scrollY = Scrollbar ( self.text_frame, orient=VERTICAL,
+        command=self.text_area.yview )
+        self.text_area['yscrollcommand'] = self.scrollY.set
+        self.scrollY.pack(side = RIGHT,expand = YES, fill = Y, anchor = W)
+        
     def exit_action(self, event):
         self.myParent.destroy()
-  
+    
     def connect_action(self, event):
-        cs = "TOPSerial = serial.Serial("
+        cs = "serial.Serial("
         
         for k,v in self.options.items():
             n, t = v
@@ -403,8 +457,18 @@ class TopsHelper:
             
             cs = cs + ", "
         connection_string = cs[:-2] + ")" # remove last ", "
-        
-        d = ConnectDialog(self.myParent, connection_string)
+        try:
+            TOPSerial = eval(connection_string)
+        except serial.SerialException, detail:
+            e = ErrorDialog(self.myParent, detail)
+        else:
+            TOPSerial.open()
+            d = ConnectDialog(self.myParent, connection_string)
+            n = TOPSerial.inWaiting()
+            result = TOPSerial.read(n)
+            #result = "sample data here"
+            self.text_area.delete("1.0",END)
+            self.text_area.insert(END,result)
     
     def about_action(self, event):
         d = AboutDialog(self.myParent)
@@ -413,3 +477,4 @@ root = Tk()
 TopsHelper = TopsHelper(root)
 root.title("Total Open Station helper")
 root.mainloop()
+
