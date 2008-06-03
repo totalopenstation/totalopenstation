@@ -188,21 +188,21 @@ class TopsHelper:
                                    text="Port",
                                    width = 25)
         self.option1_label.pack(side = LEFT)
-        self.option1_value = IntVar()
-#        self.option1_entry = Entry(self.option1_frame,
-#                                   textvariable=self.option1_value,
-#                                   width = 25)
-        self.option1_entry = Menubutton(self.option1_frame,
-                                        text="choose a value",
-                                        textvariable=self.option1_value,
-                                        relief = RAISED,
-                                        width = 24)
-        self.option1_entry.menu = Menu( self.option1_entry, tearoff=0 )
-        self.option1_entry["menu"] = self.option1_entry.menu
-        for n,s in scan():
-            self.option1_entry.menu.add_radiobutton ( label=s,
-                                           variable=self.option1_value,
-                                           value = n)
+        self.option1_value = StringVar()
+        self.option1_entry = Entry(self.option1_frame,
+                                   textvariable=self.option1_value,
+                                   width = 25)
+#        self.option1_entry = Menubutton(self.option1_frame,
+#                                        text="choose a value",
+#                                        textvariable=self.option1_value,
+#                                        relief = RAISED,
+#                                        width = 24)
+#        self.option1_entry.menu = Menu( self.option1_entry, tearoff=0 )
+#        self.option1_entry["menu"] = self.option1_entry.menu
+#        for n,s in scan():
+#            self.option1_entry.menu.add_radiobutton ( label=s,
+#                                           variable=self.option1_value,
+#                                           value = n)
         self.option1_entry.pack(side = LEFT, anchor = W)
         
         # option 2 : baudrate
