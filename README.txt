@@ -1,9 +1,8 @@
 ====================
  Total Open Station
 ====================
---------------------------------------------------------------------------
-A generic Python interface for downloading data from total station devices
---------------------------------------------------------------------------
+
+A generic Python interface for downloading data from total station devices.
 
 Introduction
 ============
@@ -25,141 +24,43 @@ The application icons are copyright by Lapo Calamandrei 2008.
 Helper application
 ==================
 
-The helper application is found in the `helper` directory. It is meant as a
-simple tool for retrieving the right serial connection parameters from an
-unknown device. The user can play with the 8 options and see the results
-in a text area. Once the downloaded results look good, we are almost sure that
-we have used the right parameters, and we can add the tested model to the
-program database.
+The helper application is found in the `helper` directory of the source tree.
+
+To run it, you will need:
+
+* the pySerial library
+* the Python Tkinter GUI library
+
+What the helper is
+------------------
+
+It is meant as a simple tool for obtaining two pieces of information:
+
+1. the right **serial connection parameters** from an unknown device. The user
+   can play with the 8 options and see the results in a text area. Once the
+   downloaded results look good, we are almost sure that we have used the right
+   parameters, and we can add the tested model to the program database.
+2. **sample data dumps** from unknown models that are needed to develop new
+   parser modules.
 
 The helper consists of a single python module which can be executed stand-alone
-on any platform. For Windows, a single .exe program will be made available
-through py2exe.
+on any platform. For Microsoft Windows, a single executable program is
+available through `py2exe`. It has been reported to work on GNU/Linux
+(including the OpenMoko FreeRunner) and Microsoft Windows.
 
-Data
-====
+What the helper is **not**
+--------------------------
 
-For each device, there are 2 kind of information needed:
+* The helper is not a beta version of Total Open Station
+* The helper is not a draft of the final GUI
+* The helper is not a broken Total Open Station implementation
+* The helper is not ugly. It's just you who don't like Tk
+* The helper is not a wizard. You have to tune the options using your prior
+  knowledge of your total station.
 
-* connection parameters for downloading correctly data from the serial port
-* data model for parsing of the downloaded data
+Documentation
+=============
 
-Connection parameters
----------------------
-
-I decided to use the **pySerial** library, that works well and has a
-cross-platform interface. Connection parameters are expressed as arguments
-of the ``Serial`` class:
-
->>> zeiss = serial.Serial('/dev/ttyUSB0', baudrate=9600,
-    bytesize=serial.SEVENBITS, timeout=0, parity=serial.PARITY_NONE, rtscts=1)
-
-Things to note:
-
-* the connection port can also be indicated with a number, that is platform
-  indipendent, but I don't know if this means that the user has to enter the
-  port manually
-* the standard ``baudrate`` is 9600
-* setting ``timeout`` = 0 makes the device not emit errors nor strange beeps
-* the other options work, but I cannot explain them
-
-Data model
-----------
-
-The main information that we should get is made by the XYZ coordinates of each
-recorded point. This kind of information can probably be stored safely using
-a PythonGeoInterface_ or something similar.
-
-.. _PythonGeoInterface: http://trac.gispython.org/projects/PCL/wiki/PythonGeoInterface
-
-Each point must also be assigned its ID, that is the same recorded on the
-device.
-
-Each session has an arbitrary origin point, that each point must reference
-as an attribute to be able to patch different sessions together.
-
-It should be noted that these coordinates do not express any geographic nor
-cartographic position, and using GIS tools it's always difficult to avoid
-definining a Coordinate Reference System for your data. Often WGS84 is
-implicit if you don't specify one.
-
-Models
-======
-
-Zeiss Elta R55
---------------
-
-The hardware interface consists of a serial RS232 cable, that works also with
-common serial-usb adapters.
-
->>> import serial
->>> ser = serial.Serial('/dev/ttyUSB0', \
-    baudrate=9600, bytesize=serial.SEVENBITS, timeout=0, \
-    parity=serial.PARITY_NONE, rtscts=1)
->>> ser.open()
-
-At this point, you have to start the download from the device menu. When this
-operation has finished, it's good practice to control if you have actually
-received any data:
-
->>> ser.inWaiting()
-648L
-
-A non-zero result means that something has been downloaded. Good enough.
-
-This number can be saved to a variable and passed as parameter to the
-``read()`` command
-
->>> n = ser.inWaiting()
->>> result = ser.read(n)
-
-The ``result`` object is a string that contains our data:
-
->>> print(result)
-   0001 OR.COOR                                                                
-   0002                   0S        X        0.000 Y         0.000 Z     0.000 
-   0003                                            Om     397.0370             
-   0004 POLAR                                                                  
-   0005 INPUT                       th       1.500 ih        0.000             
-   0006 INPUT                       th       0.000 ih        0.000 Z     0.000 
-   0007                   1         X       -0.472 Y         1.576 Z     0.004 
-END                                                                            
-
-So far, we can say that the downloaded file contains this information:
-
-* ``OR.COOR``: but I don't know if this line can take other values too
-* **origin point** defined by the ``OS`` string followed by its ``X``, ``Y``,
-  ``Z`` coordinates
-* **orientation angle** ``Om``: are these gradiants?
-* ``POLAR``: but I don't know if this line can take other values too
-* ``INPUT``: are there always two ``INPUT`` lines?
-
-  * ``th``
-  * ``ih``
-  * ``Z``
-
-* points, expressed as ``N`` (starting from 1), ``X``, ``Y``, ``Z``
-* ``END``: after this line no more data
-
-Nikon NPL-350
--------------
-
-Download is in ASCII format.
-
-Even the brute method ``cat /dev/ttyS0 > file`` creates an ASCII file without any
-problem, so probably the default parameters for the serial port are OK.
-
-
-Other models
-------------
-
-At the moment I haven't had access to any other model. The best would be to
-create a standard procedure to enable anyone to get the right parameters for
-their model executing a simple test and sending us their results.
-
-This way we can start also giving general information about makers that can
-be helpful when testing.
-
-This information and other about specific models could be inserted in a wiki
-and organized in a database to be distributed along with the program.
+Documentation is available at http://totalopenstation.sharesource.org/docs/
+with details on the application structure, supported models and other stuff.
 
