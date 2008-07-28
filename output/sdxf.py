@@ -253,6 +253,9 @@ class Point(_Entity):
     def __init__(self,points=None,**common):
         _Entity.__init__(self,**common)
         self.points=points
+    def __str__(self):
+        return '\n'.join(['0\nPOINT',self._common()]+
+                         _points(self.points))
 
 class Solid(_Entity):
     """Colored solid fill."""
@@ -576,6 +579,6 @@ def main():
     d.append(Solid(points=[(4,4,0),(5,4,0),(7,8,0),(9,9,0)],color=3))
     d.append(PolyLine(points=[(1,1,1),(2,1,1),(2,2,1),(1,2,1)],closed=1,color=1))
     
-    d.saveas('c:\\test.dxf')
+    d.saveas('test.dxf')
 
 if __name__=='__main__':main()
