@@ -45,14 +45,15 @@ class ZeissEltaR55(Parser):
 
     def get_point(self,line):
         tokens = {
-            'pid' : line[8:27],
-            'text' : line[27:32],
-            'x' : line[38:50],
-            'y' : line[53:66],
-            'z' : line[69:80]
+            'pid' : line[8:27].split()[0],   # the result is more elegant than
+            'text' : line[27:32].split()[0], # the code (Heisenberg rocks!)
+            'x' : line[38:50].split()[0],
+            'y' : line[53:66].split()[0],
+            'z' : line[69:80].split()[0]
             }
         
         point_id = int(tokens['pid'])
+        text = str(tokens['text'])
         
         # note that for now we keep floats into strings to avoid approximation
         # problems, provided that for writing DXF a string is sufficient.
@@ -61,7 +62,6 @@ class ZeissEltaR55(Parser):
         x = str(tokens['x'])
         y = str(tokens['y'])
         z = str(tokens['z'])
-        text = str(tokens['text'])
         
         if self.swapXY is True:
             return (point_id, y, x, z, text)
