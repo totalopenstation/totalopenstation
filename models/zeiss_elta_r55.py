@@ -17,13 +17,25 @@ class ZeissEltaR55(Parser):
         '''Example line:
    0007                   1         X       -0.472 Y         1.576 Z     0.004 
         '''
-        tokens = line.split()
+        
+        tokens = {
+            'sequence' : line[0:7],
+            'pid' : line[8:27],
+            'text' : line[27:32],
+            'X_str' : line[36],
+            'x' : line[38:50],
+            'Y_str' : line[51],
+            'y' : line[53:66],
+            'Z_str' : line[67],
+            'z' : line[69:80]
+            }
+        
         try:
-            int(tokens[0])
-            int(tokens[1])
-            #float(tokens[3])
-            #float(tokens[5])
-            #float(tokens[7])
+            int(tokens['sequence'])
+            int(tokens['pid'])
+            float(tokens['x'])
+            float(tokens['y'])
+            float(tokens['z'])
         except (ValueError, IndexError):
             is_point = False
         else:
@@ -32,18 +44,25 @@ class ZeissEltaR55(Parser):
         return is_point
 
     def get_point(self,line):
-        tokens = line.split()
-        point_id = int(tokens[1])
-        if tokens[2] == 'X':
-            x = str(tokens[3])
-            y = str(tokens[5])
-            z = str(tokens[7])
-            text = ""
-        elif tokens[3] == 'X':
-            x = str(tokens[4])
-            y = str(tokens[6])
-            z = str(tokens[8])
-            text = str(tokens[2])
+        tokens = {
+            'pid' : line[8:27],
+            'text' : line[27:32],
+            'x' : line[38:50],
+            'y' : line[53:66],
+            'z' : line[69:80]
+            }
+        
+        point_id = int(tokens['pid'])
+        
+        # note that for now we keep floats into strings to avoid approximation
+        # problems, provided that for writing DXF a string is sufficient.
+        # FIXME before introducing new output formats.
+        
+        x = str(tokens['x'])
+        y = str(tokens['y'])
+        z = str(tokens['z'])
+        text = str(tokens['text'])
+        
         if self.swapXY is True:
             return (point_id, y, x, z, text)
         else:
