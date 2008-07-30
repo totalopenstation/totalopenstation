@@ -69,5 +69,5 @@ class ZeissEltaR55(Parser):
             return (point_id, x, y, z, text)
 
 if __name__ == "__main__":
-    main = ZeissEltaR55(open('zeiss_elta_r55_20080704.raw').readlines())
+    main = ZeissEltaR55(open('zeiss_elta_r55_20080717.raw').readlines())
 
