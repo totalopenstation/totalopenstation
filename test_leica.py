@@ -5,13 +5,13 @@
 # Under the GNU GPL 3 License
 
 from output.dxf.sdxf import *
-from models import tops
+from models import leica_tcr_1205
 
 # read TS data
 
-main = tops.LeicaTCR1205('/home/gqb/code/totalopenstation/models/leica_1205_1.txt')
-main.parse_retrieve_data()
-punti = main.points.list_to_tuple()
+main = leica_tcr_1205.LeicaTCR1205('models/leica_1205_1.txt')
+punti = main.t_points
+
 
 
 codici = set([ p[4] for p in punti ])
