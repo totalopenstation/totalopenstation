@@ -62,12 +62,10 @@ def make_csv():
     csv_output = TotalOpenCSV(punti,'leica.csv')
 
 if len(sys.argv) > 1:
-#    if sys.argv[1] == 'csv':
-#        make_csv()
-#    if sys.argv[1] == 'dxf':
-#        make_dxf()
     try:
         eval("make_%s()" % sys.argv[1])
     except NameError:
         print "Output format %s is not recognized" % sys.argv[1]
+else:
+    print punti[0:30]
 
