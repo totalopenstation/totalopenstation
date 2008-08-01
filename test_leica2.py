@@ -6,10 +6,9 @@
 
 from output.dxf.sdxf import *
 from models import leica_tcr_1205
-from dxfexporter import *
+from output.dxf import tops_dxf
 
 # read TS data
 
 main = leica_tcr_1205.LeicaTCR1205('models/leica_1205_1.txt')
-dxf = DXFexporter(main.t_points)
-dxf.export_Dxf_ToFile(dxf.dxf_doc,'leica.dxf')
+dxf = tops_dxf.Tops_Dxf(main.t_points,'leica.dxf')

@@ -1,14 +1,16 @@
 #! /usr/bin/env python
 
-from output.dxf.sdxf import *
+from sdxf import *
 
-class DXFexporter:
+class Tops_Dxf:
 	
-	def __init__(self, tuplepoints):
+	def __init__(self, tuplepoints, filename):
 	
 		self.points = tuplepoints
 		self.codes = self.make_codes(self.points)
+		self.filename = filename
 		self.dxf_doc = self.createDxf(self.codes,self.points)
+		self.export_Dxf_ToFile(self.dxf_doc,self.filename)
 		
 	def make_codes(self, points):
 		
