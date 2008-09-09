@@ -5,13 +5,15 @@
 # Under the GNU GPL 3 License
 
 from output.dxf.sdxf import *
-from models.zeiss_elta_r55 import *
+from models import zeiss_elta_r55
 
 # read TS data
 
-main = ZeissEltaR55(open('models/zeiss_elta_r55_20080717.raw').readlines())
+main = zeiss_elta_r55.ZeissEltaR55('models/zeiss_elta_r55_20080717.raw')
+punti = main.t_points
 
-codici = set([ p[4] for p in main.points ])
+
+codici = set([ p[4] for p in punti ])
 
 # create DXF
 
@@ -31,7 +33,7 @@ for n, i in enumerate(codici):
     d.append(Layer(name=name_q, color=n))
     d.append(Layer(name=name_n, color=n))
 
-for p in main.points:
+for p in punti:
     p_id, p_x, p_y, p_z, p_layer = p
     name_p = "%s_PUNTI" % p_layer
     name_q = "%s_QUOTE" % p_layer
@@ -46,5 +48,5 @@ for p in main.points:
     # add Z value
     d.append(Text(str(p_z), point=(p_x, p_y, 0), layer=name_q ))
 
-d.saveas('gqb.dxf')
+d.saveas('zeiss.dxf')
 
