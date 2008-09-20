@@ -12,7 +12,7 @@ from models import leica_tcr_1205
 
 # read TS data
 
-main = leica_tcr_1205.LeicaTCR1205('/home/gqb/code/totalopenstation/models/leica_1205_1.txt')
+main = leica_tcr_1205.LeicaTCR1205('models/leica_1205_1.txt')
 main.parse_retrieve_data()
 punti = main.points.list_to_tuple()
 
