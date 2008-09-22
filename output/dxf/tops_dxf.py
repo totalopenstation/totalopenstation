@@ -4,42 +4,64 @@
 # Copyright 2008 Stefano Costa <steko@iosa.it>
 # Under the GNU GPL 3 License
 
-# sample data in internal format
 
-points = [('10000', 450403.99400000001, 205882.98800000001, 58.689, 'BS'), ('10001', 450402.04200000002, 205885.61799999999, 61.308999999999997, 'Line0001'), ('10002', 450402.59999999998, 205884.88, 61.283000000000001, 'Line0001'), ('10003', 450403.538, 205883.636, 61.289000000000001, 'Line0001'), ('10004', 450403.61300000001, 205883.54199999999, 61.292999999999999, 'Line0001'), ('10005', 450403.598, 205883.53400000001, 61.311, 'Line0001'), ('10006', 450403.73800000001, 205883.35999999999, 61.317999999999998, 'Line0001'), ('10007', 450403.75400000002, 205883.34700000001, 61.301000000000002, 'Line0001'), ('10008', 450403.96100000001, 205883.04999999999, 61.307000000000002, 'Line0001'), ('10009', 450404.04700000002, 205882.94399999999, 61.298999999999999, 'Line0001'), ('10010', 450404.04300000001, 205882.902, 61.378, 'Line0001'), ('10011', 450404.03999999998, 205882.90100000001, 61.411999999999999, 'Line0001'), ('10012', 450403.19500000001, 205884.05900000001, 61.393999999999998, 'Line0001'), ('10013', 450403.19, 205884.068, 61.378999999999998, 'Line0001'), ('10014', 450403.18400000001, 205884.07699999999, 61.369999999999997, 'Line0001'), ('10015', 450403.17300000001, 205884.09299999999, 61.357999999999997, 'Line0001'), ('10016', 450403.16399999999, 205884.10699999999, 61.353999999999999, 'Line0001'), ('10017', 450403.15600000002, 205884.117, 61.353999999999999, 'Line0001'), ('10018', 450403.141, 205884.13800000001, 61.356000000000002, 'Line0001'), ('10019', 450403.11599999998, 205884.16899999999, 61.351999999999997, 'Line0001'), ('10020', 450403.09000000003, 205884.201, 61.369999999999997, 'Line0001'), ('10021', 450403.076, 205884.21799999999, 61.381, 'Line0001'), ('10022', 450402.45600000001, 205885.04399999999, 61.396000000000001, 'Line0001'), ('10023', 450402.038, 205885.60399999999, 61.43, 'Line0001'), ('1100', 450402.12699999998, 205885.43400000001, 61.326999999999998, 'Line0002'), ('1101', 450402.12800000003, 205885.42300000001, 61.415999999999997, 'Line0002'), ('1102', 450402.13799999998, 205885.41399999999, 61.412999999999997, 'Line0002'), ('1103', 450402.14000000001, 205885.41699999999, 61.325000000000003, 'Line0002'), ('1104', 450402.13099999999, 205885.421, 61.331000000000003, 'Line0003'), ('1104', 450402.13099999999, 205885.421, 61.331000000000003, 'Line0003')]
-
-def write_dxf():
-    '''Sample DXF output function.
+class TotalOpenDXF:
     
-    Based on the official DXF2000 documentation. Works with AutoCAD 2005.'''
+    """
+    Exports points data in AutoCAD DXF format.
     
-    dxf_file = 'test_2.dxf'
-    result = '  0\nSECTION\n  2\nENTITIES\n'
+    It is based on the official DXF2000 documentation. Works with AutoCAD 2005.
     
-    codes = set([ p[4] for p in points ])
+    ``data`` should be an iterable (e.g. list) containing one iterable (e.g.
+    tuple) for each point. The default order is PID, x, x, z, TEXT.
     
-    layers = dict(enumerate(codes))
-    colors = dict(zip(layers.values(), layers.keys()))
+    This is consistent with our current standard.
+    """
     
-    for p in points:
-        p_id, p_x, p_y, p_z, p_layer = p
-#        name_p = "%s_PUNTI" % p_layer
-#        name_q = "%s_QUOTE" % p_layer
-#        name_n = "%s_NUMERI" % p_layer
+    def __init__(self,data,filepath,separate_layers=True):
         
-        # add point
-        result = '%s  0\nPOINT\n  8\n%s\n  10\n%s\n  20\n%s\n  62\n%s\n' % (result, p_layer, p_x, p_y, colors[p_layer])
+        self.data = data
+        self.dxf_file = filepath
+        self.separate_layers = separate_layers
+        self.result = '  0\nSECTION\n  2\nENTITIES\n'
+        self.text_height = 0.05
         
-        # add ID number
-        result = '%s  0\nTEXT\n  8\n%s\n  10\n%s\n  20\n%s\n  62\n%s\n  40\n0.05\n  1\n%s\n' % (result, p_layer, p_x, p_y, colors[p_layer], p_id)
+        self.codes = set([ p[4] for p in self.data ])
         
-        # add Z value
-        # d.append(Text(str(p_z), point=(p_x, p_y, 0), layer=name_q ))
-    
-    result = result + '  0\nENDSEC\n  0\nEOF\n'
-    open(dxf_file, 'w').write(result)
+        self.layers = dict(enumerate(self.codes))
+        self.colors = dict(zip(self.layers.values(), self.layers.keys()))
+        
+        for p in self.data:
+            p_id, p_x, p_y, p_z, p_layer = p
+            if self.separate_layers is True:
+                layer_point = "%s_PUNTI" % p_layer
+                layer_z_text = "%s_QUOTE" % p_layer
+                layer_id_text = "%s_NUMERI" % p_layer
+            else:
+                layer_point = layer_z_text = layer_id_text = p_layer
+            p_yz = str(float(p_y) - (self.text_height * 1.2))
+            
+            # add point
+            self.result = '%s  0\nPOINT\n  8\n%s\n  10\n%s\n  20\n%s\n  62\n%s\n' % (self.result, layer_point, p_x, p_y, self.colors[p_layer])
+            
+            # add ID number
+            self.result = '%s  0\nTEXT\n  8\n%s\n  10\n%s\n  20\n%s\n  62\n%s\n  40\n%01.2f\n  1\n%s\n' % (self.result, layer_id_text, p_x, p_y, self.colors[p_layer], self.text_height, p_id)
+            
+            # add Z value
+            # d.append(Text(str(p_z), point=(p_x, p_y, 0), layer=name_q ))
+            self.result = '%s  0\nTEXT\n  8\n%s\n  10\n%s\n  20\n%s\n  62\n%s\n  40\n%01.2f\n  1\n%s\n' % (self.result, layer_z_text, p_x, p_yz, self.colors[p_layer], self.text_height, p_z)
+        
+        self.result = self.result + '  0\nENDSEC\n  0\nEOF\n'
+        self.output = open(self.dxf_file, 'w')
+        self.output.write(self.result)
+        self.output.close()
 
 
-if __name__ == '__main__':
-    write_dxf()
+if __name__ == "__main__":
+    TotalOpenDXF(
+        [
+            (1,2,3,4,'qwerty'),
+            ("2.3",42,45,12,'asdfg')
+        ],
+    'p.dxf')
 
