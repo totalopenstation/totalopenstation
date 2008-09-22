@@ -20,7 +20,6 @@ punti = main.points.list_to_tuple()
 def make_dxf():
     dxf_output = TotalOpenDXF(punti, 'leica.dxf')
 
-make_dxf()
 
 def make_csv():
     csv_output = TotalOpenCSV(punti, 'leica.csv')
