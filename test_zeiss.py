@@ -1,52 +1,24 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
-# filename: prova.py
+# filename: test_zeiss.py
 # Copyright 2008 Stefano Costa <steko@iosa.it>
 # Under the GNU GPL 3 License
 
-from output.dxf.sdxf import *
+
+from output.dxf.tops_dxf import TotalOpenDXF
 from models import zeiss_elta_r55
 
 # read TS data
 
-main = zeiss_elta_r55.ZeissEltaR55('models/zeiss_elta_r55_20080717.raw')
+main = zeiss_elta_r55.ZeissEltaR55('interactive_download.txt')
 punti = main.t_points
 
 
 codici = set([ p[4] for p in punti ])
 
-# create DXF
 
-#Drawing
-d=Drawing(layers=())
-#tables
-d.styles.append(Style())                #table styles
-d.styles.append(Style( name='GQB', height=0.04 ))
-d.views.append(View('Normal'))          #table view
-d.views.append(ViewByWindow('Window',leftBottom=(1,0),rightTop=(2,1)))  #idem
+def make_dxf():
+    dxf_output = TotalOpenDXF(punti, 'zeiss.dxf')
 
-for n, i in enumerate(codici):
-    name_p = "%s_PUNTI" % i
-    name_q = "%s_QUOTE" % i
-    name_n = "%s_NUMERI" % i
-    d.append(Layer(name=name_p, color=n))
-    d.append(Layer(name=name_q, color=n))
-    d.append(Layer(name=name_n, color=n))
-
-for p in punti:
-    p_id, p_x, p_y, p_z, p_layer = p
-    name_p = "%s_PUNTI" % p_layer
-    name_q = "%s_QUOTE" % p_layer
-    name_n = "%s_NUMERI" % p_layer
-    
-    # add point
-    d.append(Point(points=[(p_x, p_y, 0)], layer=name_p, color=256))
-    
-    # add ID number
-    d.append(Text(str(p_id),point=(p_x, p_y, 0), layer=name_n ))
-    
-    # add Z value
-    d.append(Text(str(p_z), point=(p_x, p_y, 0), layer=name_q ))
-
-d.saveas('zeiss.dxf')
+make_dxf()
 
