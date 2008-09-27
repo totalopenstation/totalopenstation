@@ -1,4 +1,4 @@
 #! /usr/bin/env python
 
-__all__ = ["csv", "dxf"]
+__all__ = ["csv", "dxf", "dat"]
 
