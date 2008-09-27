@@ -481,9 +481,9 @@ class Tops:
                 result = result + TOPSerial.read(TOPSerial.inWaiting())
                 sleep(1)
             
-            #result = "sample data here"
             self.text_area.delete("1.0",END)
-            self.text_area.insert(END,result)
+            result_to_print = result.replace('\r','')
+            self.text_area.insert(END,result_to_print)
     
     def about_action(self, event):
         d = AboutDialog(self.myParent)
