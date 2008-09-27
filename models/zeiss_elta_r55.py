@@ -44,20 +44,14 @@ class ZeissEltaR55(TotalStation):
         return is_point
     
     def get_point(self,line):
-        
-        text = line[27:32].split()
-        
-        if len(text) >= 1 :
-            aux = text[0]
-        else:
-            aux = ""
+        '''Gets a point from a line retrieving basic data.'''
         
         tokens = {
-            'pid' : line[8:27].split()[0],   # the result is more elegant than
-            'text' : aux,                    # the code (Heisenberg rocks!)
-            'x' : line[38:50].split()[0],
-            'y' : line[53:66].split()[0],
-            'z' : line[69:80].split()[0]
+            'pid' : line[8:27].strip(),   # the result is more elegant than
+            'text' : line[27:32].strip(), # the code (Heisenberg rocks!)
+            'x' : line[38:50].strip(),
+            'y' : line[53:66].strip(),
+            'z' : line[69:80].strip()
             }
                     
         point_id = int(tokens['pid'])
@@ -66,6 +60,8 @@ class ZeissEltaR55(TotalStation):
         # note that for now we keep floats into strings to avoid approximation
         # problems, provided that for writing DXF a string is sufficient.
         # FIXME before introducing new output formats.
+        # We could use string formatting operations to store data as floats
+        # and convert them to strings with the needed precision on the fly.
         
         x = str(tokens['x'])
         y = str(tokens['y'])
