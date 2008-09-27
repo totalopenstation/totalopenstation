@@ -474,12 +474,12 @@ class Tops:
             d = ConnectDialog(self.myParent, connection_string)
             n = TOPSerial.inWaiting()
             result = TOPSerial.read(n)
-            sleep(2)
+            sleep(1)
             
             # prevent full buffer effect
             while ser.inWaiting() > 0:
                 result = result + TOPSerial.read(TOPSerial.inWaiting())
-                sleep(2)
+                sleep(1)
             
             #result = "sample data here"
             self.text_area.delete("1.0",END)

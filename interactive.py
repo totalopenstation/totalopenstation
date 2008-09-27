@@ -12,7 +12,7 @@ ser = serial.Serial('/dev/ttyUSB0', baudrate=9600, bytesize=serial.SEVENBITS, ti
 ser.open()
 
 # start from the device...
-a = raw_input("Digit something and press ENTER when download has finished\n")
+a = raw_input("Press ENTER when download has finished\n")
 # wait until finished!
 
 n = ser.inWaiting()
@@ -21,11 +21,11 @@ result = ser.read(n)
 # looks like there is a maximum buffer of 4096 characters, so we have to
 # wait and iterate the process until finished
 
-sleep(7)
+sleep(1)
 
 while ser.inWaiting() > 0:
     result = result + ser.read(ser.inWaiting())
-    sleep(7)
+    sleep(1)
 print(result)
 
 e = open('interactive_download.txt', 'w')
