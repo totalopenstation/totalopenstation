@@ -477,7 +477,7 @@ class Tops:
             sleep(1)
             
             # prevent full buffer effect
-            while ser.inWaiting() > 0:
+            while TOPSerial.inWaiting() > 0:
                 result = result + TOPSerial.read(TOPSerial.inWaiting())
                 sleep(1)
             
