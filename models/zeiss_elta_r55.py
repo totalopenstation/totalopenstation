@@ -1,6 +1,9 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
 # filename: zeiss_elta_r55.py
+# Copyright 2008 Luca Bianconi <lc.bianconi@googlemail.com>
+# Copyright 2008 Stefano Costa <steko@iosa.it>
+# Under the GNU GPL 3 License
 
 from generic import *
 
