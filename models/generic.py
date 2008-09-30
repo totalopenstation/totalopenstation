@@ -7,23 +7,29 @@ import serial
 from time import sleep
 
 class Connector(serial.Serial):
-    def __init__(self, port=None, baudrate=9600, bytesize=8, parity='N', stopbits=1, timeout=None, xonxoff=0, rtscts=0, writeTimeout=None, dsrdtr=None):
+    def __init__(self, port=None, baudrate=9600, bytesize=8, parity='N',
+                stopbits=1, timeout=None, xonxoff=0, rtscts=0,
+                writeTimeout=None, dsrdtr=None):
         
-        serial.Serial.__init__(self, port=port, baudrate=baudrate, bytesize=bytesize, parity=parity, stopbits=stopbits, timeout=timeout, xonxoff=xonxoff, rtscts=rtscts, writeTimeout=writeTimeout, dsrdtr=dsrdtr)
+        serial.Serial.__init__(self, port=port, baudrate=baudrate,
+        bytesize=bytesize, parity=parity, stopbits=stopbits, timeout=timeout,
+        xonxoff=xonxoff, rtscts=rtscts, writeTimeout=writeTimeout,
+        dsrdtr=dsrdtr)
         
         self.open()
+    
+    def download(self):
+        '''Download method for user interfaces.
         
-        # FIXME this code shouldn't be here because it depends on command-line
-        # input from the user. We should define a few methods.
-        # start from the device...
-        a = raw_input("Press ENTER when download has finished\n")
-        # wait until finished!
+        Firts the class must be instantiated, then the port is open and the
+        transfer from the device can start. Once the transfer is finished
+        the user interface should call this method.'''
         
         n = self.inWaiting()
         result = self.read(n)
-        
-        # looks like there is a maximum buffer of 4096 characters, so we have to
-        # wait for a short time and iterate the process until finished
+    
+        # looks like there is a maximum buffer of 4096 characters, so we have
+        # to wait for a short time and iterate the process until finished
         
         sleep(0.1)
         
@@ -32,6 +38,7 @@ class Connector(serial.Serial):
             sleep(0.1)
         
         self.result = result
+        return self.result
 
 class Point:
     
