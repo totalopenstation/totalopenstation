@@ -109,6 +109,34 @@ class ConnectDialog(tkSimpleDialog.Dialog):
         Label(master, text=message2, fg="red").pack()
 
 
+class ProcessDialog(tkSimpleDialog.Dialog):
+    def __init__(self, parent, data):
+        self.data = data
+        tkSimpleDialog.Dialog.__init__(self, parent)
+    
+    def body(self, master):
+        title="Choose output format and destination file"
+        question = "Output format:\n"
+
+        message1="Data to be processed:\n"
+        params = "%s\n" %(self.data)
+        Label(master, bitmap="question").pack()
+        Label(master, text=title, font=("Helvetica", "16", "bold")).pack()
+        Label(master, text=question).pack()
+        output_format = StringVar()
+        for t in ['CSV', 'DAT', 'DXF']:
+            w = Radiobutton(master,
+                            text = t,
+                            value = t,
+                            variable = output_format
+                            ).pack()
+        Label(master, text=message1).pack()
+        t = Text(master,
+             width=80)
+        t.insert(END, params)
+        t.pack()
+
+
 class ErrorDialog(tkSimpleDialog.Dialog):
     def __init__(self, parent, message):
         self.message = message
@@ -418,7 +446,16 @@ class Tops:
         self.connect_button.pack(side = LEFT, anchor = S)
         self.connect_button.bind("<Button-1>", self.connect_action)
         self.connect_button.bind("<Return>", self.connect_action)
-
+        
+        self.process_button = Button(self.buttons_frame,
+                                        text = "Process data",
+                                        background = "cyan",
+                                        padx = imb_buttonx,
+                                        pady = imb_buttony)
+        self.process_button.pack(side = LEFT, anchor = S)
+        self.process_button.bind("<Button-1>", self.process_action)
+        self.process_button.bind("<Return>", self.process_action)
+        
         self.about_button = Button(self.buttons_frame,
                                       text = "About TOPS",
                                       padx = imb_buttonx, 
@@ -466,7 +503,6 @@ class Tops:
         connection_string = cs[:-2] + ")" # remove last ", "
         try:
             TOPSerial = eval(connection_string)
-            print TOPSerial
         except serial.SerialException, detail:
             e = ErrorDialog(self.myParent, detail)
         else:
@@ -474,16 +510,20 @@ class Tops:
             d = ConnectDialog(self.myParent, connection_string)
             n = TOPSerial.inWaiting()
             result = TOPSerial.read(n)
-            sleep(1)
+            sleep(0.1)
             
             # prevent full buffer effect
             while TOPSerial.inWaiting() > 0:
                 result = result + TOPSerial.read(TOPSerial.inWaiting())
-                sleep(1)
+                sleep(0.1)
             
             self.text_area.delete("1.0",END)
             result_to_print = result.replace('\r','')
             self.text_area.insert(END,result_to_print)
+    
+    def process_action(self, event):
+        data = self.text_area.get("1.0", END)
+        d = ProcessDialog(self.myParent, data)
     
     def about_action(self, event):
         d = AboutDialog(self.myParent)
