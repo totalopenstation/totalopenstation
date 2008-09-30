@@ -5,7 +5,8 @@
 from generic import *
 
 class ZeissConn(Connector):
-    pass
+    def __init__(self, port):
+        Connector.__init__(self, port=port, bytesize=7)
 
 class ZeissEltaR55(TotalStation):
     
