@@ -1,6 +1,9 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
 # filename: generic.py
+# Copyright 2008 Luca Bianconi <lc.bianconi@googlemail.com>
+# Copyright 2008 Stefano Costa <steko@iosa.it>
+# Under the GNU GPL 3 License
 
 import serial
 
@@ -64,7 +67,7 @@ class PointsList:
 		
 		list_aux=[]
 		for p in self.listofpoints:
-			list_aux.append(p.point_to_tuple())
+			list_aux.append(p.tuplepoint)
 		return list_aux
 
 class Data:

@@ -6,6 +6,7 @@
 
 
 import sys
+import os.path
 
 
 class TOPS:
@@ -44,6 +45,15 @@ class TOPS:
 			print "Supported formats are: "
 			for f in supportedExportFormats:
 				print f
+			
+			sys.exit()
+		
+		if os.path.exists(fileToOpen) != True:
+			
+			print "Input Data File not existent"
+			print "Please chose a correct file name"
+			
+			sys.exit()
 		
 		
 		if(tsModel == "Zeiss_Elta_r55"):
