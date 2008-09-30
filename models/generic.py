@@ -17,6 +17,8 @@ class Point:
 		self.z=z
 		self.text=text
 		
+		self.tuplepoint = (self.p_id, self.x, self.y, self.z, self.text)
+		
 	def get_coords(self):
 		
 		coords = {'x': self.x,'y':self.y,'z':self.z}
