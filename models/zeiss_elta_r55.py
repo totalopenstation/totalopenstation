@@ -53,7 +53,7 @@ class ZeissEltaR55(TotalStation):
             'y' : line[53:66].strip(),
             'z' : line[69:80].strip()
             }
-                    
+        
         point_id = int(tokens['pid'])
         text = str(tokens['text'])
         
