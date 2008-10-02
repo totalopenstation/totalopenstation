@@ -7,7 +7,8 @@
 
 models = {
     'Leica TCR 1205' : 'leica_tcr_1205',
-    'Zeiss Elta R55' : 'zeiss_elta_r55'
+    'Zeiss Elta R55' : 'zeiss_elta_r55',
+    'Custom' : 'generic'
     }
 
 if __name__ == '__main__':

@@ -6,7 +6,9 @@
 
 from models import *
 
-station = zeiss_elta_r55.ZeissConn('/dev/ttyUSB0')
+
+station = zeiss_elta_r55.ModelConnector('/dev/ttyUSB0')
+station.open_conn()
 
 # start from the device...
 a = raw_input("Press ENTER when download has finished\n")
