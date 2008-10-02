@@ -15,7 +15,8 @@ class Connector(serial.Serial):
         bytesize=bytesize, parity=parity, stopbits=stopbits, timeout=timeout,
         xonxoff=xonxoff, rtscts=rtscts, writeTimeout=writeTimeout,
         dsrdtr=dsrdtr)
-        
+
+    def open_conn(self):
         self.open()
     
     def download(self):
@@ -110,7 +111,7 @@ class Data:
         file.close()
 
 
-class TotalStation:
+class Parser:
     
     def __init__(self,filename,swapXY=False):
         

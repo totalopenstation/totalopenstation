@@ -1,6 +1,6 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
-# filename: prova_leica.py
+# filename: leica_tcr_1205.py
 # Copyright 2008 Luca Bianconi <luxetluc@yahoo.it>
 # Copyright 2008 Stefano Costa <steko@iosa.it>
 # Under the GNU GPL 3 License
@@ -8,7 +8,7 @@
 from generic import *
 
 
-class LeicaTCR1205(TotalStation):
+class ModelParser(Parser):
     
     def is_point(self,line):
         
@@ -18,12 +18,9 @@ class LeicaTCR1205(TotalStation):
             float(tokens[1])
             float(tokens[2])
             float(tokens[3])
-        
         except (ValueError, IndexError):
-            
             is_point = False
-        
-        else:    
+        else:
             #di questo controllo che segue FORSE non gliene frega un beliscimu
             if tokens[4]=="MEAS":
                 is_point = True
@@ -42,5 +39,5 @@ class LeicaTCR1205(TotalStation):
             text = ""
             
         p = Point(str(tokens[0]), float(tokens[1]), float(tokens[2]), float(tokens[3]), text)
-        
         return p
+

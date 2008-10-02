@@ -519,45 +519,62 @@ class Tops:
             self.control_panel.pack(side = TOP, expand = YES, fill = Y, ipadx = 5, ipady = 5)
     
     def connect_action(self, event):
-        cs = "serial.Serial("
         
-        for k,v in self.options.items():
-            print k,v
-            n, t = v
-            cs = cs + "%s = " %k
-            if t == 'str':
-                cs = cs + "'" + eval("self.option%s_value.get()" %n) + "'"
-            elif t == 'int':
-                try:
-                    int(eval("self.option%s_value.get()" %n))
-                except ValueError:
-                    cs = cs + "None"
-                else:
-                    cs = cs + str(int(eval("self.option%s_value.get()" %n)))
-            elif t == 'bool':
-                cs = cs + str(bool(eval("self.option%s_value.get()" %n)))
+        chosen_model = self.optionMODEL_value.get()
+        chosen_port = self.option1_value.get()
+        
+        if chosen_model == 'Custom':
             
-            cs = cs + ", "
-        connection_string = cs[:-2] + ")" # remove last ", "
-        try:
-            TOPSerial = eval(connection_string)
-        except serial.SerialException, detail:
-            e = ErrorDialog(self.myParent, detail)
-        else:
-            TOPSerial.open()
-            d = ConnectDialog(self.myParent, connection_string)
-            n = TOPSerial.inWaiting()
-            result = TOPSerial.read(n)
-            sleep(0.1)
+            # FIXME : convert this section to the new Connector API.
+            #  No more string construction!
             
-            # prevent full buffer effect
-            while TOPSerial.inWaiting() > 0:
-                result = result + TOPSerial.read(TOPSerial.inWaiting())
+            cs = "serial.Serial("
+            
+            for k,v in self.options.items():
+                print k,v
+                n, t = v
+                cs = cs + "%s = " %k
+                if t == 'str':
+                    cs = cs + "'" + eval("self.option%s_value.get()" %n) + "'"
+                elif t == 'int':
+                    try:
+                        int(eval("self.option%s_value.get()" %n))
+                    except ValueError:
+                        cs = cs + "None"
+                    else:
+                        cs = cs + str(int(eval("self.option%s_value.get()" %n)))
+                elif t == 'bool':
+                    cs = cs + str(bool(eval("self.option%s_value.get()" %n)))
+                
+                cs = cs + ", "
+            connection_string = cs[:-2] + ")" # remove last ", "
+            try:
+                TOPSerial = eval(connection_string)
+            except serial.SerialException, detail:
+                e = ErrorDialog(self.myParent, detail)
+            else:
+                TOPSerial.open()
+                d = ConnectDialog(self.myParent, connection_string)
+                n = TOPSerial.inWaiting()
+                result = TOPSerial.read(n)
                 sleep(0.1)
-            
-            self.text_area.delete("1.0",END)
-            result_to_print = result.replace('\r','')
-            self.text_area.insert(END,result_to_print)
+                
+                # prevent full buffer effect
+                while TOPSerial.inWaiting() > 0:
+                    result = result + TOPSerial.read(TOPSerial.inWaiting())
+                    sleep(0.1)
+                
+                self.text_area.delete("1.0",END)
+                result_to_print = result.replace('\r','')
+                self.text_area.insert(END,result_to_print)
+        
+        else:
+            module = models.models[chosen_model]
+            exec('from models.%s import ModelConnector' % module)
+            mc = ModelConnector(chosen_port)
+            mc.open()
+            d = ConnectDialog(self.myParent, mc)
+            self.result = mc.download()
     
     def process_action(self, event):
         data = self.text_area.get("1.0", END)
