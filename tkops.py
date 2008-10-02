@@ -7,6 +7,7 @@
 import serial
 
 from time import sleep
+from models import models
 
 from Tkinter import *
 import tkSimpleDialog
@@ -123,12 +124,12 @@ class ProcessDialog(tkSimpleDialog.Dialog):
         Label(master, bitmap="question").pack()
         Label(master, text=title, font=("Helvetica", "16", "bold")).pack()
         Label(master, text=question).pack()
-        output_format = StringVar()
+        self.output_format = StringVar()
         for t in ['CSV', 'DAT', 'DXF']:
             w = Radiobutton(master,
                             text = t,
                             value = t,
-                            variable = output_format
+                            variable = self.output_format
                             ).pack()
         Label(master, text=message1).pack()
         t = Text(master,
@@ -205,17 +206,20 @@ class Tops:
         Label(self.header_frame,
           text = welcome_message,
           justify = LEFT).pack(side = LEFT, anchor = W)
-        
+
         self.buttons_frame = Frame(self.upper_frame)
         self.buttons_frame.pack(side = TOP, expand = NO, fill = Y,
                                   ipadx = 5, ipady = 5)
         
-        # control panel
+        # default control panel
+        self.control_panel0 = Frame(self.main_frame)
+        self.control_panel0.pack(side = TOP, expand = YES, fill = Y, ipadx = 5, ipady = 5)
+        
+        # control panel for custom serial connection
         self.control_panel = Frame(self.main_frame)
-        self.control_panel.pack(side = TOP, expand = YES, fill = Y, ipadx = 5)
         
         # option 1 : serial port
-        self.option1_frame = Frame(self.control_panel, relief = RIDGE, bd = 1)
+        self.option1_frame = Frame(self.control_panel0, relief = RIDGE, bd = 1)
         self.option1_frame.pack(side = TOP)
         
         self.option1_label = Label(self.option1_frame,
@@ -238,6 +242,33 @@ class Tops:
 #                                           variable=self.option1_value,
 #                                           value = n)
         self.option1_entry.pack(side = LEFT, anchor = W)
+        
+        # option MODEL substitutes all connection parameters for better
+        # user experience
+        
+        self.optionMODEL_frame = Frame(self.control_panel0, relief = RIDGE, bd = 1)
+        self.optionMODEL_frame.pack(side = TOP)
+        
+        self.optionMODEL_label = Label(self.optionMODEL_frame,
+                                   text="Total Station",
+                                   justify = LEFT,
+                                   width = 25)
+        self.optionMODEL_label.pack(side = LEFT, anchor = E)
+        self.optionMODEL_value = StringVar()
+        self.optionMODEL_entry = Menubutton(self.optionMODEL_frame,
+                                        text="choose a model",
+                                        textvariable=self.optionMODEL_value,
+                                        relief = RAISED,
+                                        width = 24)
+        self.optionMODEL_entry.menu = Menu( self.optionMODEL_entry, tearoff=0 )
+        self.optionMODEL_entry["menu"] = self.optionMODEL_entry.menu
+        
+        for k,v in models.models.items():
+            self.optionMODEL_entry.menu.add_radiobutton(label=k,
+                                                        variable=self.optionMODEL_value,
+                                                        value=k,
+                                                        command=self.print_model)
+        self.optionMODEL_entry.pack(side = LEFT, anchor = W)
         
         # option 2 : baudrate
         self.option2_frame = Frame(self.control_panel, relief = RIDGE, bd = 1)
@@ -480,6 +511,13 @@ class Tops:
     def exit_action(self, event):
         self.myParent.destroy()
     
+    def print_model(self):
+        model = self.optionMODEL_value.get()
+        if model != 'Custom':
+            self.control_panel.forget()
+        else:
+            self.control_panel.pack(side = TOP, expand = YES, fill = Y, ipadx = 5, ipady = 5)
+    
     def connect_action(self, event):
         cs = "serial.Serial("
         
@@ -524,6 +562,8 @@ class Tops:
     def process_action(self, event):
         data = self.text_area.get("1.0", END)
         d = ProcessDialog(self.myParent, data)
+        e = ErrorDialog(self.myParent, d.output_format.get())
+        print d.output_format.get()
     
     def about_action(self, event):
         d = AboutDialog(self.myParent)
