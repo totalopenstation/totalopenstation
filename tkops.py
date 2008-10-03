@@ -7,6 +7,7 @@
 import serial
 
 from time import sleep
+from models import models
 
 from Tkinter import *
 import tkSimpleDialog
@@ -109,6 +110,34 @@ class ConnectDialog(tkSimpleDialog.Dialog):
         Label(master, text=message2, fg="red").pack()
 
 
+class ProcessDialog(tkSimpleDialog.Dialog):
+    def __init__(self, parent, data):
+        self.data = data
+        tkSimpleDialog.Dialog.__init__(self, parent)
+    
+    def body(self, master):
+        title="Choose output format and destination file"
+        question = "Output format:\n"
+
+        message1="Data to be processed:\n"
+        params = "%s\n" %(self.data)
+        Label(master, bitmap="question").pack()
+        Label(master, text=title, font=("Helvetica", "16", "bold")).pack()
+        Label(master, text=question).pack()
+        self.output_format = StringVar()
+        for t in ['CSV', 'DAT', 'DXF']:
+            w = Radiobutton(master,
+                            text = t,
+                            value = t,
+                            variable = self.output_format
+                            ).pack()
+        Label(master, text=message1).pack()
+        t = Text(master,
+             width=80)
+        t.insert(END, params)
+        t.pack()
+
+
 class ErrorDialog(tkSimpleDialog.Dialog):
     def __init__(self, parent, message):
         self.message = message
@@ -177,17 +206,20 @@ class Tops:
         Label(self.header_frame,
           text = welcome_message,
           justify = LEFT).pack(side = LEFT, anchor = W)
-        
+
         self.buttons_frame = Frame(self.upper_frame)
         self.buttons_frame.pack(side = TOP, expand = NO, fill = Y,
                                   ipadx = 5, ipady = 5)
         
-        # control panel
+        # default control panel
+        self.control_panel0 = Frame(self.main_frame)
+        self.control_panel0.pack(side = TOP, expand = YES, fill = Y, ipadx = 5, ipady = 5)
+        
+        # control panel for custom serial connection
         self.control_panel = Frame(self.main_frame)
-        self.control_panel.pack(side = TOP, expand = YES, fill = Y, ipadx = 5)
         
         # option 1 : serial port
-        self.option1_frame = Frame(self.control_panel, relief = RIDGE, bd = 1)
+        self.option1_frame = Frame(self.control_panel0, relief = RIDGE, bd = 1)
         self.option1_frame.pack(side = TOP)
         
         self.option1_label = Label(self.option1_frame,
@@ -210,6 +242,33 @@ class Tops:
 #                                           variable=self.option1_value,
 #                                           value = n)
         self.option1_entry.pack(side = LEFT, anchor = W)
+        
+        # option MODEL substitutes all connection parameters for better
+        # user experience
+        
+        self.optionMODEL_frame = Frame(self.control_panel0, relief = RIDGE, bd = 1)
+        self.optionMODEL_frame.pack(side = TOP)
+        
+        self.optionMODEL_label = Label(self.optionMODEL_frame,
+                                   text="Total Station",
+                                   justify = LEFT,
+                                   width = 25)
+        self.optionMODEL_label.pack(side = LEFT, anchor = E)
+        self.optionMODEL_value = StringVar()
+        self.optionMODEL_entry = Menubutton(self.optionMODEL_frame,
+                                        text="choose a model",
+                                        textvariable=self.optionMODEL_value,
+                                        relief = RAISED,
+                                        width = 24)
+        self.optionMODEL_entry.menu = Menu( self.optionMODEL_entry, tearoff=0 )
+        self.optionMODEL_entry["menu"] = self.optionMODEL_entry.menu
+        
+        for k,v in models.models.items():
+            self.optionMODEL_entry.menu.add_radiobutton(label=k,
+                                                        variable=self.optionMODEL_value,
+                                                        value=k,
+                                                        command=self.print_model)
+        self.optionMODEL_entry.pack(side = LEFT, anchor = W)
         
         # option 2 : baudrate
         self.option2_frame = Frame(self.control_panel, relief = RIDGE, bd = 1)
@@ -418,7 +477,16 @@ class Tops:
         self.connect_button.pack(side = LEFT, anchor = S)
         self.connect_button.bind("<Button-1>", self.connect_action)
         self.connect_button.bind("<Return>", self.connect_action)
-
+        
+        self.process_button = Button(self.buttons_frame,
+                                        text = "Process data",
+                                        background = "cyan",
+                                        padx = imb_buttonx,
+                                        pady = imb_buttony)
+        self.process_button.pack(side = LEFT, anchor = S)
+        self.process_button.bind("<Button-1>", self.process_action)
+        self.process_button.bind("<Return>", self.process_action)
+        
         self.about_button = Button(self.buttons_frame,
                                       text = "About TOPS",
                                       padx = imb_buttonx, 
@@ -443,47 +511,76 @@ class Tops:
     def exit_action(self, event):
         self.myParent.destroy()
     
-    def connect_action(self, event):
-        cs = "serial.Serial("
-        
-        for k,v in self.options.items():
-            print k,v
-            n, t = v
-            cs = cs + "%s = " %k
-            if t == 'str':
-                cs = cs + "'" + eval("self.option%s_value.get()" %n) + "'"
-            elif t == 'int':
-                try:
-                    int(eval("self.option%s_value.get()" %n))
-                except ValueError:
-                    cs = cs + "None"
-                else:
-                    cs = cs + str(int(eval("self.option%s_value.get()" %n)))
-            elif t == 'bool':
-                cs = cs + str(bool(eval("self.option%s_value.get()" %n)))
-            
-            cs = cs + ", "
-        connection_string = cs[:-2] + ")" # remove last ", "
-        try:
-            TOPSerial = eval(connection_string)
-            print TOPSerial
-        except serial.SerialException, detail:
-            e = ErrorDialog(self.myParent, detail)
+    def print_model(self):
+        model = self.optionMODEL_value.get()
+        if model != 'Custom':
+            self.control_panel.forget()
         else:
-            TOPSerial.open()
-            d = ConnectDialog(self.myParent, connection_string)
-            n = TOPSerial.inWaiting()
-            result = TOPSerial.read(n)
-            sleep(1)
+            self.control_panel.pack(side = TOP, expand = YES, fill = Y, ipadx = 5, ipady = 5)
+    
+    def connect_action(self, event):
+        
+        chosen_model = self.optionMODEL_value.get()
+        chosen_port = self.option1_value.get()
+        
+        if chosen_model == 'Custom':
             
-            # prevent full buffer effect
-            while TOPSerial.inWaiting() > 0:
-                result = result + TOPSerial.read(TOPSerial.inWaiting())
-                sleep(1)
+            # FIXME : convert this section to the new Connector API.
+            #  No more string construction!
             
-            self.text_area.delete("1.0",END)
-            result_to_print = result.replace('\r','')
-            self.text_area.insert(END,result_to_print)
+            cs = "serial.Serial("
+            
+            for k,v in self.options.items():
+                print k,v
+                n, t = v
+                cs = cs + "%s = " %k
+                if t == 'str':
+                    cs = cs + "'" + eval("self.option%s_value.get()" %n) + "'"
+                elif t == 'int':
+                    try:
+                        int(eval("self.option%s_value.get()" %n))
+                    except ValueError:
+                        cs = cs + "None"
+                    else:
+                        cs = cs + str(int(eval("self.option%s_value.get()" %n)))
+                elif t == 'bool':
+                    cs = cs + str(bool(eval("self.option%s_value.get()" %n)))
+                
+                cs = cs + ", "
+            connection_string = cs[:-2] + ")" # remove last ", "
+            try:
+                TOPSerial = eval(connection_string)
+            except serial.SerialException, detail:
+                e = ErrorDialog(self.myParent, detail)
+            else:
+                TOPSerial.open()
+                d = ConnectDialog(self.myParent, connection_string)
+                n = TOPSerial.inWaiting()
+                result = TOPSerial.read(n)
+                sleep(0.1)
+                
+                # prevent full buffer effect
+                while TOPSerial.inWaiting() > 0:
+                    result = result + TOPSerial.read(TOPSerial.inWaiting())
+                    sleep(0.1)
+                
+                self.text_area.delete("1.0",END)
+                result_to_print = result.replace('\r','')
+                self.text_area.insert(END,result_to_print)
+        
+        else:
+            module = models.models[chosen_model]
+            exec('from models.%s import ModelConnector' % module)
+            mc = ModelConnector(chosen_port)
+            mc.open()
+            d = ConnectDialog(self.myParent, mc)
+            self.result = mc.download()
+    
+    def process_action(self, event):
+        data = self.text_area.get("1.0", END)
+        d = ProcessDialog(self.myParent, data)
+        e = ErrorDialog(self.myParent, d.output_format.get())
+        print d.output_format.get()
     
     def about_action(self, event):
         d = AboutDialog(self.myParent)

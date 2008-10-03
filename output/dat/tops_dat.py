@@ -6,8 +6,11 @@
 
 
 def to_dat(e):
-    string = "%s %s %s %s\n" % (e[0], e[0], e[1], e[2])
-    return string
+    if e[4].endswith("R"):
+        string = "%s %s %s %s\n" % (e[0], e[0], e[1], e[2])
+        return string
+    else:
+        return ''
 
 
 class TotalOpenDAT:
