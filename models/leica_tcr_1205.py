@@ -8,6 +8,11 @@
 from generic import *
 
 
+class ModelConnector(Connector):
+    def __init__(self, port):
+        Connector.__init__(self, port=port, baudrate=19200)
+
+
 class ModelParser(Parser):
     
     def is_point(self,line):
