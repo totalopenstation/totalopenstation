@@ -1,12 +1,15 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# filename: interactive.py
+# filename: tops_interface.py
 # Copyright 2008 Luca Bianconi<lc.bianconi@googlemail.com> and Stefano Costa <steko@iosa.it>
 # Under the GNU GPL 3 License
 
 
 import sys
 import os.path
+
+from models import models
+
 
 
 class TOPS:
@@ -16,7 +19,7 @@ class TOPS:
 		#to be entered maybe from a txt file containing the list of the supported models
 		supportedTs = ("Zeiss_Elta_r55","Leica_Tcr_1205")
 		
-		supportedExportFormats=("CSV","DXF","DAT")
+		supportedExportFormats=("CSV","DXF","DAT","TXT")
 		
 		
 		try:
@@ -50,22 +53,22 @@ class TOPS:
 		
 		if os.path.exists(fileToOpen) != True:
 			
-			print "Input Data File not existent"
-			print "Please chose a correct file name"
+			#print "Input Data File not existent"
+			#print "Please chose a correct file name"
 			
-			sys.exit()
+			sys.exit("Input Data File not existent"+"\n"+"Please chose a correct file name")
 		
 		
-		if(tsModel == "Zeiss_Elta_r55"):
+		#if(tsModel == "Zeiss_Elta_r55"):
 			
-			self.goZeissEltaR55(fileToOpen,exportFormat,fileToSave)
+			#self.goZeissEltaR55(fileToOpen,exportFormat,fileToSave)
 		
 			
-		elif(tsModel == "Leica_Tcr_1205"):
+		#elif(tsModel == "Leica_Tcr_1205"):
 			
-			self.goLeicaTCR1205(fileToOpen,exportFormat,fileToSave)
-		
-			
+			#self.goLeicaTCR1205(fileToOpen,exportFormat,fileToSave)
+		if tsModel in models.models.values():
+                    self.goTS(tsModel,fileToOpen,exportFormat,fileToSave)	
 		else:
 			print "Incorrect Total Station Model type!"
 			print "Supported models are: "
@@ -105,6 +108,12 @@ class TOPS:
 			from output.dat.tops_dat import TotalOpenDAT
 			
 			dat_output = TotalOpenDAT(pnts, (outName+'.dat'))
+			
+		elif frmt == "TXT":
+		
+			from output.txt.tops_txt import TotalOpenTXT
+			
+			txt_output = TotalOpenTXT(pnts, (outName+'.txt'))
 		
 	#Zeiss' routine
 	def goZeissEltaR55(self,fileIn,frmt,outName):
@@ -113,7 +122,7 @@ class TOPS:
 		
 		# read TS data
 		
-		main = zeiss_elta_r55.ZeissEltaR55(fileIn)
+		main = zeiss_elta_r55.ModelParser(fileIn)
 		punti = main.t_points
 		
 		codici = set([ p[4] for p in punti ])
@@ -127,13 +136,22 @@ class TOPS:
 		
 		# read TS data
 		
-		main = leica_tcr_1205.LeicaTCR1205(fileIn)
+		main = leica_tcr_1205.ModelParser(fileIn)
 		main.parse_retrieve_data()
 		punti = main.points.list_to_tuple()
 		
 		self.exportAction(frmt,punti,outName)
+                
+        def goTS(self,ts,fileIn,frmt,outName):
 		
-	
+           exec('from models.%s import ModelParser' % ts)
+           
+           main = ModelParser(fileIn)
+           
+           main.parse_retrieve_data()
+	   punti = main.points.list_to_tuple()
+		
+	   self.exportAction(frmt,punti,outName)
 	
 
 if __name__ == '__main__':
