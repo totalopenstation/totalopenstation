@@ -10,13 +10,18 @@ from time import sleep
 from models import models
 
 from Tkinter import *
-import tkSimpleDialog
+import tkSimpleDialog, tkFileDialog
+
 
 def scan():
     """scan for available ports. return a list of tuples (num, name).
     
     Part of pySerial (http://pyserial.sf.net)  (C)2002-2003 <cliechti@gmx.net>
     """
+    
+    # TODO move this function in a separate module together with scanwin32.py
+    # and add conditional loading depending on the operating system
+    
     available = []
     for i in range(256):
         try:
@@ -111,28 +116,57 @@ class ConnectDialog(tkSimpleDialog.Dialog):
 
 
 class ProcessDialog(tkSimpleDialog.Dialog):
-    def __init__(self, parent, data):
+    def __init__(self, parent, data, model):
         self.data = data
+        self.model = model
         tkSimpleDialog.Dialog.__init__(self, parent)
     
     def body(self, master):
         title="Choose output format and destination file"
         question = "Output format:\n"
-
+        top_frame = Frame(master)
+        top_frame.pack(side = TOP, padx = 5, pady = 5)
+        bottom_frame = Frame(master)
+        bottom_frame.pack(side = TOP, anchor = S)
+        
+        Label(top_frame, bitmap="question").pack(side = TOP, anchor = N)
+        Label(top_frame, text=title).pack(side = TOP, anchor = N)
+        output_frame = Frame(top_frame)
+        input_frame = Frame(top_frame)
+        output_frame.pack(side = LEFT)
+        input_frame.pack(side = LEFT)
+        
         message1="Data to be processed:\n"
         params = "%s\n" %(self.data)
-        Label(master, bitmap="question").pack()
-        Label(master, text=title, font=("Helvetica", "16", "bold")).pack()
-        Label(master, text=question).pack()
+        
+        Label(input_frame, text='Input model').pack(side = TOP)
+        
+        optionMODEL_value = StringVar()
+        optionMODEL_value.set(self.model)
+        optionMODEL_entry = Menubutton(input_frame,
+                                        text="choose a model",
+                                        textvariable=optionMODEL_value,
+                                        relief = RAISED,
+                                        width = 24)
+        optionMODEL_entry.menu = Menu(optionMODEL_entry, tearoff=0)
+        optionMODEL_entry["menu"] = optionMODEL_entry.menu
+        
+        for k,v in models.models.items():
+            optionMODEL_entry.menu.add_radiobutton(label=k,
+                                                        variable=optionMODEL_value,
+                                                        value=k)
+        optionMODEL_entry.pack(side = LEFT, anchor = W)
+        
+        Label(output_frame, text=question).pack()
         self.output_format = StringVar()
         for t in ['CSV', 'DAT', 'DXF']:
-            w = Radiobutton(master,
+            w = Radiobutton(output_frame,
                             text = t,
                             value = t,
                             variable = self.output_format
                             ).pack()
-        Label(master, text=message1).pack()
-        t = Text(master,
+        Label(bottom_frame, text=message1).pack()
+        t = Text(bottom_frame,
              width=80)
         t.insert(END, params)
         t.pack()
@@ -199,16 +233,16 @@ class Tops:
         self.logo_canvas = Label(self.header_frame, image=self.logo)
         self.logo_canvas.pack(side = LEFT, expand = NO)
 
-        welcome_message = """
-        This program will help you to find the right connection
-        parameters for your total station device, and after that also
-        to retrieve data from it."""
-        Label(self.header_frame,
-          text = welcome_message,
-          justify = LEFT).pack(side = LEFT, anchor = W)
+#        welcome_message = """
+#        This program will help you to find the right connection
+#        parameters for your total station device, and after that also
+#        to retrieve data from it."""
+#        Label(self.header_frame,
+#          text = welcome_message,
+#          justify = LEFT).pack(side = LEFT, anchor = W)
 
-        self.buttons_frame = Frame(self.upper_frame)
-        self.buttons_frame.pack(side = TOP, expand = NO, fill = Y,
+        self.buttons_frame = Frame(self.header_frame)
+        self.buttons_frame.pack(side = LEFT, expand = NO, fill = Y,
                                   ipadx = 5, ipady = 5)
         
         # default control panel
@@ -227,20 +261,20 @@ class Tops:
                                    width = 25)
         self.option1_label.pack(side = LEFT)
         self.option1_value = StringVar()
-        self.option1_entry = Entry(self.option1_frame,
-                                   textvariable=self.option1_value,
-                                   width = 25)
-#        self.option1_entry = Menubutton(self.option1_frame,
-#                                        text="choose a value",
-#                                        textvariable=self.option1_value,
-#                                        relief = RAISED,
-#                                        width = 24)
-#        self.option1_entry.menu = Menu( self.option1_entry, tearoff=0 )
-#        self.option1_entry["menu"] = self.option1_entry.menu
-#        for n,s in scan():
-#            self.option1_entry.menu.add_radiobutton ( label=s,
-#                                           variable=self.option1_value,
-#                                           value = n)
+#        self.option1_entry = Entry(self.option1_frame,
+#                                   textvariable=self.option1_value,
+#                                   width = 25)
+        self.option1_entry = Menubutton(self.option1_frame,
+                                        text="choose a value",
+                                        textvariable=self.option1_value,
+                                        relief = RAISED,
+                                        width = 24)
+        self.option1_entry.menu = Menu( self.option1_entry, tearoff=0 )
+        self.option1_entry["menu"] = self.option1_entry.menu
+        for n,s in scan():
+            self.option1_entry.menu.add_radiobutton ( label=s,
+                                           variable=self.option1_value,
+                                           value = s)
         self.option1_entry.pack(side = LEFT, anchor = W)
         
         # option MODEL substitutes all connection parameters for better
@@ -461,7 +495,6 @@ class Tops:
         # control buttons
         self.exit_button = Button(self.buttons_frame,
                                       text = "Quit", 
-                                      width = buttons_width, 
                                       padx = imb_buttonx, 
                                       pady = imb_buttony)
         self.exit_button.pack(side = LEFT, anchor = S)
@@ -471,12 +504,19 @@ class Tops:
         self.connect_button = Button(self.buttons_frame,
                                       text = "Connect",
                                       background = "green",
-                                      width = buttons_width,
                                       padx = imb_buttonx, 
                                       pady = imb_buttony)
         self.connect_button.pack(side = LEFT, anchor = S)
         self.connect_button.bind("<Button-1>", self.connect_action)
         self.connect_button.bind("<Return>", self.connect_action)
+        
+        self.open_button = Button(self.buttons_frame,
+                                      text = "Open file",
+                                      padx = imb_buttonx, 
+                                      pady = imb_buttony)
+        self.open_button.pack(side = LEFT, anchor = S)
+        self.open_button.bind("<Button-1>", self.open_action)
+        self.open_button.bind("<Return>", self.open_action)
         
         self.process_button = Button(self.buttons_frame,
                                         text = "Process data",
@@ -564,26 +604,39 @@ class Tops:
                     result = result + TOPSerial.read(TOPSerial.inWaiting())
                     sleep(0.1)
                 
-                self.text_area.delete("1.0",END)
-                result_to_print = result.replace('\r','')
-                self.text_area.insert(END,result_to_print)
+                self.replace_text(result)
         
         else:
             module = models.models[chosen_model]
             exec('from models.%s import ModelConnector' % module)
             mc = ModelConnector(chosen_port)
-            mc.open()
-            d = ConnectDialog(self.myParent, mc)
-            self.result = mc.download()
+            try:
+                mc.open()
+            except serial.SerialException, detail:
+                e = ErrorDialog(self.myParent, detail)
+            else:
+                d = ConnectDialog(self.myParent, mc)
+                self.result = mc.download()
+    
+    def open_action(self, event):
+        d = tkFileDialog.askopenfilename()
+        of = open(d, 'r')
+        oc = of.read()
+        self.replace_text(oc)
     
     def process_action(self, event):
+        chosen_model = self.optionMODEL_value.get()
         data = self.text_area.get("1.0", END)
-        d = ProcessDialog(self.myParent, data)
-        e = ErrorDialog(self.myParent, d.output_format.get())
-        print d.output_format.get()
+        d = ProcessDialog(self.myParent, data, chosen_model)
+        
     
     def about_action(self, event):
         d = AboutDialog(self.myParent)
+    
+    def replace_text(self, text):
+        self.text_area.delete("1.0",END)
+        self.text_area.insert(END,text.replace('\r',''))
+
 
 root = Tk()
 Tops = Tops(root)
