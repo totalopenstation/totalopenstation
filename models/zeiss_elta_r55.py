@@ -15,7 +15,7 @@ class ModelConnector(Connector):
 class ModelParser(Parser):
     
     def __init__(self, filename):
-        TotalStation.__init__(self, filename, swapXY=True)
+        Parser.__init__(self, filename, swapXY=True)
     
     def is_point(self,line):
 
