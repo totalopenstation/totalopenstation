@@ -51,6 +51,9 @@ class Point:
         self.z=z
         self.text=text
         
+        self.tuplepoint = (self.p_id, self.x, self.y, self.z, self.text)
+        
+        
     def get_coords(self):
         
         coords = {'x': self.x,'y':self.y,'z':self.z}
@@ -96,19 +99,19 @@ class PointsList:
         
         list_aux=[]
         for p in self.listofpoints:
-            list_aux.append(p.point_to_tuple())
+            list_aux.append(p.tuplepoint)
         return list_aux
 
-class Data:
+#class Data:
     
-    def __init__(self):
-        pass
+    #def __init__(self):
+        #pass
         
-    def data_from_txt_file(self, filepathname):
+    #def data_from_txt_file(self, filepathname):
         
-        file = open(filepathname,'r')
-        self.lines = file.readlines()
-        file.close()
+        #file = open(filepathname,'r')
+        #self.lines = file.readlines()
+        #file.close()
 
 
 class Parser:
