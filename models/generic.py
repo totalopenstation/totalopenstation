@@ -22,7 +22,7 @@ class Connector(serial.Serial):
     def download(self):
         '''Download method for user interfaces.
         
-        Firts the class must be instantiated, then the port is open and the
+        First the class must be instantiated, then the port is open and the
         transfer from the device can start. Once the transfer is finished
         the user interface should call this method.'''
         
