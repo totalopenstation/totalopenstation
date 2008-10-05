@@ -223,15 +223,15 @@ class Tops:
         self.upper_frame = Frame(self.main_frame) ###
         self.upper_frame.pack(side = TOP, expand = NO, padx = 10,
                                    pady = 5, ipadx = 5, ipady = 5)
-
-        self.header_frame = Frame(self.upper_frame)
-        self.header_frame.pack(side = TOP, expand = NO)
+        
+        self.logo_frame = Frame(self.upper_frame)
+        self.logo_frame.pack(side = LEFT, expand = NO)
         
         self.logo_data = logo_data
         self.logo = PhotoImage(data = self.logo_data)
-        
-        self.logo_canvas = Label(self.header_frame, image=self.logo)
-        self.logo_canvas.pack(side = LEFT, expand = NO)
+        self.logo_canvas = Label(self.logo_frame, image=self.logo)
+        self.logo_canvas.pack(side = LEFT, expand = NO, padx = 5,
+                                   pady = 5)
 
 #        welcome_message = """
 #        This program will help you to find the right connection
@@ -241,16 +241,19 @@ class Tops:
 #          text = welcome_message,
 #          justify = LEFT).pack(side = LEFT, anchor = W)
 
+        self.header_frame = Frame(self.upper_frame)
+        self.header_frame.pack(side = LEFT, expand = NO, pady = 5)
+        
         self.buttons_frame = Frame(self.header_frame)
-        self.buttons_frame.pack(side = LEFT, expand = NO, fill = Y,
+        self.buttons_frame.pack(side = TOP, expand = NO, fill = Y,
                                   ipadx = 5, ipady = 5)
         
         # default control panel
-        self.control_panel0 = Frame(self.main_frame)
-        self.control_panel0.pack(side = TOP, expand = YES, fill = Y, ipadx = 5, ipady = 5)
+        self.control_panel0 = Frame(self.header_frame)
+        self.control_panel0.pack(side = TOP, expand = YES, fill = Y, padx = 5, pady = 5)
         
         # control panel for custom serial connection
-        self.control_panel = Frame(self.main_frame)
+        self.control_panel = Frame(self.header_frame)
         
         # option 1 : serial port
         self.option1_frame = Frame(self.control_panel0, relief = RIDGE, bd = 1)
@@ -416,71 +419,71 @@ class Tops:
                                                  value = 2 )
         self.option5_entry.pack(side = LEFT, anchor = W)
 
-        # option 6 : timeout
-        self.option6_frame = Frame(self.control_panel, relief = RIDGE, bd = 1)
-        self.option6_frame.pack(side = TOP)
-        
-        self.option6_label = Label(self.option6_frame,
-                                   text="Timeout (empty for None)",
-                                   justify = LEFT,
-                                   width = 25)
-        self.option6_label.pack(side = LEFT, anchor = E)
-        self.option6_value = StringVar()
-        self.option6_value.set("0") 
-        self.option6_entry = Entry(self.option6_frame,
-                                   textvariable=self.option6_value,
-                                   width = 25)
-        self.option6_entry.pack(side = LEFT, anchor = W)
-        
-        # option 7 : xonxoff
-        self.option7_frame = Frame(self.control_panel, relief = RIDGE, bd = 1)
-        self.option7_frame.pack(side = TOP)
-        
-        self.option7_label = Label(self.option7_frame,
-                                   text="Xon/Xoff flow control",
-                                   justify = LEFT,
-                                   width = 25)
-        self.option7_label.pack(side = LEFT, anchor = E)
-        self.option7_value = IntVar()
-        self.option7_entry = Menubutton(self.option7_frame,
-                                        text="choose a value",
-                                        textvariable=self.option7_value,
-                                        relief = RAISED,
-                                        width = 24)
-        self.option7_entry.menu =   Menu ( self.option7_entry, tearoff=0 )
-        self.option7_entry["menu"]  = self.option7_entry.menu
-        self.option7_entry.menu.add_radiobutton (label="Enabled",
-                                                 variable=self.option7_value,
-                                                 value = 1 )
-        self.option7_entry.menu.add_radiobutton (label="Disabled",
-                                                 variable=self.option7_value,
-                                                 value = 0 )
-        self.option7_entry.pack(side = LEFT, anchor = W)
-        
-        # option 8: hardware flow control
-        self.option8_frame = Frame(self.control_panel, relief = RIDGE, bd = 1)
-        self.option8_frame.pack(side = TOP)
-        
-        self.option8_label = Label(self.option8_frame,
-                                   text="Hardware flow control",
-                                   justify = LEFT,
-                                   width = 25)
-        self.option8_label.pack(side = LEFT, anchor = E)
-        self.option8_value = IntVar()
-        self.option8_entry = Menubutton(self.option8_frame,
-                                        text="choose a value",
-                                        textvariable=self.option8_value,
-                                        relief = RAISED,
-                                        width = 24)
-        self.option8_entry.menu =   Menu ( self.option8_entry, tearoff=0 )
-        self.option8_entry["menu"]  = self.option8_entry.menu
-        self.option8_entry.menu.add_radiobutton (label="Enabled",
-                                                 variable=self.option8_value,
-                                                 value = 1 )
-        self.option8_entry.menu.add_radiobutton (label="Disabled",
-                                                 variable=self.option8_value,
-                                                 value = 0 )
-        self.option8_entry.pack(side = LEFT, anchor = W)
+#        # option 6 : timeout
+#        self.option6_frame = Frame(self.control_panel, relief = RIDGE, bd = 1)
+#        self.option6_frame.pack(side = TOP)
+#        
+#        self.option6_label = Label(self.option6_frame,
+#                                   text="Timeout (empty for None)",
+#                                   justify = LEFT,
+#                                   width = 25)
+#        self.option6_label.pack(side = LEFT, anchor = E)
+#        self.option6_value = StringVar()
+#        self.option6_value.set("0") 
+#        self.option6_entry = Entry(self.option6_frame,
+#                                   textvariable=self.option6_value,
+#                                   width = 25)
+#        self.option6_entry.pack(side = LEFT, anchor = W)
+#        
+#        # option 7 : xonxoff
+#        self.option7_frame = Frame(self.control_panel, relief = RIDGE, bd = 1)
+#        self.option7_frame.pack(side = TOP)
+#        
+#        self.option7_label = Label(self.option7_frame,
+#                                   text="Xon/Xoff flow control",
+#                                   justify = LEFT,
+#                                   width = 25)
+#        self.option7_label.pack(side = LEFT, anchor = E)
+#        self.option7_value = IntVar()
+#        self.option7_entry = Menubutton(self.option7_frame,
+#                                        text="choose a value",
+#                                        textvariable=self.option7_value,
+#                                        relief = RAISED,
+#                                        width = 24)
+#        self.option7_entry.menu =   Menu ( self.option7_entry, tearoff=0 )
+#        self.option7_entry["menu"]  = self.option7_entry.menu
+#        self.option7_entry.menu.add_radiobutton (label="Enabled",
+#                                                 variable=self.option7_value,
+#                                                 value = 1 )
+#        self.option7_entry.menu.add_radiobutton (label="Disabled",
+#                                                 variable=self.option7_value,
+#                                                 value = 0 )
+#        self.option7_entry.pack(side = LEFT, anchor = W)
+#        
+#        # option 8: hardware flow control
+#        self.option8_frame = Frame(self.control_panel, relief = RIDGE, bd = 1)
+#        self.option8_frame.pack(side = TOP)
+#        
+#        self.option8_label = Label(self.option8_frame,
+#                                   text="Hardware flow control",
+#                                   justify = LEFT,
+#                                   width = 25)
+#        self.option8_label.pack(side = LEFT, anchor = E)
+#        self.option8_value = IntVar()
+#        self.option8_entry = Menubutton(self.option8_frame,
+#                                        text="choose a value",
+#                                        textvariable=self.option8_value,
+#                                        relief = RAISED,
+#                                        width = 24)
+#        self.option8_entry.menu =   Menu ( self.option8_entry, tearoff=0 )
+#        self.option8_entry["menu"]  = self.option8_entry.menu
+#        self.option8_entry.menu.add_radiobutton (label="Enabled",
+#                                                 variable=self.option8_value,
+#                                                 value = 1 )
+#        self.option8_entry.menu.add_radiobutton (label="Disabled",
+#                                                 variable=self.option8_value,
+#                                                 value = 0 )
+#        self.option8_entry.pack(side = LEFT, anchor = W)
     
         # dictionary for passing options to Serial
         self.options = {'port':(1,'str'),
@@ -493,13 +496,6 @@ class Tops:
                    'rtscts':(8,'bool')}
         
         # control buttons
-        self.exit_button = Button(self.buttons_frame,
-                                      text = "Quit", 
-                                      padx = imb_buttonx, 
-                                      pady = imb_buttony)
-        self.exit_button.pack(side = LEFT, anchor = S)
-        self.exit_button.bind("<Button-1>", self.exit_action)
-        self.exit_button.bind("<Return>", self.exit_action)
         
         self.connect_button = Button(self.buttons_frame,
                                       text = "Connect",
@@ -518,6 +514,14 @@ class Tops:
         self.open_button.bind("<Button-1>", self.open_action)
         self.open_button.bind("<Return>", self.open_action)
         
+        self.save_button = Button(self.buttons_frame,
+                                      text = "Save raw data",
+                                      padx = imb_buttonx, 
+                                      pady = imb_buttony)
+        self.save_button.pack(side = LEFT, anchor = S)
+        self.save_button.bind("<Button-1>", self.save_action)
+        self.save_button.bind("<Return>", self.save_action)
+        
         self.process_button = Button(self.buttons_frame,
                                         text = "Process data",
                                         background = "cyan",
@@ -534,6 +538,14 @@ class Tops:
         self.about_button.pack(side = LEFT, anchor = S)
         self.about_button.bind("<Button-1>", self.about_action)
         self.about_button.bind("<Return>", self.about_action)
+        
+        self.exit_button = Button(self.buttons_frame,
+                                      text = "Quit", 
+                                      padx = imb_buttonx, 
+                                      pady = imb_buttony)
+        self.exit_button.pack(side = LEFT, anchor = S)
+        self.exit_button.bind("<Button-1>", self.exit_action)
+        self.exit_button.bind("<Return>", self.exit_action)
         
         # text frame
         self.text_frame = Frame(self.main_frame)
@@ -636,6 +648,12 @@ class Tops:
         parsed_points = parsed_data.t_points
         sd = tkFileDialog.asksaveasfilename(defaultextension = '.%s' % ofl)
         output = Output(parsed_points, sd)
+        
+    def save_action(self, event):
+        sd = tkFileDialog.asksaveasfilename(defaultextension = '.tops')
+        data = self.text_area.get("1.0", END)
+        of = open(sd, 'w')
+        oc = of.write(data)
     
     def about_action(self, event):
         d = AboutDialog(self.myParent)
