@@ -12,7 +12,7 @@ from models import models
 
 
 
-class TOPS:
+class Tops_ParserExport:
 
 	def __init__(self):
 		
@@ -32,10 +32,10 @@ class TOPS:
 			
 		except IndexError:
 			
-			print "Incorrect number of arguments: "
-			print "tops_interface <fileToOpen> <TotalStationModel> <exportFormat> <OutputFile'sName>"
+			#print "Incorrect number of arguments: "
+			#print "tops_interface <fileToOpen> <TotalStationModel> <exportFormat> <OutputFile'sName>"
 			
-			sys.exit()
+			sys.exit("Incorrect number of arguments: "+"\n"+"tops_interface <fileToOpen> <TotalStationModel> <exportFormat> <OutputFile'sName>")
 		
 		#if the entered string for chosing the export format is converted to an only upper case version
 		if exportFormat.isupper() != True:
@@ -58,17 +58,10 @@ class TOPS:
 			
 			sys.exit("Input Data File not existent"+"\n"+"Please chose a correct file name")
 		
-		
-		#if(tsModel == "Zeiss_Elta_r55"):
-			
-			#self.goZeissEltaR55(fileToOpen,exportFormat,fileToSave)
-		
-			
-		#elif(tsModel == "Leica_Tcr_1205"):
-			
-			#self.goLeicaTCR1205(fileToOpen,exportFormat,fileToSave)
 		if tsModel in models.models.values():
-                    self.goTS(tsModel,fileToOpen,exportFormat,fileToSave)	
+                    
+                    self.goTS(tsModel,fileToOpen,exportFormat,fileToSave)
+                    	
 		else:
 			print "Incorrect Total Station Model type!"
 			print "Supported models are: "
@@ -114,41 +107,15 @@ class TOPS:
 			from output.txt.tops_txt import TotalOpenTXT
 			
 			txt_output = TotalOpenTXT(pnts, (outName+'.txt'))
-		
-	#Zeiss' routine
-	def goZeissEltaR55(self,fileIn,frmt,outName):
-		
-		from models import zeiss_elta_r55
-		
-		# read TS data
-		
-		main = zeiss_elta_r55.ModelParser(fileIn)
-		punti = main.t_points
-		
-		codici = set([ p[4] for p in punti ])
-		
-		self.exportAction(frmt,punti,outName)
-		
-	#Leica's routine
-	def goLeicaTCR1205(self,fileIn,frmt,outName):
-	
-		from models import leica_tcr_1205
-		
-		# read TS data
-		
-		main = leica_tcr_1205.ModelParser(fileIn)
-		main.parse_retrieve_data()
-		punti = main.points.list_to_tuple()
-		
-		self.exportAction(frmt,punti,outName)
                 
+        #execute parsing and exporting ops
         def goTS(self,ts,fileIn,frmt,outName):
 		
            exec('from models.%s import ModelParser' % ts)
            
            main = ModelParser(fileIn)
            
-           main.parse_retrieve_data()
+           #main.parse_retrieve_data()
 	   punti = main.points.list_to_tuple()
 		
 	   self.exportAction(frmt,punti,outName)
@@ -156,4 +123,4 @@ class TOPS:
 
 if __name__ == '__main__':
 	
-	TOPS()
+	Tops_ParserExport()

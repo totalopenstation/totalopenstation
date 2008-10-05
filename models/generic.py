@@ -101,6 +101,10 @@ class PointsList:
         
         return False
         
+    def points_number(self):
+        
+        return len(self.listofpoints)
+        
     def list_to_tuple(self):
         
         list_aux=[]
@@ -131,7 +135,9 @@ class Parser:
         self.swapXY = swapXY
         
         self.parse_retrieve_data()
-        self.t_points = self.points.list_to_tuple()
+        
+        if self.points.points_number() > 0:
+            self.t_points = self.points.list_to_tuple()
         
         
     def set_data(self, data):
