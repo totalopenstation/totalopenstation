@@ -115,12 +115,14 @@ class PointsList:
 
 
 class Parser:
+    '''Parses a *single* string of raw data and turns it to the internal format.
     
-    def __init__(self,filename,swapXY=False):
+    This means that if you plan to load data from a file you have to pass
+    the output of open(file).read() to this class.'''
+    
+    def __init__(self, data, swapXY=False):
         
-        #self.d = Data()
-        #self.d.data_from_txt_file(filename)
-        self.d = open(filename).readlines()
+        self.d = data.splitlines()
         self.points = PointsList()
         self.swapXY = swapXY
         
