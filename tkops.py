@@ -629,13 +629,13 @@ class Tops:
         data = self.text_area.get("1.0", END)
         d = ProcessDialog(self.myParent, data, chosen_model)
         module = models.models[d.optionMODEL_value.get()]
-        print module, type(module)
         ofl, ofp = str(d.output_format.get()).lower(), str(d.output_format.get()).upper()
         exec('from models.%s import ModelParser' % module)
         exec('from output.%s.tops_%s import TotalOpen%s as Output' % (ofl, ofl, ofp))
         parsed_data = ModelParser(data)
         parsed_points = parsed_data.t_points
-        output = Output(parsed_points, 'tkops.%s' % ofl)
+        sd = tkFileDialog.asksaveasfilename(defaultextension = '.%s' % ofl)
+        output = Output(parsed_points, sd)
     
     def about_action(self, event):
         d = AboutDialog(self.myParent)
