@@ -71,6 +71,12 @@ class Point:
     def point_to_tuple(self):
         tuplepoint = (self.p_id, self.x, self.y, self.z, self.text)
         return tuplepoint
+    
+    #def SwapXY(self):
+        
+        #temp = self.x
+        #self.x =self.y
+        #self.y=temp
 
 class PointsList:
     

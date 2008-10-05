@@ -71,11 +71,15 @@ class ModelParser(Parser):
         x = str(tokens['x'])
         y = str(tokens['y'])
         z = str(tokens['z'])
-            
-        if self.swapXY is True:
-            p = Point(point_id, y, x, z, text)
-        else:
-            p = Point(point_id, x, y, z, text)
+        
+        p = Point(point_id, y, x, z, text)
+        
+        """ Here it's always True so it's not worthy making the machine evaluating the condition. """
+        
+        #if self.swapXY is True:
+            #p = Point(point_id, y, x, z, text)
+        #else:
+            #p = Point(point_id, x, y, z, text)
         
         return p
 
