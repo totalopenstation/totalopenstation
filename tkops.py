@@ -141,11 +141,11 @@ class ProcessDialog(tkSimpleDialog.Dialog):
         
         Label(input_frame, text='Input model').pack(side = TOP)
         
-        optionMODEL_value = StringVar()
-        optionMODEL_value.set(self.model)
+        self.optionMODEL_value = StringVar()
+        self.optionMODEL_value.set(self.model)
         optionMODEL_entry = Menubutton(input_frame,
                                         text="choose a model",
-                                        textvariable=optionMODEL_value,
+                                        textvariable=self.optionMODEL_value,
                                         relief = RAISED,
                                         width = 24)
         optionMODEL_entry.menu = Menu(optionMODEL_entry, tearoff=0)
@@ -153,7 +153,7 @@ class ProcessDialog(tkSimpleDialog.Dialog):
         
         for k,v in models.models.items():
             optionMODEL_entry.menu.add_radiobutton(label=k,
-                                                        variable=optionMODEL_value,
+                                                        variable=self.optionMODEL_value,
                                                         value=k)
         optionMODEL_entry.pack(side = LEFT, anchor = W)
         
@@ -625,10 +625,17 @@ class Tops:
         self.replace_text(oc)
     
     def process_action(self, event):
-        chosen_model = self.optionMODEL_value.get()
+        chosen_model = str(self.optionMODEL_value.get())
         data = self.text_area.get("1.0", END)
         d = ProcessDialog(self.myParent, data, chosen_model)
-        
+        module = models.models[d.optionMODEL_value.get()]
+        print module, type(module)
+        ofl, ofp = str(d.output_format.get()).lower(), str(d.output_format.get()).upper()
+        exec('from models.%s import ModelParser' % module)
+        exec('from output.%s.tops_%s import TotalOpen%s as Output' % (ofl, ofl, ofp))
+        parsed_data = ModelParser(data)
+        parsed_points = parsed_data.t_points
+        output = Output(parsed_points, 'tkops.%s' % ofl)
     
     def about_action(self, event):
         d = AboutDialog(self.myParent)
