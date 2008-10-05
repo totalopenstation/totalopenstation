@@ -71,7 +71,7 @@ class ModelParser(Parser):
         x = str(tokens['x'])
         y = str(tokens['y'])
         z = str(tokens['z'])
-        
+        """ Even here it would have been better not giving x and y the wrong values(the inverted ones)but directly the right ones! """
         p = Point(point_id, y, x, z, text)
         
         """ Here it's always True so it's not worthy making the machine evaluating the condition. """
