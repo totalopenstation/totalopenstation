@@ -9,6 +9,7 @@ import sys
 import os.path
 
 from models import models
+from tops_graphs import *
 
 
 
@@ -32,9 +33,6 @@ class Tops_ParserExport:
 			
 		except IndexError:
 			
-			#print "Incorrect number of arguments: "
-			#print "tops_interface <fileToOpen> <TotalStationModel> <exportFormat> <OutputFile'sName>"
-			
 			sys.exit("Incorrect number of arguments: "+"\n"+"tops_interface <fileToOpen> <TotalStationModel> <exportFormat> <OutputFile'sName>")
 		
 		#if the entered string for chosing the export format is converted to an only upper case version
@@ -52,9 +50,6 @@ class Tops_ParserExport:
 			sys.exit()
 		
 		if os.path.exists(fileToOpen) != True:
-			
-			#print "Input Data File not existent"
-			#print "Please chose a correct file name"
 			
 			sys.exit("Input Data File not existent"+"\n"+"Please chose a correct file name")
 		
@@ -117,6 +112,9 @@ class Tops_ParserExport:
            
            #main.parse_retrieve_data()
 	   punti = main.points.list_to_tuple()
+           
+           Graph2D(punti)
+           Graph3D(punti)
 		
 	   self.exportAction(frmt,punti,outName)
 	
