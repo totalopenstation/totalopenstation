@@ -264,20 +264,27 @@ class Tops:
                                    width = 25)
         self.option1_label.pack(side = LEFT)
         self.option1_value = StringVar()
-#        self.option1_entry = Entry(self.option1_frame,
-#                                   textvariable=self.option1_value,
-#                                   width = 25)
-        self.option1_entry = Menubutton(self.option1_frame,
-                                        text="choose a value",
-                                        textvariable=self.option1_value,
-                                        relief = RAISED,
-                                        width = 24)
-        self.option1_entry.menu = Menu( self.option1_entry, tearoff=0 )
-        self.option1_entry["menu"] = self.option1_entry.menu
-        for n,s in scan():
-            self.option1_entry.menu.add_radiobutton ( label=s,
-                                           variable=self.option1_value,
-                                           value = s)
+
+# Leave this Entry uncommented to enter port as a string, or ...
+#
+        self.option1_entry = Entry(self.option1_frame,
+                                   textvariable=self.option1_value,
+                                   width = 25)
+        
+# ... comment out this Menubutton if you want to use the scan() output
+#
+#        self.option1_entry = Menubutton(self.option1_frame,
+#                                        text="choose a value",
+#                                        textvariable=self.option1_value,
+#                                        relief = RAISED,
+#                                        width = 24)
+#        self.option1_entry.menu = Menu( self.option1_entry, tearoff=0 )
+#        self.option1_entry["menu"] = self.option1_entry.menu
+#        for n,s in scan():
+#            self.option1_entry.menu.add_radiobutton ( label=s,
+#                                           variable=self.option1_value,
+#                                           value = s)
+        
         self.option1_entry.pack(side = LEFT, anchor = W)
         
         # option MODEL substitutes all connection parameters for better
