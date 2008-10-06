@@ -635,7 +635,8 @@ class Tops:
                 e = ErrorDialog(self.myParent, detail)
             else:
                 d = ConnectDialog(self.myParent, mc)
-                self.result = mc.download()
+                result = mc.download()
+                self.replace_text(result)
     
     def open_action(self, event):
         d = tkFileDialog.askopenfilename()
