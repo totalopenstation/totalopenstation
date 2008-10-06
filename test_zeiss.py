@@ -12,7 +12,7 @@ from models import zeiss_elta_r55
 
 # read TS data
 
-main = zeiss_elta_r55.ZeissEltaR55('interactive_download.txt')
+main = zeiss_elta_r55.ModelParser('interactive_download.txt')
 punti = main.t_points
 
 
