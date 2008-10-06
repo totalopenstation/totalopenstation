@@ -22,7 +22,7 @@ class Connector(serial.Serial):
     def download(self):
         '''Download method for user interfaces.
         
-        Firts the class must be instantiated, then the port is open and the
+        First the class must be instantiated, then the port is open and the
         transfer from the device can start. Once the transfer is finished
         the user interface should call this method.'''
         
@@ -125,12 +125,14 @@ class PointsList:
 
 
 class Parser:
+    '''Parses a *single* string of raw data and turns it to the internal format.
     
-    def __init__(self,filename,swapXY=False):
+    This means that if you plan to load data from a file you have to pass
+    the output of open(file).read() to this class.'''
+    
+    def __init__(self, data, swapXY=False):
         
-        #self.d = Data()
-        #self.d.data_from_txt_file(filename)
-        self.d = open(filename).readlines()
+        self.d = data.splitlines()
         self.points = PointsList()
         self.swapXY = swapXY
         
