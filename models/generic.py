@@ -129,6 +129,8 @@ class Parser:
     
     This means that if you plan to load data from a file you have to pass
     the output of open(file).read() to this class.'''
+    ''' WHO THE FUCK ARE THE ARTIC MONKEYS!?!?!?!'''
+    ''' This should be a good reason to use the commented class DATA!'''
     
     def __init__(self, data, swapXY=False):
         
@@ -140,7 +142,6 @@ class Parser:
         
         if self.points.points_number() > 0:
             self.t_points = self.points.list_to_tuple()
-        
         
     def set_data(self, data):
         
@@ -157,6 +158,7 @@ class Parser:
         for l in valid_lines:
 
             self.points.add_point(self.get_point(l))
+            
     
     def is_point(self):
         

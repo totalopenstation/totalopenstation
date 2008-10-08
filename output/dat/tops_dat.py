@@ -27,6 +27,7 @@ class TotalOpenDAT:
     def __init__(self,data,filepath):
         output = open(filepath, "wb")
         lines = [ to_dat(e) for e in data ]
+        print lines
         output.writelines(lines)
         output.close()
 
