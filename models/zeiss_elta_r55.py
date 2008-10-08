@@ -14,24 +14,24 @@ class ModelConnector(Connector):
 
 class ModelParser(Parser):
     
-    def __init__(self, filename):
-        Parser.__init__(self, filename, swapXY=True)
+    def __init__(self, data):
+        Parser.__init__(self, data, swapXY=True)
     
     def is_point(self,line):
-
-        tokens = {
-            'sequence' : line[0:7],
-            'pid' : line[8:27],
-            'text' : line[27:32],
-            'X_str' : line[36],
-            'x' : line[38:50],
-            'Y_str' : line[51],
-            'y' : line[53:66],
-            'Z_str' : line[67],
-            'z' : line[69:80]
-            }
         
         try:
+            tokens = {
+                'sequence' : line[0:7],
+                'pid' : line[8:27],
+                'text' : line[27:32],
+                'X_str' : line[36],
+                'x' : line[38:50],
+                'Y_str' : line[51],
+                'y' : line[53:66],
+                'Z_str' : line[67],
+                'z' : line[69:80]
+                }
+            
             int(tokens['sequence'])
             int(tokens['pid'])
             float(tokens['x'])
