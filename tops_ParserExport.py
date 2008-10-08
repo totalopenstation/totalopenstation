@@ -10,7 +10,7 @@ import os.path
 
 from models import models
 from tops_graphs import *
-
+from tops_paramset import *
 
 
 class Tops_ParserExport:
@@ -18,24 +18,21 @@ class Tops_ParserExport:
 	def __init__(self):
 		
 		#to be entered maybe from a txt file containing the list of the supported models
-		supportedTs = ("Zeiss_Elta_r55","Leica_Tcr_1205")
+		supportedTs = models.models.values()
 		
 		supportedExportFormats=("CSV","DXF","DAT","TXT")
 		
+                argsreader = ParamSet("Tops")
 		
-		try:
-		
-			fileToOpen = sys.argv[1]
-			tsModel = sys.argv[2]
-			exportFormat = sys.argv[3]
-			fileToSave = sys.argv[4]
-			
-			
-		except IndexError:
-			
-			sys.exit("Incorrect number of arguments: "+"\n"+"tops_interface <fileToOpen> <TotalStationModel> <exportFormat> <OutputFile'sName>")
+                fileToOpen = argsreader.options.infile
+                tsModel = argsreader.options.tsmodel
+                exportFormat = argsreader.options.exformat
+                fileToSave = argsreader.options.outfile
+                
+                #argsreader.destroy()
 		
 		#if the entered string for chosing the export format is converted to an only upper case version
+
 		if exportFormat.isupper() != True:
 			exportFormat = exportFormat.upper()
 		
@@ -53,7 +50,7 @@ class Tops_ParserExport:
 			
 			sys.exit("Input Data File not existent"+"\n"+"Please chose a correct file name")
 		
-		if tsModel in models.models.values():
+		if tsModel in supportedTs:
                     
                     self.goTS(tsModel,fileToOpen,exportFormat,fileToSave)
                     	
@@ -62,8 +59,7 @@ class Tops_ParserExport:
 			print "Supported models are: "
 			for ts in supportedTs:
 				print ts
-	
-	
+	                sys.exit()
 	
 	#check if the exporting format is correct
 	def isInExportFormats(self,a, supF):
@@ -102,7 +98,7 @@ class Tops_ParserExport:
 			from output.txt.tops_txt import TotalOpenTXT
 			
 			txt_output = TotalOpenTXT(pnts, (outName+'.txt'))
-                
+
         #execute parsing and exporting ops
         def goTS(self,ts,fileIn,frmt,outName):
 		
