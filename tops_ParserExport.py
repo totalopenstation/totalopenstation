@@ -104,7 +104,7 @@ class Tops_ParserExport:
 		
            exec('from models.%s import ModelParser' % ts)
            
-           main = ModelParser(fileIn)
+           main = ModelParser(open(fileIn).read())
            
            #main.parse_retrieve_data()
 	   punti = main.points.list_to_tuple()
