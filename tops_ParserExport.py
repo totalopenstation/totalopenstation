@@ -9,7 +9,7 @@ import sys
 import os.path
 
 from models import models
-from tops_graphs import *
+from graphics import tops_graphs
 from tops_paramset import *
 
 
