@@ -109,8 +109,8 @@ class Tops_ParserExport:
            #main.parse_retrieve_data()
 	   punti = main.points.list_to_tuple()
            
-           Graph2D(punti)
-           Graph3D(punti)
+           #Graph2D(punti)
+           #Graph3D(punti)
 		
 	   self.exportAction(frmt,punti,outName)
 	

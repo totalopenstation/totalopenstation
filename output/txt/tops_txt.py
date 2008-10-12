@@ -11,7 +11,7 @@ class TotalOpenTXT:
     Exports points data in TXT format line by line.
     
     ``data`` should be an iterable (e.g. list) containing one iterable (e.g.
-    tuple) for each point. The default order is PID, x, x, z, TEXT.
+    tuple) for each point. The default order is PID, x, y, z, TEXT.
     
     This is consistent with our current standard.
     """
@@ -22,7 +22,8 @@ class TotalOpenTXT:
 		
 	for d in data:
 		
-		file.write((str(d)+"\n"))
+                string = "%s,%s,%s\n" % (d[1], d[2], d[3])
+		file.write((str(string)))
 		
 	file.close()
         
