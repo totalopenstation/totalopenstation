@@ -111,8 +111,11 @@ class Tops_ParserExport:
            
            #Graph2D(punti)
            #Graph3D(punti)
+           tops_graphs.GraphSimple(punti)
 		
 	   self.exportAction(frmt,punti,outName)
+           
+           temp_frmt = frmt.lower()
 	
 
 if __name__ == '__main__':
