@@ -77,8 +77,9 @@ class GraphRasterMap:
  
 class GraphSimple:
     
-    def __init__(self, pnts = None):
+    def __init__(self, pnts = None, outputname = 'previewgraph'):
         
+        self.outname = outputname
         self.points = []
         self.getPoints(pnts)
         
@@ -123,7 +124,7 @@ class GraphSimple:
             y = [float(y[1]) for y in self.points]
             z = [float(z[1]) for z in self.points]
             
-            r.png('output.png')
+            r.png(self.outname+'.png')
     
             r.plot(x,y, xlab='x', ylab='y', main='TOPS-preview graph')
             r.lines(x, z, col='red')

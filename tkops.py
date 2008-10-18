@@ -8,6 +8,8 @@ import serial
 
 from time import sleep
 from models import models
+from graphics import tops_graphs
+
 
 from Tkinter import *
 import tkSimpleDialog, tkFileDialog
@@ -655,6 +657,7 @@ class Tops:
         parsed_data = ModelParser(data)
         parsed_points = parsed_data.t_points
         sd = tkFileDialog.asksaveasfilename(defaultextension = '.%s' % ofl)
+        tops_graphs.GraphSimple(parsed_points,sd)
         output = Output(parsed_points, sd)
         
     def save_action(self, event):
