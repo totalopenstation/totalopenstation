@@ -5,11 +5,11 @@
 # Under the GNU GPL 3 License
 
 #from pylab import *
-from numpy import *
-import pylab as p
-import matplotlib.axes3d as p3
+#from numpy import *
+#import pylab as p
+#import matplotlib.axes3d as p3
 
-from raster_map import *
+#from raster_map import *
 
 #import mat3d as M
 
@@ -26,53 +26,53 @@ class Graph2D:
         pass
 
 
-class Graph3D:
+#class Graph3D:
 
-    def __init__(self, pnts = None):
+    #def __init__(self, pnts = None):
         
-        self.points = pnts
-        self.create_grid()
-        self.set_data()
-        self.plot_data()
+        #self.points = pnts
+        #self.create_grid()
+        #self.set_data()
+        #self.plot_data()
     
-    def create_grid(self):
+    #def create_grid(self):
         
-        self.X,self.Y = meshgrid((0,20,1),(0,20,1))
+        #self.X,self.Y = meshgrid((0,20,1),(0,20,1))
         
-        self.Z = zeros((len(self.X),len(self.Y)),'Float32')
+        #self.Z = zeros((len(self.X),len(self.Y)),'Float32')
         
-    def set_data(self):
+    #def set_data(self):
         
-        for p in self.points:
-            x,y,z = p
-            ix = int(x / 10)
-            iy = int(y / 10)
-            self.Z[iy, ix] = z
+        #for p in self.points:
+            #x,y,z = p
+            #ix = int(x / 10)
+            #iy = int(y / 10)
+            #self.Z[iy, ix] = z
 
         
-    def plot_data(self):
+    #def plot_data(self):
         
-        fig = p.figure()
-        ax = p3.Axes3D(fig)
-        ax.plot_wireframe(self.X, self.Y, self.Z)
-        p.show()
+        #fig = p.figure()
+        #ax = p3.Axes3D(fig)
+        #ax.plot_wireframe(self.X, self.Y, self.Z)
+        #p.show()
 
 
-class GraphRasterMap:
+#class GraphRasterMap:
     
-    def __init__(self, pnts = None):
+    #def __init__(self, pnts = None):
         
-        self.points = pnts
-        self.rmap = raster_import_ryan(self.points)
-        self.plot_data()
+        #self.points = pnts
+        #self.rmap = raster_import_ryan(self.points)
+        #self.plot_data()
 
 
 
         
-    def plot_data(self):
+    #def plot_data(self):
         
-        self.rmap.draw_map(imin=0, imax=349, center=1, scale=1)
-        #self.rmap.line_3d(imin=100, imax=150,              center=1, scale=1)
+        #self.rmap.draw_map(imin=0, imax=349, center=1, scale=1)
+        ##self.rmap.line_3d(imin=100, imax=150,              center=1, scale=1)
 
  
 class GraphSimple:
@@ -130,33 +130,33 @@ class GraphSimple:
             r.lines(x, z, col='red')
 
 
-class GraphPersonal:
+#class GraphPersonal:
     
-    def __init__(self, pnts = None):
+    #def __init__(self, pnts = None):
         
-        self.points = open(pnts).readlines()
-        self.plot_data()
+        #self.points = open(pnts).readlines()
+        #self.plot_data()
         
-    def plot_data(self):
-        i=0
-        for p in self.points:
+    #def plot_data(self):
+        #i=0
+        #for p in self.points:
             
-            ps = p.split(",")
-            if len(ps) == 3:
-                x = ps[0]
-                x = float(x)
-                x= (x-450000)/1000
+            #ps = p.split(",")
+            #if len(ps) == 3:
+                #x = ps[0]
+                #x = float(x)
+                #x= (x-450000)/1000
                 
-                y = ps[1]
-                y = float(y)
-                y = (y-205000)/1000
+                #y = ps[1]
+                #y = float(y)
+                #y = (y-205000)/1000
                 
-                z = ps[2]
-                z = float(z)
-                z = (z-62000)/1000
+                #z = ps[2]
+                #z = float(z)
+                #z = (z-62000)/1000
                 
-                box(pos = (x+i, y+i, z+i), size = (x,y,z), color = color.green)
-                i = i+1
+                #box(pos = (x+i, y+i, z+i), size = (x,y,z), color = color.green)
+                #i = i+1
 
 
 #class Mat3DMap:
