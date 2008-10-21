@@ -24,8 +24,14 @@ class ParamSet:
         self.parser.add_option("-t", "--totalstation",action="store", type="string", dest="tsmodel",help="chose total station model STRING",metavar="STRING")
 
         self.parser.add_option("-e", "--exportformat",action="store", type="string", dest="exformat",help="chose export format typing the exstension's three chars STRING", metavar="STRING")
+        
+        self.parser.add_option("-g", "--graphs_plugin",action="store_true", dest="graphs_plugin",help="use graphic plugin, normally disabled", default=False)
 
         (self.options, self.args) = self.parser.parse_args()
+        
+        if self.options.graphs_plugin == None:
+            
+            self.options.graphs_plugin = False
         
         if (self.options.infile == None)or(self.options.outfile == None)or(self.options.tsmodel == None)or(self.options.exformat == None):
             self.parser.error( """ Insert all the four arguments, please! """ )

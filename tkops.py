@@ -8,8 +8,6 @@ import serial
 
 from time import sleep
 from models import models
-from graphics import tops_graphs
-
 
 from Tkinter import *
 import tkSimpleDialog, tkFileDialog
@@ -206,6 +204,9 @@ class ErrorDialog(tkSimpleDialog.Dialog):
 
 class Tops:
     def __init__(self, parent):
+        
+        #Set through a click on a "Preview"'s button, to be implemented yet
+        self.graph_plugin = False
 
         #--- costanti per il controllo della disposizione
         #--- dei pulsanti
@@ -657,7 +658,15 @@ class Tops:
         parsed_data = ModelParser(data)
         parsed_points = parsed_data.t_points
         sd = tkFileDialog.asksaveasfilename(defaultextension = '.%s' % ofl)
-        tops_graphs.GraphSimple(parsed_points,sd)
+        
+        #Enabled by clicking on a "Preview" button, to be implemented yet
+        #It suggests Tops the user wanna use the graphs' plugin, not in the standard "light" version of TOPS
+        if self.graph_plugin == True:
+            
+            from graphics import tops_graphs
+            
+            tops_graphs.GraphSimple(parsed_points,sd)
+        
         output = Output(parsed_points, sd)
         
     def save_action(self, event):

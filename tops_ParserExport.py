@@ -9,7 +9,6 @@ import sys
 import os.path
 
 from models import models
-from graphics import tops_graphs
 from tops_paramset import *
 
 
@@ -28,6 +27,7 @@ class Tops_ParserExport:
                 tsModel = argsreader.options.tsmodel
                 exportFormat = argsreader.options.exformat
                 fileToSave = argsreader.options.outfile
+                self.graphs_plugin = argsreader.options.graphs_plugin
                 
                 #argsreader.destroy()
 		
@@ -109,9 +109,11 @@ class Tops_ParserExport:
            #main.parse_retrieve_data()
 	   punti = main.points.list_to_tuple()
            
-           #Graph2D(punti)
-           #Graph3D(punti)
-           tops_graphs.GraphSimple(punti)
+           if self.graphs_plugin == True:
+               
+               from graphics import tops_graphs
+               
+               tops_graphs.GraphSimple(punti)
 		
 	   self.exportAction(frmt,punti,outName)
            
