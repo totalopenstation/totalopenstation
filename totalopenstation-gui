@@ -662,7 +662,7 @@ class Tops:
         module = models.models[d.optionMODEL_value.get()]
         ofl, ofp = str(d.output_format.get()).lower(), str(d.output_format.get()).upper()
         exec('from models.%s import ModelParser' % module)
-        exec('from output.%s.tops_%s import TotalOpen%s as Output' % (ofl, ofl, ofp))
+        exec('from output.tops_%s import TotalOpen%s as Output' % (ofl, ofp))
         parsed_data = ModelParser(data)
         parsed_points = parsed_data.t_points
         sd = tkFileDialog.asksaveasfilename(defaultextension = '.%s' % ofl)
