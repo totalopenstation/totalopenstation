@@ -6,11 +6,16 @@
 
 
 def to_sql(point,tablename):
+    '''Generate SQL line corresponding to the input point.
+    
+    At this moment the column names are fixed, but they could change in the
+    future. The default names are reasonable.'''
+    
     params = { 'wkt' : to_wkt(point),
         'tablename' : tablename,
         'pid' : point[0],
         'text' : point[4]}
-    sql_string = 'INSERT INTO %(tablename)s (point_id, point_geom, point_text) VALUES (%(pid)s,GeomFromText(\'%(wkt)s\'),\'%(text)s\');\n' % params
+    sql_string = "INSERT INTO %(tablename)s (point_id, point_geom, point_text) VALUES (%(pid)s,GeomFromText('%(wkt)s'),'%(text)s');\n" % params
     return sql_string
 
 def to_wkt(point):
@@ -32,6 +37,8 @@ class TotalOpenSQL:
     def __init__(self,data,filepath,tablename):
         output = open(filepath, "wb")
         lines = [ to_sql(e,tablename) for e in data ]
+        lines.insert(0,'BEGIN;\n')
+        lines.append('COMMIT;\n')
         output.writelines(lines)
         output.close()
 
