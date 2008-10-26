@@ -8,6 +8,11 @@ import serial
 
 from time import sleep
 from models import models
+if 'serialwin32' in dir(serial):
+    from scanwin32 import comports
+    PLATFORM = 'WIN32'
+else:
+    PLATFORM = 'POSIX'
 
 from Tkinter import *
 import tkSimpleDialog, tkFileDialog
@@ -31,6 +36,8 @@ def scan():
         except serial.SerialException:
             pass
     return available
+
+
 
 # logo GIF image encoded as base64 string
 # this way we don't need external an external image file
@@ -267,26 +274,27 @@ class Tops:
                                    width = 25)
         self.option1_label.pack(side = LEFT)
         self.option1_value = StringVar()
-
-# Leave this Entry uncommented to enter port as a string, or ...
-#
-        self.option1_entry = Entry(self.option1_frame,
-                                   textvariable=self.option1_value,
-                                   width = 25)
         
-# ... comment out this Menubutton if you want to use the scan() output
-#
-#        self.option1_entry = Menubutton(self.option1_frame,
-#                                        text="choose a value",
-#                                        textvariable=self.option1_value,
-#                                        relief = RAISED,
-#                                        width = 24)
-#        self.option1_entry.menu = Menu( self.option1_entry, tearoff=0 )
-#        self.option1_entry["menu"] = self.option1_entry.menu
-#        for n,s in scan():
-#            self.option1_entry.menu.add_radiobutton ( label=s,
-#                                           variable=self.option1_value,
-#                                           value = s)
+        # scawin32 can detect serial-USB adapters, while serialposix cannot:
+        # so offer win32 users a dropdown list and POSIX users a text entry
+        
+        if PLATFORM == 'POSIX':
+            self.option1_entry = Entry(self.option1_frame,
+                                       textvariable=self.option1_value,
+                                       width = 25)
+        elif PLATFORM == 'WIN32':
+            self.option1_entry = Menubutton(self.option1_frame,
+                                            text="choose a value",
+                                            textvariable=self.option1_value,
+                                            relief = RAISED,
+                                            width = 24)
+            self.option1_entry.menu = Menu( self.option1_entry, tearoff=0 )
+            self.option1_entry["menu"] = self.option1_entry.menu
+            
+            for port, desc, hwid in comports():
+                self.option1_entry.menu.add_radiobutton ( label=port,
+                                               variable=self.option1_value,
+                                               value = port)
         
         self.option1_entry.pack(side = LEFT, anchor = W)
         
