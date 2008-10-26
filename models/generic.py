@@ -28,6 +28,7 @@ class Connector(serial.Serial):
         
         n = self.inWaiting()
         result = self.read(n)
+        self.downloaded = False
     
         # looks like there is a maximum buffer of 4096 characters, so we have
         # to wait for a short time and iterate the process until finished
@@ -39,7 +40,24 @@ class Connector(serial.Serial):
             sleep(0.1)
         
         self.result = result
+        self.downloaded = True
         return self.result
+    
+    def fast_download(self):
+        '''Implement a `fast' download method that requires less user input.
+        
+        Inside, it calls download() itself, just wrapping it inside another
+        loop that checks whether there's input coming from the serial port:
+        when data become to appear, download() can start.
+        '''
+        
+        while self.inWaiting() == 0:
+#        && self.downloaded = False:
+            sleep(0.5)
+        
+        self.download()
+        return self.result
+
 
 class Point:
     

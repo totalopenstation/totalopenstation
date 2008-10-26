@@ -28,6 +28,9 @@ class TotalOpenSQL:
     """
     Exports points data in SQL format suitable for use with PostGIS & friends.
     
+    http://postgis.refractions.net/documentation/manual-1.3/ch04.html#id2986280
+    has an example of loading an SQL file into a PostgreSQL database.
+    
     ``data`` should be an iterable (e.g. list) containing one iterable (e.g.
     tuple) for each point. The default order is PID, x, x, z, TEXT.
     
