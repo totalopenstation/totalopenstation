@@ -10,6 +10,7 @@ from time import sleep
 from models import models
 
 from Tkinter import *
+from tkMessageBox import showwarning
 import tkSimpleDialog, tkFileDialog
 
 
@@ -582,99 +583,113 @@ class Tops:
     
     def connect_action(self, event):
         
-        chosen_model = self.optionMODEL_value.get()
-        chosen_port = self.option1_value.get()
-        
-        if chosen_model == 'Custom':
+        try:
+            chosen_model = self.optionMODEL_value.get()
+            chosen_port = self.option1_value.get()
             
-            # FIXME : convert this section to the new Connector API.
-            #  No more string construction!
-            
-            cs = "serial.Serial("
-            
-            for k,v in self.options.items():
-                print k,v
-                n, t = v
-                cs = cs + "%s = " %k
-                if t == 'str':
-                    cs = cs + "'" + eval("self.option%s_value.get()" %n) + "'"
-                elif t == 'int':
-                    try:
-                        int(eval("self.option%s_value.get()" %n))
-                    except ValueError:
-                        cs = cs + "None"
-                    else:
-                        cs = cs + str(int(eval("self.option%s_value.get()" %n)))
-                elif t == 'bool':
-                    cs = cs + str(bool(eval("self.option%s_value.get()" %n)))
+            if chosen_model == 'Custom':
                 
-                cs = cs + ", "
-            connection_string = cs[:-2] + ")" # remove last ", "
-            try:
-                TOPSerial = eval(connection_string)
-            except serial.SerialException, detail:
-                e = ErrorDialog(self.myParent, detail)
-            else:
-                TOPSerial.open()
-                d = ConnectDialog(self.myParent, connection_string)
-                n = TOPSerial.inWaiting()
-                result = TOPSerial.read(n)
-                sleep(0.1)
+                # FIXME : convert this section to the new Connector API.
+                #  No more string construction!
                 
-                # prevent full buffer effect
-                while TOPSerial.inWaiting() > 0:
-                    result = result + TOPSerial.read(TOPSerial.inWaiting())
+                cs = "serial.Serial("
+                
+                for k,v in self.options.items():
+                    print k,v
+                    n, t = v
+                    cs = cs + "%s = " %k
+                    if t == 'str':
+                        cs = cs + "'" + eval("self.option%s_value.get()" %n) + "'"
+                    elif t == 'int':
+                        try:
+                            int(eval("self.option%s_value.get()" %n))
+                        except ValueError:
+                            cs = cs + "None"
+                        else:
+                            cs = cs + str(int(eval("self.option%s_value.get()" %n)))
+                    elif t == 'bool':
+                        cs = cs + str(bool(eval("self.option%s_value.get()" %n)))
+                    
+                    cs = cs + ", "
+                connection_string = cs[:-2] + ")" # remove last ", "
+                try:
+                    TOPSerial = eval(connection_string)
+                except serial.SerialException, detail:
+                    e = ErrorDialog(self.myParent, detail)
+                else:
+                    TOPSerial.open()
+                    d = ConnectDialog(self.myParent, connection_string)
+                    n = TOPSerial.inWaiting()
+                    result = TOPSerial.read(n)
                     sleep(0.1)
-                
-                self.replace_text(result)
-        
-        else:
-            module = models.models[chosen_model]
-            exec('from models.%s import ModelConnector' % module)
-            mc = ModelConnector(chosen_port)
-            try:
-                mc.open()
-            except serial.SerialException, detail:
-                e = ErrorDialog(self.myParent, detail)
+                    
+                    # prevent full buffer effect
+                    while TOPSerial.inWaiting() > 0:
+                        result = result + TOPSerial.read(TOPSerial.inWaiting())
+                        sleep(0.1)
+                    
+                    self.replace_text(result)
+            
             else:
-                d = ConnectDialog(self.myParent, mc)
-                result = mc.download()
-                self.replace_text(result)
+                module = models.models[chosen_model]
+                exec('from models.%s import ModelConnector' % module)
+                mc = ModelConnector(chosen_port)
+                try:
+                    mc.open()
+                except serial.SerialException, detail:
+                    e = ErrorDialog(self.myParent, detail)
+                else:
+                    d = ConnectDialog(self.myParent, mc)
+                    result = mc.download()
+                    self.replace_text(result)
+        except:
+            showwarning("No Connection options","No connection settings entered!\n") 
     
     def open_action(self, event):
-        d = tkFileDialog.askopenfilename()
-        of = open(d, 'r')
-        oc = of.read()
-        self.replace_text(oc)
+        try:
+            d = tkFileDialog.askopenfilename()
+            of = open(d, 'r')
+            oc = of.read()
+            self.replace_text(oc)
+        except:
+            pass
     
     def process_action(self, event):
-        chosen_model = str(self.optionMODEL_value.get())
-        data = self.text_area.get("1.0", END)
-        d = ProcessDialog(self.myParent, data, chosen_model)
-        module = models.models[d.optionMODEL_value.get()]
-        ofl, ofp = str(d.output_format.get()).lower(), str(d.output_format.get()).upper()
-        exec('from models.%s import ModelParser' % module)
-        exec('from output.%s.tops_%s import TotalOpen%s as Output' % (ofl, ofl, ofp))
-        parsed_data = ModelParser(data)
-        parsed_points = parsed_data.t_points
-        sd = tkFileDialog.asksaveasfilename(defaultextension = '.%s' % ofl)
         
-        #Enabled by clicking on a "Preview" button, to be implemented yet
-        #It suggests Tops the user wanna use the graphs' plugin, not in the standard "light" version of TOPS
-        if self.graph_plugin == True:
+        try:
+            chosen_model = str(self.optionMODEL_value.get())
+            data = self.text_area.get("1.0", END)
+            d = ProcessDialog(self.myParent, data, chosen_model)
+            module = models.models[d.optionMODEL_value.get()]
+            ofl, ofp = str(d.output_format.get()).lower(), str(d.output_format.get()).upper()
+            exec('from models.%s import ModelParser' % module)
+            exec('from output.%s.tops_%s import TotalOpen%s as Output' % (ofl, ofl, ofp))
+            parsed_data = ModelParser(data)
+            parsed_points = parsed_data.t_points
+            sd = tkFileDialog.asksaveasfilename(defaultextension = '.%s' % ofl)
             
-            from graphics import tops_graphs
+            #Enabled by clicking on a "Preview" button, to be implemented yet
+            #It suggests Tops the user wanna use the graphs' plugin, not in the standard "light" version of TOPS
+            if self.graph_plugin == True:
+                
+                from graphics import tops_graphs
+                
+                tops_graphs.GraphSimple(parsed_points,sd)
             
-            tops_graphs.GraphSimple(parsed_points,sd)
-        
-        output = Output(parsed_points, sd)
+            output = Output(parsed_points, sd)
+        except:
+            showwarning("No Processing options","No processing settings entered!\n") 
+
         
     def save_action(self, event):
-        sd = tkFileDialog.asksaveasfilename(defaultextension = '.tops')
-        data = self.text_area.get("1.0", END)
-        of = open(sd, 'w')
-        oc = of.write(data)
-    
+        try:
+            sd = tkFileDialog.asksaveasfilename(defaultextension = '.tops')
+            data = self.text_area.get("1.0", END)
+            of = open(sd, 'w')
+            oc = of.write(data)
+        except:
+            pass
+        
     def about_action(self, event):
         d = AboutDialog(self.myParent)
     
