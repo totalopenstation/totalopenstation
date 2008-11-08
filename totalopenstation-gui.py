@@ -663,6 +663,7 @@ class Tops:
         ofl, ofp = str(d.output_format.get()).lower(), str(d.output_format.get()).upper()
         exec('from models.%s import ModelParser' % module)
         exec('from output.tops_%s import TotalOpen%s as Output' % (ofl, ofp))
+
         parsed_data = ModelParser(data)
         parsed_points = parsed_data.t_points
         sd = tkFileDialog.asksaveasfilename(defaultextension = '.%s' % ofl)
@@ -692,7 +693,9 @@ class Tops:
 
 
 root = Tk()
-Tops = Tops(root)
+
+#root.iconbitmap(logo_data)
 root.title("Total Open Station")
+Tops = Tops(root)
 root.mainloop()
 
