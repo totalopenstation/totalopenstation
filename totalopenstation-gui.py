@@ -8,13 +8,9 @@ import serial
 
 from time import sleep
 from models import models
-if 'serialwin32' in dir(serial):
-    from scanwin32 import comports
-    PLATFORM = 'WIN32'
-else:
-    PLATFORM = 'POSIX'
 
 from Tkinter import *
+from tkMessageBox import showwarning
 import tkSimpleDialog, tkFileDialog
 
 
@@ -36,8 +32,6 @@ def scan():
         except serial.SerialException:
             pass
     return available
-
-
 
 # logo GIF image encoded as base64 string
 # this way we don't need external an external image file
@@ -274,27 +268,26 @@ class Tops:
                                    width = 25)
         self.option1_label.pack(side = LEFT)
         self.option1_value = StringVar()
+
+# Leave this Entry uncommented to enter port as a string, or ...
+#
+        self.option1_entry = Entry(self.option1_frame,
+                                   textvariable=self.option1_value,
+                                   width = 25)
         
-        # scawin32 can detect serial-USB adapters, while serialposix cannot:
-        # so offer win32 users a dropdown list and POSIX users a text entry
-        
-        if PLATFORM == 'POSIX':
-            self.option1_entry = Entry(self.option1_frame,
-                                       textvariable=self.option1_value,
-                                       width = 25)
-        elif PLATFORM == 'WIN32':
-            self.option1_entry = Menubutton(self.option1_frame,
-                                            text="choose a value",
-                                            textvariable=self.option1_value,
-                                            relief = RAISED,
-                                            width = 24)
-            self.option1_entry.menu = Menu( self.option1_entry, tearoff=0 )
-            self.option1_entry["menu"] = self.option1_entry.menu
-            
-            for port, desc, hwid in comports():
-                self.option1_entry.menu.add_radiobutton ( label=port,
-                                               variable=self.option1_value,
-                                               value = port)
+# ... comment out this Menubutton if you want to use the scan() output
+#
+#        self.option1_entry = Menubutton(self.option1_frame,
+#                                        text="choose a value",
+#                                        textvariable=self.option1_value,
+#                                        relief = RAISED,
+#                                        width = 24)
+#        self.option1_entry.menu = Menu( self.option1_entry, tearoff=0 )
+#        self.option1_entry["menu"] = self.option1_entry.menu
+#        for n,s in scan():
+#            self.option1_entry.menu.add_radiobutton ( label=s,
+#                                           variable=self.option1_value,
+#                                           value = s)
         
         self.option1_entry.pack(side = LEFT, anchor = W)
         
@@ -590,100 +583,113 @@ class Tops:
     
     def connect_action(self, event):
         
-        chosen_model = self.optionMODEL_value.get()
-        chosen_port = self.option1_value.get()
-        
-        if chosen_model == 'Custom':
+        try:
+            chosen_model = self.optionMODEL_value.get()
+            chosen_port = self.option1_value.get()
             
-            # FIXME : convert this section to the new Connector API.
-            #  No more string construction!
-            
-            cs = "serial.Serial("
-            
-            for k,v in self.options.items():
-                print k,v
-                n, t = v
-                cs = cs + "%s = " %k
-                if t == 'str':
-                    cs = cs + "'" + eval("self.option%s_value.get()" %n) + "'"
-                elif t == 'int':
-                    try:
-                        int(eval("self.option%s_value.get()" %n))
-                    except ValueError:
-                        cs = cs + "None"
-                    else:
-                        cs = cs + str(int(eval("self.option%s_value.get()" %n)))
-                elif t == 'bool':
-                    cs = cs + str(bool(eval("self.option%s_value.get()" %n)))
+            if chosen_model == 'Custom':
                 
-                cs = cs + ", "
-            connection_string = cs[:-2] + ")" # remove last ", "
-            try:
-                TOPSerial = eval(connection_string)
-            except serial.SerialException, detail:
-                e = ErrorDialog(self.myParent, detail)
-            else:
-                TOPSerial.open()
-                d = ConnectDialog(self.myParent, connection_string)
-                n = TOPSerial.inWaiting()
-                result = TOPSerial.read(n)
-                sleep(0.1)
+                # FIXME : convert this section to the new Connector API.
+                #  No more string construction!
                 
-                # prevent full buffer effect
-                while TOPSerial.inWaiting() > 0:
-                    result = result + TOPSerial.read(TOPSerial.inWaiting())
+                cs = "serial.Serial("
+                
+                for k,v in self.options.items():
+                    print k,v
+                    n, t = v
+                    cs = cs + "%s = " %k
+                    if t == 'str':
+                        cs = cs + "'" + eval("self.option%s_value.get()" %n) + "'"
+                    elif t == 'int':
+                        try:
+                            int(eval("self.option%s_value.get()" %n))
+                        except ValueError:
+                            cs = cs + "None"
+                        else:
+                            cs = cs + str(int(eval("self.option%s_value.get()" %n)))
+                    elif t == 'bool':
+                        cs = cs + str(bool(eval("self.option%s_value.get()" %n)))
+                    
+                    cs = cs + ", "
+                connection_string = cs[:-2] + ")" # remove last ", "
+                try:
+                    TOPSerial = eval(connection_string)
+                except serial.SerialException, detail:
+                    e = ErrorDialog(self.myParent, detail)
+                else:
+                    TOPSerial.open()
+                    d = ConnectDialog(self.myParent, connection_string)
+                    n = TOPSerial.inWaiting()
+                    result = TOPSerial.read(n)
                     sleep(0.1)
-                
-                self.replace_text(result)
-        
-        else:
-            module = models.models[chosen_model]
-            exec('from models.%s import ModelConnector' % module)
-            mc = ModelConnector(chosen_port)
-            try:
-                mc.open()
-            except serial.SerialException, detail:
-                e = ErrorDialog(self.myParent, detail)
+                    
+                    # prevent full buffer effect
+                    while TOPSerial.inWaiting() > 0:
+                        result = result + TOPSerial.read(TOPSerial.inWaiting())
+                        sleep(0.1)
+                    
+                    self.replace_text(result)
+            
             else:
-                d = ConnectDialog(self.myParent, mc)
-                result = mc.download()
-                self.replace_text(result)
+                module = models.models[chosen_model]
+                exec('from models.%s import ModelConnector' % module)
+                mc = ModelConnector(chosen_port)
+                try:
+                    mc.open()
+                except serial.SerialException, detail:
+                    e = ErrorDialog(self.myParent, detail)
+                else:
+                    d = ConnectDialog(self.myParent, mc)
+                    result = mc.download()
+                    self.replace_text(result)
+        except:
+            showwarning("No Connection options","No connection settings entered!\n") 
     
     def open_action(self, event):
-        d = tkFileDialog.askopenfilename()
-        of = open(d, 'r')
-        oc = of.read()
-        self.replace_text(oc)
+        try:
+            d = tkFileDialog.askopenfilename()
+            of = open(d, 'r')
+            oc = of.read()
+            self.replace_text(oc)
+        except:
+            pass
     
     def process_action(self, event):
-        chosen_model = str(self.optionMODEL_value.get())
-        data = self.text_area.get("1.0", END)
-        d = ProcessDialog(self.myParent, data, chosen_model)
-        module = models.models[d.optionMODEL_value.get()]
-        ofl, ofp = str(d.output_format.get()).lower(), str(d.output_format.get()).upper()
-        exec('from models.%s import ModelParser' % module)
-        exec('from output.tops_%s import TotalOpen%s as Output' % (ofl, ofp))
+        
+        try:
+            chosen_model = str(self.optionMODEL_value.get())
+            data = self.text_area.get("1.0", END)
+            d = ProcessDialog(self.myParent, data, chosen_model)
+            module = models.models[d.optionMODEL_value.get()]
+            ofl, ofp = str(d.output_format.get()).lower(), str(d.output_format.get()).upper()
+            exec('from models.%s import ModelParser' % module)
+            exec('from output.%s.tops_%s import TotalOpen%s as Output' % (ofl, ofl, ofp))
+            parsed_data = ModelParser(data)
+            parsed_points = parsed_data.t_points
+            sd = tkFileDialog.asksaveasfilename(defaultextension = '.%s' % ofl)
+            
+            #Enabled by clicking on a "Preview" button, to be implemented yet
+            #It suggests Tops the user wanna use the graphs' plugin, not in the standard "light" version of TOPS
+            if self.graph_plugin == True:
+                
+                from graphics import tops_graphs
+                
+                tops_graphs.GraphSimple(parsed_points,sd)
+            
+            output = Output(parsed_points, sd)
+        except:
+            showwarning("No Processing options","No processing settings entered!\n") 
 
-        parsed_data = ModelParser(data)
-        parsed_points = parsed_data.t_points
-        sd = tkFileDialog.asksaveasfilename(defaultextension = '.%s' % ofl)
-        
-        #Enabled by clicking on a "Preview" button, to be implemented yet
-        #It suggests Tops the user wanna use the graphs' plugin, not in the standard "light" version of TOPS
-        if self.graph_plugin == True:
-            
-            from graphics import tops_graphs
-            
-            tops_graphs.GraphSimple(parsed_points,sd)
-        
-        output = Output(parsed_points, sd)
         
     def save_action(self, event):
-        sd = tkFileDialog.asksaveasfilename(defaultextension = '.tops')
-        data = self.text_area.get("1.0", END)
-        of = open(sd, 'w')
-        oc = of.write(data)
-    
+        try:
+            sd = tkFileDialog.asksaveasfilename(defaultextension = '.tops')
+            data = self.text_area.get("1.0", END)
+            of = open(sd, 'w')
+            oc = of.write(data)
+        except:
+            pass
+        
     def about_action(self, event):
         d = AboutDialog(self.myParent)
     
@@ -693,9 +699,7 @@ class Tops:
 
 
 root = Tk()
-
-#root.iconbitmap(logo_data)
-root.title("Total Open Station")
 Tops = Tops(root)
+root.title("Total Open Station")
 root.mainloop()
 
