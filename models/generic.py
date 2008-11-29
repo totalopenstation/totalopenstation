@@ -37,7 +37,7 @@ class Connector(serial.Serial):
         
         while self.inWaiting() > 0:
             result = result + self.read(self.inWaiting())
-            sleep(0.1)
+            sleep(0.3) # TODO find some clever way to determine sleep time from baudrate
         
         self.result = result
         return self.result
