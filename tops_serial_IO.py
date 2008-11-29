@@ -8,7 +8,7 @@ from models import *
 
 
 station = zeiss_elta_r55.ModelConnector('/dev/ttyUSB0')
-station.open_conn()
+station.open()
 
 # start from the device...
 a = raw_input("Press ENTER when download has finished\n")
