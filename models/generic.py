@@ -16,8 +16,8 @@ class Connector(serial.Serial):
         xonxoff=xonxoff, rtscts=rtscts, writeTimeout=writeTimeout,
         dsrdtr=dsrdtr)
 
-    def open_conn(self):
-        self.open()
+    def open(self):
+        serial.Serial.open(self)
     
     def download(self):
         '''Download method for user interfaces.
