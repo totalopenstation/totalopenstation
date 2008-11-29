@@ -10,11 +10,9 @@ from models import *
 station = zeiss_elta_r55.ModelConnector('/dev/ttyUSB0')
 station.open()
 
-# start from the device...
-a = raw_input("Press ENTER when download has finished\n")
-# wait until finished!
+print "Start download from the device"
 
-result = station.download()
+result = station.fast_download()
 print result
 
 e = open('interactive_download.txt', 'w')
