@@ -40,7 +40,6 @@ class Connector(serial.Serial):
             sleep(0.1)
         
         self.result = result
-        self.downloaded = True
         return self.result
     
     def fast_download(self):
@@ -51,11 +50,14 @@ class Connector(serial.Serial):
         when data become to appear, download() can start.
         '''
         
-        while self.inWaiting() == 0:
-#        && self.downloaded = False:
-            sleep(0.5)
+        # TODO printing from within the library method is UGLY™
+        # An event system should be able to catch signals from the running process
         
+        while self.inWaiting() == 0:
+            sleep(0.1)
+        print "\nStarting download\n"
         self.download()
+        print "Download finished\n"
         return self.result
 
 
