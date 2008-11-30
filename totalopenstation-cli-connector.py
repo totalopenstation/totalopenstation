@@ -47,9 +47,14 @@ except ImportError, message:
 station = ModelConnector(options.port)
 station.open()
 
-print "Start download from %s device" % options.model
+print "Now you can start download from %s device" % options.model
 
-result = station.fast_download()
+station.start()
+station.dl_started.wait()
+print "Download started..."
+station.dl_finished.wait()
+print "Download finished..."
+result = station.result
 
 if options.outfile:
     if not os.path.exists(options.outfile):

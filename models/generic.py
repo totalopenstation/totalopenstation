@@ -3,10 +3,12 @@
 # filename: generic.py
 
 import serial
+import sys
 
 from time import sleep
+import threading
 
-class Connector(serial.Serial):
+class Connector(serial.Serial, threading.Thread):
     def __init__(self, port=None, baudrate=9600, bytesize=8, parity='N',
                 stopbits=1, timeout=None, xonxoff=0, rtscts=0,
                 writeTimeout=None, dsrdtr=None):
@@ -15,7 +17,11 @@ class Connector(serial.Serial):
         bytesize=bytesize, parity=parity, stopbits=stopbits, timeout=timeout,
         xonxoff=xonxoff, rtscts=rtscts, writeTimeout=writeTimeout,
         dsrdtr=dsrdtr)
-
+        
+        threading.Thread.__init__(self)
+        self.dl_started = threading.Event()
+        self.dl_finished = threading.Event()
+    
     def open(self):
         serial.Serial.open(self)
     
@@ -28,7 +34,7 @@ class Connector(serial.Serial):
         
         n = self.inWaiting()
         result = self.read(n)
-    
+        
         # looks like there is a maximum buffer of 4096 characters, so we have
         # to wait for a short time and iterate the process until finished
         
@@ -39,7 +45,6 @@ class Connector(serial.Serial):
             sleep(0.3) # TODO find some clever way to determine sleep time from baudrate
         
         self.result = result
-        return self.result
     
     def fast_download(self):
         '''Implement a `fast' download method that requires less user input.
@@ -49,15 +54,18 @@ class Connector(serial.Serial):
         when data become to appear, download() can start.
         '''
         
-        # TODO printing from within the library method is UGLY™
-        # An event system should be able to catch signals from the running process
-        
         while self.inWaiting() == 0:
             sleep(0.1)
-        print "\nStarting download\n"
-        self.download()
-        print "Download finished\n"
-        return self.result
+        self.dl_started.set()
+        try:
+            self.download()
+        except threading.exceptions.KeyboardInterrupt:
+            sys.exit()
+        else:
+            self.dl_finished.set()
+    
+    def run(self):
+        self.fast_download()
 
 
 class Point:
