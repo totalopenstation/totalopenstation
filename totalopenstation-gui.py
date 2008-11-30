@@ -206,11 +206,6 @@ class ErrorDialog(tkSimpleDialog.Dialog):
 class Tops:
     def __init__(self, parent):
         
-        #Set through a click on a "Preview"'s button, to be implemented yet
-        self.graph_plugin = False
-
-        #--- costanti per il controllo della disposizione
-        #--- dei pulsanti
         buttons_width = 8
         imb_buttonx = "2m"
         imb_buttony = "1m"
@@ -218,12 +213,12 @@ class Tops:
         imb_buttons_framey = "2m"
         imb_int_buttons_framex = "3m"
         imb_int_buttons_framey = "1m"
-
+        
         self.myParent = parent
-
+        
         self.main_frame = Frame(parent) ###
         self.main_frame.pack(expand = YES, fill = BOTH)
-
+        
         self.upper_frame = Frame(self.main_frame) ###
         self.upper_frame.pack(side = TOP, expand = NO, padx = 10,
                                    pady = 5, ipadx = 5, ipady = 5)
@@ -236,15 +231,7 @@ class Tops:
         self.logo_canvas = Label(self.logo_frame, image=self.logo)
         self.logo_canvas.pack(side = LEFT, expand = NO, padx = 5,
                                    pady = 5)
-
-#        welcome_message = """
-#        This program will help you to find the right connection
-#        parameters for your total station device, and after that also
-#        to retrieve data from it."""
-#        Label(self.header_frame,
-#          text = welcome_message,
-#          justify = LEFT).pack(side = LEFT, anchor = W)
-
+        
         self.header_frame = Frame(self.upper_frame)
         self.header_frame.pack(side = LEFT, expand = NO, pady = 5)
         
@@ -425,72 +412,6 @@ class Tops:
                                                  variable=self.option5_value,
                                                  value = 2 )
         self.option5_entry.pack(side = LEFT, anchor = W)
-
-#        # option 6 : timeout
-#        self.option6_frame = Frame(self.control_panel, relief = RIDGE, bd = 1)
-#        self.option6_frame.pack(side = TOP)
-#        
-#        self.option6_label = Label(self.option6_frame,
-#                                   text="Timeout (empty for None)",
-#                                   justify = LEFT,
-#                                   width = 25)
-#        self.option6_label.pack(side = LEFT, anchor = E)
-#        self.option6_value = StringVar()
-#        self.option6_value.set("0") 
-#        self.option6_entry = Entry(self.option6_frame,
-#                                   textvariable=self.option6_value,
-#                                   width = 25)
-#        self.option6_entry.pack(side = LEFT, anchor = W)
-#        
-#        # option 7 : xonxoff
-#        self.option7_frame = Frame(self.control_panel, relief = RIDGE, bd = 1)
-#        self.option7_frame.pack(side = TOP)
-#        
-#        self.option7_label = Label(self.option7_frame,
-#                                   text="Xon/Xoff flow control",
-#                                   justify = LEFT,
-#                                   width = 25)
-#        self.option7_label.pack(side = LEFT, anchor = E)
-#        self.option7_value = IntVar()
-#        self.option7_entry = Menubutton(self.option7_frame,
-#                                        text="choose a value",
-#                                        textvariable=self.option7_value,
-#                                        relief = RAISED,
-#                                        width = 24)
-#        self.option7_entry.menu =   Menu ( self.option7_entry, tearoff=0 )
-#        self.option7_entry["menu"]  = self.option7_entry.menu
-#        self.option7_entry.menu.add_radiobutton (label="Enabled",
-#                                                 variable=self.option7_value,
-#                                                 value = 1 )
-#        self.option7_entry.menu.add_radiobutton (label="Disabled",
-#                                                 variable=self.option7_value,
-#                                                 value = 0 )
-#        self.option7_entry.pack(side = LEFT, anchor = W)
-#        
-#        # option 8: hardware flow control
-#        self.option8_frame = Frame(self.control_panel, relief = RIDGE, bd = 1)
-#        self.option8_frame.pack(side = TOP)
-#        
-#        self.option8_label = Label(self.option8_frame,
-#                                   text="Hardware flow control",
-#                                   justify = LEFT,
-#                                   width = 25)
-#        self.option8_label.pack(side = LEFT, anchor = E)
-#        self.option8_value = IntVar()
-#        self.option8_entry = Menubutton(self.option8_frame,
-#                                        text="choose a value",
-#                                        textvariable=self.option8_value,
-#                                        relief = RAISED,
-#                                        width = 24)
-#        self.option8_entry.menu =   Menu ( self.option8_entry, tearoff=0 )
-#        self.option8_entry["menu"]  = self.option8_entry.menu
-#        self.option8_entry.menu.add_radiobutton (label="Enabled",
-#                                                 variable=self.option8_value,
-#                                                 value = 1 )
-#        self.option8_entry.menu.add_radiobutton (label="Disabled",
-#                                                 variable=self.option8_value,
-#                                                 value = 0 )
-#        self.option8_entry.pack(side = LEFT, anchor = W)
     
         # dictionary for passing options to Serial
         self.options = {'port':(1,'str'),
@@ -510,7 +431,6 @@ class Tops:
                    6:'timeout',
                    7:'xonxoff',
                    8:'rtscts'}
-        
         
         # control buttons
         
