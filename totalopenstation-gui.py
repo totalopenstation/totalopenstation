@@ -327,7 +327,6 @@ class Tops:
                                    width = 25)
         self.option2_label.pack(side = LEFT)
         self.option2_value = IntVar()
-        self.option2_value.set(9600)
         self.option2_entry = Menubutton(self.option2_frame,
                                         text="choose a value",
                                         textvariable=self.option2_value,
@@ -353,7 +352,6 @@ class Tops:
                                    width = 25)
         self.option3_label.pack(side = LEFT, anchor = E)
         self.option3_value = IntVar()
-        self.option3_value.set(8)
         self.option3_entry = Menubutton(self.option3_frame,
                                         text="choose a value",
                                         textvariable=self.option3_value,
@@ -385,7 +383,6 @@ class Tops:
                                    width = 25)
         self.option4_label.pack(side = LEFT, anchor = E)
         self.option4_value = StringVar()
-        self.option4_value.set('N')
         self.option4_entry = Menubutton(self.option4_frame,
                                         text="choose a value",
                                         textvariable=self.option4_value,
@@ -414,7 +411,6 @@ class Tops:
                                    width = 25)
         self.option5_label.pack(side = LEFT, anchor = E)
         self.option5_value = IntVar()
-        self.option5_value.set(1)
         self.option5_entry = Menubutton(self.option5_frame,
                                         text="choose a value",
                                         textvariable=self.option5_value,
@@ -588,7 +584,15 @@ class Tops:
         model = self.optionMODEL_value.get()
         if model != 'Custom':
             self.control_panel.forget()
+            self.option2_value.set(0)
+            self.option3_value.set(0)
+            self.option4_value.set('')
+            self.option5_value.set(0)
         else:
+            self.option2_value.set(9600)
+            self.option3_value.set(8)
+            self.option4_value.set('N')
+            self.option5_value.set(1)
             self.control_panel.pack(side = TOP, expand = YES, fill = Y, ipadx = 5, ipady = 5)
     
     def connect_action(self, event):
@@ -596,7 +600,9 @@ class Tops:
         self.options2 = dict()
         for n in xrange(1,6):
             value = eval("self.option%s_value.get()" %n)
-            if value is not None:
+            if value == 0 or value == '':
+                pass
+            else:
                 self.options2[self.options_z[n]] = value
         print self.options2
         
