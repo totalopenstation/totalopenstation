@@ -2,7 +2,7 @@
  Total Open Station
 ====================
 
-A generic Python interface for downloading data from total station devices.
+A program for downloading data from total station devices.
 
 Introduction
 ============
@@ -21,46 +21,22 @@ This program is licensed under the GNU General Public License version 3.
 
 The application icons are copyright by Lapo Calamandrei 2008.
 
-Helper application
-==================
+GUI
+===
 
-The helper application is found in the `helper` directory of the source tree.
+The ``totalopenstation-gui.py`` module is a simple, yet complete user interface
+for Total Open Station that allows to download, open and save raw data and export
+into the available output formats.
 
-To run it, you will need:
+CLI
+===
 
-* the pySerial library
-* the Python Tkinter GUI library
-
-What the helper is
-------------------
-
-It is meant as a simple tool for obtaining two pieces of information:
-
-1. the right **serial connection parameters** from an unknown device. The user
-   can play with the 8 options and see the results in a text area. Once the
-   downloaded results look good, we are almost sure that we have used the right
-   parameters, and we can add the tested model to the program database.
-2. **sample data dumps** from unknown models that are needed to develop new
-   parser modules.
-
-The helper consists of a single python module which can be executed stand-alone
-on any platform. For Microsoft Windows, a single executable program is
-available through `py2exe`. It has been reported to work on GNU/Linux
-(including the OpenMoko FreeRunner) and Microsoft Windows.
-
-What the helper is **not**
---------------------------
-
-* The helper is not a beta version of Total Open Station
-* The helper is not a draft of the final GUI
-* The helper is not a broken Total Open Station implementation
-* The helper is not ugly. It's just you who don't like Tk
-* The helper is not a wizard. You have to tune the options using your prior
-  knowledge of your total station.
+The ``totalopenstation-cli-connector.py`` module is a command line user interface
+to download and save raw data
 
 Documentation
 =============
 
-Documentation is available at http://totalopenstation.sharesource.org/docs/
+Documentation is available at http://tops.berlios.de/docs/
 with details on the application structure, supported models and other stuff.
 
