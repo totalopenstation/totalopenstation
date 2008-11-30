@@ -656,30 +656,22 @@ class Tops:
     
     def process_action(self, event):
         
+        chosen_model = str(self.optionMODEL_value.get())
+        data = self.text_area.get("1.0", END)
+        d = ProcessDialog(self.myParent, data, chosen_model)
+        module = models.models[d.optionMODEL_value.get()]
+        ofl, ofp = str(d.output_format.get()).lower(), str(d.output_format.get()).upper()
+        exec('from models.%s import ModelParser' % module)
+        exec('from output.tops_%s import TotalOpen%s as Output' % (ofl, ofp))
+        parsed_data = ModelParser(data)
+        parsed_points = parsed_data.points
+        
+        sd = tkFileDialog.asksaveasfilename(defaultextension = '.%s' % ofl)
+        
         try:
-            chosen_model = str(self.optionMODEL_value.get())
-            data = self.text_area.get("1.0", END)
-            d = ProcessDialog(self.myParent, data, chosen_model)
-            module = models.models[d.optionMODEL_value.get()]
-            ofl, ofp = str(d.output_format.get()).lower(), str(d.output_format.get()).upper()
-            exec('from models.%s import ModelParser' % module)
-            exec('from output.%s.tops_%s import TotalOpen%s as Output' % (ofl, ofl, ofp))
-            parsed_data = ModelParser(data)
-            parsed_points = parsed_data.t_points
-            sd = tkFileDialog.asksaveasfilename(defaultextension = '.%s' % ofl)
-            
-            #Enabled by clicking on a "Preview" button, to be implemented yet
-            #It suggests Tops the user wanna use the graphs' plugin, not in the standard "light" version of TOPS
-            if self.graph_plugin == True:
-                
-                from graphics import tops_graphs
-                
-                tops_graphs.GraphSimple(parsed_points,sd)
-            
             output = Output(parsed_points, sd)
-        except:
-            showwarning("No Processing options","No processing settings entered!\n") 
-
+        except TypeError:
+            showwarning("No output file specified","No processing settings entered!\n") 
         
     def save_action(self, event):
         try:
