@@ -28,7 +28,6 @@ class Connector(serial.Serial):
         
         n = self.inWaiting()
         result = self.read(n)
-        self.downloaded = False
     
         # looks like there is a maximum buffer of 4096 characters, so we have
         # to wait for a short time and iterate the process until finished
