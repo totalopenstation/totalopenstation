@@ -506,6 +506,16 @@ class Tops:
                    'xonxoff':(7,'bool'),
                    'rtscts':(8,'bool')}
         
+        self.options_z = {1:'port',
+                   2:'baudrate',
+                   3:'bytesize',
+                   4:'parity',
+                   5:'stopbits',
+                   6:'timeout',
+                   7:'xonxoff',
+                   8:'rtscts'}
+        
+        
         # control buttons
         
         self.connect_button = Button(self.buttons_frame,
@@ -583,6 +593,13 @@ class Tops:
     
     def connect_action(self, event):
         
+        self.options2 = dict()
+        for n in xrange(1,6):
+            value = eval("self.option%s_value.get()" %n)
+            if value is not None:
+                self.options2[self.options_z[n]] = value
+        print self.options2
+        
         try:
             chosen_model = self.optionMODEL_value.get()
             chosen_port = self.option1_value.get()
@@ -595,7 +612,7 @@ class Tops:
                 cs = "serial.Serial("
                 
                 for k,v in self.options.items():
-                    print k,v
+                    #print k,v
                     n, t = v
                     cs = cs + "%s = " %k
                     if t == 'str':
