@@ -72,76 +72,9 @@ class Point:
         self.text=text
         
         self.tuplepoint = (self.p_id, self.x, self.y, self.z, self.text)
-        
-        
-    def get_coords(self):
-        
-        coords = {'x': self.x,'y':self.y,'z':self.z}
-        return coords
     
-    def get_string_of_points(self):
-        
-        string = str(self.p_id)+" "+str(self.x)+" "+str(self.y)+" "+str(self.z)+" "+str(self.text)
-        return string
-    
-    def dump_point(self):
-        
-        print self.p_id," ",self.x," ",self.y," ",self.z," ",self.text
-    
-    def point_to_tuple(self):
-        tuplepoint = (self.p_id, self.x, self.y, self.z, self.text)
-        return tuplepoint
-    
-    #def SwapXY(self):
-        
-        #temp = self.x
-        #self.x =self.y
-        #self.y=temp
-
-class PointsList:
-    
-    def __init__(self):
-        
-        self.listofpoints = []
-        
-    def add_point(self, p):
-        
-        self.listofpoints.append(p)
-        
-    def add_points(self, lp):
-        
-        self.listofpoints.extend(lp)
-        
-    def pid_is_in_lop(self, aux_p_id):
-        
-        for p in self.listofpoints:
-            
-            if aux_p_id == p.p_id :
-                return True
-        
-        return False
-        
-    def points_number(self):
-        
-        return len(self.listofpoints)
-        
-    def list_to_tuple(self):
-        
-        list_aux=[]
-        for p in self.listofpoints:
-            list_aux.append(p.tuplepoint)
-        return list_aux
-
-#class Data:
-    
-    #def __init__(self):
-        #pass
-        
-    #def data_from_txt_file(self, filepathname):
-        
-        #file = open(filepathname,'r')
-        #self.lines = file.readlines()
-        #file.close()
+    def __str__(self):
+        return self.p_id, self.x, self.y, self.z, self.text
 
 
 class Parser:
@@ -149,57 +82,19 @@ class Parser:
     
     This means that if you plan to load data from a file you have to pass
     the output of open(file).read() to this class.'''
-    ''' WHO THE FUCK ARE THE ARTIC MONKEYS!?!?!?!'''
-    ''' This should be a good reason to use the commented class DATA!'''
     
     def __init__(self, data, swapXY=False):
         
         self.d = data.splitlines()
-        self.points = PointsList()
         self.swapXY = swapXY
         
-        self.parse_retrieve_data()
-        
-        if self.points.points_number() > 0:
-            self.t_points = self.points.list_to_tuple()
-        
-    def set_data(self, data):
-        
-        self.d = data
-    
-    def get_data(self):
-        
-        return self.d
-    
-    def parse_retrieve_data(self):
-        
         valid_lines = filter(self.is_point, self.d)
-        
-        for l in valid_lines:
-
-            self.points.add_point(self.get_point(l))
-            
+        fg_lines = map(self.get_point, valid_lines)
+        self.points = [ p.tuplepoint for p in fg_lines if p is not None ]
     
     def is_point(self):
-        
         pass
     
     def get_point(self):
-        
         pass
-    
-    def print_found_points(self):
-        
-        
-        for p in self.points.listofpoints:
-            p.dump_point()
-            
-    def export_points_toTXT(self, filepathname):
-        
-        file = open(filepathname,'w')
-        
-        for p in self.points.listofpoints:
-            
-            file.write(p.get_string_of_points()+"\n")
-            
-        file.close()
+
