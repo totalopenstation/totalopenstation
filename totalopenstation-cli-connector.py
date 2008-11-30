@@ -9,8 +9,6 @@ import os
 
 from optparse import OptionParser
 
-from models import *
-
 
 usage = "usage: totalopenstation-cli-connector.py [option] arg1 [option] arg2 ..."
 
