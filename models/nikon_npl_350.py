@@ -26,15 +26,14 @@ class ModelParser(Parser):
             sp_line = line.split(",")
             tokens = {
                 'code' : sp_line[0],
-                'pid' : line[1],
-                'text' : line[7],
-                'x' : line[4],
-                'y' : line[3],
-                'z' : line[5]
+                'pid' : sp_line[1],
+                'text' : sp_line[7],
+                'x' : sp_line[4],
+                'y' : sp_line[3],
+                'z' : sp_line[5]
                 }
             
             assert tokens['code'] == 'SS'
-            int(tokens['sequence'])
             int(tokens['pid'])
             float(tokens['x'])
             float(tokens['y'])
