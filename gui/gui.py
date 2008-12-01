@@ -108,10 +108,12 @@ class TotalOpenGUI(object):
         ex = ExportDialog()
         input_model = ex.combobox_input.get_active()
         output_model = ex.combobox_output.get_active()
-        if not (output_model and input_model):
-            md = gtk.MessageDialog(type=gtk.MESSAGE_ERROR,
+        if (output_model < 0) or (input_model < 0):
+            
+            md = gtk.MessageDialog(parent=None,
+                                   type=gtk.MESSAGE_ERROR,
                                    buttons=gtk.BUTTONS_CLOSE,
-                                   text="Please choose input and output")
+                                   message_format="Please choose input and output")
         else:
             self.iterstart = self.textBuffer.get_start_iter()
             self.iterend = self.textBuffer.get_end_iter()
