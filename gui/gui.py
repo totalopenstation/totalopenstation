@@ -10,15 +10,11 @@ import gtk.glade
 import pango
 import os
 
-#from .. import models
+from models.models import models
+from output.formats import formats
 
-models = {
-    'Leica TCR 1205' : 'leica_tcr_1205',
-    'Zeiss Elta R55' : 'zeiss_elta_r55',
-    'Nikon Npl 350' : 'nikon_npl_350',
-    'Custom' : 'generic'
-    }
-GLADEFILE = "tops.glade"
+# FIXME this path is relative to the root source directory
+GLADEFILE = "gui/tops.glade"
 
 class AboutDialog(object):
     def __init__(self):
@@ -101,5 +97,6 @@ class TotalOpenGUI(object):
     def about_dialog(self, widget):
         AboutDialog()
 
-TotalOpenGUI()
-gtk.main()
+if __name__ == '__main__':
+    print('Please use the totalopenstation-gui2.py module in the root source.')
+
