@@ -29,6 +29,8 @@ class ExportDialog(object):
         self.gladefile = GLADEFILE
         self.widgetTree1 = gtk.glade.XML(self.gladefile,'export_dialog1')
         self.export_dialog1 = self.widgetTree1.get_widget('export_dialog1')
+        
+        # model combo box
         self.modelsListStore = gtk.ListStore(gobject.TYPE_STRING)
         for m, n in models.items():
             self.modelsListStore.append([m])
@@ -37,7 +39,17 @@ class ExportDialog(object):
         cell = gtk.CellRendererText()
         self.combobox_input.pack_start(cell, True)
         self.combobox_input.add_attribute(cell, 'text', 0)
-
+        
+        # output format combo box
+        self.outputFormatsListStore = gtk.ListStore(gobject.TYPE_STRING)
+        for m, n in formats.items():
+            self.outputFormatsListStore.append([m])
+        self.combobox_output = self.widgetTree1.get_widget('combobox_output')
+        self.combobox_output.set_model(model=self.outputFormatsListStore)
+        cell1 = gtk.CellRendererText()
+        self.combobox_output.pack_start(cell, True)
+        self.combobox_output.add_attribute(cell, 'text', 0)
+        
         self.export_dialog1.run()
         self.export_dialog1.destroy()
 
@@ -83,16 +95,49 @@ class TotalOpenGUI(object):
         if file_save.run() == gtk.RESPONSE_OK:
             result = file_save.get_filename()
         file_save.destroy()
-        iterstart = self.textBuffer.get_start_iter()
-        iterend = self.textBuffer.get_end_iter()
+        
+        self.iterstart = self.textBuffer.get_start_iter()
+        self.iterend = self.textBuffer.get_end_iter()
         
         # FIXME handle overwriting an existing file (ask the user)
         e = open(result, 'w')
-        e.write(self.textBuffer.get_text(iterstart, iterend))
+        e.write(self.textBuffer.get_text(self.iterstart, self.iterend))
         e.close()
     
     def export_dialog(self, widget):
-        ExportDialog()
+        ex = ExportDialog()
+        input_model = ex.combobox_input.get_active()
+        output_model = ex.combobox_output.get_active()
+        if not (output_model and input_model):
+            md = gtk.MessageDialog(type=gtk.MESSAGE_ERROR,
+                                   buttons=gtk.BUTTONS_CLOSE,
+                                   text="Please choose input and output")
+        else:
+            self.iterstart = self.textBuffer.get_start_iter()
+            self.iterend = self.textBuffer.get_end_iter()
+            data = self.textBuffer.get_text(self.iterstart, self.iterend)
+            exec('from models.%s import ModelParser' % (
+                models[ex.modelsListStore[input_model][0]]
+                ))
+            exec('from output.%s import TotalOpen%s as Output' % (
+                formats[ex.outputFormatsListStore[output_model][0]],
+                ex.outputFormatsListStore[output_model][0]
+                ))
+            parsed_data = ModelParser(data)
+            parsed_points = parsed_data.points
+            
+            file_save = gtk.FileChooserDialog(title="Select destination file"
+                    , action=gtk.FILE_CHOOSER_ACTION_SAVE
+                    , buttons=(gtk.STOCK_CANCEL
+                        , gtk.RESPONSE_CANCEL
+                        , gtk.STOCK_SAVE
+                        , gtk.RESPONSE_OK))
+            if file_save.run() == gtk.RESPONSE_OK:
+                result = file_save.get_filename()
+            file_save.destroy()
+            
+            # FIXME handle overwriting an existing file (ask the user)
+            output = Output(parsed_points, result)
     
     def about_dialog(self, widget):
         AboutDialog()
