@@ -14,7 +14,7 @@ formats = {
 
 if __name__ == '__main__':
     print("List of supported output formats:\n------------------------")
-    for k in models.keys():
-        print k
+    for k, v in formats.items():
+        print k.ljust(10), v
     print("")
 
