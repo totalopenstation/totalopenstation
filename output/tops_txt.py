@@ -17,16 +17,12 @@ class TotalOpenTXT:
     """
     
     def __init__(self,data,filepath):
-	
-	file = open(filepath,'w')
-		
-	for d in data:
-		
-                string = "%s,%s,%s\n" % (d[1], d[2], d[3])
-		file.write((str(string)))
-		
-	file.close()
         
+        file = open(filepath,'w')
+        for d in data:
+            string = "%s,%s,%s\n" % (d[1], d[2], d[3])
+            file.write((str(string)))
+        file.close()
 
 if __name__ == "__main__":
     TotalOpenTXT(
