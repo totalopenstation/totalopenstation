@@ -9,7 +9,8 @@ formats = {
     'DXF' : 'tops_dxf',
     'CSV' : 'tops_csv',
     'SQL' : 'tops_sql',
-    'DAT' : 'tops_dat'
+    'DAT' : 'tops_dat',
+    'TXT' : 'tops_txt',
     }
 
 if __name__ == '__main__':
