@@ -20,7 +20,7 @@ class TotalOpenTXT:
         
         file = open(filepath,'w')
         for d in data:
-            string = "%s,%s,%s\n" % (d[1], d[2], d[3])
+            string = "%s %s %s\n" % (d[1], d[2], d[3])
             file.write((str(string)))
         file.close()
 
