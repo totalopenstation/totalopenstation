@@ -12,9 +12,13 @@ models = {
     'Custom' : 'generic'
     }
 
-if __name__ == '__main__':
-    print("List of supported models:\n------------------------")
-    for k in models.keys():
-        print k
-    print("")
+def list_models():
+    mod_string = ''
+    mod_string = mod_string + "List of supported models:\n------------------------\n"
+    for k,v in models.items():
+        mod_string = mod_string + k.ljust(20) + v + "\n"
+    mod_string = mod_string + "\n"
+    return mod_string
 
+if __name__ == '__main__':
+    print list_models()
