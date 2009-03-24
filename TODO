@@ -1,0 +1,21 @@
+Once fast_download() has been implemented, use a ProgressBar to inform the
+user that we are performing the download operation.
+
+Below the progress bar (which will be presumably doing ping-pong because we
+cannot tell the amount of downloaded data until we have it all) should be
+italicized text with the current task:
+
+* waiting data from device
+* downloading data
+* elaborating data
+
+In another sense, we could consider this process a 3-step one and provide such
+a progress bar that reflects this situation. An interesting option could be a
+checklist window:
+
+    Occasionally a procedure is comprised of a series of user performable
+    actions. In these cases, particularly when it is desirable that the user
+    acquire some familiarity with the actions involved in a procedure,
+    checklist windows may be used.
+
+A "Cancel" button is mandatory.
