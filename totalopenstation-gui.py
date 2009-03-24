@@ -1,8 +1,23 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
-# filename: tkops.py
-# Copyright 2008 Stefano Costa <steko@iosa.it>
-# Under the GNU GPL 3 License
+# filename: totalopenstation-gui.py
+# Copyright 2008-2009 Stefano Costa <steko@iosa.it>
+
+# This file is part of Total Open Station.
+
+# Total Open Station is free software: you can redistribute it and/or
+# modify it under the terms of the GNU General Public License as
+# published by the Free Software Foundation, either version 3 of the
+# License, or (at your option) any later version.
+
+# Total Open Station is distributed in the hope that it will be
+# useful, but WITHOUT ANY WARRANTY; without even the implied warranty
+# of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+# General Public License for more details.
+
+# You should have received a copy of the GNU General Public License
+# along with Total Open Station.  If not, see
+# <http://www.gnu.org/licenses/>.
 
 import serial
 
@@ -72,10 +87,10 @@ class AboutDialog(tkSimpleDialog.Dialog):
     def body(self, master):
         title="Total Open Station 0.1"
         message="""
-Total Open Station is copyright 2008 Luca Bianconi, Stefano Costa and the IOSA
-project.
+Total Open Station is copyright 2008-2009 Luca Bianconi, Stefano Costa
+and the IOSA project.
 
-http://totalopenstation.sharesource.org/
+http://tops.berlios.de/
 
 The application logo is copyright 2008 Lapo Calamandrei."""
         
@@ -88,7 +103,11 @@ The application logo is copyright 2008 Lapo Calamandrei."""
     
     def buttonbox(self):
         box = Frame(self)
-        w = Button(box, text="OK", width=10, command=self.cancel, default=ACTIVE)
+        w = Button(box,
+                   text="OK",
+                   width=10,
+                   command=self.cancel,
+                   default=ACTIVE)
         w.pack(side=LEFT, padx=5, pady=5)
         self.bind("&lt;Return>", self.cancel)
         self.bind("&lt;Escape>", self.cancel)
@@ -110,7 +129,11 @@ Press OK when finished to proceed."""
     
     def buttonbox(self):
         box = Frame(self)
-        self.w = Button(box, text="OK", width=10, command=self.cancel, default=DISABLED)
+        self.w = Button(box,
+                        text="OK",
+                        width=10,
+                        command=self.cancel,
+                        default=DISABLED)
         self.w.pack(side=LEFT, padx=5, pady=5)
         self.bind("&lt;Return>", self.cancel)
         self.bind("&lt;Escape>", self.cancel)
@@ -178,9 +201,10 @@ class ProcessDialog(tkSimpleDialog.Dialog):
         optionMODEL_entry["menu"] = optionMODEL_entry.menu
         
         for k,v in models.models.items():
-            optionMODEL_entry.menu.add_radiobutton(label=k,
-                                                        variable=self.optionMODEL_value,
-                                                        value=k)
+            optionMODEL_entry.menu.add_radiobutton(
+                label=k,
+                variable=self.optionMODEL_value,
+                value=k)
         optionMODEL_entry.pack(side = LEFT, anchor = W)
         
         Label(output_frame, text=question).pack()
@@ -261,12 +285,19 @@ class Tops:
         self.header_frame.pack(side = LEFT, expand = NO, pady = 5)
         
         self.buttons_frame = Frame(self.header_frame)
-        self.buttons_frame.pack(side = TOP, expand = NO, fill = Y,
-                                  ipadx = 5, ipady = 5)
+        self.buttons_frame.pack(
+            side = TOP,
+            expand = NO,
+            fill = Y,
+            ipadx = 5,
+            ipady = 5)
         
         # default control panel
         self.control_panel0 = Frame(self.header_frame)
-        self.control_panel0.pack(side = TOP, expand = YES, fill = Y, padx = 5, pady = 5)
+        self.control_panel0.pack(
+            side = TOP,
+            expand = YES,
+            fill = Y, padx = 5, pady = 5)
         
         # control panel for custom serial connection
         self.control_panel = Frame(self.header_frame)
@@ -306,7 +337,10 @@ class Tops:
         # option MODEL substitutes all connection parameters for better
         # user experience
         
-        self.optionMODEL_frame = Frame(self.control_panel0, relief = RIDGE, bd = 1)
+        self.optionMODEL_frame = Frame(
+            self.control_panel0,
+            relief = RIDGE,
+            bd = 1)
         self.optionMODEL_frame.pack(side = TOP)
         
         self.optionMODEL_label = Label(self.optionMODEL_frame,
@@ -324,10 +358,11 @@ class Tops:
         self.optionMODEL_entry["menu"] = self.optionMODEL_entry.menu
         
         for k,v in models.models.items():
-            self.optionMODEL_entry.menu.add_radiobutton(label=k,
-                                                        variable=self.optionMODEL_value,
-                                                        value=k,
-                                                        command=self.print_model)
+            self.optionMODEL_entry.menu.add_radiobutton(
+                label=k,
+                variable=self.optionMODEL_value,
+                value=k,
+                command=self.print_model)
         self.optionMODEL_entry.pack(side = LEFT, anchor = W)
         
         # option 2 : baudrate
@@ -538,7 +573,11 @@ class Tops:
             self.option3_value.set(8)
             self.option4_value.set('N')
             self.option5_value.set(1)
-            self.control_panel.pack(side = TOP, expand = YES, fill = Y, ipadx = 5, ipady = 5)
+            self.control_panel.pack(side = TOP,
+                                    expand = YES,
+                                    fill = Y,
+                                    ipadx = 5,
+                                    ipady = 5)
     
     def connect_action(self, event):
         
@@ -629,7 +668,8 @@ class Tops:
         data = self.text_area.get("1.0", END)
         d = ProcessDialog(self.myParent, data, chosen_model)
         module = models.models[d.optionMODEL_value.get()]
-        ofl, ofp = str(d.output_format.get()).lower(), str(d.output_format.get()).upper()
+        ofl = str(d.output_format.get()).lower()
+        ofp = str(d.output_format.get()).upper()
         exec('from models.%s import ModelParser' % module)
         exec('from output.tops_%s import TotalOpen%s as Output' % (ofl, ofp))
         parsed_data = ModelParser(data)
