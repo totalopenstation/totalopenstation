@@ -9,6 +9,7 @@ models = {
     'Leica TCR 1205' : 'leica_tcr_1205',
     'Zeiss Elta R55' : 'zeiss_elta_r55',
     'Nikon Npl 350' : 'nikon_npl_350',
+    'Trimble .are' : 'trimble',
     'Custom' : 'generic'
     }
 
