@@ -92,16 +92,37 @@ class Parser:
     
     def __init__(self, data, swapXY=False):
         
-        self.d = data.splitlines()
+        self.data = data
+        self.d = self.split_points()
         self.swapXY = swapXY
-        
+
         valid_lines = filter(self.is_point, self.d)
         fg_lines = map(self.get_point, valid_lines)
         self.points = [ p.tuplepoint for p in fg_lines if p is not None ]
-    
+
     def is_point(self):
+        """Action for finding which parts of the source file are points.
+
+        This method **must** be overridden in the child class
+        to have a working parser."""
+
         pass
     
     def get_point(self):
+        """Action for getting points from source file.
+
+        This method **must** be overridden in the child class
+        to have a working parser."""
+
         pass
+
+    def split_points(self):
+        """Action for splitting points.
+
+        Defaults to ``splitlines()`` because most formats have one
+        point per line.
+
+        Override this method if the format is different."""
+
+        return self.data.splitlines()
 
