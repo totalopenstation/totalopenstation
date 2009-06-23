@@ -70,7 +70,10 @@ else:
 
 if options.outformat:
     try:
-        exec('from output.tops_%s import FormatOutput' % options.outformat)
+        exec('from output.tops_%s import TotalOpen%s' % (
+                options.outformat,
+                options.outformat.upper()
+                ))
     except ImportError, message:
         sys.exit("\nError:\n%s\n" % message)
 else:
@@ -79,9 +82,9 @@ else:
 
 if options.infile:
     if not os.path.exists(options.outfile):
-#        e = open(options.outfile, 'w')
-#        e.write(result)
-#        e.close()
+        e = open(options.outfile, 'w')
+        e.write(result)
+        e.close()
         print "Downloaded data saved to out file %s" % options.outfile
     else:
         sys.exit("Specified output file already exists\n")
