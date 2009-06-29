@@ -10,8 +10,18 @@ from generic import *
 
 
 class ModelConnector(Connector):
+
+    """Trimble Geodimeter 600"""
+
     def __init__(self, port):
-        Connector.__init__(self, port=port, baudrate=19200)
+        Connector.__init__(
+            self,
+            port=port,
+            baudrate=9600,
+            bytesize=8,
+            stopbits=1,
+            parity='N'
+            )
 
 
 class ModelParser(Parser):
