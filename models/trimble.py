@@ -24,7 +24,7 @@ class ModelConnector(Connector):
             )
 
 
-class ModelParser(Parser):
+class ModelParser(Parser,swapXY=True):
 
     def is_point(self,line):
 
