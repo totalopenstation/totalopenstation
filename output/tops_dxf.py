@@ -6,7 +6,7 @@
 
 
 class TotalOpenDXF:
-    
+
     """
     Exports points data in AutoCAD DXF format.
     
@@ -14,20 +14,29 @@ class TotalOpenDXF:
     
     ``data`` should be an iterable (e.g. list) containing one iterable (e.g.
     tuple) for each point. The default order is PID, x, x, z, TEXT.
-    
+
     This is consistent with our current standard.
     """
-    
-    def __init__(self,data,filepath,separate_layers=True):
-        
+
+    def __init__(self, data, separate_layers=True):
+
         self.data = data
-        self.dxf_file = filepath
+        # self.dxf_file = filepath
         self.separate_layers = separate_layers
         self.result = '  0\nSECTION\n  2\nENTITIES\n'
         self.text_height = 0.05
-        
+
+
+    def process(self):
+        '''Process the input data and return a string as output.
+
+        This is because we want to keep separated the generation of output
+        from saving it to disk.'''
+
+        result = ''
+
+        # extract layer list
         self.codes = set([ p[4] for p in self.data ])
-        
         self.layers = dict(enumerate(self.codes))
         self.colors = dict(zip(self.layers.values(), self.layers.keys()))
         
@@ -49,12 +58,10 @@ class TotalOpenDXF:
             
             # add Z value
             # d.append(Text(str(p_z), point=(p_x, p_y, 0), layer=name_q ))
-            self.result = '%s  0\nTEXT\n  8\n%s\n  10\n%s\n  20\n%s\n  62\n%s\n  40\n%01.2f\n  1\n%s\n' % (self.result, layer_z_text, p_x, p_yz, self.colors[p_layer], self.text_height, p_z)
-        
-        self.result = self.result + '  0\nENDSEC\n  0\nEOF\n'
-        self.output = open(self.dxf_file, 'w')
-        self.output.write(self.result)
-        self.output.close()
+            result = '%s  0\nTEXT\n  8\n%s\n  10\n%s\n  20\n%s\n  62\n256\n  40\n%01.2f\n  1\n%s\n' % (result, layer_z_text, p_x, p_yz, self.text_height, p_z)
+
+        result = result + '  0\nENDSEC\n  0\nEOF\n'
+        return result
 
 
 if __name__ == "__main__":
@@ -62,6 +69,5 @@ if __name__ == "__main__":
         [
             (1,2,3,4,'qwerty'),
             ("2.3",42,45,12,'asdfg')
-        ],
-    'p.dxf')
+            ])
 

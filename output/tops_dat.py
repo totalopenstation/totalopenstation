@@ -1,9 +1,10 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
 # filename: tops_dat.py
-# Copyright 2008 Stefano Costa <steko@iosa.it>
+# Copyright 2008-2009 Stefano Costa <steko@iosa.it>
 # Under the GNU GPL 3 License
 
+import StringIO
 
 def to_dat(e):
     if e[4].endswith("R"):
@@ -24,12 +25,14 @@ class TotalOpenDAT:
     This is consistent with our current standard.
     """
     
-    def __init__(self,data,filepath):
-        output = open(filepath, "wb")
-        lines = [ to_dat(e) for e in data ]
-        print lines
+    def __init__(self,data):
+        self.data = data
+
+    def process(self):
+        output = StringIO.StringIO()
+        lines = [ to_dat(e) for e in self.data ]
         output.writelines(lines)
-        output.close()
+        return output.getvalue()
 
 
 if __name__ == "__main__":
@@ -37,6 +40,6 @@ if __name__ == "__main__":
         [
             (1,2,3,4,'qwerty'),
             ("2.3",42,45,12,'asdfg')
-        ],
-    'tops.dat')
+            ]
+        )
 

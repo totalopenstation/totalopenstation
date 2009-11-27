@@ -1,16 +1,17 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
 # filename: tops_sql.py
-# Copyright 2008 Stefano Costa <steko@iosa.it>
+# Copyright 2008-2009 Stefano Costa <steko@iosa.it>
 # Under the GNU GPL 3 License
 
+import StringIO
 
 def to_sql(point,tablename):
     '''Generate SQL line corresponding to the input point.
-    
+
     At this moment the column names are fixed, but they could change in the
     future. The default names are reasonable.'''
-    
+
     params = { 'wkt' : to_wkt(point),
         'tablename' : tablename,
         'pid' : point[0],
@@ -24,7 +25,7 @@ def to_wkt(point):
     return wkt_representation
 
 class TotalOpenSQL:
-    
+
     """
     Exports points data in SQL format suitable for use with PostGIS & friends.
     
@@ -37,20 +38,23 @@ class TotalOpenSQL:
     This is consistent with our current standard.
     """
     
-    def __init__(self,data,filepath,tablename):
-        output = open(filepath, "wb")
-        lines = [ to_sql(e,tablename) for e in data ]
+    def __init__(self,data,tablename='topsdata'):
+        self.data = data
+        self.tablename = tablename
+
+    def process(self):
+        output = StringIO.StringIO()
+        lines = [ to_sql(e,self.tablename) for e in self.data ]
         lines.insert(0,'BEGIN;\n')
         lines.append('COMMIT;\n')
         output.writelines(lines)
-        output.close()
-
+        return output.getvalue()
 
 if __name__ == "__main__":
     TotalOpenSQL(
         [
             (1,2,3,4,'qwerty'),
             ("2.3",42,45,12,'asdfg')
-        ],
-    'tops.sql','prova')
+            ],
+        'prova')
 
