@@ -1,10 +1,11 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
 # filename: tops_csv.py
-# Copyright 2008 Stefano Costa <steko@iosa.it>
+# Copyright 2008-2009 Stefano Costa <steko@iosa.it>
 # Under the GNU GPL 3 License
 
 import csv
+import StringIO
 
 class TotalOpenCSV:
     
@@ -17,16 +18,20 @@ class TotalOpenCSV:
     This is consistent with our current standard.
     """
     
-    def __init__(self,data,filepath):
-        writer = csv.writer(open(filepath, "wb"), quoting=csv.QUOTE_NONNUMERIC)
-        writer.writerow(('PID', 'x', 'y', 'z', 'TEXT'))
-        writer.writerows(data)
+    def __init__(self,data):
+        self.data = data
+        self.output = StringIO.StringIO()
+        self.writer = csv.writer(self.output, quoting=csv.QUOTE_NONNUMERIC)
+
+    def process(self):
+        self.writer.writerow(('PID', 'x', 'y', 'z', 'TEXT'))
+        self.writer.writerows(self.data)
+        return self.output.getvalue()
 
 if __name__ == "__main__":
     TotalOpenCSV(
         [
             (1,2,3,4,'qwerty'),
             ("2.3",42,45,12,'asdfg')
-        ],
-    'p.csv')
+            ])
 
