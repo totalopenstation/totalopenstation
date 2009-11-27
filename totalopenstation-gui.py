@@ -674,13 +674,16 @@ class Tops:
         exec('from output.tops_%s import TotalOpen%s as Output' % (ofl, ofp))
         parsed_data = ModelParser(data)
         parsed_points = parsed_data.points
-        
+        output = Output(parsed_points)
         sd = tkFileDialog.asksaveasfilename(defaultextension = '.%s' % ofl)
         
         try:
-            output = Output(parsed_points, sd)
+            sd_file = open(sd, 'wb')
         except TypeError:
-            showwarning("No output file specified","No processing settings entered!\n") 
+            showwarning("No output file specified","No processing settings entered!\n")
+        else:
+            sd_file.write(output.process())
+            sd_file.close()
         
     def save_action(self, event):
         try:
