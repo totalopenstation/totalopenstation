@@ -70,7 +70,7 @@ else:
 
 if options.outformat:
     try:
-        exec('from output.tops_%s import TotalOpen%s' % (
+        exec('from output.tops_%s import TotalOpen%s as Output' % (
                 options.outformat,
                 options.outformat.upper()
                 ))
@@ -81,25 +81,26 @@ else:
 
 
 if options.infile:
-    if not os.path.exists(options.outfile):
-        e = open(options.outfile, 'w')
-        e.write(result)
-        e.close()
-        print "Downloaded data saved to out file %s" % options.outfile
-    else:
-        sys.exit("Specified output file already exists\n")
+    infile = open(options.infile, 'r').read()
 else:
-    print sys.stdin.read()
+    infile = sys.stdin.read()
 
+def main(infile):
 
-#if options.outfile:
-#    if not os.path.exists(options.outfile):
-#        e = open(options.outfile, 'w')
-#        e.write(result)
-#        e.close()
-#        print "Downloaded data saved to out file %s" % options.outfile
-#    else:
-#        sys.exit("Specified output file already exists\n")
-#else:
-#    sys.stdout.write(result)
+    parsed_data = ModelParser(infile)
+    parsed_points = parsed_data.points
 
+    output = Output(parsed_points)
+    if options.outfile:
+        if not os.path.exists(options.outfile):
+            e = open(options.outfile, 'w')
+            e.write(output.process())
+            e.close()
+            print "Downloaded data saved to out file %s" % options.outfile
+        else:
+            sys.exit("Specified output file already exists\n")
+    else:
+        sys.stdout.write(output.process())
+
+if __name__ == '__main__':
+    main(infile)
