@@ -56,6 +56,12 @@ parser.add_option("-t",
                 dest="outformat",
                 help="select input FORMAT",
                 metavar="FORMAT")
+parser.add_option(
+                "--overwrite",
+                action="store_true",
+                dest="overwrite",
+                default=False,
+                help="overwrite existing output file")
 
 (options, args) = parser.parse_args()
 
@@ -86,19 +92,27 @@ else:
     infile = sys.stdin.read()
 
 def main(infile):
+    '''After setting up all parameters, finally try to process input data.'''
 
     parsed_data = ModelParser(infile)
     parsed_points = parsed_data.points
-
     output = Output(parsed_points)
+
+    def write_to_file(outfile):
+        e = open(outfile, 'w')
+        e.write(output.process())
+        e.close()
+
     if options.outfile:
         if not os.path.exists(options.outfile):
-            e = open(options.outfile, 'w')
-            e.write(output.process())
-            e.close()
+            write_to_file(options.outfile)
             print "Downloaded data saved to out file %s" % options.outfile
         else:
-            sys.exit("Specified output file already exists\n")
+            if options.overwrite:
+                write_to_file(options.outfile)
+                print "Downloaded data saved to out file %s, overwriting the existing file" % options.outfile
+            else:
+                sys.exit("Specified output file already exists\n")
     else:
         sys.stdout.write(output.process())
 
