@@ -381,12 +381,12 @@ class Tops:
                                         width = 24)
         self.option2_entry.menu = Menu( self.option2_entry, tearoff=0 )
         self.option2_entry["menu"] = self.option2_entry.menu
-        self.option2_entry.menu.add_radiobutton ( label="9600",
-                                       variable=self.option2_value,
-                                       value = 9600 )
-        self.option2_entry.menu.add_radiobutton ( label="4800",
-                                       variable=self.option2_value,
-                                       value = 4800 )
+        for key in sorted(serial.baudrate_constants.keys()): # dynamic list
+            self.option2_entry.menu.add_radiobutton(
+                label = "%s" % key,
+                variable = self.option2_value,
+                value = key,
+                )
         self.option2_entry.pack(side = LEFT, anchor = W)
         
         # option 3 : bytesize
