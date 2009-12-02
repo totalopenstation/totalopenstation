@@ -67,10 +67,10 @@ parser.add_option(
 
 if options.informat:
     try:
-        exec('from models.%s import ModelParser' % options.informat)
+        exec('from formats.%s import FormatParser' % options.informat)
     except ImportError, message:
-        from models.models import list_models
-        sys.exit("\nError:\n%s\n\n%s" % (message, list_models()))
+        from formats.formats import list_formats
+        sys.exit("\nError:\n%s\n\n%s" % (message, list_formats()))
 else:
     sys.exit("Please specify an input format")
 

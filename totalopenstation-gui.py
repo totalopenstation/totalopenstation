@@ -23,6 +23,7 @@ import serial
 
 from time import sleep
 from models import models
+from formats import formats
 
 from Tkinter import *
 from tkMessageBox import showwarning, showinfo, askokcancel
@@ -31,13 +32,13 @@ import tkSimpleDialog, tkFileDialog
 
 def scan():
     """scan for available ports. return a list of tuples (num, name).
-    
+
     Part of pySerial (http://pyserial.sf.net)  (C)2002-2003 <cliechti@gmx.net>
     """
-    
+
     # TODO move this function in a separate module together with scanwin32.py
     # and add conditional loading depending on the operating system
-    
+
     available = []
     for i in range(256):
         try:
@@ -93,14 +94,14 @@ and the IOSA project.
 http://tops.berlios.de/
 
 The application logo is copyright 2008 Lapo Calamandrei."""
-        
+
         self.logo_data = logo_data
         self.logo = PhotoImage(data = self.logo_data)
         Label(master, image=self.logo).pack()
-        
+
         Label(master, text=title, font=("Helvetica", "16", "bold")).pack()
         Label(master, text=message).pack()
-    
+
     def buttonbox(self):
         box = Frame(self)
         w = Button(box,
@@ -120,13 +121,13 @@ class DownloadDialog(tkSimpleDialog.Dialog):
         message="""
 This dialog will guide you through the download procedure.\n
 Press OK when finished to proceed."""
-        
+
         Label(master, text=title, font=("Helvetica", "16", "bold")).pack()
         self.msg_var = StringVar()
         self.msg_var.set(message)
         self.msg = Label(master, textvariable=self.msg_var)
         self.msg.pack()
-    
+
     def buttonbox(self):
         box = Frame(self)
         self.w = Button(box,
@@ -138,7 +139,7 @@ Press OK when finished to proceed."""
         self.bind("&lt;Return>", self.cancel)
         self.bind("&lt;Escape>", self.cancel)
         box.pack()
-    
+
     def chg_msg(self, new_msg):
         self.msg_var.set(new_msg)
 
@@ -147,7 +148,7 @@ class ConnectDialog(tkSimpleDialog.Dialog):
     def __init__(self, parent, cs):
         self.conn_str = cs
         tkSimpleDialog.Dialog.__init__(self, parent)
-    
+
     def body(self, master):
         title="waiting for data from device"
         message1="Connection initialized with the following parameters:\n"
@@ -165,11 +166,11 @@ class ConnectDialog(tkSimpleDialog.Dialog):
 
 
 class ProcessDialog(tkSimpleDialog.Dialog):
-    def __init__(self, parent, data, model):
+    def __init__(self, parent, data):
         self.data = data
-        self.model = model
+        self.format = ''
         tkSimpleDialog.Dialog.__init__(self, parent)
-    
+
     def body(self, master):
         title="Choose output format and destination file"
         question = "Output format:\n"
@@ -177,39 +178,39 @@ class ProcessDialog(tkSimpleDialog.Dialog):
         top_frame.pack(side = TOP, padx = 5, pady = 5)
         bottom_frame = Frame(master)
         bottom_frame.pack(side = TOP, anchor = S)
-        
+
         Label(top_frame, bitmap="question").pack(side = TOP, anchor = N)
         Label(top_frame, text=title).pack(side = TOP, anchor = N)
         output_frame = Frame(top_frame)
         input_frame = Frame(top_frame)
         output_frame.pack(side = LEFT)
         input_frame.pack(side = LEFT)
-        
+
         message1="Data to be processed:\n"
         params = "%s\n" %(self.data)
-        
-        Label(input_frame, text='Input model').pack(side = TOP)
-        
-        self.optionMODEL_value = StringVar()
-        self.optionMODEL_value.set(self.model)
-        optionMODEL_entry = Menubutton(input_frame,
+
+        Label(input_frame, text='Input format').pack(side = TOP)
+
+        self.option_format_value = StringVar()
+        self.option_format_value.set(self.format)
+        option_format_entry = Menubutton(input_frame,
                                         text="choose a model",
-                                        textvariable=self.optionMODEL_value,
+                                        textvariable=self.option_format_value,
                                         relief = RAISED,
                                         width = 24)
-        optionMODEL_entry.menu = Menu(optionMODEL_entry, tearoff=0)
-        optionMODEL_entry["menu"] = optionMODEL_entry.menu
-        
-        for k,v in models.models.items():
-            optionMODEL_entry.menu.add_radiobutton(
+        option_format_entry.menu = Menu(option_format_entry, tearoff=0)
+        option_format_entry["menu"] = option_format_entry.menu
+
+        for k,v in sorted(formats.formats.items()):
+            option_format_entry.menu.add_radiobutton(
                 label=k,
-                variable=self.optionMODEL_value,
+                variable=self.option_format_value,
                 value=k)
-        optionMODEL_entry.pack(side = LEFT, anchor = W)
-        
+        option_format_entry.pack(side = LEFT, anchor = W)
+
         Label(output_frame, text=question).pack()
         self.output_format = StringVar()
-        for t in ['CSV', 'DAT', 'DXF']:
+        for t in ['CSV', 'DAT', 'DXF']: # FIXME don't use static list here
             w = Radiobutton(output_frame,
                             text = t,
                             value = t,
@@ -226,7 +227,7 @@ class ErrorDialog(tkSimpleDialog.Dialog):
     def __init__(self, parent, message):
         self.message = message
         tkSimpleDialog.Dialog.__init__(self, parent)
-    
+
     def body(self, master):
         title="Error"
         message1="Connection failed with the following error message:\n"
@@ -238,7 +239,7 @@ class ErrorDialog(tkSimpleDialog.Dialog):
         t.insert(END, self.message)
         t.pack()
         Label(master, text=message2).pack()
-    
+
     def buttonbox(self):
         box = Frame(self)
         w = Button(box,
@@ -254,7 +255,7 @@ class ErrorDialog(tkSimpleDialog.Dialog):
 
 class Tops:
     def __init__(self, parent):
-        
+
         buttons_width = 8
         imb_buttonx = "2m"
         imb_buttony = "1m"
@@ -262,28 +263,28 @@ class Tops:
         imb_buttons_framey = "2m"
         imb_int_buttons_framex = "3m"
         imb_int_buttons_framey = "1m"
-        
+
         self.myParent = parent
-        
+
         self.main_frame = Frame(parent) ###
         self.main_frame.pack(expand = YES, fill = BOTH)
-        
+
         self.upper_frame = Frame(self.main_frame) ###
         self.upper_frame.pack(side = TOP, expand = NO, padx = 10,
                                    pady = 5, ipadx = 5, ipady = 5)
-        
+
         self.logo_frame = Frame(self.upper_frame)
         self.logo_frame.pack(side = LEFT, expand = NO)
-        
+
         self.logo_data = logo_data
         self.logo = PhotoImage(data = self.logo_data)
         self.logo_canvas = Label(self.logo_frame, image=self.logo)
         self.logo_canvas.pack(side = LEFT, expand = NO, padx = 5,
                                    pady = 5)
-        
+
         self.header_frame = Frame(self.upper_frame)
         self.header_frame.pack(side = LEFT, expand = NO, pady = 5)
-        
+
         self.buttons_frame = Frame(self.header_frame)
         self.buttons_frame.pack(
             side = TOP,
@@ -291,21 +292,21 @@ class Tops:
             fill = Y,
             ipadx = 5,
             ipady = 5)
-        
+
         # default control panel
         self.control_panel0 = Frame(self.header_frame)
         self.control_panel0.pack(
             side = TOP,
             expand = YES,
             fill = Y, padx = 5, pady = 5)
-        
+
         # control panel for custom serial connection
         self.control_panel = Frame(self.header_frame)
-        
+
         # option 1 : serial port
         self.option1_frame = Frame(self.control_panel0, relief = RIDGE, bd = 1)
         self.option1_frame.pack(side = TOP)
-        
+
         self.option1_label = Label(self.option1_frame,
                                    text="Port",
                                    width = 25)
@@ -317,7 +318,7 @@ class Tops:
         self.option1_entry = Entry(self.option1_frame,
                                    textvariable=self.option1_value,
                                    width = 25)
-        
+
 # ... comment out this Menubutton if you want to use the scan() output
 #
 #        self.option1_entry = Menubutton(self.option1_frame,
@@ -331,18 +332,18 @@ class Tops:
 #            self.option1_entry.menu.add_radiobutton ( label=s,
 #                                           variable=self.option1_value,
 #                                           value = s)
-        
+
         self.option1_entry.pack(side = LEFT, anchor = W)
-        
+
         # option MODEL substitutes all connection parameters for better
         # user experience
-        
+
         self.optionMODEL_frame = Frame(
             self.control_panel0,
             relief = RIDGE,
             bd = 1)
         self.optionMODEL_frame.pack(side = TOP)
-        
+
         self.optionMODEL_label = Label(self.optionMODEL_frame,
                                    text="Total Station",
                                    justify = LEFT,
@@ -356,7 +357,7 @@ class Tops:
                                         width = 24)
         self.optionMODEL_entry.menu = Menu( self.optionMODEL_entry, tearoff=0 )
         self.optionMODEL_entry["menu"] = self.optionMODEL_entry.menu
-        
+
         for k,v in models.models.items():
             self.optionMODEL_entry.menu.add_radiobutton(
                 label=k,
@@ -364,11 +365,11 @@ class Tops:
                 value=k,
                 command=self.print_model)
         self.optionMODEL_entry.pack(side = LEFT, anchor = W)
-        
+
         # option 2 : baudrate
         self.option2_frame = Frame(self.control_panel, relief = RIDGE, bd = 1)
         self.option2_frame.pack(side = TOP)
-        
+
         self.option2_label = Label(self.option2_frame,
                                    text="Baudrate",
                                    width = 25)
@@ -388,11 +389,11 @@ class Tops:
                 value = key,
                 )
         self.option2_entry.pack(side = LEFT, anchor = W)
-        
+
         # option 3 : bytesize
         self.option3_frame = Frame(self.control_panel, relief = RIDGE, bd = 1)
         self.option3_frame.pack(side = TOP)
-        
+
         self.option3_label = Label(self.option3_frame,
                                    text="Bytesize",
                                    justify = LEFT,
@@ -419,11 +420,11 @@ class Tops:
                                                  variable=self.option3_value,
                                                  value = 5 )
         self.option3_entry.pack(side = LEFT, anchor = W)
-        
+
         # option 4 : parity
         self.option4_frame = Frame(self.control_panel, relief = RIDGE, bd = 1)
         self.option4_frame.pack(side = TOP)
-        
+
         self.option4_label = Label(self.option4_frame,
                                    text="Parity setting",
                                    justify = LEFT,
@@ -447,11 +448,11 @@ class Tops:
                                                  variable=self.option4_value,
                                                  value = "O" )
         self.option4_entry.pack(side = LEFT, anchor = W)
-        
+
         # option 5 : stop bit
         self.option5_frame = Frame(self.control_panel, relief = RIDGE, bd = 1)
         self.option5_frame.pack(side = TOP)
-        
+
         self.option5_label = Label(self.option5_frame,
                                    text="Stop bit",
                                    justify = LEFT,
@@ -472,7 +473,7 @@ class Tops:
                                                  variable=self.option5_value,
                                                  value = 2 )
         self.option5_entry.pack(side = LEFT, anchor = W)
-    
+
         # dictionary for passing options to Serial
         self.options = {'port':(1,'str'),
                    'baudrate':(2,'int'),
@@ -482,7 +483,7 @@ class Tops:
                    'timeout':(6,'int'),
                    'xonxoff':(7,'bool'),
                    'rtscts':(8,'bool')}
-        
+
         self.options_z = {1:'port',
                    2:'baudrate',
                    3:'bytesize',
@@ -491,34 +492,34 @@ class Tops:
                    6:'timeout',
                    7:'xonxoff',
                    8:'rtscts'}
-        
+
         # control buttons
-        
+
         self.connect_button = Button(self.buttons_frame,
                                       text = "Connect",
                                       background = "green",
-                                      padx = imb_buttonx, 
+                                      padx = imb_buttonx,
                                       pady = imb_buttony)
         self.connect_button.pack(side = LEFT, anchor = S)
         self.connect_button.bind("<Button-1>", self.connect_action)
         self.connect_button.bind("<Return>", self.connect_action)
-        
+
         self.open_button = Button(self.buttons_frame,
                                       text = "Open file",
-                                      padx = imb_buttonx, 
+                                      padx = imb_buttonx,
                                       pady = imb_buttony)
         self.open_button.pack(side = LEFT, anchor = S)
         self.open_button.bind("<Button-1>", self.open_action)
         self.open_button.bind("<Return>", self.open_action)
-        
+
         self.save_button = Button(self.buttons_frame,
                                       text = "Save raw data",
-                                      padx = imb_buttonx, 
+                                      padx = imb_buttonx,
                                       pady = imb_buttony)
         self.save_button.pack(side = LEFT, anchor = S)
         self.save_button.bind("<Button-1>", self.save_action)
         self.save_button.bind("<Return>", self.save_action)
-        
+
         self.process_button = Button(self.buttons_frame,
                                         text = "Process data",
                                         background = "cyan",
@@ -527,39 +528,39 @@ class Tops:
         self.process_button.pack(side = LEFT, anchor = S)
         self.process_button.bind("<Button-1>", self.process_action)
         self.process_button.bind("<Return>", self.process_action)
-        
+
         self.about_button = Button(self.buttons_frame,
                                       text = "About TOPS",
-                                      padx = imb_buttonx, 
+                                      padx = imb_buttonx,
                                       pady = imb_buttony)
         self.about_button.pack(side = LEFT, anchor = S)
         self.about_button.bind("<Button-1>", self.about_action)
         self.about_button.bind("<Return>", self.about_action)
-        
+
         self.exit_button = Button(self.buttons_frame,
-                                      text = "Quit", 
-                                      padx = imb_buttonx, 
+                                      text = "Quit",
+                                      padx = imb_buttonx,
                                       pady = imb_buttony)
         self.exit_button.pack(side = LEFT, anchor = S)
         self.exit_button.bind("<Button-1>", self.exit_action)
         self.exit_button.bind("<Return>", self.exit_action)
-        
+
         # text frame
         self.text_frame = Frame(self.main_frame)
         self.text_frame.pack(side = BOTTOM, expand = YES, fill = BOTH)
-        
+
         self.text_area = Text(self.text_frame, width = 80)
         self.text_area.insert(END, "Welcome.\nTurn your device on.")
         self.text_area.pack(side = LEFT, expand = YES, fill = Y)
-        
+
         self.scrollY = Scrollbar ( self.text_frame, orient=VERTICAL,
         command=self.text_area.yview )
         self.text_area['yscrollcommand'] = self.scrollY.set
         self.scrollY.pack(side = RIGHT,expand = YES, fill = Y, anchor = W)
-        
+
     def exit_action(self, event):
         self.myParent.destroy()
-    
+
     def print_model(self):
         model = self.optionMODEL_value.get()
         if model != 'Custom':
@@ -578,9 +579,9 @@ class Tops:
                                     fill = Y,
                                     ipadx = 5,
                                     ipady = 5)
-    
+
     def connect_action(self, event):
-        
+
         self.options2 = dict()
         for n in xrange(1,6):
             value = eval("self.option%s_value.get()" %n)
@@ -588,17 +589,17 @@ class Tops:
                 pass
             else:
                 self.options2[self.options_z[n]] = value
-        
+
         chosen_model = self.optionMODEL_value.get()
         chosen_port = self.option1_value.get()
-        
+
         if chosen_model == 'Custom':
-            
+
             # FIXME : convert this section to the new Connector API.
             #  No more string construction!
-            
+
             cs = "serial.Serial("
-            
+
             for k,v in self.options.items():
                 n, t = v
                 cs = cs + "%s = " %k
@@ -613,7 +614,7 @@ class Tops:
                         cs = cs + str(int(eval("self.option%s_value.get()" %n)))
                 elif t == 'bool':
                     cs = cs + str(bool(eval("self.option%s_value.get()" %n)))
-                
+
                 cs = cs + ", "
             connection_string = cs[:-2] + ")" # remove last ", "
             try:
@@ -626,14 +627,14 @@ class Tops:
                 n = TOPSerial.inWaiting()
                 result = TOPSerial.read(n)
                 sleep(0.1)
-                
+
                 # prevent full buffer effect
                 while TOPSerial.inWaiting() > 0:
                     result = result + TOPSerial.read(TOPSerial.inWaiting())
                     sleep(0.1)
-                
+
                 self.replace_text(result)
-        
+
         else:
             module = models.models[chosen_model]
             exec('from models.%s import ModelConnector' % module)
@@ -644,7 +645,7 @@ class Tops:
                 e = ErrorDialog(self.myParent, detail)
             else:
                 st = DownloadDialog(self.myParent)
-                
+
                 mc.start()
                 mc.dl_started.wait()
                 st.chg_msg("The download has started...")
@@ -652,7 +653,7 @@ class Tops:
                 st.chg_msg("The download has finished.\nPress OK to proceed")
                 result = mc.result
                 self.replace_text(result)
-    
+
     def open_action(self, event):
         try:
             d = tkFileDialog.askopenfilename()
@@ -661,22 +662,20 @@ class Tops:
             self.replace_text(oc)
         except:
             pass
-    
+
     def process_action(self, event):
-        
-        chosen_model = str(self.optionMODEL_value.get())
         data = self.text_area.get("1.0", END)
-        d = ProcessDialog(self.myParent, data, chosen_model)
-        module = models.models[d.optionMODEL_value.get()]
+        d = ProcessDialog(self.myParent, data)
+        module = formats.formats[d.option_format_value.get()]
         ofl = str(d.output_format.get()).lower()
         ofp = str(d.output_format.get()).upper()
-        exec('from models.%s import ModelParser' % module)
+        exec('from formats.%s import FormatParser' % module)
         exec('from output.tops_%s import TotalOpen%s as Output' % (ofl, ofp))
-        parsed_data = ModelParser(data)
+        parsed_data = FormatParser(data)
         parsed_points = parsed_data.points
         output = Output(parsed_points)
         sd = tkFileDialog.asksaveasfilename(defaultextension = '.%s' % ofl)
-        
+
         try:
             sd_file = open(sd, 'wb')
         except TypeError:
@@ -684,7 +683,7 @@ class Tops:
         else:
             sd_file.write(output.process())
             sd_file.close()
-        
+
     def save_action(self, event):
         try:
             sd = tkFileDialog.asksaveasfilename(defaultextension = '.tops')
@@ -693,10 +692,10 @@ class Tops:
             oc = of.write(data)
         except:
             pass
-        
+
     def about_action(self, event):
         d = AboutDialog(self.myParent)
-    
+
     def replace_text(self, text):
         self.text_area.delete("1.0",END)
         self.text_area.insert(END,text.replace('\r',''))
