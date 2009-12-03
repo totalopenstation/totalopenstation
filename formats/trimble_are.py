@@ -22,18 +22,16 @@
 
 from . import Parser, Point
 
-class FormatParser(Parser,swapXY=True):
 
-    def is_point(self,line):
+class FormatParser(Parser, swapXY=True):
 
+    def is_point(self, line):
         is_point = False
-
         if "5=" and "4=" and "37=" and "38=" and "39=" in line:
             is_point = True
-
         return is_point
 
-    def get_point(self,chunk):
+    def get_point(self, chunk):
         tokens = {}
         lines = chunk.splitlines()
         for i in lines:
@@ -50,13 +48,11 @@ class FormatParser(Parser,swapXY=True):
         tokens['text'] = lines[0]
 
         try:
-            p = Point(
-                tokens['n'],
-                tokens['x'],
-                tokens['y'],
-                tokens['z'],
-                tokens['p']
-                )
+            p = Point(tokens['n'],
+                      tokens['x'],
+                      tokens['y'],
+                      tokens['z'],
+                      tokens['p'])
         except KeyError:
             pass
         else:
@@ -65,4 +61,3 @@ class FormatParser(Parser,swapXY=True):
     def split_points(self):
         splitted_points = self.data.split('0=')
         return splitted_points
-

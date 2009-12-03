@@ -27,7 +27,7 @@ from optparse import OptionParser
 
 usage = "usage: totalopenstation-cli-parser.py [option] arg1 [option] arg2 ..."
 
-parser = OptionParser(usage = usage)
+parser = OptionParser(usage=usage)
 parser.add_option("-i",
                 "--infile",
                 action="store",
@@ -77,9 +77,7 @@ else:
 if options.outformat:
     try:
         exec('from output.tops_%s import TotalOpen%s as Output' % (
-                options.outformat,
-                options.outformat.upper()
-                ))
+                options.outformat, options.outformat.upper()))
     except ImportError, message:
         sys.exit("\nError:\n%s\n" % message)
 else:
@@ -90,6 +88,7 @@ if options.infile:
     infile = open(options.infile, 'r').read()
 else:
     infile = sys.stdin.read()
+
 
 def main(infile):
     '''After setting up all parameters, finally try to process input data.'''
@@ -110,7 +109,8 @@ def main(infile):
         else:
             if options.overwrite:
                 write_to_file(options.outfile)
-                print "Downloaded data saved to out file %s, overwriting the existing file" % options.outfile
+                print "Downloaded data saved to file %s," % options.outfile,
+                print "overwriting the existing file"
             else:
                 sys.exit("Specified output file already exists\n")
     else:

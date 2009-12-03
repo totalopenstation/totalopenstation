@@ -21,16 +21,17 @@
 # <http://www.gnu.org/licenses/>.
 
 formats = {
-    'Leica TCR 1205' : 'leica_tcr_1205',
-    'Zeiss REC 500' : 'zeiss_rec_500',
-    'Nikon Npl 350' : 'nikon_npl_350',
-    'Leica TCR 705' : 'leica_tcr_705',
-    'Trimble AREA' : 'trimble_are',
+    'Leica TCR 1205': 'leica_tcr_1205',
+    'Zeiss REC 500': 'zeiss_rec_500',
+    'Nikon Npl 350': 'nikon_npl_350',
+    'Leica TCR 705': 'leica_tcr_705',
+    'Trimble AREA': 'trimble_are',
     }
 
+
 def list_formats():
-    mod_string = "List of supported input formats:\n" + "-"*20+ "\n"
-    for k,v in sorted(formats.items()):
+    mod_string = "List of supported input formats:\n" + "-" * 20 + "\n"
+    for k, v in sorted(formats.items()):
         mod_string += k.ljust(20) + v + "\n"
     mod_string += "\n"
     return mod_string

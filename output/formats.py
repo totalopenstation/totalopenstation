@@ -6,11 +6,11 @@
 # Under the GNU GPL 3 License
 
 formats = {
-    'DXF' : 'tops_dxf',
-    'CSV' : 'tops_csv',
-    'SQL' : 'tops_sql',
-    'DAT' : 'tops_dat',
-    'TXT' : 'tops_txt',
+    'DXF': 'tops_dxf',
+    'CSV': 'tops_csv',
+    'SQL': 'tops_sql',
+    'DAT': 'tops_dat',
+    'TXT': 'tops_txt',
     }
 
 if __name__ == '__main__':
@@ -18,4 +18,3 @@ if __name__ == '__main__':
     for k, v in formats.items():
         print k.ljust(10), v
     print("")
-

@@ -49,7 +49,7 @@ class TotalOpenDXF:
         result = ''
 
         # extract layer list
-        codes = set([ p[4] for p in self.data ])
+        codes = set([p[4] for p in self.data])
         layers = dict(enumerate(codes))
         colors = dict(zip(layers.values(), layers.keys()))
 
@@ -130,8 +130,5 @@ class TotalOpenDXF:
 
 if __name__ == "__main__":
     TotalOpenDXF(
-        [
-            (1,2,3,4,'qwerty'),
-            ("2.3",42,45,12,'asdfg')
-            ])
-
+        [(1, 2, 3, 4, 'qwerty'),
+         ("2.3", 42, 45, 12, 'asdfg')])

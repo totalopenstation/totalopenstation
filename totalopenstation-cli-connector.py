@@ -10,9 +10,9 @@ import os
 from optparse import OptionParser
 
 
-usage = "usage: totalopenstation-cli-connector.py [option] arg1 [option] arg2 ..."
+usage = "usage: %prog [option] arg1 [option] arg2 ..."
 
-parser = OptionParser(usage = usage)
+parser = OptionParser(usage=usage)
 parser.add_option("-m",
                 "--model",
                 action="store",
@@ -64,4 +64,3 @@ if options.outfile:
         sys.exit("Specified output file already exists\n")
 else:
     sys.stdout.write(result)
-
