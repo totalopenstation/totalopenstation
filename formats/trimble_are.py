@@ -23,7 +23,10 @@
 from . import Parser, Point
 
 
-class FormatParser(Parser, swapXY=True):
+class FormatParser(Parser):
+
+    def __init__(self, data):
+        Parser.__init__(self, data, swapXY=True)
 
     def is_point(self, line):
         is_point = False
