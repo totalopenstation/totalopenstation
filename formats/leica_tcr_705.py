@@ -21,9 +21,10 @@
 
 from . import Parser, Point
 
+
 class FormatParser(Parser):
 
-    def is_point(self,line):
+    def is_point(self, line):
 
         tokens = line.split(",")
         is_point = False
@@ -44,16 +45,19 @@ class FormatParser(Parser):
 
         return is_point
 
-    def get_point(self,line):
+    def get_point(self, line):
 
         tokens = line.split(",")
 
-        if len(tokens)> 4:
+        if len(tokens) > 4:
             text = str(tokens[4])
         else:
             text = ""
 
-        p = Point(str(tokens[0]), float(tokens[1]), float(tokens[2]), float(tokens[3]), text)
+        p = Point(str(tokens[0]),
+                  float(tokens[1]),
+                  float(tokens[2]),
+                  float(tokens[3]),
+                  text)
 
         return p
-

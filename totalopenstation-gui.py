@@ -27,7 +27,8 @@ from formats import formats
 
 from Tkinter import *
 from tkMessageBox import showwarning, showinfo, askokcancel
-import tkSimpleDialog, tkFileDialog
+import tkSimpleDialog
+import tkFileDialog
 
 
 def scan():
@@ -43,7 +44,7 @@ def scan():
     for i in range(256):
         try:
             s = serial.Serial(i)
-            available.append( (i, s.portstr))
+            available.append((i, s.portstr))
             s.close()   #explicit close 'cause of delayed GC in java
         except serial.SerialException:
             pass
@@ -85,9 +86,10 @@ ABNCBhycraFEwdSSiQWZ1PL78Qb1TrtiAQEAOw==\n'''
 
 
 class AboutDialog(tkSimpleDialog.Dialog):
+
     def body(self, master):
-        title="Total Open Station 0.1"
-        message="""
+        title = "Total Open Station 0.1"
+        message = """
 Total Open Station is copyright 2008-2009 Luca Bianconi, Stefano Costa
 and the IOSA project.
 
@@ -96,7 +98,7 @@ http://tops.berlios.de/
 The application logo is copyright 2008 Lapo Calamandrei."""
 
         self.logo_data = logo_data
-        self.logo = PhotoImage(data = self.logo_data)
+        self.logo = PhotoImage(data=self.logo_data)
         Label(master, image=self.logo).pack()
 
         Label(master, text=title, font=("Helvetica", "16", "bold")).pack()
@@ -116,9 +118,10 @@ The application logo is copyright 2008 Lapo Calamandrei."""
 
 
 class DownloadDialog(tkSimpleDialog.Dialog):
+
     def body(self, master):
-        title="Total Open Station download"
-        message="""
+        title = "Total Open Station download"
+        message = """
 This dialog will guide you through the download procedure.\n
 Press OK when finished to proceed."""
 
@@ -145,14 +148,15 @@ Press OK when finished to proceed."""
 
 
 class ConnectDialog(tkSimpleDialog.Dialog):
+
     def __init__(self, parent, cs):
         self.conn_str = cs
         tkSimpleDialog.Dialog.__init__(self, parent)
 
     def body(self, master):
-        title="waiting for data from device"
-        message1="Connection initialized with the following parameters:\n"
-        params = "%s\n" %(self.conn_str)
+        title = "waiting for data from device"
+        message1 = "Connection initialized with the following parameters:\n"
+        params = "%s\n" % self.conn_str
         message2 = "\nStart the download procedure on the device.\n"
         message2 = message2 + "Press OK when done."
         Label(master, bitmap="hourglass").pack()
@@ -166,55 +170,56 @@ class ConnectDialog(tkSimpleDialog.Dialog):
 
 
 class ProcessDialog(tkSimpleDialog.Dialog):
+
     def __init__(self, parent, data):
         self.data = data
         self.format = ''
         tkSimpleDialog.Dialog.__init__(self, parent)
 
     def body(self, master):
-        title="Choose output format and destination file"
+        title = "Choose output format and destination file"
         question = "Output format:\n"
         top_frame = Frame(master)
-        top_frame.pack(side = TOP, padx = 5, pady = 5)
+        top_frame.pack(side=TOP, padx=5, pady=5)
         bottom_frame = Frame(master)
-        bottom_frame.pack(side = TOP, anchor = S)
+        bottom_frame.pack(side=TOP, anchor=S)
 
-        Label(top_frame, bitmap="question").pack(side = TOP, anchor = N)
-        Label(top_frame, text=title).pack(side = TOP, anchor = N)
+        Label(top_frame, bitmap="question").pack(side=TOP, anchor=N)
+        Label(top_frame, text=title).pack(side=TOP, anchor=N)
         output_frame = Frame(top_frame)
         input_frame = Frame(top_frame)
-        output_frame.pack(side = LEFT)
-        input_frame.pack(side = LEFT)
+        output_frame.pack(side=LEFT)
+        input_frame.pack(side=LEFT)
 
-        message1="Data to be processed:\n"
-        params = "%s\n" %(self.data)
+        message1 = "Data to be processed:\n"
+        params = "%s\n" % self.data
 
-        Label(input_frame, text='Input format').pack(side = TOP)
+        Label(input_frame, text='Input format').pack(side=TOP)
 
         self.option_format_value = StringVar()
         self.option_format_value.set(self.format)
         option_format_entry = Menubutton(input_frame,
                                         text="choose a model",
                                         textvariable=self.option_format_value,
-                                        relief = RAISED,
-                                        width = 24)
+                                        relief=RAISED,
+                                        width=24)
         option_format_entry.menu = Menu(option_format_entry, tearoff=0)
         option_format_entry["menu"] = option_format_entry.menu
 
-        for k,v in sorted(formats.formats.items()):
+        for k, v in sorted(formats.formats.items()):
             option_format_entry.menu.add_radiobutton(
                 label=k,
                 variable=self.option_format_value,
                 value=k)
-        option_format_entry.pack(side = LEFT, anchor = W)
+        option_format_entry.pack(side=LEFT, anchor=W)
 
         Label(output_frame, text=question).pack()
         self.output_format = StringVar()
         for t in ['CSV', 'DAT', 'DXF']: # FIXME don't use static list here
             w = Radiobutton(output_frame,
-                            text = t,
-                            value = t,
-                            variable = self.output_format
+                            text=t,
+                            value=t,
+                            variable=self.output_format,
                             ).pack()
         Label(bottom_frame, text=message1).pack()
         t = Text(bottom_frame,
@@ -224,13 +229,14 @@ class ProcessDialog(tkSimpleDialog.Dialog):
 
 
 class ErrorDialog(tkSimpleDialog.Dialog):
+
     def __init__(self, parent, message):
         self.message = message
         tkSimpleDialog.Dialog.__init__(self, parent)
 
     def body(self, master):
-        title="Error"
-        message1="Connection failed with the following error message:\n"
+        title = "Error"
+        message1 = "Connection failed with the following error message:\n"
         message2 = "\nCheck your connection parameters and try again.\n"
         Label(master, bitmap="error", fg="red").pack()
         Label(master, text=title, font=("Helvetica", "16", "bold")).pack()
@@ -254,6 +260,7 @@ class ErrorDialog(tkSimpleDialog.Dialog):
 
 
 class Tops:
+
     def __init__(self, parent):
 
         buttons_width = 8
@@ -267,65 +274,65 @@ class Tops:
         self.myParent = parent
 
         self.main_frame = Frame(parent) ###
-        self.main_frame.pack(expand = YES, fill = BOTH)
+        self.main_frame.pack(expand=YES, fill=BOTH)
 
         self.upper_frame = Frame(self.main_frame) ###
-        self.upper_frame.pack(side = TOP, expand = NO, padx = 10,
-                                   pady = 5, ipadx = 5, ipady = 5)
+        self.upper_frame.pack(side=TOP, expand=NO, padx=10,
+                                   pady=5, ipadx=5, ipady=5)
 
         self.logo_frame = Frame(self.upper_frame)
-        self.logo_frame.pack(side = LEFT, expand = NO)
+        self.logo_frame.pack(side=LEFT, expand=NO)
 
         self.logo_data = logo_data
-        self.logo = PhotoImage(data = self.logo_data)
+        self.logo = PhotoImage(data=self.logo_data)
         self.logo_canvas = Label(self.logo_frame, image=self.logo)
-        self.logo_canvas.pack(side = LEFT, expand = NO, padx = 5,
-                                   pady = 5)
+        self.logo_canvas.pack(side=LEFT, expand=NO, padx=5,
+                                   pady=5)
 
         self.header_frame = Frame(self.upper_frame)
-        self.header_frame.pack(side = LEFT, expand = NO, pady = 5)
+        self.header_frame.pack(side=LEFT, expand=NO, pady=5)
 
         self.buttons_frame = Frame(self.header_frame)
         self.buttons_frame.pack(
-            side = TOP,
-            expand = NO,
-            fill = Y,
-            ipadx = 5,
-            ipady = 5)
+            side=TOP,
+            expand=NO,
+            fill=Y,
+            ipadx=5,
+            ipady=5)
 
         # default control panel
         self.control_panel0 = Frame(self.header_frame)
         self.control_panel0.pack(
-            side = TOP,
-            expand = YES,
-            fill = Y, padx = 5, pady = 5)
+            side=TOP,
+            expand=YES,
+            fill=Y, padx=5, pady=5)
 
         # control panel for custom serial connection
         self.control_panel = Frame(self.header_frame)
 
         # option 1 : serial port
-        self.option1_frame = Frame(self.control_panel0, relief = RIDGE, bd = 1)
-        self.option1_frame.pack(side = TOP)
+        self.option1_frame = Frame(self.control_panel0, relief=RIDGE, bd=1)
+        self.option1_frame.pack(side=TOP)
 
         self.option1_label = Label(self.option1_frame,
                                    text="Port",
-                                   width = 25)
-        self.option1_label.pack(side = LEFT)
+                                   width=25)
+        self.option1_label.pack(side=LEFT)
         self.option1_value = StringVar()
 
 # Leave this Entry uncommented to enter port as a string, or ...
 #
         self.option1_entry = Entry(self.option1_frame,
                                    textvariable=self.option1_value,
-                                   width = 25)
+                                   width=25)
 
 # ... comment out this Menubutton if you want to use the scan() output
 #
 #        self.option1_entry = Menubutton(self.option1_frame,
 #                                        text="choose a value",
 #                                        textvariable=self.option1_value,
-#                                        relief = RAISED,
-#                                        width = 24)
+#                                        relief=RAISED,
+#                                        width=24)
 #        self.option1_entry.menu = Menu( self.option1_entry, tearoff=0 )
 #        self.option1_entry["menu"] = self.option1_entry.menu
 #        for n,s in scan():
@@ -333,230 +340,231 @@ class Tops:
 #                                           variable=self.option1_value,
 #                                           value = s)
 
-        self.option1_entry.pack(side = LEFT, anchor = W)
+        self.option1_entry.pack(side=LEFT, anchor=W)
 
         # option MODEL substitutes all connection parameters for better
         # user experience
 
         self.optionMODEL_frame = Frame(
             self.control_panel0,
-            relief = RIDGE,
-            bd = 1)
-        self.optionMODEL_frame.pack(side = TOP)
+            relief=RIDGE,
+            bd=1)
+        self.optionMODEL_frame.pack(side=TOP)
 
         self.optionMODEL_label = Label(self.optionMODEL_frame,
                                    text="Total Station",
-                                   justify = LEFT,
-                                   width = 25)
-        self.optionMODEL_label.pack(side = LEFT, anchor = E)
+                                   justify=LEFT,
+                                   width=25)
+        self.optionMODEL_label.pack(side=LEFT, anchor=E)
         self.optionMODEL_value = StringVar()
         self.optionMODEL_entry = Menubutton(self.optionMODEL_frame,
                                         text="choose a model",
                                         textvariable=self.optionMODEL_value,
-                                        relief = RAISED,
-                                        width = 24)
-        self.optionMODEL_entry.menu = Menu( self.optionMODEL_entry, tearoff=0 )
+                                        relief=RAISED,
+                                        width=24)
+        self.optionMODEL_entry.menu = Menu(self.optionMODEL_entry, tearoff=0)
         self.optionMODEL_entry["menu"] = self.optionMODEL_entry.menu
 
-        for k,v in models.models.items():
+        for k, v in models.models.items():
             self.optionMODEL_entry.menu.add_radiobutton(
                 label=k,
                 variable=self.optionMODEL_value,
                 value=k,
                 command=self.print_model)
-        self.optionMODEL_entry.pack(side = LEFT, anchor = W)
+        self.optionMODEL_entry.pack(side=LEFT, anchor=W)
 
         # option 2 : baudrate
-        self.option2_frame = Frame(self.control_panel, relief = RIDGE, bd = 1)
-        self.option2_frame.pack(side = TOP)
+        self.option2_frame = Frame(self.control_panel, relief=RIDGE, bd=1)
+        self.option2_frame.pack(side=TOP)
 
         self.option2_label = Label(self.option2_frame,
                                    text="Baudrate",
-                                   width = 25)
-        self.option2_label.pack(side = LEFT)
+                                   width=25)
+        self.option2_label.pack(side=LEFT)
         self.option2_value = IntVar()
         self.option2_entry = Menubutton(self.option2_frame,
                                         text="choose a value",
                                         textvariable=self.option2_value,
-                                        relief = RAISED,
-                                        width = 24)
-        self.option2_entry.menu = Menu( self.option2_entry, tearoff=0 )
+                                        relief=RAISED,
+                                        width=24)
+        self.option2_entry.menu = Menu(self.option2_entry, tearoff=0)
         self.option2_entry["menu"] = self.option2_entry.menu
         for key in sorted(serial.baudrate_constants.keys()): # dynamic list
             self.option2_entry.menu.add_radiobutton(
-                label = "%s" % key,
-                variable = self.option2_value,
-                value = key,
+                label="%s" % key,
+                variable=self.option2_value,
+                value=key,
                 )
-        self.option2_entry.pack(side = LEFT, anchor = W)
+        self.option2_entry.pack(side=LEFT, anchor=W)
 
         # option 3 : bytesize
-        self.option3_frame = Frame(self.control_panel, relief = RIDGE, bd = 1)
-        self.option3_frame.pack(side = TOP)
+        self.option3_frame = Frame(self.control_panel, relief=RIDGE, bd=1)
+        self.option3_frame.pack(side=TOP)
 
         self.option3_label = Label(self.option3_frame,
                                    text="Bytesize",
-                                   justify = LEFT,
-                                   width = 25)
-        self.option3_label.pack(side = LEFT, anchor = E)
+                                   justify=LEFT,
+                                   width=25)
+        self.option3_label.pack(side=LEFT, anchor=E)
         self.option3_value = IntVar()
         self.option3_entry = Menubutton(self.option3_frame,
                                         text="choose a value",
                                         textvariable=self.option3_value,
-                                        relief = RAISED,
-                                        width = 24)
-        self.option3_entry.menu = Menu( self.option3_entry, tearoff=0 )
+                                        relief=RAISED,
+                                        width=24)
+        self.option3_entry.menu = Menu(self.option3_entry, tearoff=0)
         self.option3_entry["menu"] = self.option3_entry.menu
-        self.option3_entry.menu.add_radiobutton (label="8",
-                                                 variable=self.option3_value,
-                                                 value = 8 )
-        self.option3_entry.menu.add_radiobutton (label="7",
-                                                 variable=self.option3_value,
-                                                 value = 7 )
-        self.option3_entry.menu.add_radiobutton (label="6",
-                                                 variable=self.option3_value,
-                                                 value = 6 )
-        self.option3_entry.menu.add_radiobutton (label="5",
-                                                 variable=self.option3_value,
-                                                 value = 5 )
-        self.option3_entry.pack(side = LEFT, anchor = W)
+        self.option3_entry.menu.add_radiobutton(label="8",
+                                                variable=self.option3_value,
+                                                value=8)
+        self.option3_entry.menu.add_radiobutton(label="7",
+                                                variable=self.option3_value,
+                                                value=7)
+        self.option3_entry.menu.add_radiobutton(label="6",
+                                                variable=self.option3_value,
+                                                value=6)
+        self.option3_entry.menu.add_radiobutton(label="5",
+                                                variable=self.option3_value,
+                                                value=5)
+        self.option3_entry.pack(side=LEFT, anchor=W)
 
         # option 4 : parity
-        self.option4_frame = Frame(self.control_panel, relief = RIDGE, bd = 1)
-        self.option4_frame.pack(side = TOP)
+        self.option4_frame = Frame(self.control_panel, relief=RIDGE, bd=1)
+        self.option4_frame.pack(side=TOP)
 
         self.option4_label = Label(self.option4_frame,
                                    text="Parity setting",
-                                   justify = LEFT,
-                                   width = 25)
-        self.option4_label.pack(side = LEFT, anchor = E)
+                                   justify=LEFT,
+                                   width=25)
+        self.option4_label.pack(side=LEFT, anchor=E)
         self.option4_value = StringVar()
         self.option4_entry = Menubutton(self.option4_frame,
                                         text="choose a value",
                                         textvariable=self.option4_value,
-                                        relief = RAISED,
-                                        width = 24)
-        self.option4_entry.menu = Menu( self.option4_entry, tearoff=0 )
+                                        relief=RAISED,
+                                        width=24)
+        self.option4_entry.menu = Menu(self.option4_entry, tearoff=0)
         self.option4_entry["menu"] = self.option4_entry.menu
-        self.option4_entry.menu.add_radiobutton (label="Even",
-                                                 variable=self.option4_value,
-                                                 value = "E" )
-        self.option4_entry.menu.add_radiobutton (label="None",
-                                                 variable=self.option4_value,
-                                                 value = "N" )
-        self.option4_entry.menu.add_radiobutton (label="Odd",
-                                                 variable=self.option4_value,
-                                                 value = "O" )
-        self.option4_entry.pack(side = LEFT, anchor = W)
+        self.option4_entry.menu.add_radiobutton(label="Even",
+                                                variable=self.option4_value,
+                                                value="E")
+        self.option4_entry.menu.add_radiobutton(label="None",
+                                                variable=self.option4_value,
+                                                value="N")
+        self.option4_entry.menu.add_radiobutton(label="Odd",
+                                                variable=self.option4_value,
+                                                value="O")
+        self.option4_entry.pack(side=LEFT, anchor=W)
 
         # option 5 : stop bit
-        self.option5_frame = Frame(self.control_panel, relief = RIDGE, bd = 1)
-        self.option5_frame.pack(side = TOP)
+        self.option5_frame = Frame(self.control_panel, relief=RIDGE, bd=1)
+        self.option5_frame.pack(side=TOP)
 
         self.option5_label = Label(self.option5_frame,
                                    text="Stop bit",
-                                   justify = LEFT,
-                                   width = 25)
-        self.option5_label.pack(side = LEFT, anchor = E)
+                                   justify=LEFT,
+                                   width=25)
+        self.option5_label.pack(side=LEFT, anchor=E)
         self.option5_value = IntVar()
         self.option5_entry = Menubutton(self.option5_frame,
                                         text="choose a value",
                                         textvariable=self.option5_value,
-                                        relief = RAISED,
-                                        width = 24)
-        self.option5_entry.menu =   Menu ( self.option5_entry, tearoff=0 )
-        self.option5_entry["menu"]  = self.option5_entry.menu
-        self.option5_entry.menu.add_radiobutton (label="1",
-                                                 variable=self.option5_value,
-                                                 value = 1 )
-        self.option5_entry.menu.add_radiobutton (label="2",
-                                                 variable=self.option5_value,
-                                                 value = 2 )
-        self.option5_entry.pack(side = LEFT, anchor = W)
+                                        relief=RAISED,
+                                        width=24)
+        self.option5_entry.menu = Menu(self.option5_entry, tearoff=0)
+        self.option5_entry["menu"] = self.option5_entry.menu
+        self.option5_entry.menu.add_radiobutton(label="1",
+                                                variable=self.option5_value,
+                                                value=1)
+        self.option5_entry.menu.add_radiobutton(label="2",
+                                                variable=self.option5_value,
+                                                value=2)
+        self.option5_entry.pack(side=LEFT, anchor=W)
 
         # dictionary for passing options to Serial
-        self.options = {'port':(1,'str'),
-                   'baudrate':(2,'int'),
-                   'bytesize':(3,'int'),
-                   'parity':(4,'str'),
-                   'stopbits':(5,'int'),
-                   'timeout':(6,'int'),
-                   'xonxoff':(7,'bool'),
-                   'rtscts':(8,'bool')}
+        self.options = {'port': (1, 'str'),
+                   'baudrate': (2, 'int'),
+                   'bytesize': (3, 'int'),
+                   'parity': (4, 'str'),
+                   'stopbits': (5, 'int'),
+                   'timeout': (6, 'int'),
+                   'xonxoff': (7, 'bool'),
+                   'rtscts': (8, 'bool')}
 
-        self.options_z = {1:'port',
-                   2:'baudrate',
-                   3:'bytesize',
-                   4:'parity',
-                   5:'stopbits',
-                   6:'timeout',
-                   7:'xonxoff',
-                   8:'rtscts'}
+        self.options_z = {1: 'port',
+                   2: 'baudrate',
+                   3: 'bytesize',
+                   4: 'parity',
+                   5: 'stopbits',
+                   6: 'timeout',
+                   7: 'xonxoff',
+                   8: 'rtscts'}
 
         # control buttons
 
         self.connect_button = Button(self.buttons_frame,
-                                      text = "Connect",
-                                      background = "green",
-                                      padx = imb_buttonx,
-                                      pady = imb_buttony)
-        self.connect_button.pack(side = LEFT, anchor = S)
+                                      text="Connect",
+                                      background="green",
+                                      padx=imb_buttonx,
+                                      pady=imb_buttony)
+        self.connect_button.pack(side=LEFT, anchor=S)
         self.connect_button.bind("<Button-1>", self.connect_action)
         self.connect_button.bind("<Return>", self.connect_action)
 
         self.open_button = Button(self.buttons_frame,
-                                      text = "Open file",
-                                      padx = imb_buttonx,
-                                      pady = imb_buttony)
-        self.open_button.pack(side = LEFT, anchor = S)
+                                      text="Open file",
+                                      padx=imb_buttonx,
+                                      pady=imb_buttony)
+        self.open_button.pack(side=LEFT, anchor=S)
         self.open_button.bind("<Button-1>", self.open_action)
         self.open_button.bind("<Return>", self.open_action)
 
         self.save_button = Button(self.buttons_frame,
-                                      text = "Save raw data",
-                                      padx = imb_buttonx,
-                                      pady = imb_buttony)
-        self.save_button.pack(side = LEFT, anchor = S)
+                                      text="Save raw data",
+                                      padx=imb_buttonx,
+                                      pady=imb_buttony)
+        self.save_button.pack(side=LEFT, anchor=S)
         self.save_button.bind("<Button-1>", self.save_action)
         self.save_button.bind("<Return>", self.save_action)
 
         self.process_button = Button(self.buttons_frame,
-                                        text = "Process data",
-                                        background = "cyan",
-                                        padx = imb_buttonx,
-                                        pady = imb_buttony)
-        self.process_button.pack(side = LEFT, anchor = S)
+                                     text="Process data",
+                                     background="cyan",
+                                     padx=imb_buttonx,
+                                     pady=imb_buttony)
+        self.process_button.pack(side=LEFT, anchor=S)
         self.process_button.bind("<Button-1>", self.process_action)
         self.process_button.bind("<Return>", self.process_action)
 
         self.about_button = Button(self.buttons_frame,
-                                      text = "About TOPS",
-                                      padx = imb_buttonx,
-                                      pady = imb_buttony)
-        self.about_button.pack(side = LEFT, anchor = S)
+                                   text="About TOPS",
+                                   padx=imb_buttonx,
+                                   pady=imb_buttony)
+        self.about_button.pack(side=LEFT, anchor=S)
         self.about_button.bind("<Button-1>", self.about_action)
         self.about_button.bind("<Return>", self.about_action)
 
         self.exit_button = Button(self.buttons_frame,
-                                      text = "Quit",
-                                      padx = imb_buttonx,
-                                      pady = imb_buttony)
-        self.exit_button.pack(side = LEFT, anchor = S)
+                                  text="Quit",
+                                  padx=imb_buttonx,
+                                  pady=imb_buttony)
+        self.exit_button.pack(side=LEFT, anchor=S)
         self.exit_button.bind("<Button-1>", self.exit_action)
         self.exit_button.bind("<Return>", self.exit_action)
 
         # text frame
         self.text_frame = Frame(self.main_frame)
-        self.text_frame.pack(side = BOTTOM, expand = YES, fill = BOTH)
+        self.text_frame.pack(side=BOTTOM, expand=YES, fill=BOTH)
 
-        self.text_area = Text(self.text_frame, width = 80)
+        self.text_area = Text(self.text_frame, width=80)
         self.text_area.insert(END, "Welcome.\nTurn your device on.")
-        self.text_area.pack(side = LEFT, expand = YES, fill = Y)
+        self.text_area.pack(side=LEFT, expand=YES, fill=Y)
 
-        self.scrollY = Scrollbar ( self.text_frame, orient=VERTICAL,
-        command=self.text_area.yview )
+        self.scrollY = Scrollbar(self.text_frame,
+                                 orient=VERTICAL,
+                                 command=self.text_area.yview)
         self.text_area['yscrollcommand'] = self.scrollY.set
-        self.scrollY.pack(side = RIGHT,expand = YES, fill = Y, anchor = W)
+        self.scrollY.pack(side=RIGHT, expand=YES, fill=Y, anchor=W)
 
     def exit_action(self, event):
         self.myParent.destroy()
@@ -574,17 +582,17 @@ class Tops:
             self.option3_value.set(8)
             self.option4_value.set('N')
             self.option5_value.set(1)
-            self.control_panel.pack(side = TOP,
-                                    expand = YES,
-                                    fill = Y,
-                                    ipadx = 5,
-                                    ipady = 5)
+            self.control_panel.pack(side=TOP,
+                                    expand=YES,
+                                    fill=Y,
+                                    ipadx=5,
+                                    ipady=5)
 
     def connect_action(self, event):
 
         self.options2 = dict()
-        for n in xrange(1,6):
-            value = eval("self.option%s_value.get()" %n)
+        for n in xrange(1, 6):
+            value = eval("self.option%s_value.get()" % n)
             if value == 0 or value == '':
                 pass
             else:
@@ -600,22 +608,22 @@ class Tops:
 
             cs = "serial.Serial("
 
-            for k,v in self.options.items():
+            for k, v in self.options.items():
                 n, t = v
-                cs = cs + "%s = " %k
+                cs += "%s = " % k
                 if t == 'str':
-                    cs = cs + "'" + eval("self.option%s_value.get()" %n) + "'"
+                    cs += "'" + eval("self.option%s_value.get()" % n) + "'"
                 elif t == 'int':
                     try:
-                        int(eval("self.option%s_value.get()" %n))
+                        int(eval("self.option%s_value.get()" % n))
                     except ValueError:
-                        cs = cs + "None"
+                        cs += "None"
                     else:
-                        cs = cs + str(int(eval("self.option%s_value.get()" %n)))
+                        cs += + str(int(eval("self.option%s_value.get()" % n)))
                 elif t == 'bool':
-                    cs = cs + str(bool(eval("self.option%s_value.get()" %n)))
+                    cs += str(bool(eval("self.option%s_value.get()" % n)))
 
-                cs = cs + ", "
+                cs = += ", "
             connection_string = cs[:-2] + ")" # remove last ", "
             try:
                 TOPSerial = eval(connection_string)
@@ -674,19 +682,20 @@ class Tops:
         parsed_data = FormatParser(data)
         parsed_points = parsed_data.points
         output = Output(parsed_points)
-        sd = tkFileDialog.asksaveasfilename(defaultextension = '.%s' % ofl)
+        sd = tkFileDialog.asksaveasfilename(defaultextension='.%s' % ofl)
 
         try:
             sd_file = open(sd, 'wb')
         except TypeError:
-            showwarning("No output file specified","No processing settings entered!\n")
+            showwarning("No output file specified",
+                        "No processing settings entered!\n")
         else:
             sd_file.write(output.process())
             sd_file.close()
 
     def save_action(self, event):
         try:
-            sd = tkFileDialog.asksaveasfilename(defaultextension = '.tops')
+            sd = tkFileDialog.asksaveasfilename(defaultextension='.tops')
             data = self.text_area.get("1.0", END)
             of = open(sd, 'w')
             oc = of.write(data)
@@ -697,12 +706,11 @@ class Tops:
         d = AboutDialog(self.myParent)
 
     def replace_text(self, text):
-        self.text_area.delete("1.0",END)
-        self.text_area.insert(END,text.replace('\r',''))
+        self.text_area.delete("1.0", END)
+        self.text_area.insert(END, text.replace('\r', ''))
 
 
 root = Tk()
 Tops = Tops(root)
 root.title("Total Open Station")
 root.mainloop()
-

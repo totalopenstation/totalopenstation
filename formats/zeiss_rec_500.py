@@ -21,51 +21,45 @@
 
 from . import Parser, Point
 
+
 class FormatParser(Parser):
 
     def __init__(self, data):
         Parser.__init__(self, data, swapXY=True)
 
-    def is_point(self,line):
-
+    def is_point(self, line):
         try:
             tokens = {
-                'sequence' : line[0:7],
-                'pid' : line[8:27],
-                'text' : line[27:32],
-                'X_str' : line[36],
-                'x' : line[38:50],
-                'Y_str' : line[51],
-                'y' : line[53:66],
-                'Z_str' : line[67],
-                'z' : line[69:80]
+                'sequence': line[0:7],
+                'pid': line[8:27],
+                'text': line[27:32],
+                'X_str': line[36],
+                'x': line[38:50],
+                'Y_str': line[51],
+                'y': line[53:66],
+                'Z_str': line[67],
+                'z': line[69:80],
                 }
-
             int(tokens['sequence'])
             int(tokens['pid'])
             float(tokens['x'])
             float(tokens['y'])
             float(tokens['z'])
-
         except (ValueError, IndexError):
-
             is_point = False
-
         else:
-
             is_point = True
-
         return is_point
 
-    def get_point(self,line):
+    def get_point(self, line):
         '''Gets a point from a line retrieving basic data.'''
 
         tokens = {
-            'pid' : line[8:27].strip(),   # the result is more elegant than
-            'text' : line[27:32].strip(), # the code (Heisenberg rocks!)
-            'x' : line[38:50].strip(),
-            'y' : line[53:66].strip(),
-            'z' : line[69:80].strip()
+            'pid': line[8:27].strip(),   # the result is more elegant than
+            'text': line[27:32].strip(), # the code (Heisenberg rocks!)
+            'x': line[38:50].strip(),
+            'y': line[53:66].strip(),
+            'z': line[69:80].strip(),
             }
 
         point_id = int(tokens['pid'])
@@ -80,10 +74,13 @@ class FormatParser(Parser):
         x = str(tokens['x'])
         y = str(tokens['y'])
         z = str(tokens['z'])
-        """ Even here it would have been better not giving x and y the wrong values(the inverted ones)but directly the right ones! """
+        # Even here it would have been better not giving x and y the
+        # wrong values(the inverted ones)but directly the right ones!
+
         p = Point(point_id, y, x, z, text)
 
-        """ Here it's always True so it's not worthy making the machine evaluating the condition. """
+        # Here it's always True so it's not worthy making the machine
+        # evaluating the condition.
 
         #if self.swapXY is True:
             #p = Point(point_id, y, x, z, text)
@@ -91,4 +88,3 @@ class FormatParser(Parser):
             #p = Point(point_id, x, y, z, text)
 
         return p
-

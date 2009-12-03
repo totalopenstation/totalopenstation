@@ -19,15 +19,16 @@
 # along with Total Open Station.  If not, see
 # <http://www.gnu.org/licenses/>.
 
+
 class Point:
 
     def __init__(self, p_id, x, y, z, text):
 
-        self.p_id= p_id
-        self.x=x
-        self.y=y
-        self.z=z
-        self.text=text
+        self.p_id = p_id
+        self.x = x
+        self.y = y
+        self.z = z
+        self.text = text
 
         self.tuplepoint = (self.p_id, self.x, self.y, self.z, self.text)
 
@@ -36,10 +37,10 @@ class Point:
 
 
 class Parser:
-    '''Parses a *single* string of raw data and turns it to the internal format.
+    '''Parses a *single* string of raw data.
 
-    This means that if you plan to load data from a file you have to pass
-    the output of open(file).read() to this class.'''
+    This means that if you plan to load data from a file you have to
+    pass the output of open(file).read() to this class.'''
 
     def __init__(self, data, swapXY=False):
 
@@ -49,7 +50,7 @@ class Parser:
 
         valid_lines = filter(self.is_point, self.d)
         fg_lines = map(self.get_point, valid_lines)
-        self.points = [ p.tuplepoint for p in fg_lines if p is not None ]
+        self.points = [p.tuplepoint for p in fg_lines if p is not None]
 
     def is_point(self):
         """Action for finding which parts of the source file are points.
@@ -76,4 +77,3 @@ class Parser:
         Override this method if the format is different."""
 
         return self.data.splitlines()
-

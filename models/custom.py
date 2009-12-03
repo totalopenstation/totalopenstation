@@ -7,10 +7,8 @@
 
 from generic import *
 
+
 class ModelConnector(Connector):
+
     def __init__(self, port):
         Connector.__init__(self, port=port)
-
-class ModelParser(Parser):
-    pass
-
