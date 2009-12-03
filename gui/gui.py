@@ -8,10 +8,10 @@ import gobject
 import gtk
 import gtk.glade
 import pango
-import os
 
 from models.models import models
-from output.formats import formats
+from formats.formats import formats as input_formats
+from output.formats import formats as output_formats
 
 # FIXME this path is relative to the root source directory
 GLADEFILE = "gui/tops.glade"
@@ -34,22 +34,22 @@ class ExportDialog(object):
         self.widgetTree1 = gtk.glade.XML(self.gladefile, 'export_dialog1')
         self.export_dialog1 = self.widgetTree1.get_widget('export_dialog1')
 
-        # model combo box
-        self.modelsListStore = gtk.ListStore(gobject.TYPE_STRING)
-        for m, n in models.items():
-            self.modelsListStore.append([m])
+        # format combo box
+        self.input_formats_ls = gtk.ListStore(gobject.TYPE_STRING)
+        for m, n in input_formats.items():
+            self.input_formats_ls.append([m])
         self.combobox_input = self.widgetTree1.get_widget('combobox_input')
-        self.combobox_input.set_model(model=self.modelsListStore)
+        self.combobox_input.set_model(model=self.input_formats_ls)
         cell = gtk.CellRendererText()
         self.combobox_input.pack_start(cell, True)
         self.combobox_input.add_attribute(cell, 'text', 0)
 
         # output format combo box
-        self.outputFormatsListStore = gtk.ListStore(gobject.TYPE_STRING)
-        for m, n in formats.items():
-            self.outputFormatsListStore.append([m])
+        self.output_formats_list_store = gtk.ListStore(gobject.TYPE_STRING)
+        for m, n in output_formats.items():
+            self.output_formats_list_store.append([m])
         self.combobox_output = self.widgetTree1.get_widget('combobox_output')
-        self.combobox_output.set_model(model=self.outputFormatsListStore)
+        self.combobox_output.set_model(model=self.output_formats_list_store)
         cell1 = gtk.CellRendererText()
         self.combobox_output.pack_start(cell, True)
         self.combobox_output.add_attribute(cell, 'text', 0)
@@ -123,14 +123,14 @@ class TotalOpenGUI(object):
             self.iterstart = self.textBuffer.get_start_iter()
             self.iterend = self.textBuffer.get_end_iter()
             data = self.textBuffer.get_text(self.iterstart, self.iterend)
-            exec('from models.%s import ModelParser' % (
-                models[ex.modelsListStore[input_model][0]],
+            exec('from formats.%s import FormatParser' % (
+                input_formats[ex.input_formats_ls[input_model][0]],
                 ))
             exec('from output.%s import TotalOpen%s as Output' % (
-                formats[ex.outputFormatsListStore[output_model][0]],
-                ex.outputFormatsListStore[output_model][0],
+                output_formats[ex.output_formats_list_store[output_model][0]],
+                ex.output_formats_list_store[output_model][0],
                 ))
-            parsed_data = ModelParser(data)
+            parsed_data = FormatParser(data)
             parsed_points = parsed_data.points
 
             file_save = gtk.FileChooserDialog(title="Select destination file",
@@ -144,7 +144,10 @@ class TotalOpenGUI(object):
             file_save.destroy()
 
             # FIXME handle overwriting an existing file (ask the user)
-            output = Output(parsed_points, result)
+            output = Output(parsed_points)
+            e = open(result, 'w')
+            e.write(output.process())
+            e.close()
 
     def about_dialog(self, widget):
         AboutDialog()

@@ -4,7 +4,9 @@
 # Copyright 2008 Stefano Costa <steko@iosa.it>
 # Under the GNU GPL 3 License
 
-from gui.gui import *
+import gtk
+
+from gui.gui import TotalOpenGUI
 
 TotalOpenGUI()
 gtk.main()
