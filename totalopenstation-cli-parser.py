@@ -93,7 +93,7 @@ else:
 def main(infile):
     '''After setting up all parameters, finally try to process input data.'''
 
-    parsed_data = ModelParser(infile)
+    parsed_data = FormatParser(infile)
     parsed_points = parsed_data.points
     output = Output(parsed_points)
 
