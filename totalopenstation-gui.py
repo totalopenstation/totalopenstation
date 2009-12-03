@@ -623,7 +623,7 @@ class Tops:
                 elif t == 'bool':
                     cs += str(bool(eval("self.option%s_value.get()" % n)))
 
-                cs = += ", "
+                cs += ", "
             connection_string = cs[:-2] + ")" # remove last ", "
             try:
                 TOPSerial = eval(connection_string)
