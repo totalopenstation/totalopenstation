@@ -23,7 +23,8 @@ import serial
 
 from time import sleep
 from models import models
-from formats import formats
+from formats.formats import formats as iformats
+from output.formats import formats as oformats
 
 from Tkinter import *
 from tkMessageBox import showwarning, showinfo, askokcancel
@@ -206,7 +207,7 @@ class ProcessDialog(tkSimpleDialog.Dialog):
         option_format_entry.menu = Menu(option_format_entry, tearoff=0)
         option_format_entry["menu"] = option_format_entry.menu
 
-        for k, v in sorted(formats.formats.items()):
+        for k, v in sorted(iformats.items()):
             option_format_entry.menu.add_radiobutton(
                 label=k,
                 variable=self.option_format_value,
@@ -215,7 +216,7 @@ class ProcessDialog(tkSimpleDialog.Dialog):
 
         Label(output_frame, text=question).pack()
         self.output_format = StringVar()
-        for t in ['CSV', 'DAT', 'DXF']: # FIXME don't use static list here
+        for t in oformats.keys():
             w = Radiobutton(output_frame,
                             text=t,
                             value=t,
@@ -674,15 +675,27 @@ class Tops:
     def process_action(self, event):
         data = self.text_area.get("1.0", END)
         d = ProcessDialog(self.myParent, data)
-        module = formats.formats[d.option_format_value.get()]
-        ofl = str(d.output_format.get()).lower()
-        ofp = str(d.output_format.get()).upper()
-        exec('from formats.%s import FormatParser' % module)
-        exec('from output.tops_%s import TotalOpen%s as Output' % (ofl, ofp))
-        parsed_data = FormatParser(data)
+
+        # import input format parser
+        module = iformats[d.option_format_value.get()]
+        of_lower = str(d.output_format.get()).lower()
+        iformat = __import__('formats.%s' % module,
+                             globals(),
+                             locals(),
+                             ['FormatParser'])
+
+        # import output format writer
+        name = 'output.tops_%s' % of_lower
+        oformat = __import__(name,
+                             globals(),
+                             locals(),
+                             ['OutputFormat'])
+
+        # no point in parsing before the output format has been imported
+        parsed_data = iformat.FormatParser(data)
         parsed_points = parsed_data.points
-        output = Output(parsed_points)
-        sd = tkFileDialog.asksaveasfilename(defaultextension='.%s' % ofl)
+        output = oformat.OutputFormat(parsed_points)
+        sd = tkFileDialog.asksaveasfilename(defaultextension='.%s' % of_lower)
 
         try:
             sd_file = open(sd, 'wb')

@@ -24,8 +24,7 @@ import os
 
 from optparse import OptionParser
 
-
-usage = "usage: totalopenstation-cli-parser.py [option] arg1 [option] arg2 ..."
+usage = "usage: %prog [option] arg1 [option] arg2 ..."
 
 parser = OptionParser(usage=usage)
 parser.add_option("-i",
@@ -67,7 +66,10 @@ parser.add_option(
 
 if options.informat:
     try:
-        exec('from formats.%s import FormatParser' % options.informat)
+        iformat = __import__('formats.%s' % options.informat,
+                             globals(),
+                             locals(),
+                             ['FormatParser'])
     except ImportError, message:
         from formats.formats import list_formats
         sys.exit("\nError:\n%s\n\n%s" % (message, list_formats()))
@@ -76,8 +78,11 @@ else:
 
 if options.outformat:
     try:
-        exec('from output.tops_%s import TotalOpen%s as Output' % (
-                options.outformat, options.outformat.upper()))
+        name = 'output.tops_%s' % options.outformat
+        oformat = __import__(name,
+                             globals(),
+                             locals(),
+                             ['OutputFormat'])
     except ImportError, message:
         sys.exit("\nError:\n%s\n" % message)
 else:
@@ -93,9 +98,9 @@ else:
 def main(infile):
     '''After setting up all parameters, finally try to process input data.'''
 
-    parsed_data = FormatParser(infile)
+    parsed_data = iformat.FormatParser(infile)
     parsed_points = parsed_data.points
-    output = Output(parsed_points)
+    output = oformat.OutputFormat(parsed_points)
 
     def write_to_file(outfile):
         e = open(outfile, 'w')
