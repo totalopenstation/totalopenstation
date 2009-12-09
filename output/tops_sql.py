@@ -30,7 +30,7 @@ def to_wkt(point):
     return wkt_representation
 
 
-class TotalOpenSQL:
+class OutputFormat:
 
     """
     Exports points data in SQL format suitable for use with PostGIS & friends.
