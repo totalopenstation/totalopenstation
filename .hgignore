@@ -1,4 +1,5 @@
-# use glob syntax.
-syntax: glob
+^docs/_build/
+\.py[co]$
+^(build|dist|totalopenstation\.egg-info)/
+.~$
 
-*.pyc
