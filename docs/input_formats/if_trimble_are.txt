@@ -1,0 +1,7 @@
+=====================
+ Trimble AREA format
+=====================
+
+.. author:: Alessandro Bezzi
+
+
