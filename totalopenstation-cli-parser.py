@@ -66,19 +66,19 @@ parser.add_option(
 
 if options.informat:
     try:
-        iformat = __import__('formats.%s' % options.informat,
+        iformat = __import__('totalopenstation.formats.%s' % options.informat,
                              globals(),
                              locals(),
                              ['FormatParser'])
     except ImportError, message:
-        from formats.formats import list_formats
+        from totalopenstation.formats.formats import list_formats
         sys.exit("\nError:\n%s\n\n%s" % (message, list_formats()))
 else:
     sys.exit("Please specify an input format")
 
 if options.outformat:
     try:
-        name = 'output.tops_%s' % options.outformat
+        name = 'totalopenstation.output.tops_%s' % options.outformat
         oformat = __import__(name,
                              globals(),
                              locals(),

@@ -22,14 +22,15 @@
 import serial
 
 from time import sleep
-from models import models
-from formats.formats import formats as iformats
-from output.formats import formats as oformats
 
 from Tkinter import *
 from tkMessageBox import showwarning, showinfo, askokcancel
 import tkSimpleDialog
 import tkFileDialog
+
+from totalopenstation.models import models
+from totalopenstation.formats.formats import formats as iformats
+from totalopenstation.output.formats import formats as oformats
 
 
 def scan():
@@ -646,8 +647,11 @@ class Tops:
 
         else:
             module = models.models[chosen_model]
-            exec('from models.%s import ModelConnector' % module)
-            mc = ModelConnector(chosen_port)
+            iformat = __import__('totalopenstation.models.%s' % module,
+                                 globals(),
+                                 locals(),
+                                 ['ModelConnector'])
+            mc = iformats.ModelConnector(chosen_port)
             try:
                 mc.open()
             except serial.SerialException, detail:
@@ -679,13 +683,13 @@ class Tops:
         # import input format parser
         module = iformats[d.option_format_value.get()]
         of_lower = str(d.output_format.get()).lower()
-        iformat = __import__('formats.%s' % module,
+        iformat = __import__('totalopenstation.formats.%s' % module,
                              globals(),
                              locals(),
                              ['FormatParser'])
 
         # import output format writer
-        name = 'output.tops_%s' % of_lower
+        name = 'totalopenstation.output.tops_%s' % of_lower
         oformat = __import__(name,
                              globals(),
                              locals(),
