@@ -20,7 +20,7 @@
 # <http://www.gnu.org/licenses/>.
 
 
-class TotalOpenDXF:
+class OutputFormat:
 
     """
     Exports points data in AutoCAD DXF format.

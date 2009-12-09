@@ -15,7 +15,7 @@ def to_dat(e):
         return ''
 
 
-class TotalOpenDAT:
+class OutputFormat:
 
     """
     Exports points data in DAT format suitable for use with Archis.

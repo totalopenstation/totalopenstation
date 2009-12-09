@@ -8,7 +8,7 @@ import csv
 import StringIO
 
 
-class TotalOpenCSV:
+class OutputFormat:
 
     """
     Exports points data in CSV format.

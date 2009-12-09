@@ -6,7 +6,7 @@
 # Under the GNU GPL 3 License
 
 
-class TotalOpenTXT:
+class OutputFormat:
 
     """
     Exports points data in TXT format line by line.
