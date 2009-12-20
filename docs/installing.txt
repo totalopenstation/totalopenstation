@@ -4,14 +4,32 @@
  Installing
 ============
 
-Before installing Total Open Station, be sure to have all the
-:ref:`required software <requirements>` on your system.
-
-Using ``setup.py``
-==================
-
-Using ``easy_install``
-======================
-
 Using ``pip``
 =============
+
+Until your operating system's packaging tools (e.g. ``apt`` or
+``yum``) allow you to install Total Open Station along with other
+programs, the recommended way to install is using ``pip``, like::
+
+  pip install totalopenstation
+
+This will install all needed Python packages as well. ``pip`` is
+complementary with virtualenv_, and it is encouraged that you use
+virtualenv to isolate your installation.
+
+.. _virtualenv: http://pypi.python.org/pypi/virtualenv
+
+Read more about ``pip`` at http://pip.openplans.org/ and
+http://guide.python-distribute.org/pip.html .
+
+Manual install with ``setup.py``
+================================
+
+If you manually download the source distribution file from PyPI or
+from the mercurial repository, first make sure you have installed all
+the :ref:`required packages <requirements>`. Then, just ``cd`` into
+the uncompressed directory and::
+
+  python setup.py install
+
+
