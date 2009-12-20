@@ -22,7 +22,7 @@ bitbucket_ which makes it easy to create forks for your own experiments.
 The suggested way of contributing is by sending patches using the
 Mercurial *patchbomb* extension to the `development mailing list`_.
 
-https://lists.berlios.de/mailman/listinfo/tops-dev
+.. _`development mailing list`: https://lists.berlios.de/mailman/listinfo/tops-dev
 
 Coding standards
 ================
