@@ -1,0 +1,17 @@
+.. _installing:
+
+============
+ Installing
+============
+
+Before installing Total Open Station, be sure to have all the
+:ref:`required software <requirements>` on your system.
+
+Using ``setup.py``
+==================
+
+Using ``easy_install``
+======================
+
+Using ``pip``
+=============
