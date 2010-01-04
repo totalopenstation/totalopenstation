@@ -27,6 +27,14 @@ def deg2rad(deg):
     return rad
 
 
+def gon2rad(gon):
+    '''Convert gons to radiants ( 400 gon = 360° )'''
+
+
+    rad = gon / 200.0 * math.pi
+    return rad
+
+
 def polar_to_cartesian(base_x, base_y, base_z, dist, angle, z_angle, ih, th):
     '''Convert polar coordinates to cartesian.
 
@@ -46,11 +54,16 @@ def polar_to_cartesian(base_x, base_y, base_z, dist, angle, z_angle, ih, th):
 class PolarPoint:
     '''A point geometry defined by polar coordinates.'''
 
-    def __init__(self, dist, angle, z_angle, th, base_point):
+    def __init__(self, dist, angle, z_angle, th, angle_type, base_point):
         self.dist = dist
-        self.angle = deg2rad(angle)
-        self.z_angle = deg2rad(z_angle)
         self.th = th
+        self.angle_type = angle_type
+        if angle_type is 'deg':
+            self.angle = deg2rad(angle)
+            self.z_angle = deg2rad(z_angle)
+        if angle_type is 'gon':
+            self.angle = gon2rad(angle)
+            self.z_angle = gon2rad(z_angle)
         # base point data
         self.base_x = base_point.x
         self.base_y = base_point.y
@@ -90,5 +103,6 @@ if __name__ == '__main__':
                     angle=0,
                     z_angle=0,
                     th=0,
+                    angle_type='deg',
                     base_point=bp0)
     print p0.to_cartesian()
