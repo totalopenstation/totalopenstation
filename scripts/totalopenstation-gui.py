@@ -626,7 +626,7 @@ class Tops:
                     except ValueError:
                         cs += "None"
                     else:
-                        cs += + str(int(eval("self.option%s_value.get()" % n)))
+                        cs += str(int(eval("self.option%s_value.get()" % n)))
                 elif t == 'bool':
                     cs += str(bool(eval("self.option%s_value.get()" % n)))
 
@@ -652,11 +652,11 @@ class Tops:
 
         else:
             module = models.models[chosen_model]
-            iformat = __import__('totalopenstation.models.%s' % module,
+            imodel = __import__('totalopenstation.models.%s' % module,
                                  globals(),
                                  locals(),
                                  ['ModelConnector'])
-            mc = iformats.ModelConnector(chosen_port)
+            mc = imodel.ModelConnector(chosen_port)
             try:
                 mc.open()
             except serial.SerialException, detail:
