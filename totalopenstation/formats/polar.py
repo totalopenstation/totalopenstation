@@ -20,6 +20,8 @@
 
 import math
 
+from . import Point
+
 def deg2rad(deg):
     '''Convert degrees to radiants.'''
 
@@ -83,6 +85,20 @@ class PolarPoint:
                                     self.ih,
                                     self.th)
         return "%(x)s,%(y)s,%(z)s" % coords
+
+    def to_point(self):
+        '''Convert from PolarPoint to (cartesian) Point object'''
+
+         coords = polar_to_cartesian(self.base_x,
+                                    self.base_y,
+                                    self.base_z,
+                                    self.dist,
+                                    self.angle,
+                                    self.z_angle,
+                                    self.ih,
+                                    self.th)
+
+        return Point('', coords.x, coords.y, coords.z, '')
 
 
 class BasePoint:
