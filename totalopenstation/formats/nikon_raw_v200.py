@@ -64,12 +64,16 @@ class FormatParser:
                 z_angle = fs[5]
                 dist = fs[3]
                 th = fs[2]
+                pid = fs[1]
+                text = fs[7]
                 p = PolarPoint(dist=dist,
                                angle=angle,
                                z_angle=z_angle,
                                th=th,
                                angle_type='gon',
-                               base_point=bp)
+                               base_point=bp,
+                               pid=pid,
+                               text=text)
                 points.append(p.to_point())
         return points
 

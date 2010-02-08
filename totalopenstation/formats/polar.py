@@ -57,7 +57,15 @@ def polar_to_cartesian(base_x, base_y, base_z, dist, angle, z_angle, ih, th):
 class PolarPoint:
     '''A point geometry defined by polar coordinates.'''
 
-    def __init__(self, dist, angle, z_angle, th, angle_type, base_point):
+    def __init__(self,
+                 dist,          # inclined distance
+                 angle,         # horizontal angle
+                 z_angle,       # vertical angle
+                 th,            # target height
+                 angle_type,    # degrees or gons
+                 base_point,    # BasePoint object
+                 pid,           # point ID
+                 text):         # point description
         self.dist = float(dist)
         self.th = float(th)
         self.angle_type = angle_type
@@ -67,6 +75,8 @@ class PolarPoint:
         if angle_type is 'gon':
             self.angle = gon2rad(angle)
             self.z_angle = gon2rad(z_angle)
+        self.pid = pid
+        self.text = text
         # base point data
         self.base_x = base_point.x
         self.base_y = base_point.y
@@ -98,7 +108,11 @@ class PolarPoint:
                                     self.ih,
                                     self.th)
 
-        return Point('', coords['x'], coords['y'], coords['z'], '').tuplepoint
+        return Point(self.pid,
+                     coords['x'],
+                     coords['y'],
+                     coords['z'],
+                     self.text).tuplepoint
 
 
 class BasePoint:
