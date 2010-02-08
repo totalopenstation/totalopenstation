@@ -98,7 +98,7 @@ class PolarPoint:
                                     self.ih,
                                     self.th)
 
-        return Point('', coords.x, coords.y, coords.z, '')
+        return Point('', coords['x'], coords['y'], coords['z'], '').tuplepoint
 
 
 class BasePoint:
