@@ -23,6 +23,7 @@ import math
 def deg2rad(deg):
     '''Convert degrees to radiants.'''
 
+    deg = float(deg)
     rad = deg / 180.0 * math.pi
     return rad
 
@@ -30,7 +31,7 @@ def deg2rad(deg):
 def gon2rad(gon):
     '''Convert gons to radiants ( 400 gon = 360° )'''
 
-
+    gon = float(gon)
     rad = gon / 200.0 * math.pi
     return rad
 
@@ -55,8 +56,8 @@ class PolarPoint:
     '''A point geometry defined by polar coordinates.'''
 
     def __init__(self, dist, angle, z_angle, th, angle_type, base_point):
-        self.dist = dist
-        self.th = th
+        self.dist = float(dist)
+        self.th = float(th)
         self.angle_type = angle_type
         if angle_type is 'deg':
             self.angle = deg2rad(angle)
@@ -73,14 +74,15 @@ class PolarPoint:
     def to_cartesian(self):
         '''Converts from polar to cartesian.'''
 
-        return polar_to_cartesian(self.base_x,
-                                  self.base_y,
-                                  self.base_z,
-                                  self.dist,
-                                  self.angle,
-                                  self.z_angle,
-                                  self.ih,
-                                  self.th)
+        coords = polar_to_cartesian(self.base_x,
+                                    self.base_y,
+                                    self.base_z,
+                                    self.dist,
+                                    self.angle,
+                                    self.z_angle,
+                                    self.ih,
+                                    self.th)
+        return "%(x)s,%(y)s,%(z)s" % coords
 
 
 class BasePoint:
@@ -90,10 +92,10 @@ class BasePoint:
     to each single point.'''
 
     def __init__(self, x, y, z, ih):
-        self.x = x
-        self.y = y
-        self.z = z
-        self.ih = ih
+        self.x = float(x)
+        self.y = float(y)
+        self.z = float(z)
+        self.ih = float(ih)
 
 
 if __name__ == '__main__':
