@@ -89,7 +89,7 @@ class PolarPoint:
     def to_point(self):
         '''Convert from PolarPoint to (cartesian) Point object'''
 
-         coords = polar_to_cartesian(self.base_x,
+        coords = polar_to_cartesian(self.base_x,
                                     self.base_y,
                                     self.base_z,
                                     self.dist,
