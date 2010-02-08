@@ -25,7 +25,7 @@ import gettext
 
 from optparse import OptionParser
 
-t = gettext.translation('tops', './locale', fallback=True)
+t = gettext.translation('totalopenstation', './locale', fallback=True)
 _ = t.lgettext
 
 usage = _("usage: %prog [option] arg1 [option] arg2 ...")
