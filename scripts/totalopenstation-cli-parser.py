@@ -21,10 +21,14 @@
 
 import sys
 import os
+import gettext
 
 from optparse import OptionParser
 
-usage = "usage: %prog [option] arg1 [option] arg2 ..."
+t = gettext.translation('tops', './locale', fallback=True)
+_ = t.lgettext
+
+usage = _("usage: %prog [option] arg1 [option] arg2 ...")
 
 parser = OptionParser(usage=usage)
 parser.add_option("-i",
@@ -32,35 +36,35 @@ parser.add_option("-i",
                 action="store",
                 type="string",
                 dest="infile",
-                help="select input FILE  (do not specify for stdin)",
+                help=_("select input FILE  (do not specify for stdin)"),
                 metavar="FILE")
 parser.add_option("-o",
                 "--outfile",
                 action="store",
                 type="string",
                 dest="outfile",
-                help="select output FILE (do not specify for stdout)",
+                help=_("select output FILE (do not specify for stdout)"),
                 metavar="FILE")
 parser.add_option("-f",
                 "--input-format",
                 action="store",
                 type="string",
                 dest="informat",
-                help="select input FORMAT",
+                help=_("select input FORMAT"),
                 metavar="FORMAT")
 parser.add_option("-t",
                 "--output-format",
                 action="store",
                 type="string",
                 dest="outformat",
-                help="select input FORMAT",
+                help=_("select input FORMAT"),
                 metavar="FORMAT")
 parser.add_option(
                 "--overwrite",
                 action="store_true",
                 dest="overwrite",
                 default=False,
-                help="overwrite existing output file")
+                help=_("overwrite existing output file"))
 
 (options, args) = parser.parse_args()
 
@@ -72,9 +76,9 @@ if options.informat:
                              ['FormatParser'])
     except ImportError, message:
         from totalopenstation.formats.formats import list_formats
-        sys.exit("\nError:\n%s\n\n%s" % (message, list_formats()))
+        sys.exit(_("\nError:\n%s\n\n%s") % (message, list_formats()))
 else:
-    sys.exit("Please specify an input format")
+    sys.exit(_("Please specify an input format"))
 
 if options.outformat:
     try:
@@ -86,7 +90,7 @@ if options.outformat:
     except ImportError, message:
         sys.exit("\nError:\n%s\n" % message)
 else:
-    sys.exit("Please specify an output format")
+    sys.exit(_("Please specify an output format"))
 
 
 if options.infile:
@@ -110,14 +114,14 @@ def main(infile):
     if options.outfile:
         if not os.path.exists(options.outfile):
             write_to_file(options.outfile)
-            print "Downloaded data saved to out file %s" % options.outfile
+            print _("Downloaded data saved to out file %s") % options.outfile
         else:
             if options.overwrite:
                 write_to_file(options.outfile)
-                print "Downloaded data saved to file %s," % options.outfile,
-                print "overwriting the existing file"
+                print _("Downloaded data saved to file %s,") % options.outfile,
+                print _("overwriting the existing file")
             else:
-                sys.exit("Specified output file already exists\n")
+                sys.exit(_("Specified output file already exists\n"))
     else:
         sys.stdout.write(output.process())
 
