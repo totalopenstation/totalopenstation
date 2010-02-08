@@ -46,7 +46,10 @@ class FormatParser:
                 dist = fs[3]
                 th = fs[2]
                 pid = fs[1]
-                text = fs[7]
+                try:
+                    text = fs[7]
+                except IndexError:
+                    text = fs[-1]
                 p = PolarPoint(dist=dist,
                                angle=angle,
                                z_angle=z_angle,
