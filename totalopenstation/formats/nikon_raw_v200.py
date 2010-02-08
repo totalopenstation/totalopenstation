@@ -70,7 +70,7 @@ class FormatParser:
                                th=th,
                                angle_type='gon',
                                base_point=bp)
-                    points.append(p.to_point())
+                points.append(p.to_point())
         return points
 
     points = property(_points)
