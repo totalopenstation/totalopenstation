@@ -22,6 +22,11 @@ from polar import BasePoint, PolarPoint
 
 
 class FormatParser:
+    '''A FormatParser for Nikon RAW data format V2.00.
+
+    It doesn't inherit from the base Parser class because the internal
+    procedure is quite different, but it implements the same API so it
+    can work nicely with other parts of the library.'''
 
     def __init__(self, data):
         self.rows = data.splitlines()
