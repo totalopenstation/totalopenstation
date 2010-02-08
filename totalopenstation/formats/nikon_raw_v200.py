@@ -19,31 +19,7 @@
 # <http://www.gnu.org/licenses/>.
 
 from polar import BasePoint, PolarPoint
-from . import Parser
 
-def nikon_raw_parser(data):
-    '''Parses data in Nikon RAW data format V2.00.'''
-
-    rows = data.splitlines()
-    for row in rows:
-        fs = row.split(',')
-        if fs[0] == 'ST':
-            x = fs[-3]          # FIXME NEZ coord order shouldn't be hardcoded
-            y = fs[-2]
-            z = fs[-1]
-            bp = BasePoint(x=x, y=y, z=z, ih=0)
-        if fs[0] == 'SS':
-            angle = fs[4]
-            z_angle = fs[5]
-            dist = fs[3]
-            th = fs[2]
-            p = PolarPoint(dist=dist,
-                           angle=angle,
-                           z_angle=z_angle,
-                           th=th,
-                           angle_type='gon',
-                           base_point=bp)
-            print(p.to_cartesian())
 
 class FormatParser:
 
