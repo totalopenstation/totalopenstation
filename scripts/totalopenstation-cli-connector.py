@@ -38,7 +38,7 @@ parser.add_option("-o",
 (options, args) = parser.parse_args()
 
 try:
-    exec('from models.%s import ModelConnector' % options.model)
+    exec('from totalopenstation.models.%s import ModelConnector' % options.model)
 except ImportError, message:
     sys.exit("\nError:\n%s\n" % message)
 
