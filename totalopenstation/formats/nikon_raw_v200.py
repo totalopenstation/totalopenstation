@@ -55,9 +55,9 @@ class FormatParser:
         for row in self.rows:
             fs = row.split(',')
             if fs[0] == 'ST':
-                x = fs[-3]   # FIXME NEZ coord order shouldn't be hardcoded
-                y = fs[-2]
-                z = fs[-1]
+                x = fs[6]   # FIXME NEZ coord order shouldn't be hardcoded
+                y = fs[7]
+                z = fs[5]
                 bp = BasePoint(x=x, y=y, z=z, ih=0)
             if fs[0] == 'SS':
                 angle = fs[4]
