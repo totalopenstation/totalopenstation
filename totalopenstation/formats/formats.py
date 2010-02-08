@@ -23,7 +23,7 @@
 formats = {
     'Leica TCR 1205': 'leica_tcr_1205',
     'Zeiss REC 500': 'zeiss_rec_500',
-    'Nikon Npl 350': 'nikon_npl_350',
+    'Nikon RAW V2.00': 'nikon_raw_v200',
     'Leica TCR 705': 'leica_tcr_705',
     'Trimble AREA': 'trimble_are',
     }
