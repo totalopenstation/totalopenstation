@@ -34,7 +34,7 @@ from totalopenstation.formats.formats import formats as iformats
 from totalopenstation.output.formats import formats as oformats
 
 
-t = gettext.translation('tops', './locale', fallback=True)
+t = gettext.translation('totalopenstation', './locale', fallback=True)
 _ = t.lgettext
 
 
