@@ -52,7 +52,7 @@ class FormatParser:
 
     def _points(self):
         points = []
-        for row in rows:
+        for row in self.rows:
             fs = row.split(',')
             if fs[0] == 'ST':
                 x = fs[-3]   # FIXME NEZ coord order shouldn't be hardcoded
