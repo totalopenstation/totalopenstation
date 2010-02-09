@@ -58,14 +58,15 @@ class PolarPoint:
     '''A point geometry defined by polar coordinates.'''
 
     def __init__(self,
-                 dist,          # inclined distance
-                 angle,         # horizontal angle
-                 z_angle,       # vertical angle
-                 th,            # target height
-                 angle_type,    # degrees or gons
-                 base_point,    # BasePoint object
-                 pid,           # point ID
-                 text):         # point description
+                 dist,                # inclined distance
+                 angle,               # horizontal angle
+                 z_angle,             # vertical angle
+                 th,                  # target height
+                 angle_type,          # degrees or gons
+                 base_point,          # BasePoint object
+                 pid,                 # point ID
+                 text,                # point description
+                 coordorder='NEZ'):   # cartesian coordinates order (NEZ, ENZ)
         self.dist = float(dist)
         self.th = float(th)
         self.angle_type = angle_type
@@ -77,6 +78,7 @@ class PolarPoint:
             self.z_angle = gon2rad(z_angle)
         self.pid = pid
         self.text = text
+        self.coordorder = coordorder
         # base point data
         self.base_x = base_point.x
         self.base_y = base_point.y
@@ -99,7 +101,7 @@ class PolarPoint:
     def to_point(self):
         '''Convert from PolarPoint to (cartesian) Point object'''
 
-        coords = polar_to_cartesian(self.base_x,
+        cart_coords = polar_to_cartesian(self.base_x,
                                     self.base_y,
                                     self.base_z,
                                     self.dist,
@@ -108,11 +110,16 @@ class PolarPoint:
                                     self.ih,
                                     self.th)
 
-        return Point(self.pid,
-                     coords['x'],
-                     coords['y'],
-                     coords['z'],
-                     self.text).tuplepoint
+        if self.coordorder == 'NEZ':
+            cart_coords['x'], cart_coords['y'] = cart_coords['y'], cart_coords['x']
+
+        cart_point = Point(self.pid,
+                           cart_coords['x'],
+                           cart_coords['y'],
+                           cart_coords['z'],
+                           self.text)
+
+        return cart_point.tuplepoint
 
 
 class BasePoint:

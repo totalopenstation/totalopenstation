@@ -35,6 +35,8 @@ class FormatParser:
         points = []
         for row in self.rows:
             fs = row.split(',')
+            if fs[0] == 'CO' and fs[1].startswith('Coord Order:'):
+                coordorder = fs[1].split(':')[-1].strip()
             if fs[0] == 'ST':
                 x = fs[6]   # FIXME NEZ coord order shouldn't be hardcoded
                 y = fs[7]
@@ -57,7 +59,8 @@ class FormatParser:
                                angle_type='gon',
                                base_point=bp,
                                pid=pid,
-                               text=text)
+                               text=text,
+                               coordorder=coordorder)
                 points.append(p.to_point())
         return points
 
