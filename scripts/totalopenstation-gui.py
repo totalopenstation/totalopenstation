@@ -1,20 +1,21 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
 # filename: totalopenstation-gui.py
-# Copyright 2008-2009 Stefano Costa <steko@iosa.it>
-
+# Copyright 2008-2010 Stefano Costa <steko@iosa.it>
+# Copyright 2010 Luca Bianconi <luxetluc@yahoo.it>
+#
 # This file is part of Total Open Station.
-
+#
 # Total Open Station is free software: you can redistribute it and/or
 # modify it under the terms of the GNU General Public License as
 # published by the Free Software Foundation, either version 3 of the
 # License, or (at your option) any later version.
-
+#
 # Total Open Station is distributed in the hope that it will be
 # useful, but WITHOUT ANY WARRANTY; without even the implied warranty
 # of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 # General Public License for more details.
-
+#
 # You should have received a copy of the GNU General Public License
 # along with Total Open Station.  If not, see
 # <http://www.gnu.org/licenses/>.
@@ -203,22 +204,22 @@ class ProcessDialog(tkSimpleDialog.Dialog):
 
         Label(input_frame, text=_('Input format')).pack(side=TOP)
 
-        self.option_format_value = StringVar()
-        self.option_format_value.set(self.format)
-        option_format_entry = Menubutton(input_frame,
+        self.input_format = StringVar()
+        self.input_format.set(self.format)
+        input_format_entry = Menubutton(input_frame,
                                         text=_("choose a model"),
-                                        textvariable=self.option_format_value,
+                                        textvariable=self.input_format,
                                         relief=RAISED,
                                         width=24)
-        option_format_entry.menu = Menu(option_format_entry, tearoff=0)
-        option_format_entry["menu"] = option_format_entry.menu
+        input_format_entry.menu = Menu(input_format_entry, tearoff=0)
+        input_format_entry["menu"] = input_format_entry.menu
 
         for k, v in sorted(iformats.items()):
-            option_format_entry.menu.add_radiobutton(
+            input_format_entry.menu.add_radiobutton(
                 label=k,
-                variable=self.option_format_value,
+                variable=self.input_format,
                 value=k)
-        option_format_entry.pack(side=LEFT, anchor=W)
+        input_format_entry.pack(side=LEFT, anchor=W)
 
         Label(output_frame, text=question).pack()
         self.output_format = StringVar()
@@ -233,6 +234,47 @@ class ProcessDialog(tkSimpleDialog.Dialog):
              width=80)
         t.insert(END, params)
         t.pack()
+
+    def validate(self):
+        # do nothing if input is empty
+        if self.output_format.get() == '' or self.input_format.get() == '':
+            return False
+        else:
+            return True
+
+    def apply(self):
+        '''Export data in the required output format'''
+
+        module = iformats[self.input_format.get()]
+        of_lower = str(self.output_format.get()).lower()
+
+       # import input format parser
+        iformat = __import__('totalopenstation.formats.%s' % module,
+                             globals(),
+                             locals(),
+                             ['FormatParser'])
+
+        # import output format writer
+        name = 'totalopenstation.output.tops_%s' % of_lower
+        oformat = __import__(name,
+                             globals(),
+                             locals(),
+                             ['OutputFormat'])
+
+        # no point in parsing before the output format has been imported
+        parsed_data = iformat.FormatParser(self.data)
+        parsed_points = parsed_data.points
+        output = oformat.OutputFormat(parsed_points)
+        sd = tkFileDialog.asksaveasfilename(defaultextension='.%s' % of_lower)
+
+        try:
+            sd_file = open(sd, 'wb')
+        except TypeError:
+            showwarning(_("No output file specified"),
+                        _("No processing settings entered!\n"))
+        else:
+            sd_file.write(output.process())
+            sd_file.close()
 
 
 class ErrorDialog(tkSimpleDialog.Dialog):
@@ -645,36 +687,6 @@ class Tops:
     def process_action(self, event):
         data = self.text_area.get("1.0", END)
         d = ProcessDialog(self.myParent, data)
-
-        # import input format parser
-        module = iformats[d.option_format_value.get()]
-        of_lower = str(d.output_format.get()).lower()
-        iformat = __import__('totalopenstation.formats.%s' % module,
-                             globals(),
-                             locals(),
-                             ['FormatParser'])
-
-        # import output format writer
-        name = 'totalopenstation.output.tops_%s' % of_lower
-        oformat = __import__(name,
-                             globals(),
-                             locals(),
-                             ['OutputFormat'])
-
-        # no point in parsing before the output format has been imported
-        parsed_data = iformat.FormatParser(data)
-        parsed_points = parsed_data.points
-        output = oformat.OutputFormat(parsed_points)
-        sd = tkFileDialog.asksaveasfilename(defaultextension='.%s' % of_lower)
-
-        try:
-            sd_file = open(sd, 'wb')
-        except TypeError:
-            showwarning(_("No output file specified"),
-                        _("No processing settings entered!\n"))
-        else:
-            sd_file.write(output.process())
-            sd_file.close()
 
     def save_action(self, event):
         try:
