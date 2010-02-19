@@ -488,24 +488,6 @@ class Tops:
                                                 value=2)
         self.option5_entry.pack(side=LEFT, anchor=W)
 
-        # dictionary for passing options to Serial
-        self.options = {'port': (1, 'str'),
-                   'baudrate': (2, 'int'),
-                   'bytesize': (3, 'int'),
-                   'parity': (4, 'str'),
-                   'stopbits': (5, 'int'),
-                   'timeout': (6, 'int'),
-                   'xonxoff': (7, 'bool'),
-                   'rtscts': (8, 'bool')}
-
-        self.options_z = {1: 'port',
-                   2: 'baudrate',
-                   3: 'bytesize',
-                   4: 'parity',
-                   5: 'stopbits',
-                   6: 'timeout',
-                   7: 'xonxoff',
-                   8: 'rtscts'}
 
         # control buttons
 
@@ -597,14 +579,6 @@ class Tops:
 
     def connect_action(self, event):
 
-        self.options2 = dict()
-        for n in xrange(1, 6):
-            value = eval("self.option%s_value.get()" % n)
-            if value == 0 or value == '':
-                pass
-            else:
-                self.options2[self.options_z[n]] = value
-
         chosen_model = self.optionMODEL_value.get()
         chosen_port = self.option1_value.get()
 
@@ -613,30 +587,14 @@ class Tops:
 
             if chosen_model == 'Custom':
 
-                # FIXME : convert this section to the new Connector API.
-                #  No more string construction!
-
-                cs = "serial.Serial("
-
-                for k, v in self.options.items():
-                    n, t = v
-                    cs += "%s = " % k
-                    if t == 'str':
-                        cs += "'" + eval("self.option%s_value.get()" % n) + "'"
-                    elif t == 'int':
-                        try:
-                            int(eval("self.option%s_value.get()" % n))
-                        except ValueError:
-                            cs += "None"
-                        else:
-                            cs += str(int(eval("self.option%s_value.get()" % n)))
-                    elif t == 'bool':
-                        cs += str(bool(eval("self.option%s_value.get()" % n)))
-
-                    cs += ", "
-                connection_string = cs[:-2] + ")" # remove last ", "
+                # dictionary for passing options to Serial
+                self.options = {'port': self.option1_value.get(),
+                                'baudrate': self.option2_value.get(),
+                                'bytesize': self.option3_value.get(),
+                                'parity': self.option4_value.get(),
+                                'stopbits': self.option5_value.get()}
                 try:
-                    TOPSerial = eval(connection_string)
+                    TOPSerial = serial.Serial(**self.options)
                 except serial.SerialException, detail:
                     e = ErrorDialog(self.myParent, detail)
                 else:
