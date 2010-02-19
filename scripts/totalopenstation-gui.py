@@ -608,69 +608,72 @@ class Tops:
         chosen_model = self.optionMODEL_value.get()
         chosen_port = self.option1_value.get()
 
-        if chosen_model == 'Custom':
+        # do nothing if input is empty
+        if not (chosen_model == '' or chosen_port == ''):
 
-            # FIXME : convert this section to the new Connector API.
-            #  No more string construction!
+            if chosen_model == 'Custom':
 
-            cs = "serial.Serial("
+                # FIXME : convert this section to the new Connector API.
+                #  No more string construction!
 
-            for k, v in self.options.items():
-                n, t = v
-                cs += "%s = " % k
-                if t == 'str':
-                    cs += "'" + eval("self.option%s_value.get()" % n) + "'"
-                elif t == 'int':
-                    try:
-                        int(eval("self.option%s_value.get()" % n))
-                    except ValueError:
-                        cs += "None"
-                    else:
-                        cs += str(int(eval("self.option%s_value.get()" % n)))
-                elif t == 'bool':
-                    cs += str(bool(eval("self.option%s_value.get()" % n)))
+                cs = "serial.Serial("
 
-                cs += ", "
-            connection_string = cs[:-2] + ")" # remove last ", "
-            try:
-                TOPSerial = eval(connection_string)
-            except serial.SerialException, detail:
-                e = ErrorDialog(self.myParent, detail)
-            else:
-                TOPSerial.open()
-                d = ConnectDialog(self.myParent, connection_string)
-                n = TOPSerial.inWaiting()
-                result = TOPSerial.read(n)
-                sleep(0.1)
+                for k, v in self.options.items():
+                    n, t = v
+                    cs += "%s = " % k
+                    if t == 'str':
+                        cs += "'" + eval("self.option%s_value.get()" % n) + "'"
+                    elif t == 'int':
+                        try:
+                            int(eval("self.option%s_value.get()" % n))
+                        except ValueError:
+                            cs += "None"
+                        else:
+                            cs += str(int(eval("self.option%s_value.get()" % n)))
+                    elif t == 'bool':
+                        cs += str(bool(eval("self.option%s_value.get()" % n)))
 
-                # prevent full buffer effect
-                while TOPSerial.inWaiting() > 0:
-                    result = result + TOPSerial.read(TOPSerial.inWaiting())
+                    cs += ", "
+                connection_string = cs[:-2] + ")" # remove last ", "
+                try:
+                    TOPSerial = eval(connection_string)
+                except serial.SerialException, detail:
+                    e = ErrorDialog(self.myParent, detail)
+                else:
+                    TOPSerial.open()
+                    d = ConnectDialog(self.myParent, connection_string)
+                    n = TOPSerial.inWaiting()
+                    result = TOPSerial.read(n)
                     sleep(0.1)
 
-                self.replace_text(result)
+                    # prevent full buffer effect
+                    while TOPSerial.inWaiting() > 0:
+                        result = result + TOPSerial.read(TOPSerial.inWaiting())
+                        sleep(0.1)
 
-        else:
-            module = models.models[chosen_model]
-            imodel = __import__('totalopenstation.models.%s' % module,
-                                 globals(),
-                                 locals(),
-                                 ['ModelConnector'])
-            mc = imodel.ModelConnector(chosen_port)
-            try:
-                mc.open()
-            except serial.SerialException, detail:
-                e = ErrorDialog(self.myParent, detail)
+                    self.replace_text(result)
+
             else:
-                st = DownloadDialog(self.myParent)
+                module = models.models[chosen_model]
+                imodel = __import__('totalopenstation.models.%s' % module,
+                                     globals(),
+                                     locals(),
+                                     ['ModelConnector'])
+                mc = imodel.ModelConnector(chosen_port)
+                try:
+                    mc.open()
+                except serial.SerialException, detail:
+                    e = ErrorDialog(self.myParent, detail)
+                else:
+                    st = DownloadDialog(self.myParent)
 
-                mc.start()
-                mc.dl_started.wait()
-                st.chg_msg(_("The download has started..."))
-                mc.dl_finished.wait()
-                st.chg_msg(_("The download has finished.\nPress OK to proceed"))
-                result = mc.result
-                self.replace_text(result)
+                    mc.start()
+                    mc.dl_started.wait()
+                    st.chg_msg(_("The download has started..."))
+                    mc.dl_finished.wait()
+                    st.chg_msg(_("The download has finished.\nPress OK to proceed"))
+                    result = mc.result
+                    self.replace_text(result)
 
     def open_action(self, event):
         try:
