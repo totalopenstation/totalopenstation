@@ -1,13 +1,19 @@
 from setuptools import setup, find_packages
 
-version = '0.2'
-
-setup(name='totalopenstation',
-      version=version,
-      description="A program to download and export survey data from total stations",
-      long_description="""\
-""",
-      classifiers=[
+setup(
+    name='totalopenstation',
+    version='0.2.0',
+    author='Stefano Costa',
+    author_email='steko@iosa.it',
+    packages=find_packages(exclude=['ez_setup', 'examples', 'tests', 'gui']),
+    scripts=['scripts/totalopenstation-gui.py',
+             'scripts/totalopenstation-cli-parser.py',
+             'scripts/totalopenstation-cli-connector.py'],
+    url='http://tops.berlios.de/',
+    license='GNU GPLv3',
+    description='Download and export survey data from your total station',
+    long_description=open('README.txt').read(),
+    classifiers=[
         'Development Status :: 4 - Beta',
         'Environment :: Console',
         'Environment :: X11 Applications',
@@ -17,17 +23,6 @@ setup(name='totalopenstation',
         'Programming Language :: Python',
         'Topic :: Scientific/Engineering :: GIS',
         ],
-      keywords='survey geodimeter',
-      author='Stefano Costa',
-      author_email='steko@iosa.it',
-      url='http://tops.berlios.de/',
-      license='GNU GPLv3',
-      packages=find_packages(exclude=['ez_setup', 'examples', 'tests']),
-      include_package_data=True,
-      zip_safe=False,
-      install_requires=[
-          # -*- Extra requirements: -*-
-        'pyserial',
-      ],
-      entry_points=""" """
-      )
+    keywords='survey geodimeter',
+    install_requires=['pyserial'],
+)
