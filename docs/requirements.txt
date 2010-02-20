@@ -1,0 +1,85 @@
+.. _requirements:
+
+==============
+ Requirements
+==============
+
+TotalOpenStation is written using the Python_ language. Thus you'll need to
+have a working installation of the current version of a Python of your choice.
+
+Across these pages we will refer to the standard Python_ distribution.
+
+.. _Python: http://www.python.org/
+
+Obviously, we're not going to reinvent the wheel, so we have chosen to use
+some Python libraries for some specific tasks:
+
+* the pySerial_ library
+* the Python Tkinter_ GUI library, which comes with the standard
+  Python setup
+
+.. _pySerial: http://pyserial.sourceforge.net/
+.. _Tkinter: http://wiki.python.org/moin/TkInter
+
+pySerial is needed for downloading data from the serial port (even
+through a :term:`serial-USB adapter`).
+
+Tkinter is at the moment responsible of the Graphical User
+Interface. This might change in future releases of Total Open
+Station.
+
+Getting Python
+==============
+
+If you're on GNU/Linux or a recent Mac OSX, Python should be already
+installed on your system, so you just need to get the mentioned
+libraries.
+
+On Windows, you can get an installer from the main Python website, in
+the download_ section.
+
+.. _download: http://www.python.org/download/
+
+Getting libraries
+=================
+
+Generally speaking, refer to the `pySerial website`_.
+
+.. _`pySerial website`: http://pyserial.sourceforge.net/pyserial.html#installation
+
+GNU/Linux
+---------
+
+Use your package manager (``apt-get``, ``yum``) and look
+for a package named ``python-serial`` or ``pyserial`` and install
+it. To test whether the installation went fine, open a terminal, start
+the python interpreter with ``python`` and at the prompt type ``import
+serial`` then return. It should say nothing, like this:
+
+>>> import serial
+
+If it complains, something went wrong::
+
+    >>> import serial
+    Traceback (most recent call last):
+      File "<stdin>", line 1, in <module>
+    ImportError: No module named serial
+
+and you need to check with your distribution package manager and bug
+reporting system.
+
+Mac OSX
+-------
+
+The simplest way is probably to install setuptools and use::
+
+    easy_install -U pyserial
+
+Microsoft Windows
+-----------------
+
+The pySerial website has executable installers for various versions of
+this operating system. As pySerial's documentation says, you will need
+also the pywin32_ library by Mark Hammond.
+
+.. _pywin32: http://pypi.python.org/pypi/pywin32
