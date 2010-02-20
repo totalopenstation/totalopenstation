@@ -25,4 +25,5 @@ setup(
         ],
     keywords='survey geodimeter',
     install_requires=['pyserial'],
+    include_package_data = True,
 )
