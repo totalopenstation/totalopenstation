@@ -1,7 +1,7 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
-# filename: totalopenstation-gui.py
-# Copyright 2008-2010 Stefano Costa <steko@iosa.it>
+# filename: upref.py
+# Copyright 2010 Stefano Costa <steko@iosa.it>
 # Copyright 2010 Luca Bianconi <luxetluc@yahoo.it>
 #
 # This file is part of Total Open Station.
