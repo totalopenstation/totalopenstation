@@ -22,6 +22,7 @@
 
 import serial
 import gettext
+import atexit
 
 from time import sleep
 
@@ -33,10 +34,12 @@ import tkFileDialog
 from totalopenstation.models import models
 from totalopenstation.formats.formats import formats as iformats
 from totalopenstation.output.formats import formats as oformats
-
+from totalopenstation.utils.upref import UserPrefs
 
 t = gettext.translation('totalopenstation', './locale', fallback=True)
 _ = t.lgettext
+
+
 
 
 def scan():
@@ -312,6 +315,9 @@ class Tops:
 
     def __init__(self, parent):
 
+        #init user's preferences config file object
+        self.upref = UserPrefs()
+
         buttons_width = 8
         imb_buttonx = "2m"
         imb_buttony = "1m"
@@ -368,6 +374,7 @@ class Tops:
                                    width=25)
         self.option1_label.pack(side=LEFT)
         self.option1_value = StringVar()
+        self.option1_value.set(self.upref.getvalue('port'))
 
 # Leave this Entry uncommented to enter port as a string, or ...
 #
@@ -406,6 +413,9 @@ class Tops:
                                    width=25)
         self.optionMODEL_label.pack(side=LEFT, anchor=E)
         self.optionMODEL_value = StringVar()
+
+        self.optionMODEL_value.set(self.upref.getvalue('model'))
+
         self.optionMODEL_entry = Menubutton(self.optionMODEL_frame,
                                         text="choose a model",
                                         textvariable=self.optionMODEL_value,
@@ -709,3 +719,10 @@ root = Tk()
 Tops = Tops(root)
 root.title("Total Open Station")
 root.mainloop()
+
+#save user's preferences (model and port)
+
+atexit.register(Tops.upref.setvalues,
+                {'model': Tops.optionMODEL_value.get(),
+                 'port':Tops.option1_value.get()})
+
