@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # filename: formats/leica_tcr_705.py
-# Copyright 2009 Stefano Costa <steko@iosa.it>
-# Copyright 2009 Luca Bianconi <luxetluc@yahoo.it>
+# Copyright 2009-2010 Stefano Costa <steko@iosa.it>
+# Copyright 2009-2010 Luca Bianconi <luxetluc@yahoo.it>
 
 # This file is part of Total Open Station.
 
@@ -39,9 +39,9 @@ class FormatParser(Parser):
             is_point = True
             x, y, z = tokens[1:4]
 
-        # not so clear why there are such points recorded
-        if x == '1.00' and y == '1.00' and z == '1.00':
-            is_point = False
+            # not so clear why there are such points recorded
+            if x == '1.00' and y == '1.00' and z == '1.00':
+                is_point = False
 
         return is_point
 
