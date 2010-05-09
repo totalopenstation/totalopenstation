@@ -15,7 +15,12 @@ programs, the recommended way to install is using ``pip``, like::
 
 This will install all needed Python packages as well. ``pip`` is
 complementary with virtualenv_, and it is encouraged that you use
-virtualenv to isolate your installation.
+virtualenv to isolate your installation::
+
+  pip -E tops install totalopenstation
+
+where ``-E tops`` creates a virtual environment named ``tops`` and
+installs totalopenstation into it.
 
 .. _virtualenv: http://pypi.python.org/pypi/virtualenv
 
@@ -32,4 +37,11 @@ the uncompressed directory and::
 
   python setup.py install
 
+Again, it's strongly recommended to avoid a system-wide install. Use
+``virtualenv``.
 
+Windows
+=======
+
+There is a precompiled binary for Windows XP and Vista. It's a single
+file and it should just work, even when run from a USB stick.
