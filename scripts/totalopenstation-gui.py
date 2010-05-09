@@ -651,7 +651,7 @@ class Tops:
                     e = ErrorDialog(self.myParent, detail)
                 else:
                     TOPSerial.open()
-                    d = ConnectDialog(self.myParent, connection_string)
+                    d = ConnectDialog(self.myParent, str(TOPSerial))
                     n = TOPSerial.inWaiting()
                     result = TOPSerial.read(n)
                     sleep(0.1)
