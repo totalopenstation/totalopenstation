@@ -22,21 +22,6 @@ import math
 
 from . import Point
 
-def deg2rad(deg):
-    '''Convert degrees to radiants.'''
-
-    deg = float(deg)
-    rad = deg / 180.0 * math.pi
-    return rad
-
-
-def gon2rad(gon):
-    '''Convert gons to radiants ( 400 gon = 360° )'''
-
-    gon = float(gon)
-    rad = gon / 200.0 * math.pi
-    return rad
-
 
 def polar_to_cartesian(base_x, base_y, base_z, dist, angle, z_angle, ih, th):
     '''Convert polar coordinates to cartesian.
@@ -71,11 +56,11 @@ class PolarPoint:
         self.th = float(th)
         self.angle_type = angle_type
         if angle_type is 'deg':
-            self.angle = deg2rad(angle)
-            self.z_angle = deg2rad(z_angle)
+            self.angle = math.radians(float(angle))
+            self.z_angle = math.radians(float(z_angle))
         if angle_type is 'gon':
-            self.angle = gon2rad(angle)
-            self.z_angle = gon2rad(z_angle)
+            self.angle = math.radians(float(angle)*0.9)
+            self.z_angle = math.radians(float(z_angle)*0.9)
         self.pid = pid
         self.text = text
         self.coordorder = coordorder
