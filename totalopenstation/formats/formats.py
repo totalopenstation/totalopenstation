@@ -1,7 +1,7 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
 # filename: totalopenstation-cli-parser.py
-# Copyright 2008-2009 Stefano Costa <steko@iosa.it>
+# Copyright 2008-2010 Stefano Costa <steko@iosa.it>
 # Copyright 2008-2009 Luca Bianconi <luxetluc@yahoo.it>
 
 # This file is part of Total Open Station.
@@ -26,6 +26,7 @@ formats = {
     'Nikon RAW V2.00': 'nikon_raw_v200',
     'Leica TCR 705': 'leica_tcr_705',
     'Trimble AREA': 'trimble_are',
+    'Topcon GTS': 'topcon_gts',
     }
 
 
