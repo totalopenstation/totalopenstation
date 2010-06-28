@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 # filename: formats/__init__.py
-# Copyright 2008-2009 Stefano Costa <steko@iosa.it>
+# Copyright 2008-2010 Stefano Costa <steko@iosa.it>
 # Copyright 2008 Luca Bianconi <luxetluc@yahoo.it>
 
 # This file is part of Total Open Station.
@@ -33,7 +33,7 @@ class Point:
         self.tuplepoint = (self.p_id, self.x, self.y, self.z, self.text)
 
     def __str__(self):
-        return self.p_id, self.x, self.y, self.z, self.text
+        return 'Point(%(p_id)s, %(x)s, %(y)s, %(z)s, %(text)s)' % self.__dict__
 
 
 class Parser:
@@ -52,7 +52,7 @@ class Parser:
         fg_lines = map(self.get_point, valid_lines)
         self.points = [p.tuplepoint for p in fg_lines if p is not None]
 
-    def is_point(self):
+    def is_point(self, point):
         """Action for finding which parts of the source file are points.
 
         This method **must** be overridden in the child class
@@ -60,7 +60,7 @@ class Parser:
 
         pass
 
-    def get_point(self):
+    def get_point(self, point):
         """Action for getting points from source file.
 
         This method **must** be overridden in the child class
