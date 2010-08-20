@@ -61,28 +61,28 @@ class OutputFormat:
                 result += '  5\n10\n'              # LAYER handle
                 result += '  2\n%s_PUNTI\n' % l    # LAYER name
                 result += ' 70\n0\n'              # LAYER is not frozen
-                result += ' 62\n%s\n' % colors[l] # LAYER color
+                result += ' 62\n%s\n' % (int(colors[l]) + 1) # LAYER color
                 result += '  6\nCONTINUOUS\n'      # LAYER linetype
 
                 result += '  0\nLAYER\n'           # same as above
                 result += '  5\n10\n'
                 result += '  2\n%s_QUOTE\n' % l
                 result += ' 70\n0\n'
-                result += ' 62\n%s\n' % colors[l]
+                result += ' 62\n%s\n' % (int(colors[l]) + 1)
                 result += '  6\nCONTINUOUS\n'
 
                 result += '  0\nLAYER\n'           # ditto
                 result += '  5\n10\n'
                 result += '  2\n%s_NUMERI\n' % l
                 result += ' 70\n0\n'
-                result += ' 62\n%s\n' % colors[l]
+                result += ' 62\n%s\n' % (int(colors[l]) + 1)
                 result += '  6\nCONTINUOUS\n'
             else:
                 result += '  0\nLAYER\n'           # ditto
                 result += '  5\n10\n'
                 result += '  2\n%s\n' % l          # LAYER name w/o any suffix
                 result += ' 70\n0\n'
-                result += ' 62\n%s\n' % colors[l]
+                result += ' 62\n%s\n' % (int(colors[l]) + 1)
                 result += '  6\nCONTINUOUS\n'
 
         result += '  0\nENDTAB\n  0\nENDSEC\n'
