@@ -441,19 +441,28 @@ class Tops:
                                    width=25)
         self.option2_label.pack(side=LEFT)
         self.option2_value = IntVar()
-        self.option2_entry = Menubutton(self.option2_frame,
-                                        text=_("choose a value"),
-                                        textvariable=self.option2_value,
-                                        relief=RAISED,
-                                        width=24)
-        self.option2_entry.menu = Menu(self.option2_entry, tearoff=0)
-        self.option2_entry["menu"] = self.option2_entry.menu
-        for key in sorted(serial.baudrate_constants.keys()): # dynamic list
-            self.option2_entry.menu.add_radiobutton(
-                label="%s" % key,
-                variable=self.option2_value,
-                value=key,
-                )
+
+        try:
+            assert serial.baudrate_constants
+            assert serial.baudrate_constants is not {}
+        except (AttributeError, AssertionError):
+            self.option2_entry = Entry(self.option2_frame,
+                                       textvariable=self.option2_value,
+                                       width=25)
+        else:
+            self.option2_entry = Menubutton(self.option2_frame,
+                                            text=_("choose a value"),
+                                            textvariable=self.option2_value,
+                                            relief=RAISED,
+                                            width=24)
+            self.option2_entry.menu = Menu(self.option2_entry, tearoff=0)
+            self.option2_entry["menu"] = self.option2_entry.menu
+            for key in sorted(serial.baudrate_constants.keys()): # dynamic list
+                self.option2_entry.menu.add_radiobutton(
+                    label="%s" % key,
+                    variable=self.option2_value,
+                    value=key,
+                    )
         self.option2_entry.pack(side=LEFT, anchor=W)
 
         # option 3 : bytesize
