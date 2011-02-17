@@ -4,6 +4,11 @@
  Installing
 ============
 
+There are a few different ways to install Total Open Station,
+depending on your operating system. If you are on GNU/Linux or Mac
+OSX, you should already have Python installed on your
+system. Instructions for Microsoft Windows are below.
+
 Using ``pip``
 =============
 
@@ -13,9 +18,9 @@ programs, the recommended way to install is using ``pip``, like::
 
   pip install totalopenstation
 
-This will install all needed Python packages as well. ``pip`` is
-complementary with virtualenv_, and it is encouraged that you use
-virtualenv to isolate your installation::
+This will install all the other required Python packages as
+well. ``pip`` is complementary with virtualenv_, and it is encouraged
+that you use virtualenv to isolate your installation::
 
   pip -E tops install totalopenstation
 
@@ -43,5 +48,12 @@ Again, it's strongly recommended to avoid a system-wide install. Use
 Windows
 =======
 
-There is a precompiled binary for Windows XP and Vista. It's a single
-file and it should just work, even when run from a USB stick.
+There is a binary installer available at PyPI_. This requires you to
+install a Python_ distribution (latest available is 2.7.1 ‒ do not
+install Python 3 as we don't support it yet), and the pyserial_ and
+setuptools_ modules.
+
+.. _PyPI: http://pypi.python.org/pypi/totalopenstation#downloads
+.. _Python: http://www.python.org/getit/windows/
+.. _pyserial: http://pypi.python.org/pypi/pyserial#downloads
+.. _setuptools: http://pypi.python.org/pypi/setuptools#downloads
