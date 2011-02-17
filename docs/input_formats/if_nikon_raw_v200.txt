@@ -2,7 +2,7 @@
  Nikon RAW format V2.00
 ========================
 
-:moduleauthor: Stefano Costa
+:author: Stefano Costa
 
 This format contains polar data. It is the first polar format
 supported by Total Open Station.

@@ -35,16 +35,22 @@ a stable release available yet.
 You can download the latest development “tip” either as a `compressed
 source archive`_ or directly with Mercurial::
 
-  hg clone https://hg.berlios.de/repos/tops
+  hg clone https://bitbucket.org/steko/totalopenstation
 
-.. _`compressed source archive`: https://hg.berlios.de/repos/tops/archive/tip.tar.gz
+.. _`compressed source archive`: https://bitbucket.org/steko/totalopenstation/get/tip.zip 
+
+If you are on Windows, the recommended way to install is using the
+binary installer available at PyPI_. Detailed instructions are
+available at the page about :ref:`installing`.
+
+.. _PyPI: http://pypi.python.org/pypi/totalopenstation#downloads
 
 .. warning::
 
    This is alpha quality code, it might behave in unexpected ways,
    crash your system or just don't work at all.
 
-Binary installable packages are planned. :ref:`installing` requires
+Binary installable packages are planned. requires
 using the command-line, but it is definitely easy.
 
 Documentation
@@ -66,10 +72,9 @@ to request support for new models or submit bugs.
 Who is doing this?
 ==================
 
-Total Open Station is mainly developed at grupporicerche_ as part of
-the IOSA_ project by Stefano Costa and Luca Bianconi, archaeologists.
+Total Open Station is mainly developed as part of the IOSA_ project by
+Stefano Costa and Luca Bianconi, archaeologists.
 
-.. _grupporicerche: http://www.grupporicerche.it/
 .. _IOSA: http://www.iosa.it/
 
 Total Open Station is licensed under the GNU General Public License
