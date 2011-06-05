@@ -1,3 +1,4 @@
+
 # -*- coding: utf-8 -*-
 #
 # Total Open Station documentation build configuration file, created by
@@ -38,7 +39,7 @@ master_doc = 'contents'
 
 # General information about the project.
 project = u'Total Open Station'
-copyright = u'2008-2010, Stefano Costa, Luca Bianconi'
+copyright = u'2008-2011, Stefano Costa, Luca Bianconi'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
