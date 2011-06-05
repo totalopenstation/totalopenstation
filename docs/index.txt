@@ -24,7 +24,8 @@ thus enabling exporting data to a variety of output formats, even at a
 later moment. Archiving of raw data is made easy by using plain text
 files.
 
-:ref:`users` are a growing number, you can be the next.
+:ref:`users` are a growing number, you can be the next. See which
+:ref:`models` are already supported.
 
 Getting Total Open Station
 ==========================
