@@ -118,15 +118,3 @@ class BasePoint:
         self.y = float(y)
         self.z = float(z)
         self.ih = float(ih)
-
-
-if __name__ == '__main__':
-    bp0 = BasePoint(x=100.0, y=100.0, z=100.0, ih=0)
-
-    p0 = PolarPoint(dist=10,
-                    angle=0,
-                    z_angle=0,
-                    th=0,
-                    angle_type='deg',
-                    base_point=bp0)
-    print p0.to_cartesian()

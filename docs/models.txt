@@ -1,3 +1,5 @@
+.. _models:
+
 Models
 ======
 
@@ -6,6 +8,5 @@ Models
    :glob:
    
    models/general
-   models/*
+   models/model_*
    models/other
-
