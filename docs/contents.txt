@@ -28,7 +28,7 @@ For developers
    models
    formats
    contributing
-
+   roadmap
 
 Indices and tables
 ==================
