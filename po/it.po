@@ -1,0 +1,260 @@
+# Italian translations for Total Open Station package
+# Traduzioni italiane per il pacchetto Total Open Station.
+# Copyright (C) 2010 Stefano Costa, Luca Bianconi and the Total Open Station contributors
+# This file is distributed under the same license as the Total Open Station package.
+# Stefano Costa <steko@iosa.it>, 2010.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Total Open Station 0.2\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2010-02-08 16:07+0100\n"
+"PO-Revision-Date: 2010-02-08 16:25+0100\n"
+"Last-Translator: Stefano Costa <steko@iosa.it>\n"
+"Language-Team: Italian\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: ../scripts/totalopenstation-cli-parser.py:31
+msgid "usage: %prog [option] arg1 [option] arg2 ..."
+msgstr "utilizzo: %prog [opzione] arg1 [opzione] arg2 ..."
+
+#: ../scripts/totalopenstation-cli-parser.py:39
+msgid "select input FILE  (do not specify for stdin)"
+msgstr "indicare il FILE da leggere (non indicare per leggere dallo standard input)"
+
+#: ../scripts/totalopenstation-cli-parser.py:46
+msgid "select output FILE (do not specify for stdout)"
+msgstr "indicare il FILE dover salvare (non indicare per inviare allo standard output)"
+
+#: ../scripts/totalopenstation-cli-parser.py:53
+#: ../scripts/totalopenstation-cli-parser.py:60
+msgid "select input FORMAT"
+msgstr "indicare il FORMATO del file da aprire"
+
+#: ../scripts/totalopenstation-cli-parser.py:67
+msgid "overwrite existing output file"
+msgstr "sovrascrivere il file di salvataggio"
+
+#: ../scripts/totalopenstation-cli-parser.py:79
+#, python-format
+msgid ""
+"\n"
+"Error:\n"
+"%s\n"
+"\n"
+"%s"
+msgstr ""
+"\n"
+"Errore:\n"
+"%s\n"
+"\n"
+"%s"
+
+#: ../scripts/totalopenstation-cli-parser.py:81
+msgid "Please specify an input format"
+msgstr "Indicare un formato per il file da leggere"
+
+#: ../scripts/totalopenstation-cli-parser.py:93
+msgid "Please specify an output format"
+msgstr "Indicare un formato in cui salvare"
+
+#: ../scripts/totalopenstation-cli-parser.py:117
+#, python-format
+msgid "Downloaded data saved to out file %s"
+msgstr "I dati scaricati sono stati salvati nel file %s"
+
+#: ../scripts/totalopenstation-cli-parser.py:121
+#, python-format
+msgid "Downloaded data saved to file %s,"
+msgstr "I dati scaricati sono stati salvati nel file %s"
+
+#: ../scripts/totalopenstation-cli-parser.py:122
+msgid "overwriting the existing file"
+msgstr "sovrascrittura del file esistente"
+
+#: ../scripts/totalopenstation-cli-parser.py:124
+msgid "Specified output file already exists\n"
+msgstr "Il file indicato esiste già\n"
+
+#: ../scripts/totalopenstation-gui.py:99
+msgid ""
+"\n"
+"Total Open Station is copyright 2008-2009 Luca Bianconi, Stefano Costa\n"
+"and the IOSA project.\n"
+"\n"
+"http://tops.berlios.de/\n"
+"\n"
+"The application logo is copyright 2008 Lapo Calamandrei."
+msgstr ""
+"\n"
+"Total Open Station © 2008-2009 Stefano Costa, Luca Bianconi e il progetto IOSA.\n"
+"\n"
+"http://tops.berlios.de/\n"
+"Logo di Total Open Station © 2008 Lapo Calamandrei"
+
+#: ../scripts/totalopenstation-gui.py:131
+msgid ""
+"\n"
+"This dialog will guide you through the download procedure.\n"
+"\n"
+"Press OK when finished to proceed."
+msgstr ""
+"\n"
+"Questa finestra vi condurrà attraverso la procedura di scaricamento dei dati.\n"
+"\n"
+"Avviare lo scaricamento tramite il menu dello strumento e premere OK quando è terminato."
+
+#: ../scripts/totalopenstation-gui.py:164
+msgid "waiting for data from device"
+msgstr "in attesa dei dati dallo strumento"
+
+#: ../scripts/totalopenstation-gui.py:165
+msgid "Connection initialized with the following parameters:\n"
+msgstr "La connessione è stata avviata con i seguenti parametri:\n"
+
+#: ../scripts/totalopenstation-gui.py:167
+msgid ""
+"\n"
+"Start the download procedure on the device.\n"
+msgstr ""
+"\n"
+"Avviare la procedura di download sullo strumento.\n"
+
+#: ../scripts/totalopenstation-gui.py:168
+msgid "Press OK when done."
+msgstr "Premere OK quando la procedura è completata."
+
+#: ../scripts/totalopenstation-gui.py:187
+msgid "Choose output format and destination file"
+msgstr "Selezionare un formato di esportazione e un file dove salvare"
+
+#: ../scripts/totalopenstation-gui.py:188
+msgid "Output format:\n"
+msgstr "Formato di esportazione:\n"
+
+#: ../scripts/totalopenstation-gui.py:201
+msgid "Data to be processed:\n"
+msgstr "Dati da elaborare:\n"
+
+#: ../scripts/totalopenstation-gui.py:204
+msgid "Input format"
+msgstr "Formato dei dati da leggere"
+
+#: ../scripts/totalopenstation-gui.py:209
+msgid "choose a model"
+msgstr "selezionare uno strumento"
+
+#: ../scripts/totalopenstation-gui.py:245
+msgid "Error"
+msgstr "Errore"
+
+#: ../scripts/totalopenstation-gui.py:246
+msgid "Connection failed with the following error message:\n"
+msgstr "La connessione è fallita con il seguente messaggio di errore:\n"
+
+#: ../scripts/totalopenstation-gui.py:247
+msgid ""
+"\n"
+"Check your connection parameters and try again.\n"
+msgstr ""
+"\n"
+"Controllare i parametri di connessione e tentare nuovamente.\n"
+
+#: ../scripts/totalopenstation-gui.py:259
+msgid "Cancel"
+msgstr "Annulla"
+
+#: ../scripts/totalopenstation-gui.py:325
+msgid "Port"
+msgstr "Porta seriale"
+
+#: ../scripts/totalopenstation-gui.py:362
+msgid "Total Station"
+msgstr "Stazione totale"
+
+#: ../scripts/totalopenstation-gui.py:393
+#: ../scripts/totalopenstation-gui.py:418
+#: ../scripts/totalopenstation-gui.py:449
+#: ../scripts/totalopenstation-gui.py:477
+msgid "choose a value"
+msgstr "selezionare un valore"
+
+#: ../scripts/totalopenstation-gui.py:412
+msgid "Bytesize"
+msgstr "Bytesize"
+
+#: ../scripts/totalopenstation-gui.py:443
+msgid "Parity setting"
+msgstr "Parità"
+
+#: ../scripts/totalopenstation-gui.py:455
+msgid "Even"
+msgstr "Even"
+
+#: ../scripts/totalopenstation-gui.py:458
+msgid "None"
+msgstr "None"
+
+#: ../scripts/totalopenstation-gui.py:461
+msgid "Odd"
+msgstr "Odd"
+
+#: ../scripts/totalopenstation-gui.py:471
+msgid "Stop bit"
+msgstr "Stop bit"
+
+#: ../scripts/totalopenstation-gui.py:513
+msgid "Connect"
+msgstr "Connessione"
+
+#: ../scripts/totalopenstation-gui.py:522
+msgid "Open file"
+msgstr "Apri file ..."
+
+#: ../scripts/totalopenstation-gui.py:530
+msgid "Save raw data"
+msgstr "Salva dati grezzi"
+
+#: ../scripts/totalopenstation-gui.py:538
+msgid "Process data"
+msgstr "Esporta dati"
+
+#: ../scripts/totalopenstation-gui.py:547
+msgid "About TOPS"
+msgstr "Informazioni su TOPS"
+
+#: ../scripts/totalopenstation-gui.py:555
+msgid "Quit"
+msgstr "Esci"
+
+#: ../scripts/totalopenstation-gui.py:567
+msgid ""
+"Welcome.\n"
+"Turn your device on."
+msgstr ""
+"Benvenuti.\n"
+"Accendere lo strumento."
+
+#: ../scripts/totalopenstation-gui.py:669
+msgid "The download has started..."
+msgstr "Lo scaricamento dei dati è iniziato ..."
+
+#: ../scripts/totalopenstation-gui.py:671
+msgid ""
+"The download has finished.\n"
+"Press OK to proceed"
+msgstr ""
+"Lo scaricamento dei dati è completato.\n"
+"Premere OK per proseguire"
+
+#: ../scripts/totalopenstation-gui.py:712
+msgid "No output file specified"
+msgstr "Nessun file da leggere indicato"
+
+#: ../scripts/totalopenstation-gui.py:713
+msgid "No processing settings entered!\n"
+msgstr "Non sono stati indicati i parametri per l'esportazione!\n"
+
