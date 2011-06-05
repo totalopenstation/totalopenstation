@@ -24,7 +24,7 @@ import atexit
 import os
 import os.path
 
-from ConfigParser import ConfigParser
+from ConfigParser import ConfigParser, NoSectionError
 
 
 class UserPrefs(ConfigParser):
@@ -46,18 +46,24 @@ class UserPrefs(ConfigParser):
         self.upref = os.path.expanduser(USER_PREFS_PATH)
 
         if os.path.exists(self.upref):
-            print('User preferences exist')
             self.read(self.upref)
-
-
-        else:
+            try:
+                self.getvalue('model')
+            except NoSectionError:
+                self.initfile()
+        elif not os.path.exists(os.path.dirname(self.upref)):
             os.mkdir(os.path.dirname(self.upref))
-            self.write()
-            print('User preferences do not exist!')
-            self.add_section('topsconfig')
-            self.set('topsconfig', 'model','')
-            self.set('topsconfig', 'port', '')
-            print('Created new user preferences file')
+            self.initfile()
+        else:
+            self.initfile()
+
+    def initfile(self):
+        self.write()
+        print('User preferences do not exist!')
+        self.add_section('topsconfig')
+        self.set('topsconfig', 'model','')
+        self.set('topsconfig', 'port', '')
+        print('Created new user preferences file')
 
     def write(self):
         ''' override ConfigParser.write() method '''

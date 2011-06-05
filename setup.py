@@ -1,3 +1,6 @@
+from distribute_setup import use_setuptools
+use_setuptools()
+
 from setuptools import setup, find_packages
 
 setup(
@@ -21,9 +24,13 @@ setup(
         'License :: OSI Approved :: GNU General Public License (GPL)',
         'Operating System :: OS Independent',
         'Programming Language :: Python',
+        'Programming Language :: Python :: 2',
+        'Programming Language :: Python :: 2.5',
+        'Programming Language :: Python :: 2.6',
         'Topic :: Scientific/Engineering :: GIS',
         ],
     keywords='survey geodimeter',
     install_requires=['pyserial'],
     include_package_data = True,
+    zip_safe = False,
 )

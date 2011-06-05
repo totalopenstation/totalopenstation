@@ -2,6 +2,7 @@
  Trimble AREA format
 =====================
 
-.. author:: Alessandro Bezzi
-
+:moduleauthor: Stefano Costa
+:moduleauthor: Luca Bianconi
+:moduleauthor: Alessandro Bezzi
 

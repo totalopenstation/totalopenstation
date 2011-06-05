@@ -12,9 +12,8 @@ Public License v3`_ or (at your option) any later version.
 Development is tracked with Mercurial_, a fast decentralized version
 control system. Installing *Mercurial* is not needed unless you want
 to participate in TOPS development, but please **do it**. The main
-development repository is on Berlios at
-https://hg.berlios.de/repos/tops , but there's a mirror also at
-bitbucket_ which makes it easy to create forks for your own experiments.
+development repository is on bitbucket_ where it's easy to fork the
+source code for your own experiments.
 
 .. _Mercurial: http://mercurial.selenic.com/
 .. _bitbucket: http://bitbucket.org/steko/totalopenstation
