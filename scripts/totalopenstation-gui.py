@@ -190,25 +190,31 @@ class ProcessDialog(tkSimpleDialog.Dialog):
         question = _("Output format:\n")
         top_frame = Frame(master)
         top_frame.pack(side=TOP, padx=5, pady=5)
+
+        control_panel0 = Frame(master)
+        control_panel0.pack(
+            side=TOP,
+            expand=YES,
+            anchor=S,
+            fill=Y, padx=5, pady=5)
         bottom_frame = Frame(master)
         bottom_frame.pack(side=TOP, anchor=S)
 
         Label(top_frame, bitmap="question").pack(side=TOP, anchor=N)
         Label(top_frame, text=title).pack(side=TOP, anchor=N)
-        output_frame = Frame(top_frame)
-        input_frame = Frame(top_frame)
-        output_frame.pack(side=LEFT)
-        input_frame.pack(side=LEFT)
+        output_frame = Frame(control_panel0, relief=RIDGE, bd=1)
+        input_frame = Frame(control_panel0, relief=RIDGE, bd=1)
+        input_frame.pack(side=TOP)
+        output_frame.pack(side=TOP)
 
-        message1 = _("Data to be processed:\n")
         params = "%s\n" % self.data
 
-        Label(input_frame, text=_('Input format')).pack(side=TOP)
+        Label(input_frame, text=_('Input format'), width=20).pack(side=LEFT)
 
         self.input_format = StringVar()
         self.input_format.set(self.format)
         input_format_entry = Menubutton(input_frame,
-                                        text=_("choose a model"),
+                                        text=_("choose a format"),
                                         textvariable=self.input_format,
                                         relief=RAISED,
                                         width=24)
@@ -222,7 +228,8 @@ class ProcessDialog(tkSimpleDialog.Dialog):
                 value=k)
         input_format_entry.pack(side=LEFT, anchor=W)
 
-        Label(output_frame, text=question).pack()
+        Label(output_frame, text=_('Output format'), width=20).pack(side=LEFT)
+
         self.output_format = StringVar()
         self.output_format.set(self.format)
         output_format_entry = Menubutton(output_frame,
