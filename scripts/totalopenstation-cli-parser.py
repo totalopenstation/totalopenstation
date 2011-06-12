@@ -25,6 +25,10 @@ import gettext
 
 from optparse import OptionParser
 
+from totalopenstation.formats import BUILTIN_INPUT_FORMATS
+from totalopenstation.output import BUILTIN_OUTPUT_FORMATS
+
+
 t = gettext.translation('totalopenstation', './locale', fallback=True)
 _ = t.lgettext
 
@@ -65,33 +69,59 @@ parser.add_option(
                 dest="overwrite",
                 default=False,
                 help=_("overwrite existing output file"))
+parser.add_option(
+    "--list",
+    action="store_true",
+    dest="list",
+    default=False,
+    help=_("list the available input and output formats"))
+
 
 (options, args) = parser.parse_args()
 
+def list_formats():
+    '''Print a list of the supported input and output formats.'''
+
+    from totalopenstation.formats import BUILTIN_INPUT_FORMATS
+
+    mod_string = "List of supported input formats:\n" + "-" * 30 + "\n"
+    for k, v in sorted(BUILTIN_INPUT_FORMATS.items()):
+        mod_string += k.ljust(20) + v[2] + "\n"
+    mod_string += "\n\n"
+
+    mod_string += "List of supported output formats:\n" + "-" * 30 + "\n"
+    for k, v in sorted(BUILTIN_OUTPUT_FORMATS.items()):
+        mod_string += k.ljust(20) + v[2] + "\n"
+    mod_string += "\n"
+    return mod_string
+
+if options.list:
+    sys.stdout.write(list_formats())
+    sys.exit()
+
 if options.informat:
-    try:
-        iformat = __import__('totalopenstation.formats.%s' % options.informat,
-                             globals(),
-                             locals(),
-                             ['FormatParser'])
-    except ImportError, message:
-        from totalopenstation.formats.formats import list_formats
-        sys.exit(_("\nError:\n%s\n\n%s") % (message, list_formats()))
+    inputclass = BUILTIN_INPUT_FORMATS[options.informat]
+    if isinstance(inputclass, tuple):
+        try:
+            # builtin format parser
+            mod, cls, name = inputclass
+            inputclass = getattr(
+                __import__('totalopenstation.formats.' + mod, None, None, [cls]), cls)
+        except ImportError, message:
+            sys.exit(_("\nError:\n%s\n\n%s") % (message, list_formats()))
 else:
     sys.exit(_("Please specify an input format"))
 
 if options.outformat:
-    try:
-        name = 'totalopenstation.output.tops_%s' % options.outformat
-        oformat = __import__(name,
-                             globals(),
-                             locals(),
-                             ['OutputFormat'])
-    except ImportError, message:
-        sys.exit("\nError:\n%s\n" % message)
-else:
-    sys.exit(_("Please specify an output format"))
-
+    outputclass = BUILTIN_OUTPUT_FORMATS[options.outformat]
+    if isinstance(outputclass, tuple):
+        try:
+            # builtin output builder
+            mod, cls, name = outputclass
+            outputclass = getattr(
+                __import__('totalopenstation.output.' + mod, None, None, [cls]), cls)
+        except ImportError, message:
+            sys.exit(_("\nError:\n%s\n\n%s") % (message, list_formats()))
 
 if options.infile:
     infile = open(options.infile, 'r').read()
@@ -102,9 +132,9 @@ else:
 def main(infile):
     '''After setting up all parameters, finally try to process input data.'''
 
-    parsed_data = iformat.FormatParser(infile)
+    parsed_data = inputclass(infile)
     parsed_points = parsed_data.points
-    output = oformat.OutputFormat(parsed_points)
+    output = outputclass(parsed_points)
 
     def write_to_file(outfile):
         e = open(outfile, 'w')

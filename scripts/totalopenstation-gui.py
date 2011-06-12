@@ -1,7 +1,7 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
 # filename: totalopenstation-gui.py
-# Copyright 2008-2010 Stefano Costa <steko@iosa.it>
+# Copyright 2008-2011 Stefano Costa <steko@iosa.it>
 # Copyright 2010 Luca Bianconi <luxetluc@yahoo.it>
 #
 # This file is part of Total Open Station.
@@ -32,14 +32,12 @@ import tkSimpleDialog
 import tkFileDialog
 
 from totalopenstation.models import models
-from totalopenstation.formats.formats import formats as iformats
-from totalopenstation.output.formats import formats as oformats
+from totalopenstation.formats import BUILTIN_INPUT_FORMATS
+from totalopenstation.output import BUILTIN_OUTPUT_FORMATS
 from totalopenstation.utils.upref import UserPrefs
 
 t = gettext.translation('totalopenstation', './locale', fallback=True)
 _ = t.lgettext
-
-
 
 
 def scan():
@@ -217,26 +215,30 @@ class ProcessDialog(tkSimpleDialog.Dialog):
         input_format_entry.menu = Menu(input_format_entry, tearoff=0)
         input_format_entry["menu"] = input_format_entry.menu
 
-        for k, v in sorted(iformats.items()):
+        for k, v in sorted(BUILTIN_INPUT_FORMATS.items()):
             input_format_entry.menu.add_radiobutton(
-                label=k,
+                label=v[2],
                 variable=self.input_format,
                 value=k)
         input_format_entry.pack(side=LEFT, anchor=W)
 
         Label(output_frame, text=question).pack()
         self.output_format = StringVar()
-        for t in oformats.keys():
-            w = Radiobutton(output_frame,
-                            text=t,
-                            value=t,
-                            variable=self.output_format,
-                            ).pack()
-        Label(bottom_frame, text=message1).pack()
-        t = Text(bottom_frame,
-             width=80)
-        t.insert(END, params)
-        t.pack()
+        self.output_format.set(self.format)
+        output_format_entry = Menubutton(output_frame,
+                                        text=_("choose a format"),
+                                        textvariable=self.output_format,
+                                        relief=RAISED,
+                                        width=24)
+        output_format_entry.menu = Menu(output_format_entry, tearoff=0)
+        output_format_entry["menu"] = output_format_entry.menu
+
+        for k, v in sorted(BUILTIN_OUTPUT_FORMATS.items()):
+            output_format_entry.menu.add_radiobutton(
+                label=v[2],
+                variable=self.output_format,
+                value=k)
+        output_format_entry.pack(side=LEFT, anchor=W)
 
     def validate(self):
         # do nothing if input is empty
@@ -248,26 +250,34 @@ class ProcessDialog(tkSimpleDialog.Dialog):
     def apply(self):
         '''Export data in the required output format'''
 
-        module = iformats[self.input_format.get()]
-        of_lower = str(self.output_format.get()).lower()
+        inputclass = BUILTIN_INPUT_FORMATS[self.input_format.get()]
 
-       # import input format parser
-        iformat = __import__('totalopenstation.formats.%s' % module,
-                             globals(),
-                             locals(),
-                             ['FormatParser'])
+        # import input format parser
+        if isinstance(inputclass, tuple):
+            try:
+                # builtin format parser
+                mod, cls, name = inputclass
+                inputclass = getattr(
+                    __import__('totalopenstation.formats.' + mod, None, None, [cls]), cls)
+            except ImportError, msg:
+                showwarning(_('Error loading the required input module: %s' % msg))
 
         # import output format writer
-        name = 'totalopenstation.output.tops_%s' % of_lower
-        oformat = __import__(name,
-                             globals(),
-                             locals(),
-                             ['OutputFormat'])
+        of_lower = str(self.output_format.get()).lower()
+        outputclass = BUILTIN_OUTPUT_FORMATS[self.output_format.get()]
+        if isinstance(outputclass, tuple):
+            try:
+                # builtin output builder
+                mod, cls, name = outputclass
+                outputclass = getattr(
+                    __import__('totalopenstation.output.' + mod, None, None, [cls]), cls)
+            except ImportError, msg:
+                showwarning(_('Error loading the required output module: %s' % msg))
 
         # no point in parsing before the output format has been imported
-        parsed_data = iformat.FormatParser(self.data)
+        parsed_data = inputclass(self.data)
         parsed_points = parsed_data.points
-        output = oformat.OutputFormat(parsed_points)
+        output = outputclass(parsed_points)
         sd = tkFileDialog.asksaveasfilename(defaultextension='.%s' % of_lower)
 
         try:
