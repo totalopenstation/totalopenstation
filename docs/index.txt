@@ -65,6 +65,8 @@ developer's manual, and it is made with Sphinx_, as the whole website.
 Help and support
 ================
 
+If you're experiencing problems with TOPS, try first our :ref:`faq`.
+
 Community support is available through the `mailing list`_. Subscribe
 to request support for new models or submit bugs.
 
