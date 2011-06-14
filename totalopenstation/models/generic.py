@@ -6,23 +6,23 @@ import serial
 import sys
 
 from time import sleep
-import threading
+from threading import Event, Thread
 
 
-class Connector(serial.Serial, threading.Thread):
+class Connector(serial.Serial, Thread):
 
     def __init__(self, port=None, baudrate=9600, bytesize=8, parity='N',
                 stopbits=1, timeout=None, xonxoff=0, rtscts=0,
                 writeTimeout=None, dsrdtr=None):
 
+        Thread.__init__(self)
+        self.dl_started = Event()
+        self.dl_finished = Event()
+
         serial.Serial.__init__(self, port=port, baudrate=baudrate,
         bytesize=bytesize, parity=parity, stopbits=stopbits, timeout=timeout,
         xonxoff=xonxoff, rtscts=rtscts, writeTimeout=writeTimeout,
         dsrdtr=dsrdtr)
-
-        threading.Thread.__init__(self)
-        self.dl_started = threading.Event()
-        self.dl_finished = threading.Event()
 
     def open(self):
         serial.Serial.open(self)
