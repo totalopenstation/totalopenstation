@@ -93,6 +93,24 @@ zNdS4/IDgUi49AEIHSQh0NfA1C22UX2YXfdx1wKNkIEHFrQUjAUZiDDM3FHXHfYpqHB3h95nRy2Q\n
 MB0IKLVHwNBiQQWc2IJ04sAcEsNCMRyyt+QC2cLJBhbQAsxHwdhiy+sEoZ20BTjafvlAwMi+e23B\n
 ABNCBhycraFEwdSSiQWZ1PL78Qb1TrtiAQEAOw==\n'''
 
+class StatusBar(Frame):
+    '''A status bar for Tkinter applications.
+
+    From: http://effbot.org/tkinterbook/tkinter-application-windows.htm
+    '''
+
+    def __init__(self, master):
+        Frame.__init__(self, master)
+        self.label = Label(self, bd=1, relief=SUNKEN, anchor=W)
+        self.label.pack(fill=X)
+
+    def set(self, format, *args):
+        self.label.config(text=format % args)
+        self.label.update_idletasks()
+
+    def clear(self):
+        self.label.config(text="")
+        self.label.update_idletasks()
 
 class AboutDialog(tkSimpleDialog.Dialog):
 
@@ -610,6 +628,10 @@ class Tops:
         self.exit_button.bind("<Button-1>", self.exit_action)
         self.exit_button.bind("<Return>", self.exit_action)
 
+        self.status = StatusBar(self.main_frame)
+        self.status.set('Welcome to Total Open Station')
+        self.status.pack(side=BOTTOM, fill=X)
+
         # text frame
         self.text_frame = Frame(self.main_frame)
         self.text_frame.pack(side=BOTTOM, expand=YES, fill=BOTH)
@@ -623,6 +645,7 @@ class Tops:
                                  command=self.text_area.yview)
         self.text_area['yscrollcommand'] = self.scrollY.set
         self.scrollY.pack(side=RIGHT, expand=YES, fill=Y, anchor=W)
+
 
     def exit_action(self, event):
         self.myParent.destroy()
@@ -694,7 +717,7 @@ class Tops:
                 else:
                     st = DownloadDialog(self.myParent)
                     if st.result:
-                        self.replace_text(_("Waiting for data...\nPlease start transfer from your total station menu."))
+                        self.status.set(_("Waiting for data: please start transfer from your total station menu."))
                         while mc.inWaiting() == 0:
                             sleep(0.1)
                         n = mc.inWaiting()
@@ -704,11 +727,12 @@ class Tops:
                         while mc.inWaiting() > 0:
                             newdata = mc.read(mc.inWaiting())
                             result += newdata
+                            self.status.set(_('Downloaded %d bytes'), len(result))
                             self.replace_text(result)
                             sleep(0.3) # TODO determine sleep time from baudrate
                         mc.close()
                         showinfo(_('Success!'),
-                                 _('Download finished!'))
+                                 _('Download finished!\nYou have %d bytes of data.') % len(result))
 
     def open_action(self, event):
         try:
