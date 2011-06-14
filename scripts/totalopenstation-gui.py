@@ -267,7 +267,8 @@ class ProcessDialog(tkSimpleDialog.Dialog):
                 inputclass = getattr(
                     __import__('totalopenstation.formats.' + mod, None, None, [cls]), cls)
             except ImportError, msg:
-                showwarning(_('Error loading the required input module: %s' % msg))
+                showwarning(_('Import error'),
+                            _('Error loading the required input module: %s' % msg))
 
         # import output format writer
         of_lower = str(self.output_format.get()).lower()
@@ -279,7 +280,8 @@ class ProcessDialog(tkSimpleDialog.Dialog):
                 outputclass = getattr(
                     __import__('totalopenstation.output.' + mod, None, None, [cls]), cls)
             except ImportError, msg:
-                showwarning(_('Error loading the required output module: %s' % msg))
+                showwarning(_('Import error'),
+                            _('Error loading the required output module: %s' % msg))
 
         # no point in parsing before the output format has been imported
         parsed_data = inputclass(self.data)
