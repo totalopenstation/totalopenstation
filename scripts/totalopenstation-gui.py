@@ -131,8 +131,9 @@ class DownloadDialog(tkSimpleDialog.Dialog):
     def body(self, master):
         title = "Total Open Station download"
         message = _("""
-This dialog will guide you through the download procedure.\n
-Press OK when finished to proceed.""")
+Press OK when you're ready to download.\n
+Depending on your device, you may need to start the transfer from\n
+the total station menu.""")
 
         Label(master, text=title, font=("Helvetica", "16", "bold")).pack()
         self.msg_var = StringVar()
@@ -140,20 +141,8 @@ Press OK when finished to proceed.""")
         self.msg = Label(master, textvariable=self.msg_var)
         self.msg.pack()
 
-    def buttonbox(self):
-        box = Frame(self)
-        self.w = Button(box,
-                        text="OK",
-                        width=10,
-                        command=self.cancel,
-                        default=DISABLED)
-        self.w.pack(side=LEFT, padx=5, pady=5)
-        self.bind("&lt;Return>", self.cancel)
-        self.bind("&lt;Escape>", self.cancel)
-        box.pack()
-
-    def chg_msg(self, new_msg):
-        self.msg_var.set(new_msg)
+    def apply(self):
+        self.result = True
 
 
 class ConnectDialog(tkSimpleDialog.Dialog):
@@ -704,14 +693,22 @@ class Tops:
                     e = ErrorDialog(self.myParent, detail)
                 else:
                     st = DownloadDialog(self.myParent)
-
-                    mc.start()
-                    mc.dl_started.wait()
-                    st.chg_msg(_("The download has started..."))
-                    mc.dl_finished.wait()
-                    st.chg_msg(_("The download has finished.\nPress OK to proceed"))
-                    result = mc.result
-                    self.replace_text(result)
+                    if st.result:
+                        self.replace_text(_("Waiting for data...\nPlease start transfer from your total station menu."))
+                        while mc.inWaiting() == 0:
+                            sleep(0.1)
+                        n = mc.inWaiting()
+                        result = mc.read(n)
+                        self.replace_text(result)
+                        sleep(0.1)
+                        while mc.inWaiting() > 0:
+                            newdata = mc.read(mc.inWaiting())
+                            result += newdata
+                            self.replace_text(result)
+                            sleep(0.3) # TODO determine sleep time from baudrate
+                        mc.close()
+                        showinfo(_('Success!'),
+                                 _('Download finished!'))
 
     def open_action(self, event):
         try:
@@ -741,6 +738,8 @@ class Tops:
     def replace_text(self, text):
         self.text_area.delete("1.0", END)
         self.text_area.insert(END, text.replace('\r', ''))
+        self.text_area.yview_moveto(1.0)
+        self.text_area.update_idletasks()
 
 
 root = Tk()
