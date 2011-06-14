@@ -508,18 +508,10 @@ class Tops:
                                         width=24)
         self.option3_entry.menu = Menu(self.option3_entry, tearoff=0)
         self.option3_entry["menu"] = self.option3_entry.menu
-        self.option3_entry.menu.add_radiobutton(label="8",
-                                                variable=self.option3_value,
-                                                value=8)
-        self.option3_entry.menu.add_radiobutton(label="7",
-                                                variable=self.option3_value,
-                                                value=7)
-        self.option3_entry.menu.add_radiobutton(label="6",
-                                                variable=self.option3_value,
-                                                value=6)
-        self.option3_entry.menu.add_radiobutton(label="5",
-                                                variable=self.option3_value,
-                                                value=5)
+        for v in [8,7,6,5]:
+            self.option3_entry.menu.add_radiobutton(label=str(v),
+                                                    variable=self.option3_value,
+                                                    value=v)
         self.option3_entry.pack(side=LEFT, anchor=W)
 
         # option 4 : parity
@@ -539,15 +531,10 @@ class Tops:
                                         width=24)
         self.option4_entry.menu = Menu(self.option4_entry, tearoff=0)
         self.option4_entry["menu"] = self.option4_entry.menu
-        self.option4_entry.menu.add_radiobutton(label=_("Even"),
-                                                variable=self.option4_value,
-                                                value="E")
-        self.option4_entry.menu.add_radiobutton(label=_("None"),
-                                                variable=self.option4_value,
-                                                value="N")
-        self.option4_entry.menu.add_radiobutton(label=_("Odd"),
-                                                variable=self.option4_value,
-                                                value="O")
+        for v in ['Even', 'None', 'Odd']:
+            self.option4_entry.menu.add_radiobutton(label=_(v),
+                                                    variable=self.option4_value,
+                                                    value=v[0])
         self.option4_entry.pack(side=LEFT, anchor=W)
 
         # option 5 : stop bit
@@ -567,12 +554,10 @@ class Tops:
                                         width=24)
         self.option5_entry.menu = Menu(self.option5_entry, tearoff=0)
         self.option5_entry["menu"] = self.option5_entry.menu
-        self.option5_entry.menu.add_radiobutton(label="1",
-                                                variable=self.option5_value,
-                                                value=1)
-        self.option5_entry.menu.add_radiobutton(label="2",
-                                                variable=self.option5_value,
-                                                value=2)
+        for v in [1, 2]:
+            self.option5_entry.menu.add_radiobutton(label=str(v),
+                                                    variable=self.option5_value,
+                                                    value=v)
         self.option5_entry.pack(side=LEFT, anchor=W)
 
 
