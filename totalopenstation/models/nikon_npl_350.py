@@ -1,10 +1,10 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
 # filename: nikon_npl_350.py
-# Copyright 2008 Stefano Costa <steko@iosa.it>
+# Copyright 2008,2011 Stefano Costa <steko@iosa.it>
 # Under the GNU GPL 3 License
 
-from generic import *
+from . import *
 
 
 class ModelConnector(Connector):
