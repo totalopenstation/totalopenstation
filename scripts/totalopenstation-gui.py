@@ -707,13 +707,13 @@ class Tops:
                             sleep(0.1)
                         n = mc.inWaiting()
                         result = mc.read(n)
-                        self.replace_text(result)
+                        self.replace_text(str(result))
                         sleep(0.1)
                         while mc.inWaiting() > 0:
                             newdata = mc.read(mc.inWaiting())
                             result += newdata
                             self.status.set(_('Downloaded %d bytes'), len(result))
-                            self.replace_text(result)
+                            self.replace_text(str(result))
                             sleep(0.3) # TODO determine sleep time from baudrate
                         mc.close()
                         showinfo(_('Success!'),
