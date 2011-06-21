@@ -31,7 +31,7 @@ from tkMessageBox import showwarning, showinfo, askokcancel
 import tkSimpleDialog
 import tkFileDialog
 
-from totalopenstation.models import models
+from totalopenstation.models import BUILTIN_MODELS
 from totalopenstation.formats import BUILTIN_INPUT_FORMATS
 from totalopenstation.output import BUILTIN_OUTPUT_FORMATS
 from totalopenstation.utils.upref import UserPrefs
@@ -450,9 +450,9 @@ class Tops:
         self.optionMODEL_entry.menu = Menu(self.optionMODEL_entry, tearoff=0)
         self.optionMODEL_entry["menu"] = self.optionMODEL_entry.menu
 
-        for k, v in models.models.items():
+        for k, (l, m, n) in BUILTIN_MODELS.items():
             self.optionMODEL_entry.menu.add_radiobutton(
-                label=k,
+                label=n,
                 variable=self.optionMODEL_value,
                 value=k,
                 command=self.print_model)
@@ -637,7 +637,7 @@ class Tops:
 
     def print_model(self):
         model = self.optionMODEL_value.get()
-        if model != 'Custom':
+        if model != 'custom':
             self.control_panel.forget()
             self.option2_value.set(0)
             self.option3_value.set(0)
@@ -662,39 +662,28 @@ class Tops:
         # do nothing if input is empty
         if not (chosen_model == '' or chosen_port == ''):
 
-            if chosen_model == 'Custom':
+            if chosen_model == 'custom':
 
                 # dictionary for passing options to Serial
-                self.options = {'port': self.option1_value.get(),
-                                'baudrate': self.option2_value.get(),
+                self.options = {'baudrate': self.option2_value.get(),
                                 'bytesize': self.option3_value.get(),
                                 'parity': self.option4_value.get(),
                                 'stopbits': self.option5_value.get()}
-                try:
-                    TOPSerial = serial.Serial(**self.options)
-                except serial.SerialException, detail:
-                    e = ErrorDialog(self.myParent, detail)
-                else:
-                    TOPSerial.open()
-                    d = ConnectDialog(self.myParent, str(TOPSerial))
-                    n = TOPSerial.inWaiting()
-                    result = TOPSerial.read(n)
-                    sleep(0.1)
-
-                    # prevent full buffer effect
-                    while TOPSerial.inWaiting() > 0:
-                        result = result + TOPSerial.read(TOPSerial.inWaiting())
-                        sleep(0.1)
-
-                    self.replace_text(result)
-
             else:
-                module = models.models[chosen_model]
-                imodel = __import__('totalopenstation.models.%s' % module,
-                                     globals(),
-                                     locals(),
-                                     ['ModelConnector'])
-                mc = imodel.ModelConnector(chosen_port)
+                self.options = {}
+
+            modelclass = BUILTIN_MODELS[chosen_model]
+            if isinstance(modelclass, tuple):
+                try:
+                    # builtin model builder
+                    mod, cls, name = modelclass
+                    modelclass = getattr(
+                        __import__('totalopenstation.models.' + mod, None, None, [cls]), cls)
+                except ImportError, msg:
+                    showwarning(_('Import error'),
+                                _('Error loading the required model module: %s' % msg))
+                if True:#self.options:
+                    mc = modelclass(chosen_port, **self.options)
                 try:
                     mc.open()
                 except serial.SerialException, detail:

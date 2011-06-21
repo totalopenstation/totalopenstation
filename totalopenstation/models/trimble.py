@@ -2,11 +2,11 @@
 # -*- coding: utf-8 -*-
 # filename: trimble.py
 # Copyright 2009 Luca Bianconi <luxetluc@yahoo.it>
-# Copyright 2009 Stefano Costa <steko@iosa.it>
+# Copyright 2009,2011 Stefano Costa <steko@iosa.it>
 # Copyright 2009 Alessandro Bezzi <alessandro.bezzi@arc-team.com>
 # Under the GNU GPL 3 License
 
-from generic import *
+from . import *
 
 
 class ModelConnector(Connector):
