@@ -3,9 +3,11 @@ use_setuptools()
 
 from setuptools import setup, find_packages
 
+import totalopenstation
+
 setup(
     name='totalopenstation',
-    version='0.2.0',
+    version=totalopenstation.__version__,
     author='Stefano Costa',
     author_email='steko@iosa.it',
     packages=find_packages(exclude=['ez_setup', 'examples', 'tests', 'gui']),
@@ -17,7 +19,7 @@ setup(
     description='Download and export survey data from your total station',
     long_description=open('README.txt').read(),
     classifiers=[
-        'Development Status :: 4 - Beta',
+        #'Development Status :: 4 - Beta',
         'Environment :: Console',
         'Environment :: X11 Applications',
         'Intended Audience :: End Users/Desktop',
@@ -27,6 +29,7 @@ setup(
         'Programming Language :: Python :: 2',
         'Programming Language :: Python :: 2.5',
         'Programming Language :: Python :: 2.6',
+        'Programming Language :: Python :: 2.7',
         'Topic :: Scientific/Engineering :: GIS',
         ],
     keywords='survey geodimeter',

@@ -31,6 +31,8 @@ from tkMessageBox import showwarning, showinfo, askokcancel
 import tkSimpleDialog
 import tkFileDialog
 
+import totalopenstation
+
 from totalopenstation.models import BUILTIN_MODELS
 from totalopenstation.formats import BUILTIN_INPUT_FORMATS
 from totalopenstation.output import BUILTIN_OUTPUT_FORMATS
@@ -115,9 +117,9 @@ class StatusBar(Frame):
 class AboutDialog(tkSimpleDialog.Dialog):
 
     def body(self, master):
-        title = "Total Open Station 0.2"
+        title = "Total Open Station %s" % totalopenstation.__version__
         message = _("""
-Total Open Station is copyright 2008-2010 Luca Bianconi, Stefano Costa
+Total Open Station is copyright 2008-2011 Luca Bianconi, Stefano Costa
 and the IOSA project.
 
 http://tops.berlios.de/
