@@ -50,6 +50,7 @@ class OutputFormat:
 
         # extract layer list
         codes = set([p[4] for p in self.data])
+        codes = [c.replace('.','_') for c in codes]
         layers = dict(enumerate(codes))
         colors = dict(zip(layers.values(), layers.keys()))
 
