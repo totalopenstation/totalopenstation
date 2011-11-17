@@ -20,6 +20,5 @@ if '+' in __version__ or 'pre' in __version__:
         out, err = p.communicate()
         if out:
             __version__ += '/' + out.strip()
-            print(__version__)
     except Exception:
         pass
