@@ -41,11 +41,9 @@ class OutputFormat:
         self.data = data
 
     def process(self):
-        
-        for d in data:
-            lines = [to_txt(e) for e in self.data]
-            output = "".join(lines)
-            return output
+        lines = [to_txt(e) for e in self.data]
+        output = "".join(lines)
+        return output
 
 if __name__ == "__main__":
     TotalOpenTXT(
