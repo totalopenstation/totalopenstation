@@ -1,0 +1,39 @@
+.. _contents:
+
+===============
+ Documentation
+===============
+
+
+For users
+=========
+
+.. toctree::
+   :maxdepth: 1
+   :glob:
+   
+   requirements
+   installing
+   getting_sample_data
+   glossary
+   users
+
+For developers
+==============
+
+.. toctree::
+   :maxdepth: 1
+   :glob:
+
+   models
+   formats
+   contributing
+   roadmap
+
+Indices and tables
+==================
+
+* :ref:`genindex`
+* :ref:`modindex`
+* :ref:`search`
+

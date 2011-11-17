@@ -1,0 +1,18 @@
+.. _library:
+
+=======================================
+ Using Total Open Station as a library
+=======================================
+
+All the functionality implemented in Total Open Station can be used
+independently, with the exception of the user interfaces.
+
+In other words, the classes for reading specific formats and those for writing
+well-known formats are entirely usable on their own.
+
+This is a feature.
+
+Example: a web app for converting total station data
+====================================================
+
+
