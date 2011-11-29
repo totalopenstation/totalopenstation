@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 # filename: formats/zeiss_rec_500.py
-# Copyright 2008-2009 Stefano Costa <steko@iosa.it>
+# Copyright 2008-2011 Stefano Costa <steko@iosa.it>
 # Copyright 2008 Luca Bianconi <luxetluc@yahoo.it>
 
 # This file is part of Total Open Station.
@@ -45,7 +45,10 @@ class FormatParser(Parser):
             float(tokens['x'])
             float(tokens['y'])
             float(tokens['z'])
-        except (ValueError, IndexError):
+            assert tokens['X_str'] == 'X'
+            assert tokens['Y_str'] == 'Y'
+            assert tokens['Z_str'] == 'Z'
+        except (ValueError, IndexError, AssertionError):
             is_point = False
         else:
             is_point = True
