@@ -11,7 +11,7 @@ setup(
     scripts=['scripts/totalopenstation-gui.py',
              'scripts/totalopenstation-cli-parser.py',
              'scripts/totalopenstation-cli-connector.py'],
-    url='http://tops.berlios.de/',
+    url='http://tops.iosa.it/',
     license='GNU GPLv3',
     description='Download and export survey data from your total station',
     long_description=open('README.txt').read(),
