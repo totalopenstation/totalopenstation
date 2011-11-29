@@ -4,7 +4,7 @@
 
 from os import path
 
-__version__  = '0.3pre'
+__version__  = '0.3'
 
 package_dir = path.abspath(path.dirname(__file__))
 
