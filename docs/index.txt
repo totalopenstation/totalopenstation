@@ -38,10 +38,9 @@ Detailed instructions are available at the :ref:`installing` page.
 
 If you are having problems with getting started, try first our
 :ref:`faq`. If that doesn't help, get in touch with the development
-team through our dedicated support channel and `mailing list`_ (you
-will need to confirm your e-mail *after* sending your first message).
+team through our dedicated support channel and `mailing list`_.
 
-.. _`mailing list`: mailto:iosa@librelist.com
+.. _`mailing list`: https://lists.berlios.de/mailman/listinfo/tops-dev
 
 Documentation
 =============
