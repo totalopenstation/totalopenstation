@@ -1,6 +1,7 @@
-.. TotalOpenStation documentation master file, created by sphinx-quickstart on Sat May 24 15:43:10 2008.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
+.. TotalOpenStation documentation master file, created by
+   sphinx-quickstart on Sat May 24 15:43:10 2008.  You can adapt this
+   file completely to your liking, but it should at least contain the
+   root `toctree` directive.
 
 ====================
  Total Open Station
@@ -12,7 +13,7 @@ downloading and processing data from total station devices.
 This is a task which is usually done by proprietary, dedicated and
 Windows™-only software, but TOPS is different by nature, because:
 
-- it is *free software* released under the GNU GPLv3 license;
+- it is **free software** released under the GNU GPLv3 license;
 - it works on *any* operating system, including mobile platforms like
   OpenMoko;
 - it is designed to support as many devices and formats as possible, all
@@ -27,32 +28,20 @@ files.
 :ref:`users` are a growing number, you can be the next. See which
 :ref:`models` are already supported.
 
-Getting Total Open Station
-==========================
+Getting started with Total Open Station
+=======================================
 
-Total Open Station is in a early phase of development and there isn't
-a stable release available yet.
+Total Open Station 0.3 is in now available as a development preview and
+can be installed on all major operating systems.
 
-You can download the latest development “tip” either as a `compressed
-source archive`_ or directly with Mercurial::
+Detailed instructions are available at the :ref:`installing` page.
 
-  hg clone https://bitbucket.org/steko/totalopenstation
+If you are having problems with getting started, try first our
+:ref:`faq`. If that doesn't help, get in touch with the development
+team through our dedicated support channel and `mailing list`_ (you
+will need to confirm your e-mail *after* sending your first message).
 
-.. _`compressed source archive`: https://bitbucket.org/steko/totalopenstation/get/tip.zip 
-
-If you are on Windows, the recommended way to install is using the
-binary installer available at PyPI_. Detailed instructions are
-available at the page about :ref:`installing`.
-
-.. _PyPI: http://pypi.python.org/pypi/totalopenstation#downloads
-
-.. warning::
-
-   This is alpha quality code, it might behave in unexpected ways,
-   crash your system or just don't work at all.
-
-Binary installable packages are planned. requires
-using the command-line, but it is definitely easy.
+.. _`mailing list`: mailto:iosa@librelist.com
 
 Documentation
 =============
@@ -61,16 +50,6 @@ The :ref:`contents` includes both the user's manual and the
 developer's manual, and it is made with Sphinx_, as the whole website.
 
 .. _Sphinx: http://sphinx.pocoo.org/
-
-Help and support
-================
-
-If you're experiencing problems with TOPS, try first our :ref:`faq`.
-
-Community support is available through the `mailing list`_. Subscribe
-to request support for new models or submit bugs.
-
-.. _`mailing list`: https://lists.berlios.de/mailman/listinfo/tops-dev
 
 Who is doing this?
 ==================

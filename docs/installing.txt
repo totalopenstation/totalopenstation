@@ -7,7 +7,9 @@
 There are a few different ways to install Total Open Station,
 depending on your operating system. If you are on GNU/Linux or Mac
 OSX, you should already have Python installed on your
-system. Instructions for Microsoft Windows are below.
+system.
+
+Instructions for Microsoft Windows are at the end of this page.
 
 Using ``pip``
 =============
@@ -45,15 +47,78 @@ the uncompressed directory and::
 Again, it's strongly recommended to avoid a system-wide install. Use
 ``virtualenv``.
 
-Windows
-=======
+Microsoft Windows
+=================
 
-There is a binary installer available at PyPI_. This requires you to
-install a Python_ distribution (latest available is 2.7.1 ‒ do not
-install Python 3 as we don't support it yet), and the pyserial_ and
-setuptools_ modules.
+Three packages need to be installed before the actual installation of
+Total Open Station, because the program is written in the Python
+programming language which is not installed by default on Windows.
 
-.. _PyPI: http://pypi.python.org/pypi/totalopenstation#downloads
-.. _Python: http://www.python.org/getit/windows/
-.. _pyserial: http://pypi.python.org/pypi/pyserial#downloads
-.. _setuptools: http://pypi.python.org/pypi/setuptools#downloads
+.. warning::
+
+   You might need administrator privileges to be able to install all
+   the programs.
+
+Install Python
+--------------
+
+Check whether your Windows is 32 bit (common) or 64 bit. Then download
+the right Python installer (direct link to the installation download):
+
+- `32-bit Python installer`_
+- `64-bit Python installer`_
+
+When you've got the installer donwloaded on your computer, install
+it. You don’t need to use Python directly, but it is needed for the
+program to work.
+
+.. _`32-bit Python installer`: http://python.org/ftp/python/2.7.2/python-2.7.2.msi
+.. _`64-bit Python installer`: http://python.org/ftp/python/2.7.2/python-2.7.2.amd64.msi
+
+Install PythonWin
+-----------------
+
+Download PythonWin_ from and install it. Again, you don’t
+need to use it directly, but it is needed for the program to work.
+
+.. _PythonWin: http://sourceforge.net/projects/pywin32/files/pywin32/Build216/pywin32-216.win32-py2.7.exe/download
+
+Install pySerial
+----------------
+
+Download pySerial_ and install it. As with PythonWin, you don’t need
+to use it directly, but it is needed for the program to work. Do NOT
+install pySerial 2.5 because it doesn’t work correctly on Windows.
+
+.. _pySerial: http://sourceforge.net/projects/pyserial/files/pyserial/2.4/pyserial-2.4.win32.exe/download
+
+
+Install Total Open Station
+--------------------------
+
+Download the most recent version of `Total Open Station`_ and install it.
+You will find the totalopenstation-gui script in C:/Python27/Scripts/
+unless you have changed the standard installation options (not
+recommended). You can create a shortcut to the program on your desktop
+if you like.
+
+To upgrade to a newer version, just go to
+http://pypi.python.org/pypi/totalopenstation, download the latest
+version and install it as with the first one. The old version will get
+overwritten. No data will be lost!
+
+.. _`Total Open Station`: http://pypi.python.org/packages/any/t/totalopenstation/totalopenstation-0.3.linux-x86_64.exe#md5=85f144de2e06e6fffc7c6d1fac095167
+
+
+Install the Prolific PL2032 drivers
+-----------------------------------
+
+(optional, but recommended).
+
+Most USB-serial adapters are made with the Prolific chipset. If
+plugging the cable gives you errors about missing drivers for your
+hardware, drivers for Windows can be downloaded from the `Prolific
+website`_.
+
+.. _`Prolific website`:
+   http://www.prolific.com.tw/eng/downloads.asp?ID=31
