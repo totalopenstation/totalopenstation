@@ -1,0 +1,31 @@
+.. _contributing:
+
+==============
+ Contributing
+==============
+
+Total Open Station is free software, released under the GNU `General
+Public License v3`_ or (at your option) any later version.
+
+.. _`General Public License v3`: http://www.gnu.org/licenses/gpl-3.0.html
+
+Development is tracked with Mercurial_, a fast decentralized version
+control system. Installing *Mercurial* is not needed unless you want
+to participate in TOPS development, but please **do it**. The main
+development repository is on bitbucket_ where it's easy to fork the
+source code for your own experiments.
+
+.. _Mercurial: http://mercurial.selenic.com/
+.. _bitbucket: http://bitbucket.org/steko/totalopenstation
+
+The suggested way of contributing is by sending patches using the
+Mercurial *patchbomb* extension to the `development mailing list`_.
+
+.. _`development mailing list`: https://lists.berlios.de/mailman/listinfo/tops-dev
+
+Coding standards
+================
+
+We try to follow as much as possible PEP-8_, 
+
+.. _PEP-8: http://www.python.org/dev/peps/pep-0008/

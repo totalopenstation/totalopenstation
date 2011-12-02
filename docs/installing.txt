@@ -1,0 +1,109 @@
+.. _installing:
+
+============
+ Installing
+============
+
+There are a few different ways to install Total Open Station,
+depending on your operating system. If you are on GNU/Linux or Mac
+OSX, you should already have Python installed on your
+system. Instructions for Microsoft Windows are below.
+
+Using ``pip`` (recommended)
+===========================
+
+Until your operating system's packaging tools (e.g. ``apt`` or
+``yum``) allow you to install Total Open Station along with other
+programs, the recommended way to install is using ``pip``_ (a package
+manager for Python) and ``virtualenv``_ (which creates isolated
+software environments: basically you don't mix packages installed
+system-wise with your package manager and user-installed
+software). Here follows a detailed step-by-step guide.
+
+.. _``pip``: http://pip.openplans.org/
+.. _``virtualenv``: http://pypi.python.org/pypi/virtualenv
+
+Install ``pip`` and ``virtualenv``
+----------------------------------
+
+First of all, make sure you have ``pip`` and ``virtualenv``
+installed. All major GNU/Linux distributions have them packaged:
+
+- Debian and derivatives (including Ubuntu): ``apt-get install
+  python-pip python-virtualenv``
+- Fedora: ``yum install python-pip python-virtualenv``
+
+Create a virtual environment
+----------------------------
+
+Creating a virtual environment is as easy as typing in a terminal::
+
+    virtualenv tops-environment
+
+A new directory named ``tops-environment`` was created. It contains a
+minimal set of files needed to manage a Python installation that is
+isolated from the one installed on your system, helping to keep things
+clean.
+
+Now activate the environment with::
+
+    source tops-environment/bin/activate
+
+From now on, all Python-related actions will be executed within the
+newly created environment, and not on the system-wide
+installation. You terminal should look a bit different when the
+virtual environment is active::
+
+    (tops-environment)steko@gibreel:$
+
+You can change directory freely, the environment will remain active.
+
+You *deactivate* the environment (that is, you exit from it), with the
+``deactivate`` command.
+
+Installing Total Open Station
+-----------------------------
+
+Once the virtual environment is active, you're ready to install Total
+Open Station, with::
+
+    pip install totalopenstation
+
+This will automatically download the latest released version from the
+Python Package Index (PyPI), and install all the other required Python
+packages as well.
+
+Running the program
+-------------------
+
+When the program is installed, you can use it from the command line or
+with a graphical interface (recommended for new users).
+
+From your terminal, type::
+
+    totalopenstation-gui.py
+
+and the program should start. Please report any errors to the `mailing
+list`_
+
+The next time you want to run the program, follow these steps:
+
+#. open a terminal
+#. ``cd`` to the directory where the virtual environment was created
+#. ``source tops-environment/bin/activate`` to enter the virtualenv
+#. ``totalopenstation-gui.py`` will start the program
+
+.. _`mailing list`: https://lists.berlios.de/mailman/listinfo/tops-dev
+
+Windows
+=======
+
+There is a binary installer available at PyPI_. This requires you to
+install a Python_ distribution (latest available is 2.7.1 ‒ do not
+install Python 3 as we don't support it yet), and the pyserial_ and
+setuptools_ modules.
+
+.. _PyPI: http://pypi.python.org/pypi/totalopenstation#downloads
+.. _Python: http://www.python.org/getit/windows/
+.. _pyserial: http://pypi.python.org/pypi/pyserial#downloads
+.. _setuptools: http://pypi.python.org/pypi/setuptools#downloads

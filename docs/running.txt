@@ -1,0 +1,19 @@
+.. _running:
+
+============================
+ Running Total Open Station
+============================
+
+There are two ways to use Total Open Station, from the command line or
+as a user-friendly program. Each mode of operation has its drawbacks,
+and both are constantly used and tested.
+
+Command-line
+============
+
+After :ref:`installing`, there will be three new executable programs
+in your path. Two of them are meant for being run in a terminal, and
+are extremely useful for batch operations and easy repeating of common
+tasks with minimum time effort.
+
+
