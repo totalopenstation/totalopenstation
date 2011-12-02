@@ -4,7 +4,7 @@
 
 from os import path
 
-__version__  = '0.3pre'
+__version__  = '0.3'
 
 package_dir = path.abspath(path.dirname(__file__))
 
@@ -20,6 +20,5 @@ if '+' in __version__ or 'pre' in __version__:
         out, err = p.communicate()
         if out:
             __version__ += '/' + out.strip()
-            print(__version__)
     except Exception:
         pass
