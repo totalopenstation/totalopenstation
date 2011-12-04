@@ -7,16 +7,16 @@
 Present
 =======
 
-Total Open Station is at version 0.2, which is an **alpha** release.
+Total Open Station is at version |version|, which is an **alpha**
+release. We think it works quite well, but the number of supported
+formats is still too small for a beta release.
 
 Near Future
 ===========
 
-Total Open Station 0.3 will be released by June 2011. Planned
-features include:
-
-- more responsive download dialogs
-- more solid internal data format
+The next version of Total Open Station will be released in 2012. See
+what features are being `worked on
+<https://bitbucket.org/steko/totalopenstation/issues?milestone=0.4>`_.
 
 Future
 ======

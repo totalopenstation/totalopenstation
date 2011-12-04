@@ -1,8 +1,8 @@
 .. _installing:
 
-============
- Installing
-============
+===============================
+ Installing Total Open Station
+===============================
 
 There are a few different ways to install Total Open Station,
 depending on your operating system. If you are on GNU/Linux or Mac
@@ -172,3 +172,11 @@ website`_.
 
 .. _`Prolific website`:
    http://www.prolific.com.tw/eng/downloads.asp?ID=31
+
+Running the program
+-------------------
+
+Total Open Station will be installed at
+:file:`C:/Python27/Scripts/totalopenstation-gui.py`. Double-click on this
+file to start the program. You can create a shortcut if you want. We
+are still working on providing an installer that will do it for you.
