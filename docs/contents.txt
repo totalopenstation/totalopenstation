@@ -12,10 +12,9 @@ For users
    :maxdepth: 1
    :glob:
    
-   requirements
    installing
+   running
    getting_sample_data
-   glossary
    users
 
 For developers
@@ -28,11 +27,13 @@ For developers
    models
    formats
    contributing
+   library
    roadmap
 
 Indices and tables
 ==================
 
+* :ref:`glossary`
 * :ref:`genindex`
 * :ref:`modindex`
 * :ref:`search`
