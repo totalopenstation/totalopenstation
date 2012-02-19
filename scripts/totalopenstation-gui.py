@@ -42,6 +42,16 @@ t = gettext.translation('totalopenstation', './locale', fallback=True)
 _ = t.lgettext
 
 
+def onAppCloseCallback():
+	'''
+		Callback function to ask confirmation before quitting 
+		the application
+	'''
+	if askokcancel("Quit","Do you really want to quit application ?"):
+		root.destroy()
+	
+
+
 def scan():
     """scan for available ports. return a list of tuples (num, name).
 
@@ -635,7 +645,8 @@ class Tops:
 
 
     def exit_action(self, event):
-        self.myParent.destroy()
+        #self.myParent.destroy()
+        onAppCloseCallback()
 
     def print_model(self):
         model = self.optionMODEL_value.get()
@@ -745,6 +756,9 @@ class Tops:
 root = Tk()
 Tops = Tops(root)
 root.title("Total Open Station")
+
+root.protocol("WM_DELETE_WINDOW", onAppCloseCallback);
+
 root.mainloop()
 
 #save user's preferences (model and port)
