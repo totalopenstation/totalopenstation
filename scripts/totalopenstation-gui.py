@@ -41,17 +41,6 @@ from totalopenstation.utils.upref import UserPrefs
 t = gettext.translation('totalopenstation', './locale', fallback=True)
 _ = t.lgettext
 
-
-def onAppCloseCallback():
-	'''
-		Callback function to ask confirmation before quitting 
-		the application
-	'''
-	if askokcancel("Quit","Do you really want to quit application ?"):
-		root.destroy()
-	
-
-
 def scan():
     """scan for available ports. return a list of tuples (num, name).
 
@@ -642,11 +631,24 @@ class Tops:
                                  command=self.text_area.yview)
         self.text_area['yscrollcommand'] = self.scrollY.set
         self.scrollY.pack(side=RIGHT, expand=YES, fill=Y, anchor=W)
+        
+        #application name
+        self.myParent.title("Total Open Station")
+        #quit management
+        self.myParent.protocol("WM_DELETE_WINDOW", self.onAppCloseCallback)
+        #run application engine
+        self.myParent.mainloop()
 
+    def onAppCloseCallback(self):
+	    '''
+			Callback function to ask confirmation before quitting 
+			the application
+		'''
+	    if askokcancel("Quit","Do you really want to quit application ?"):
+			self.myParent.destroy()	
 
     def exit_action(self, event):
-        #self.myParent.destroy()
-        onAppCloseCallback()
+        self.onAppCloseCallback()
 
     def print_model(self):
         model = self.optionMODEL_value.get()
@@ -755,11 +757,6 @@ class Tops:
 
 root = Tk()
 Tops = Tops(root)
-root.title("Total Open Station")
-
-root.protocol("WM_DELETE_WINDOW", onAppCloseCallback);
-
-root.mainloop()
 
 #save user's preferences (model and port)
 
