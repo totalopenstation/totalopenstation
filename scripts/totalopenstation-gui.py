@@ -354,10 +354,33 @@ class Tops:
         imb_int_buttons_framey = "1m"
 
         self.myParent = parent
-
+		
         self.main_frame = Frame(parent) ###
         self.main_frame.pack(expand=YES, fill=BOTH)
-
+		
+		#MENU
+        self.menubar = Menu(self.myParent)
+        self.myParent.config(menu=self.menubar)
+		
+        filemenu = Menu(self.menubar, tearoff=0)
+        filemenu.add_command(label=_("Open file"), command=self.open_a_file)
+        filemenu.add_command(label=_("Save raw data"), command=self.save_a_file)
+        filemenu.add_command(label=_("Quit"), command=self.onAppCloseCallback)
+        
+        helpmenu = Menu(self.menubar, tearoff=0)
+        helpmenu.add_command(label=_("About TOPS"), command=self.about)
+        
+        languagemenu = Menu(self.menubar, tearoff=0)
+        language = StringVar()
+        languagemenu.add_radiobutton(label="English",variable=language,value="en")
+        languagemenu.add_radiobutton(label="Italiano",variable=language,value="it")
+        
+        self.menubar.add_cascade(label="File", menu=filemenu)
+        self.menubar.add_cascade(label="Language", menu=languagemenu) #command=self.onClickLanguage)
+        self.menubar.add_cascade(label="Help", menu=helpmenu)
+        
+        
+        
         self.upper_frame = Frame(self.main_frame) ###
         self.upper_frame.pack(side=TOP, expand=NO, padx=10,
                                    pady=5, ipadx=5, ipady=5)
@@ -639,6 +662,12 @@ class Tops:
         #run application engine
         self.myParent.mainloop()
 
+    def onClickLanguage(self):
+        ''' 
+            open select language dialog
+        '''
+        pass
+	
     def onAppCloseCallback(self):
 	    '''
 			Callback function to ask confirmation before quitting 
@@ -722,8 +751,8 @@ class Tops:
                         mc.close()
                         showinfo(_('Success!'),
                                  _('Download finished!\nYou have %d bytes of data.') % len(result))
-
-    def open_action(self, event):
+    
+    def open_a_file(self):
         try:
             d = tkFileDialog.askopenfilename()
             of = open(d, 'r')
@@ -732,11 +761,14 @@ class Tops:
         except:
             pass
 
+    def open_action(self, event):
+        self.open_a_file()
+        
     def process_action(self, event):
         data = self.text_area.get("1.0", END)
         d = ProcessDialog(self.myParent, data)
 
-    def save_action(self, event):
+    def save_a_file(self):
         try:
             sd = tkFileDialog.asksaveasfilename(defaultextension='.tops')
             data = self.text_area.get("1.0", END)
@@ -744,10 +776,16 @@ class Tops:
             oc = of.write(data)
         except:
             pass
+            
+    def save_action(self, event):
+        self.save_a_file()
 
-    def about_action(self, event):
+    def about(self):
         d = AboutDialog(self.myParent)
-
+    
+    def about_action(self, event):
+        self.about()
+        
     def replace_text(self, text):
         self.text_area.delete("1.0", END)
         self.text_area.insert(END, text.replace('\r', ''))
