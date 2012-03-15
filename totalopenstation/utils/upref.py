@@ -63,6 +63,7 @@ class UserPrefs(ConfigParser):
         self.add_section('topsconfig')
         self.set('topsconfig', 'model','')
         self.set('topsconfig', 'port', '')
+        self.set('topsconfig', 'sleeptime', '0.3')
         print('Created new user preferences file')
 
     def write(self):
@@ -75,8 +76,9 @@ class UserPrefs(ConfigParser):
 
         model = self.get('topsconfig', 'model')
         port = self.get('topsconfig', 'port')
+        sleeptime = self.get('topsconfig', 'sleeptime')
 
-        return {'model':model , 'port': port}
+        return {'model':model , 'port': port, 'sleeptime': sleeptime}
 
     def getvalue(self, value):
         ''' get specific config file value '''
@@ -88,5 +90,6 @@ class UserPrefs(ConfigParser):
 
         self.set('topsconfig', 'model', values['model'])
         self.set('topsconfig', 'port', values['port'])
+        self.set('topsconfig', 'sleeptime', values['sleeptime'])
 
         self.write()
