@@ -709,15 +709,16 @@ class Tops:
                     e = ErrorDialog(self.myParent, detail)
                 else:
                     st = DownloadDialog(self.myParent)
+                    sleeptime = self.option6_value.get()
                     if st.result:
                         self.status.set(_("Waiting for data: please start transfer from your total station menu."))
                         while mc.inWaiting() == 0:
-                            sleep(0.1)
+                            sleep(sleeptime)
                         n = mc.inWaiting()
                         result = mc.read(n)
                         self.replace_text(str(result))
-                        sleep(0.1)
-                        sleeptime = self.option6_value.get()
+                        sleep(sleeptime)
+
                         while mc.inWaiting() > 0:
                             newdata = mc.read(mc.inWaiting())
                             result += newdata
