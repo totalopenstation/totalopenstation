@@ -81,7 +81,11 @@ Install PythonWin
 Download PythonWin_ from and install it. Again, you don’t
 need to use it directly, but it is needed for the program to work.
 
-.. _PythonWin: http://sourceforge.net/projects/pywin32/files/pywin32/Build216/pywin32-216.win32-py2.7.exe/download
+Be sure to choose the right version, that is, the one that matches
+your operating system (either 32 bit or 64 bit) and your Python
+version (2.7 if you followed the above steps).
+
+.. _PythonWin: http://sourceforge.net/projects/pywin32/files/pywin32/Build%20217/
 
 Install pySerial
 ----------------
