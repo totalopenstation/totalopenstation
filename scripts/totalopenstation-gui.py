@@ -1,7 +1,7 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
 # filename: totalopenstation-gui.py
-# Copyright 2008-2011 Stefano Costa <steko@iosa.it>
+# Copyright 2008-2012 Stefano Costa <steko@iosa.it>
 # Copyright 2010 Luca Bianconi <luxetluc@yahoo.it>
 #
 # This file is part of Total Open Station.
@@ -40,6 +40,7 @@ from totalopenstation.utils.upref import UserPrefs
 
 t = gettext.translation('totalopenstation', './locale', fallback=True)
 _ = t.lgettext
+
 
 def scan():
     """scan for available ports. return a list of tuples (num, name).
@@ -118,10 +119,10 @@ class AboutDialog(tkSimpleDialog.Dialog):
     def body(self, master):
         title = "Total Open Station %s" % totalopenstation.__version__
         message = _("""
-Total Open Station is copyright 2008-2011 Luca Bianconi, Stefano Costa
+Total Open Station is copyright 2008-2012 Luca Bianconi, Stefano Costa
 and the IOSA project.
 
-http://tops.berlios.de/
+http://tops.iosa.it/
 
 The application logo is copyright 2008 Lapo Calamandrei.""")
 
@@ -354,7 +355,7 @@ class Tops:
         imb_int_buttons_framey = "1m"
 
         self.myParent = parent
-		
+
         self.main_frame = Frame(parent) ###
         self.main_frame.pack(expand=YES, fill=BOTH)
 		
@@ -421,7 +422,7 @@ class Tops:
 
         self.option1_label = Label(self.option1_frame,
                                    text=_("Port"),
-                                   width=25)
+                                   width=30)
         self.option1_label.pack(side=LEFT)
         self.option1_value = StringVar()
         self.option1_value.set(self.upref.getvalue('port'))
@@ -430,7 +431,7 @@ class Tops:
 #
         self.option1_entry = Entry(self.option1_frame,
                                    textvariable=self.option1_value,
-                                   width=25)
+                                   width=20)
 
 # ... comment out this Menubutton if you want to use the scan() output
 #
@@ -460,7 +461,7 @@ class Tops:
         self.optionMODEL_label = Label(self.optionMODEL_frame,
                                    text=_("Total Station"),
                                    justify=LEFT,
-                                   width=25)
+                                   width=30)
         self.optionMODEL_label.pack(side=LEFT, anchor=E)
         self.optionMODEL_value = StringVar()
 
@@ -470,7 +471,7 @@ class Tops:
                                         text="choose a model",
                                         textvariable=self.optionMODEL_value,
                                         relief=RAISED,
-                                        width=24)
+                                        width=20)
         self.optionMODEL_entry.menu = Menu(self.optionMODEL_entry, tearoff=0)
         self.optionMODEL_entry["menu"] = self.optionMODEL_entry.menu
 
@@ -488,7 +489,7 @@ class Tops:
 
         self.option2_label = Label(self.option2_frame,
                                    text="Baudrate",
-                                   width=25)
+                                   width=30)
         self.option2_label.pack(side=LEFT)
         self.option2_value = IntVar()
 
@@ -498,13 +499,13 @@ class Tops:
         except (AttributeError, AssertionError):
             self.option2_entry = Entry(self.option2_frame,
                                        textvariable=self.option2_value,
-                                       width=25)
+                                       width=20)
         else:
             self.option2_entry = Menubutton(self.option2_frame,
                                             text=_("choose a value"),
                                             textvariable=self.option2_value,
                                             relief=RAISED,
-                                            width=24)
+                                            width=20)
             self.option2_entry.menu = Menu(self.option2_entry, tearoff=0)
             self.option2_entry["menu"] = self.option2_entry.menu
             for key in sorted(serial.baudrate_constants.keys()): # dynamic list
@@ -522,14 +523,14 @@ class Tops:
         self.option3_label = Label(self.option3_frame,
                                    text=_("Bytesize"),
                                    justify=LEFT,
-                                   width=25)
+                                   width=30)
         self.option3_label.pack(side=LEFT, anchor=E)
         self.option3_value = IntVar()
         self.option3_entry = Menubutton(self.option3_frame,
                                         text=_("choose a value"),
                                         textvariable=self.option3_value,
                                         relief=RAISED,
-                                        width=24)
+                                        width=20)
         self.option3_entry.menu = Menu(self.option3_entry, tearoff=0)
         self.option3_entry["menu"] = self.option3_entry.menu
         for v in [8,7,6,5]:
@@ -545,14 +546,14 @@ class Tops:
         self.option4_label = Label(self.option4_frame,
                                    text=_("Parity setting"),
                                    justify=LEFT,
-                                   width=25)
+                                   width=30)
         self.option4_label.pack(side=LEFT, anchor=E)
         self.option4_value = StringVar()
         self.option4_entry = Menubutton(self.option4_frame,
                                         text=_("choose a value"),
                                         textvariable=self.option4_value,
                                         relief=RAISED,
-                                        width=24)
+                                        width=20)
         self.option4_entry.menu = Menu(self.option4_entry, tearoff=0)
         self.option4_entry["menu"] = self.option4_entry.menu
         for v in ['Even', 'None', 'Odd']:
@@ -568,14 +569,14 @@ class Tops:
         self.option5_label = Label(self.option5_frame,
                                    text=_("Stop bit"),
                                    justify=LEFT,
-                                   width=25)
+                                   width=30)
         self.option5_label.pack(side=LEFT, anchor=E)
         self.option5_value = IntVar()
         self.option5_entry = Menubutton(self.option5_frame,
                                         text=_("choose a value"),
                                         textvariable=self.option5_value,
                                         relief=RAISED,
-                                        width=24)
+                                        width=20)
         self.option5_entry.menu = Menu(self.option5_entry, tearoff=0)
         self.option5_entry["menu"] = self.option5_entry.menu
         for v in [1, 2]:
@@ -584,6 +585,23 @@ class Tops:
                                                     value=v)
         self.option5_entry.pack(side=LEFT, anchor=W)
 
+        # option 6 : time lapse between data packets
+        self.option6_frame = Frame(self.control_panel, relief=RIDGE, bd=1)
+        self.option6_frame.pack(side=TOP)
+
+        self.option6_label = Label(self.option6_frame,
+                                   text=_("Time lapse between data packets"),
+                                   justify=LEFT,
+                                   width=30)
+        self.option6_label.pack(side=LEFT, anchor=E)
+        self.option6_value = DoubleVar()
+        self.option6_value.set(self.upref.getvalue('sleeptime'))
+        self.option6_entry = Entry(self.option6_frame,
+                                   textvariable=self.option6_value,
+                                   relief=RAISED,
+                                   justify=RIGHT,
+                                   width=20)
+        self.option6_entry.pack(side=LEFT, anchor=W)
 
         # control buttons
 
@@ -734,20 +752,22 @@ class Tops:
                     e = ErrorDialog(self.myParent, detail)
                 else:
                     st = DownloadDialog(self.myParent)
+                    sleeptime = self.option6_value.get()
                     if st.result:
                         self.status.set(_("Waiting for data: please start transfer from your total station menu."))
                         while mc.inWaiting() == 0:
-                            sleep(0.1)
+                            sleep(sleeptime)
                         n = mc.inWaiting()
                         result = mc.read(n)
                         self.replace_text(str(result))
-                        sleep(0.1)
+                        sleep(sleeptime)
+
                         while mc.inWaiting() > 0:
                             newdata = mc.read(mc.inWaiting())
                             result += newdata
                             self.status.set(_('Downloaded %d bytes'), len(result))
                             self.replace_text(str(result))
-                            sleep(0.3) # TODO determine sleep time from baudrate
+                            sleep(sleeptime) # TODO determine sleep time from baudrate
                         mc.close()
                         showinfo(_('Success!'),
                                  _('Download finished!\nYou have %d bytes of data.') % len(result))
@@ -795,10 +815,15 @@ class Tops:
 
 root = Tk()
 Tops = Tops(root)
+Tops.print_model()
 
-#save user's preferences (model and port)
+
+
+#save user's preferences (model, port and sleeptime if custom model)
 
 atexit.register(Tops.upref.setvalues,
                 {'model': Tops.optionMODEL_value.get(),
-                 'port':Tops.option1_value.get()})
+                 'port': Tops.option1_value.get(),
+                 'sleeptime': Tops.option6_value.get(),
+                 })
 

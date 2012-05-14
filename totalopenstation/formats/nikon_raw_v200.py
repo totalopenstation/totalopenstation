@@ -61,7 +61,7 @@ class FormatParser:
                                pid=pid,
                                text=text,
                                coordorder=coordorder)
-                points.append(p.to_point())
+                points.append(p.to_point().tuplepoint)
         return points
 
     points = property(_points)

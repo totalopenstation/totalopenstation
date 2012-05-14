@@ -22,7 +22,7 @@ software environments: basically you don't mix packages installed
 system-wise with your package manager and user-installed
 software). Here follows a detailed step-by-step guide.
 
-.. _``pip``: http://pip.openplans.org/
+.. _``pip``: http://www.pip-installer.org/
 .. _``virtualenv``: http://pypi.python.org/pypi/virtualenv
 
 Install ``pip`` and ``virtualenv``
@@ -66,14 +66,31 @@ You *deactivate* the environment (that is, you exit from it), with the
 Installing Total Open Station
 -----------------------------
 
-Once the virtual environment is active, you're ready to install Total
-Open Station, with::
+Once the virtual environment is *active*, you're ready to install
+Total Open Station, with::
 
     pip install totalopenstation
 
 This will automatically download the latest released version from the
 Python Package Index (PyPI), and install all the other required Python
 packages as well.
+
+Installing development versions
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Sometimes it is useful to install development versions before they are
+released, to help with testing of new features and making sure that
+there are no new bugs.
+
+Using the procedure described above it is fairly easy to create
+another, separate environment. Once the new environment is *active*,
+the command for installing a development version is::
+
+    pip install -e hg+https://bitbucket.org/steko/totalopenstation#egg=totalopenstation
+
+Developers may ask you to install from another repository, but the
+concept stays the same. This mechanism is very flexible and allows to
+install and test different versions safely.
 
 Running the program
 -------------------
@@ -131,7 +148,11 @@ Install PythonWin
 Download PythonWin_ from and install it. Again, you don’t
 need to use it directly, but it is needed for the program to work.
 
-.. _PythonWin: http://sourceforge.net/projects/pywin32/files/pywin32/Build216/pywin32-216.win32-py2.7.exe/download
+Be sure to choose the right version, that is, the one that matches
+your operating system (either 32 bit or 64 bit) and your Python
+version (2.7 if you followed the above steps).
+
+.. _PythonWin: http://sourceforge.net/projects/pywin32/files/pywin32/Build%20217/
 
 Install pySerial
 ----------------
