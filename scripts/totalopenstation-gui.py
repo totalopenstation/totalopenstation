@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 # filename: totalopenstation-gui.py
 # Copyright 2008-2012 Stefano Costa <steko@iosa.it>
-# Copyright 2010 Luca Bianconi <luxetluc@yahoo.it>
+# Copyright 2010,2012 Luca Bianconi <luxetluc@yahoo.it>
 #
 # This file is part of Total Open Station.
 #
@@ -358,30 +358,33 @@ class Tops:
 
         self.main_frame = Frame(parent) ###
         self.main_frame.pack(expand=YES, fill=BOTH)
-		
+
 		#MENU
         self.menubar = Menu(self.myParent)
         self.myParent.config(menu=self.menubar)
-		
+
+        topsmenu = Menu(self.menubar, tearoff=0)
+        topsmenu.add_command(label=_("Connect"), command=self.connect_action)
+        topsmenu.add_command(label=_("Process data"), command=self.process_action)
+        topsmenu.add_command(label=_("Quit"), command=self.on_app_close)
+
         filemenu = Menu(self.menubar, tearoff=0)
         filemenu.add_command(label=_("Open file"), command=self.open_a_file)
         filemenu.add_command(label=_("Save raw data"), command=self.save_a_file)
-        filemenu.add_command(label=_("Quit"), command=self.onAppCloseCallback)
-        
+
         helpmenu = Menu(self.menubar, tearoff=0)
         helpmenu.add_command(label=_("About TOPS"), command=self.about)
-        
+
         languagemenu = Menu(self.menubar, tearoff=0)
         language = StringVar()
         languagemenu.add_radiobutton(label="English",variable=language,value="en")
         languagemenu.add_radiobutton(label="Italiano",variable=language,value="it")
-        
+
+        self.menubar.add_cascade(label="Total Station", menu=topsmenu)
         self.menubar.add_cascade(label="File", menu=filemenu)
-        self.menubar.add_cascade(label="Language", menu=languagemenu) #command=self.onClickLanguage)
+        #self.menubar.add_cascade(label="Language", menu=languagemenu)
         self.menubar.add_cascade(label="Help", menu=helpmenu)
-        
-        
-        
+
         self.upper_frame = Frame(self.main_frame) ###
         self.upper_frame.pack(side=TOP, expand=NO, padx=10,
                                    pady=5, ipadx=5, ipady=5)
@@ -607,20 +610,11 @@ class Tops:
 
         self.connect_button = Button(self.buttons_frame,
                                       text=_("Connect"),
-                                      background="green",
                                       padx=imb_buttonx,
                                       pady=imb_buttony)
         self.connect_button.pack(side=LEFT, anchor=S)
         self.connect_button.bind("<Button-1>", self.connect_action)
         self.connect_button.bind("<Return>", self.connect_action)
-
-        self.open_button = Button(self.buttons_frame,
-                                      text=_("Open file"),
-                                      padx=imb_buttonx,
-                                      pady=imb_buttony)
-        self.open_button.pack(side=LEFT, anchor=S)
-        self.open_button.bind("<Button-1>", self.open_action)
-        self.open_button.bind("<Return>", self.open_action)
 
         self.save_button = Button(self.buttons_frame,
                                       text=_("Save raw data"),
@@ -632,28 +626,11 @@ class Tops:
 
         self.process_button = Button(self.buttons_frame,
                                      text=_("Process data"),
-                                     background="cyan",
                                      padx=imb_buttonx,
                                      pady=imb_buttony)
         self.process_button.pack(side=LEFT, anchor=S)
         self.process_button.bind("<Button-1>", self.process_action)
         self.process_button.bind("<Return>", self.process_action)
-
-        self.about_button = Button(self.buttons_frame,
-                                   text=_("About TOPS"),
-                                   padx=imb_buttonx,
-                                   pady=imb_buttony)
-        self.about_button.pack(side=LEFT, anchor=S)
-        self.about_button.bind("<Button-1>", self.about_action)
-        self.about_button.bind("<Return>", self.about_action)
-
-        self.exit_button = Button(self.buttons_frame,
-                                  text=_("Quit"),
-                                  padx=imb_buttonx,
-                                  pady=imb_buttony)
-        self.exit_button.pack(side=LEFT, anchor=S)
-        self.exit_button.bind("<Button-1>", self.exit_action)
-        self.exit_button.bind("<Return>", self.exit_action)
 
         self.status = StatusBar(self.main_frame)
         self.status.set('Welcome to Total Open Station')
@@ -673,20 +650,19 @@ class Tops:
         self.text_area['yscrollcommand'] = self.scrollY.set
         self.scrollY.pack(side=RIGHT, expand=YES, fill=Y, anchor=W)
         
-        #application name
+        # init stuff
         self.myParent.title("Total Open Station")
-        #quit management
-        self.myParent.protocol("WM_DELETE_WINDOW", self.onAppCloseCallback)
-        #run application engine
+        self.myParent.protocol("WM_DELETE_WINDOW", self.on_app_close)
+        self.print_model()
         self.myParent.mainloop()
 
-    def onClickLanguage(self):
+    def on_click_language(self):
         ''' 
             open select language dialog
         '''
         pass
-	
-    def onAppCloseCallback(self):
+
+    def on_app_close(self):
 	    '''
 			Callback function to ask confirmation before quitting 
 			the application
@@ -695,7 +671,7 @@ class Tops:
 			self.myParent.destroy()	
 
     def exit_action(self, event):
-        self.onAppCloseCallback()
+        self.on_app_close()
 
     def print_model(self):
         model = self.optionMODEL_value.get()
@@ -815,8 +791,6 @@ class Tops:
 
 root = Tk()
 Tops = Tops(root)
-Tops.print_model()
-
 
 
 #save user's preferences (model, port and sleeptime if custom model)
