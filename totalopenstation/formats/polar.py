@@ -104,7 +104,7 @@ class PolarPoint:
                            cart_coords['z'],
                            self.text)
 
-        return cart_point.tuplepoint
+        return cart_point
 
 
 class BasePoint:
