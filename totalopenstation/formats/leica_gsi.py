@@ -57,8 +57,8 @@ class FormatParser(Parser):
             z = tdict['83']['sign'] + tdict['83']['data']
         except KeyError:
             #angle_type = tdict['21']['info']
-            angle = float(tdict['21']['sign'] + tdict['21']['data'])/1000
-            z_angle = float(tdict['22']['sign'] + tdict['22']['data'])/1000
+            angle = float(tdict['21']['sign'] + tdict['21']['data'])/100000
+            z_angle = float(tdict['22']['sign'] + tdict['22']['data'])/100000
             dist = float(tdict['31']['sign'] + tdict['31']['data'])/1000
             th = float(tdict['87']['sign'] + tdict['87']['data'])/1000
             ih = float(tdict['88']['sign'] + tdict['88']['data'])/1000
