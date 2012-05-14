@@ -56,23 +56,27 @@ class FormatParser(Parser):
             y = tdict['82']['sign'] + tdict['82']['data']
             z = tdict['83']['sign'] + tdict['83']['data']
         except KeyError:
-            #angle_type = tdict['21']['info']
-            angle = float(tdict['21']['sign'] + tdict['21']['data'])/100000
-            z_angle = float(tdict['22']['sign'] + tdict['22']['data'])/100000
-            dist = float(tdict['31']['sign'] + tdict['31']['data'])/1000
-            th = float(tdict['87']['sign'] + tdict['87']['data'])/1000
-            ih = float(tdict['88']['sign'] + tdict['88']['data'])/1000
-            bp = BasePoint(x=0.0, y=0.0, z=0.0, ih=ih)
-            p = PolarPoint(dist=dist,
-                           angle=angle,
-                           z_angle=z_angle,
-                           th=th,
-                           angle_type='deg',
-                           base_point=bp,
-                           pid=pid,
-                           text=text,
-                           )
-            return p.to_point()
+            try:
+                #angle_type = tdict['21']['info']
+                angle = float(tdict['21']['sign'] + tdict['21']['data'])/100000
+                z_angle = float(tdict['22']['sign'] + tdict['22']['data'])/100000
+                dist = float(tdict['31']['sign'] + tdict['31']['data'])/1000
+                th = float(tdict['87']['sign'] + tdict['87']['data'])/1000
+                ih = float(tdict['88']['sign'] + tdict['88']['data'])/1000
+            except KeyError:
+                return None
+            else:
+                bp = BasePoint(x=0.0, y=0.0, z=0.0, ih=ih)
+                p = PolarPoint(dist=dist,
+                               angle=angle,
+                               z_angle=z_angle,
+                               th=th,
+                               angle_type='deg',
+                               base_point=bp,
+                               pid=pid,
+                               text=text,
+                               )
+                return p.to_point()
         else:
             x, y, z = [float(c)/1000 for c in (x, y, z)]
             p = Point(pid, x, y, z, text)
