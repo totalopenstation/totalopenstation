@@ -307,6 +307,10 @@ class ProcessDialog(tkSimpleDialog.Dialog):
             sd_file.write(output.process())
             sd_file.close()
 
+class PreferencesDialog(tkSimpleDialog.Dialog):
+    '''A dialog to change preferences and options.'''
+
+
 
 class ErrorDialog(tkSimpleDialog.Dialog):
 
