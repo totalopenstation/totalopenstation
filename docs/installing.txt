@@ -11,19 +11,20 @@ system.
 
 Instructions for Microsoft Windows are at the end of this page.
 
-Using ``pip`` (recommended)
-===========================
 
-Until your operating system's packaging tools (e.g. ``apt`` or
-``yum``) allow you to install Total Open Station along with other
-programs, the recommended way to install is using ``pip``_ (a package
-manager for Python) and ``virtualenv``_ (which creates isolated
+Using pip (recommended)
+=======================
+
+Until your operating system's packaging tools (e.g. apt or
+yum) allow you to install Total Open Station along with other
+programs, the recommended way to install is using pip_ (a package
+manager for Python) and virtualenv_ (which creates isolated
 software environments: basically you don't mix packages installed
 system-wise with your package manager and user-installed
 software). Here follows a detailed step-by-step guide.
 
-.. _``pip``: http://www.pip-installer.org/
-.. _``virtualenv``: http://pypi.python.org/pypi/virtualenv
+.. _pip: http://www.pip-installer.org/
+.. _virtualenv: http://pypi.python.org/pypi/virtualenv
 
 Install ``pip`` and ``virtualenv``
 ----------------------------------
