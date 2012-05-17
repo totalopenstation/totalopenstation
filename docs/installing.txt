@@ -11,6 +11,18 @@ system.
 
 Instructions for Microsoft Windows are at the end of this page.
 
+GNU/Linux distributions
+=======================
+
+OpenSUSE
+--------
+
+Total Open Station is packaged for OpenSUSE. Installing is as easy as::
+
+   $ sudo zypper ar http://download.opensuse.org/repositories/Application:/Geo/openSUSE_12.1/ GEO
+   $ sudo zypper refresh
+   $ sudo zypper install TotalOpenStation
+
 
 Using pip (recommended)
 =======================
