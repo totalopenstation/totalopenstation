@@ -54,7 +54,10 @@ parser.add_option("-o",
 
 (options, args) = parser.parse_args()
 
-modelclass = BUILTIN_INPUT_FORMATS[options.model]
+if not (options.model and options.port):
+    sys.exit("Please specify your model and the port to download from")
+
+modelclass = BUILTIN_MODELS[options.model]
 
 # import input format parser
 if isinstance(modelclass, tuple):
