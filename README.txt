@@ -20,7 +20,8 @@ thus enabling exporting data to a variety of output formats, even at a
 later moment. Archiving of raw data is made easy by using plain text
 files.
 
-The application icons are copyright by Lapo Calamandrei 2008.
+The application icons are copyright by Lapo Calamandrei 2008, under the
+same license as Total Open Station.
 
 Documentation
 =============
