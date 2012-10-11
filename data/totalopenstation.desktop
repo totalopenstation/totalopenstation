@@ -1,0 +1,9 @@
+[Desktop Entry]
+Encoding=UTF-8
+Version=1.0
+Type=Application
+Terminal=false
+Exec=totalopenstation-gui.py
+Name=Total Open Station
+Icon=total-station.png
+Comment=Download and export survey data from your total station
