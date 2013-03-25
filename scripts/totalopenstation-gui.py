@@ -667,12 +667,10 @@ class Tops:
         pass
 
     def on_app_close(self):
-	    '''
-			Callback function to ask confirmation before quitting 
-			the application
-		'''
-	    if askokcancel("Quit","Do you really want to quit application ?"):
-			self.myParent.destroy()	
+        '''Callback function to ask confirmation before quitting the application.'''
+
+        if askokcancel("Quit","Do you really want to quit application ?"):
+            self.myParent.destroy()	
 
     def exit_action(self, event):
         self.on_app_close()
