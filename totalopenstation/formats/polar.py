@@ -55,10 +55,10 @@ class PolarPoint:
         self.dist = float(dist)
         self.th = float(th)
         self.angle_type = angle_type
-        if angle_type is 'deg':
+        if angle_type == 'deg':
             self.angle = math.radians(float(angle))
             self.z_angle = math.radians(float(z_angle))
-        if angle_type is 'gon':
+        if angle_type == 'gon':
             self.angle = math.radians(float(angle)*0.9)
             self.z_angle = math.radians(float(z_angle)*0.9)
         self.pid = pid
