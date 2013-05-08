@@ -23,9 +23,22 @@ Mercurial *patchbomb* extension to the `development mailing list`_.
 
 .. _`development mailing list`: https://lists.berlios.de/mailman/listinfo/tops-dev
 
+
 Coding standards
 ================
 
 We try to follow as much as possible PEP-8_, 
 
 .. _PEP-8: http://www.python.org/dev/peps/pep-0008/
+
+Translations
+============
+
+We are happy to accept translations for Total Open
+Station. Translations can be easily submitted and reviewed at our
+Transifex_ page. Translators get recognition for their valuable work.
+
+If your native language is missing, why don't you start translating
+Total Open Station right now?
+
+.. _Transifex: https://www.transifex.com/projects/p/totalopenstation/resource/totalopenstation-app/
