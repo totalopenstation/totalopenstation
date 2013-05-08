@@ -5,8 +5,8 @@
 ===============
 
 
-For users
-=========
+Users
+=====
 
 .. toctree::
    :maxdepth: 1
@@ -17,8 +17,8 @@ For users
    getting_sample_data
    users
 
-For developers
-==============
+Third-party developers
+======================
 
 .. toctree::
    :maxdepth: 1
@@ -26,8 +26,13 @@ For developers
 
    models
    formats
-   contributing
    library
+
+Total Open Station development
+==============================
+
+   release
+   contributing
    roadmap
 
 Indices and tables

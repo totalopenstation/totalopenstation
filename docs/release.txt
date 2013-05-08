@@ -1,0 +1,22 @@
+.. _release:
+
+====================================
+ Doing a Total Open Station release
+====================================
+
+Translations
+============
+
+When the release is almost ready and the source strings are not going
+to change, translators should be invited to submit updates, either via
+``.po`` files or Transifex_.
+
+.. _Transifex: https://www.transifex.com/projects/p/totalopenstation/resource/totalopenstation-app/
+
+When the translation period is over, pull the updated ``.po`` files
+from Transifex with::
+
+      tx pull -r totalopenstation.totalopenstation-app -a
+
+and check that the files are updated. Commit new files separately from updates.
+
