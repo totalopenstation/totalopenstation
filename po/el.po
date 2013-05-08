@@ -1,33 +1,41 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# 
+# Translators:
+# Stefano Costa <steko@iosa.it>, 2013
+# Wasilis <m.wasilis@yahoo.de>, 2013
+# Konstantinos Papaspyrou <kotsos@gmail.com>, 2010
 msgid ""
 msgstr ""
-"Project-Id-Version: el v0.1\n"
-"Report-Msgid-Bugs-To: \n"
+"Project-Id-Version: Total Open Station\n"
+"Report-Msgid-Bugs-To: http://bitbucket.org/steko/totalopenstation/issues/\n"
 "POT-Creation-Date: 2010-02-08 16:07+0100\n"
-"PO-Revision-Date: 2010-02-28 20:29+0200\n"
-"Last-Translator: Konstantinos Papaspyrou <kotsos@gmail.com>\n"
-"Language-Team: Greek\n"
+"PO-Revision-Date: 2013-05-08 20:50+0000\n"
+"Last-Translator: Stefano Costa <steko@iosa.it>\n"
+"Language-Team: Greek (http://www.transifex.com/projects/p/totalopenstation/language/el/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Poedit-Language: Greek\n"
+"Language: el\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: ../scripts/totalopenstation-cli-parser.py:31
 msgid "usage: %prog [option] arg1 [option] arg2 ..."
-msgstr "usage: %prog [option] arg1 [option] arg2 ..."
+msgstr "Χρήση: %prog [επιλογή] arg1 [επιλογή] arg2 ..."
 
 #: ../scripts/totalopenstation-cli-parser.py:39
 msgid "select input FILE  (do not specify for stdin)"
-msgstr "select input FILE  (do not specify for stdin)"
+msgstr "επιλέξτε το αρχείο εισόδου (δεν προσδιορίζει για stdin) "
 
 #: ../scripts/totalopenstation-cli-parser.py:46
 msgid "select output FILE (do not specify for stdout)"
-msgstr "select output FILE (do not specify for stdout)"
+msgstr "επιλέξτε το αρχείο εξόδου (δεν προσδιορίζει για stdout)"
 
 #: ../scripts/totalopenstation-cli-parser.py:53
 #: ../scripts/totalopenstation-cli-parser.py:60
 msgid "select input FORMAT"
-msgstr "select input FORMAT"
+msgstr "Επιλέξτε τη μορφή εισόδου "
 
 #: ../scripts/totalopenstation-cli-parser.py:67
 msgid "overwrite existing output file"
@@ -41,12 +49,7 @@ msgid ""
 "%s\n"
 "\n"
 "%s"
-msgstr ""
-"\n"
-"Σφάλμα:\n"
-"%s\n"
-"\n"
-"%s"
+msgstr "\nΣφάλμα:\n%s\n\n%s"
 
 #: ../scripts/totalopenstation-cli-parser.py:81
 msgid "Please specify an input format"
@@ -59,7 +62,7 @@ msgstr "Παρακαλώ προσδιορίστε τον τύπο του αρχ�
 #: ../scripts/totalopenstation-cli-parser.py:117
 #, python-format
 msgid "Downloaded data saved to out file %s"
-msgstr "Downloaded data saved to out file %s"
+msgstr "Τα ληφθέντα δεδομένα αποθηκεύτηκαν στο αρχείο %s,"
 
 #: ../scripts/totalopenstation-cli-parser.py:121
 #, python-format
@@ -83,14 +86,7 @@ msgid ""
 "http://tops.berlios.de/\n"
 "\n"
 "The application logo is copyright 2008 Lapo Calamandrei."
-msgstr ""
-"\n"
-"Total Open Station is copyright 2008-2009 Luca Bianconi, Stefano Costa\n"
-"and the IOSA project.\n"
-"\n"
-"http://tops.berlios.de/\n"
-"\n"
-"The application logo is copyright 2008 Lapo Calamandrei."
+msgstr "\nΠνευματικά δικαιώματα © 2008-2009 Οι συγγραφείς του Total Open Station.⏎\n\nhttp://tops.berlios.de/\n\nThe application logo is copyright 2008 Lapo Calamandrei."
 
 #: ../scripts/totalopenstation-gui.py:131
 msgid ""
@@ -98,11 +94,7 @@ msgid ""
 "This dialog will guide you through the download procedure.\n"
 "\n"
 "Press OK when finished to proceed."
-msgstr ""
-"\n"
-"Το παράθυρο διαλόγου θα σας καθοδηγήσει στη διαδικασία λήψης δεδομένων.\n"
-"\n"
-"Press OK when finished to proceed."
+msgstr "\nΤο παράθυρο διαλόγου θα σας καθοδηγήσει στη διαδικασία λήψης δεδομένων.\n\nPress OK when finished to proceed."
 
 #: ../scripts/totalopenstation-gui.py:164
 msgid "waiting for data from device"
@@ -116,9 +108,7 @@ msgstr "Η σύνδεση γίνεται με τις ακόλουθες παρα
 msgid ""
 "\n"
 "Start the download procedure on the device.\n"
-msgstr ""
-"\n"
-"Ξεκινήστε από το όργανο τη διαδικασία αποστολής αρχείου.\n"
+msgstr "\nΞεκινήστε από το όργανο τη διαδικασία αποστολής αρχείου.\n"
 
 #: ../scripts/totalopenstation-gui.py:168
 msgid "Press OK when done."
@@ -138,7 +128,7 @@ msgstr "Data to be processed:\n"
 
 #: ../scripts/totalopenstation-gui.py:204
 msgid "Input format"
-msgstr "Input format"
+msgstr "Μορφη εισαγωγης"
 
 #: ../scripts/totalopenstation-gui.py:209
 msgid "choose a model"
@@ -156,9 +146,7 @@ msgstr "Η επικοινωνία απέτυχε με το ακόλουθο μή
 msgid ""
 "\n"
 "Check your connection parameters and try again.\n"
-msgstr ""
-"\n"
-"Ελέγξτε τις παραμέτρους επικοινωνίας και δοκιμάστε ξανά.\n"
+msgstr "\nΕλέγξτε τις παραμέτρους επικοινωνίας και δοκιμάστε ξανά.\n"
 
 #: ../scripts/totalopenstation-gui.py:259
 msgid "Cancel"
@@ -185,7 +173,7 @@ msgstr "Bytesize"
 
 #: ../scripts/totalopenstation-gui.py:443
 msgid "Parity setting"
-msgstr "Parity setting"
+msgstr "Ρύθμιση ισοτιμιας"
 
 #: ../scripts/totalopenstation-gui.py:455
 msgid "Even"
@@ -213,11 +201,11 @@ msgstr "Άνοιγμα αρχείου"
 
 #: ../scripts/totalopenstation-gui.py:530
 msgid "Save raw data"
-msgstr "Save raw data"
+msgstr "Αποθήκευση ανεπεξέργαστων δεδομένων "
 
 #: ../scripts/totalopenstation-gui.py:538
 msgid "Process data"
-msgstr "Process data"
+msgstr "Τα στοιχεία της διαδικασίας "
 
 #: ../scripts/totalopenstation-gui.py:547
 msgid "About TOPS"
@@ -231,9 +219,7 @@ msgstr "Έξοδος"
 msgid ""
 "Welcome.\n"
 "Turn your device on."
-msgstr ""
-"Καλωσήρθατε.\n"
-"Ανοίξτε το Γεωδαιτικό σταθμό."
+msgstr "Καλωσήρθατε.\nΑνοίξτε το Γεωδαιτικό σταθμό."
 
 #: ../scripts/totalopenstation-gui.py:669
 msgid "The download has started..."
@@ -243,9 +229,7 @@ msgstr "Η λήψη δεδομένων ξεκίνησε..."
 msgid ""
 "The download has finished.\n"
 "Press OK to proceed"
-msgstr ""
-"Η λήψη ολοκληρώθηκε.\n"
-"Πατήστε OK για να συνεχίσετε"
+msgstr "Η λήψη ολοκληρώθηκε.\nΠατήστε OK για να συνεχίσετε"
 
 #: ../scripts/totalopenstation-gui.py:712
 msgid "No output file specified"
@@ -254,4 +238,3 @@ msgstr "Δεν καθορίσθηκε αρχείο προορισμού"
 #: ../scripts/totalopenstation-gui.py:713
 msgid "No processing settings entered!\n"
 msgstr "Δεν δόθηκαν παράμετροι επεξεργασίας!\n"
-
