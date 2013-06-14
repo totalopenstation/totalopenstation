@@ -1,7 +1,7 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
 # filename: upref.py
-# Copyright 2010 Stefano Costa <steko@iosa.it>
+# Copyright 2010,2013 Stefano Costa <steko@iosa.it>
 # Copyright 2010 Luca Bianconi <luxetluc@yahoo.it>
 #
 # This file is part of Total Open Station.
@@ -21,10 +21,11 @@
 # <http://www.gnu.org/licenses/>.
 
 import atexit
+import logging
 import os
 import os.path
 
-from ConfigParser import ConfigParser, NoSectionError
+from ConfigParser import ConfigParser, NoSectionError, NoOptionError
 
 
 class UserPrefs(ConfigParser):
@@ -36,6 +37,11 @@ class UserPrefs(ConfigParser):
     * returns a dictionary of user preferences
     * preferences will be set through a dictionary as well'''
 
+    OPTIONS = {
+        'model': '',
+        'port': '',
+        'sleeptime': 1.0,       # added in 0.3.1
+    }
 
     def __init__(self):
 
@@ -59,12 +65,11 @@ class UserPrefs(ConfigParser):
 
     def initfile(self):
         self.write()
-        print('User preferences do not exist!')
+        logging.info('User preferences do not exist!')
         self.add_section('topsconfig')
-        self.set('topsconfig', 'model','')
-        self.set('topsconfig', 'port', '')
-        self.set('topsconfig', 'sleeptime', '0.3')
-        print('Created new user preferences file')
+        for k,v in self.OPTIONS.items():
+            self.set('topsconfig', k, v)
+        logging.info('Created new user preferences file with default values')
 
     def write(self):
         ''' override ConfigParser.write() method '''
@@ -74,22 +79,25 @@ class UserPrefs(ConfigParser):
     def getdict(self):
         ''' get config file values '''
 
-        model = self.get('topsconfig', 'model')
-        port = self.get('topsconfig', 'port')
-        sleeptime = self.get('topsconfig', 'sleeptime')
+        current_options = {}
+        for k in self.OPTIONS.keys():
+            current_options[k] = self.getvalue(k)
 
-        return {'model':model , 'port': port, 'sleeptime': sleeptime}
+        return current_options
 
-    def getvalue(self, value):
+    def getvalue(self, key):
         ''' get specific config file value '''
 
-        return self.get('topsconfig', value)
+        try:
+            value = self.get('topsconfig', key)
+        except NoOptionError:
+            value = self.OPTIONS[key] # use default value
+        return value
 
     def setvalues(self, values):
         ''' set specific config file value '''
 
-        self.set('topsconfig', 'model', values['model'])
-        self.set('topsconfig', 'port', values['port'])
-        self.set('topsconfig', 'sleeptime', values['sleeptime'])
+        for k, v in values.items():
+            self.set('topsconfig', k, v)
 
         self.write()
