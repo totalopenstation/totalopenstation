@@ -1,7 +1,7 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
 # filename: totalopenstation-cli-parser.py
-# Copyright 2008-2009 Stefano Costa <steko@iosa.it>
+# Copyright 2008-2013 Stefano Costa <steko@iosa.it>
 
 # This file is part of Total Open Station.
 
@@ -22,6 +22,7 @@
 import sys
 import os
 import gettext
+import importlib
 
 from optparse import OptionParser
 
@@ -99,34 +100,47 @@ if options.list:
     sys.stdout.write(list_formats())
     sys.exit()
 
+def exit_with_error(message):
+    sys.exit(_("\nError:\n%(message)s\n\n%(formats)s") % {'message': message,
+                                                          'formats': list_formats()})
+
 if options.informat:
-    inputclass = BUILTIN_INPUT_FORMATS[options.informat]
-    if isinstance(inputclass, tuple):
-        try:
-            # builtin format parser
-            mod, cls, name = inputclass
-            inputclass = getattr(
-                __import__('totalopenstation.formats.' + mod, None, None, [cls]), cls)
-        except ImportError, message:
-            sys.exit(_("\nError:\n%s\n\n%s") % (message, list_formats()))
+    try:
+        inputclass = BUILTIN_INPUT_FORMATS[options.informat]
+    except KeyError, message:
+        exit_with_error(_('%s is not a valid input format') % message)
+    else:
+        if isinstance(inputclass, tuple):
+            try:
+                # builtin format parser
+                mod, cls, name = inputclass
+                inputclass = getattr(importlib.import_module('totalopenstation.formats.' + mod), cls)
+            except ImportError, message:
+                exit_with_error(message)
 else:
     sys.exit(_("Please specify an input format"))
 
 if options.outformat:
-    outputclass = BUILTIN_OUTPUT_FORMATS[options.outformat]
-    if isinstance(outputclass, tuple):
-        try:
-            # builtin output builder
-            mod, cls, name = outputclass
-            outputclass = getattr(
-                __import__('totalopenstation.output.' + mod, None, None, [cls]), cls)
-        except ImportError, message:
-            sys.exit(_("\nError:\n%s\n\n%s") % (message, list_formats()))
+    try:
+        outputclass = BUILTIN_OUTPUT_FORMATS[options.outformat]
+    except KeyError, message:
+        exit_with_error('%s is not a valid output format' % message)
+    else:
+        if isinstance(outputclass, tuple):
+            try:
+                # builtin output builder
+                mod, cls, name = outputclass
+                outputclass = getattr(importlib.import_module('totalopenstation.output.' + mod), cls)
+            except ImportError, message:
+                exit_with_error(message)
 
 if options.infile:
     infile = open(options.infile, 'r').read()
 else:
-    infile = sys.stdin.read()
+    if sys.stdin.isatty():
+        sys.exit(_('No input data!'))
+    else:
+        infile = sys.stdin.read()
 
 
 def main(infile):
