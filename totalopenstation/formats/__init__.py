@@ -84,6 +84,7 @@ BUILTIN_INPUT_FORMATS = {
     'leica_tcr_705': ('leica_tcr_705', 'FormatParser', 'Leica TCR 705'),
     'leica_tcr_1205': ('leica_tcr_1205', 'FormatParser', 'Leica TCR 1205'),
     'nikon_raw_v200': ('nikon_raw_v200', 'FormatParser','Nikon RAW V2.00'),
+    'sokkia_sdr33': ('sokkia_sdr33', 'FormatParser', 'Sokkia SDR33'),
     'topcon_gts': ('topcon_gts', 'FormatParser', 'Topcon GTS'),
     'trimble_are': ('trimble_are', 'FormatParser', 'Trimble AREA'),
     'zeiss_rec_500': ('zeiss_rec_500', 'FormatParser', 'Zeiss REC 500'),
