@@ -18,7 +18,7 @@
 # along with Total Open Station.  If not, see
 # <http://www.gnu.org/licenses/>.
 
-from polar import BasePoint, PolarPoint
+from .polar import BasePoint, PolarPoint
 
 
 class FormatParser:
