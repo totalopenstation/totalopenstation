@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 # filename: polar.py
-# Copyright 2010 Stefano Costa <steko@iosa.it>
+# Copyright 2010, 2014 Stefano Costa <steko@iosa.it>
 
 # This file is part of Total Open Station.
 
@@ -18,7 +18,7 @@
 # along with Total Open Station.  If not, see
 # <http://www.gnu.org/licenses/>.
 
-import math
+from math import cos, sin, radians
 
 from . import Point
 
@@ -26,16 +26,20 @@ from . import Point
 def polar_to_cartesian(base_x, base_y, base_z, dist, angle, z_angle, ih, th):
     '''Convert polar coordinates to cartesian.
 
-    Needs both base point coordinates and measurement angle and distance.
-    Angles should be given in radiants.'''
+    Needs base point coordinates, measurement angles and distance.
+    Angles must be given in radians.
 
-    rad_angle = angle
-    rad_z_angle = z_angle
-    dist_r = math.sin(rad_z_angle) * dist
-    target_x = base_x + math.cos(rad_angle) * dist_r
-    target_y = base_y + math.sin(rad_angle) * dist_r
-    target_z = base_z + math.cos(rad_z_angle) * dist
-    target_z = target_z + ih - th
+    Some important caveats of the current implementation:
+
+    - the horizontal ``angle`` is hardcoded with zero azimuth at North
+    - the vertical ``z_angle`` is hardcoded with zero at zenith
+    '''
+
+    dist_r = sin(z_angle) * dist
+    target_x = base_x + cos(angle) * dist_r
+    target_y = base_y + sin(angle) * dist_r
+    target_z = base_z + ih + (cos(z_angle) * dist) - th
+
     return dict(x=target_x, y=target_y, z=target_z)
 
 
@@ -51,37 +55,29 @@ class PolarPoint:
                  base_point,          # BasePoint object
                  pid,                 # point ID
                  text,                # point description
-                 coordorder='NEZ'):   # cartesian coordinates order (NEZ, ENZ)
+                 coordorder):   # cartesian coordinates order (NEZ, ENZ)
         self.dist = float(dist)
+        angle = float(angle)
+        z_angle = float(z_angle)
         self.th = float(th)
         self.angle_type = angle_type
         if angle_type == 'deg':
-            self.angle = math.radians(float(angle))
-            self.z_angle = math.radians(float(z_angle))
+            self.angle = radians(angle)
+            self.z_angle = radians(z_angle)
         if angle_type == 'gon':
-            self.angle = math.radians(float(angle)*0.9)
-            self.z_angle = math.radians(float(z_angle)*0.9)
+            self.angle = radians(angle * 0.9)
+            self.z_angle = radians(z_angle * 0.9)
         self.pid = pid
         self.text = text
-        self.coordorder = coordorder
+        if coordorder == ('NEZ' or 'ENZ'):
+            self.coordorder = coordorder
+        else:
+            raise ValueError('Invalid coordinate order')
         # base point data
         self.base_x = base_point.x
         self.base_y = base_point.y
         self.base_z = base_point.z
         self.ih = base_point.ih
-
-    def to_cartesian(self):
-        '''Converts from polar to cartesian.'''
-
-        coords = polar_to_cartesian(self.base_x,
-                                    self.base_y,
-                                    self.base_z,
-                                    self.dist,
-                                    self.angle,
-                                    self.z_angle,
-                                    self.ih,
-                                    self.th)
-        return "%(x)s,%(y)s,%(z)s" % coords
 
     def to_point(self):
         '''Convert from PolarPoint to (cartesian) Point object'''
