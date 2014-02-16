@@ -18,8 +18,6 @@
 # along with Total Open Station.  If not, see
 # <http://www.gnu.org/licenses/>.
 
-
-from . import Point
 from .polar import BasePoint, PolarPoint
 
 
@@ -34,13 +32,13 @@ class FormatParser:
         self.rows = data.splitlines()
 
     def _points(self):
-        points = {}
+        points = []
         for row in self.rows:
             fs = row.split(',')
             if fs[0] == 'CO' and fs[1].startswith('Coord Order:'):
                 coordorder = fs[1].split(':')[-1].strip()
             if fs[0] == 'ST':
-                x = fs[6]   # Coordinate order is handled in PolarPoint
+                x = fs[6]   # FIXME NEZ coord order shouldn't be hardcoded
                 y = fs[7]
                 z = fs[5]
                 bp = BasePoint(x=x, y=y, z=z, ih=0)
@@ -63,20 +61,7 @@ class FormatParser:
                                pid=pid,
                                text=text,
                                coordorder=coordorder)
-                points[pid] = p.to_point().tuplepoint
-            if fs[0] == 'CO' and fs[1].startswith('OLD'):
-                fields = fs[1].split()
-                pid = fields[0][4:]
-                x = fields[1][1:]
-                y = fields[2][1:]
-                z = fields[3][1:]
-                p_cor = Point(pid,
-                              float(y), # NEZ coordorder hardcoded here
-                              float(x),
-                              float(z),
-                              points[pid][4])
-                points[pid] = p_cor.tuplepoint
-
-        return sorted(points.values(), key=lambda p: int(p[0]))
+                points.append(p.to_point().tuplepoint)
+        return points
 
     points = property(_points)
