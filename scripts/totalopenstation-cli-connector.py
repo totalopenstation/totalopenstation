@@ -70,7 +70,11 @@ if isinstance(modelclass, tuple):
         sys.exit(_('Error loading the required model module: %s' % msg))
 
 station = modelclass(options.port)
-station.open()
+try:
+    station.close()  # sometimes the port will be already open for no reason
+    station.open()
+except serial.SerialException, detail:
+    sys.exit(detail)
 
 print "Now you can start download from %s device" % options.model
 
