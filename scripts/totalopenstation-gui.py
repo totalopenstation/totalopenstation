@@ -726,6 +726,7 @@ class Tops:
                 mc = modelclass(chosen_port, **self.options)
 
                 try:
+                    mc.close()  # sometimes the port will be already open for no reason
                     mc.open()
                 except serial.SerialException, detail:
                     e = ErrorDialog(self.myParent, detail)
