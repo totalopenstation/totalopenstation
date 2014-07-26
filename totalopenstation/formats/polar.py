@@ -46,6 +46,8 @@ def polar_to_cartesian(base_x, base_y, base_z, dist, angle, z_angle, ih, th):
 class PolarPoint:
     '''A point geometry defined by polar coordinates.'''
 
+    COORDINATE_ORDER = ('NEZ', 'ENZ')
+
     def __init__(self,
                  dist,                # inclined distance
                  angle,               # horizontal angle
@@ -69,7 +71,7 @@ class PolarPoint:
             self.z_angle = radians(z_angle * 0.9)
         self.pid = pid
         self.text = text
-        if coordorder == ('NEZ' or 'ENZ'):
+        if any((coordorder == v for v in PolarPoint.COORDINATE_ORDER)):
             self.coordorder = coordorder
         else:
             raise ValueError('Invalid coordinate order')

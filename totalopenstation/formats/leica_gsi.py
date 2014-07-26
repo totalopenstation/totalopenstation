@@ -75,6 +75,7 @@ class FormatParser(Parser):
                                base_point=bp,
                                pid=pid,
                                text=text,
+                               coordorder='NEZ'
                                )
                 return p.to_point()
         else:
