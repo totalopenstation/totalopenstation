@@ -1,7 +1,7 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
 # filename: totalopenstation-gui.py
-# Copyright 2008-2012 Stefano Costa <steko@iosa.it>
+# Copyright 2008-2014 Stefano Costa <steko@iosa.it>
 # Copyright 2010,2012 Luca Bianconi <luxetluc@yahoo.it>
 #
 # This file is part of Total Open Station.
@@ -722,8 +722,9 @@ class Tops:
                 except ImportError, msg:
                     showwarning(_('Import error'),
                                 _('Error loading the required model module: %s' % msg))
-                if True:#self.options:
-                    mc = modelclass(chosen_port, **self.options)
+
+                mc = modelclass(chosen_port, **self.options)
+
                 try:
                     mc.open()
                 except serial.SerialException, detail:
