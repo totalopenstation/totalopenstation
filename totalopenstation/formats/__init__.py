@@ -80,6 +80,7 @@ class Parser:
 
 
 BUILTIN_INPUT_FORMATS = {
+    'carlson_rw5': ('carlson_rw5', 'FormatParser', 'Carlson RW5'),
     'leica_gsi': ('leica_gsi', 'FormatParser', 'Leica GSI'),
     'leica_tcr_705': ('leica_tcr_705', 'FormatParser', 'Leica TCR 705'),
     'leica_tcr_1205': ('leica_tcr_1205', 'FormatParser', 'Leica TCR 1205'),
