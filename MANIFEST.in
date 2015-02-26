@@ -2,5 +2,6 @@ recursive-include docs *.rst
 recursive-include locale *.mo *.po
 recursive-include sample_data *
 recursive-include data *.desktop *.svg *.png
+include AUTHORS
 include COPYING.txt
 include README.txt
