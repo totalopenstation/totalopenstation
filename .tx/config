@@ -2,7 +2,7 @@
 host = https://www.transifex.com
 
 [totalopenstation.totalopenstation-app]
-file_filter = po/<lang>.po
-source_file = po/totalopenstation.pot
+file_filter = locale/<lang>/LC_MESSAGES/messages.po
+source_file = locale/totalopenstation.pot
 source_lang = en
 type = PO

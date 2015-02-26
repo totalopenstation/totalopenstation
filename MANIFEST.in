@@ -1,5 +1,5 @@
 recursive-include docs *.txt
-recursive-include po *.po
+recursive-include locale *.mo *.po
 recursive-include sample_data *
 recursive-include data *.desktop *.svg *.png
 include COPYING.txt
