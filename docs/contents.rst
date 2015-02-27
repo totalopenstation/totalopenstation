@@ -31,6 +31,10 @@ Third-party developers
 Total Open Station development
 ==============================
 
+.. toctree::
+   :maxdepth: 1
+   :glob:
+
    release
    contributing
    roadmap

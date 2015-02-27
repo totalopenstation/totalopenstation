@@ -1,8 +1,8 @@
 .. _release:
 
-====================================
- Doing a Total Open Station release
-====================================
+============================================
+ Releasing a new Total Open Station version
+============================================
 
 Translations
 ============
@@ -28,6 +28,34 @@ and check that the files are updated. Commit new files separately from updates.
 .. _Babel: http://babel.edgewall.org/wiki/Documentation/0.9/setup.html
 .. _Transifex: https://www.transifex.com/projects/p/totalopenstation/resource/totalopenstation-app/
 
-Compile the translated messages with::
+If using Babel, compile the translated messages with::
 
     python setup.py compile_catalog -d locale
+
+Documentation
+=============
+
+The documentation is included in the source tree, and is published
+online at <http://totalopenstation.readthedocs.org/>_.
+
+Manual pages for the three scripts provided with TOPS are not
+available at the moment.
+
+Release
+=======
+
+The version number is declared in ``totalopenstation/__init__.py`` and
+is propagated in other places from there, including ``setup.py`` and
+the “About” dialog.
+
+A *source distribution* is made using::
+
+  python setup.py sdist
+
+A *built distribution* is made using (e.g. for Windows installer)::
+
+  python setup.py bdist --formats wininst
+
+We are currently following the `Python Packaging User Guide
+<https://packaging.python.org/en/latest/distributing.html>`_ and
+distributing sources and *wheels*.
