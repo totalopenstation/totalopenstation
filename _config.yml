@@ -1,6 +1,6 @@
 name: Total Open Station
 markdown: kramdown
-highlighter: rouge
+highlighter: pygments
 
 # Setup
 title: Total Open Station
