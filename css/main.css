@@ -62,6 +62,11 @@ ul.posts span {
   font-size: 80%;
 }
 
+ol {
+  padding-left:0px;
+  list-style-position:inside; 
+}
+
 /*****************************************************************************/
 /*
 /* Site
