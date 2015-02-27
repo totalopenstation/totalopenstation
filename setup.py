@@ -16,7 +16,7 @@ setup(
     description='Download and export survey data from your total station',
     long_description=open('README.txt').read(),
     classifiers=[
-        #'Development Status :: 4 - Beta',
+        'Development Status :: 4 - Beta',
         'Environment :: Console',
         'Environment :: X11 Applications',
         'Intended Audience :: End Users/Desktop',
