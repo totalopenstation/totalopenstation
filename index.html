@@ -1,0 +1,70 @@
+---
+layout: default
+title: Total Open Station
+---
+
+<div id="home">
+
+<p><img class="gif" alt="Total Open Station in action" src="img/action.gif"/></p>
+
+<h2>What it does</h2>
+
+<p>Total Open Station (TOPS) downloads survey data from total
+stations on your computer, from almost any operating system.</p>
+
+<p>Data you download can be archived as is, and exported to
+exchange formats (CSV, DXF, GeoJSON, ...) for use in CAD or GIS
+software.</p>
+
+<p>The program is written with simplicity in mind, it is very
+small and fast.</p>
+
+<h2>News</h2>
+
+<ul class="posts">
+  {% for post in site.posts limit:5 %}
+  <li><span>{{ post.date | date_to_string }}</span> &raquo; <a href="{{ post.url }}">{{ post.title }}</a></li>
+  {% endfor %}
+</ul>
+
+<h2>Download</h2>
+
+<p class="post">Total Open Station is a stand-alone Python application. It
+comes already packaged in Debian and OpenSUSE. Others (including
+Windows users) can get it from
+the <a href="https://pypi.python.org/pypi/totalopenstation">Python
+package index</a>, or install it directly with:
+
+<pre>
+pip install totalopenstation
+</pre>
+
+More detailed instructions are available in the
+<a href="http://totalopenstation.readthedocs.org/">documentation</a>.</p>
+
+<h2>Using it</h2>
+
+<p>Start the program, connect your total station with a serial or
+<em>serial-to-USB cable</em>, insert the serial connection parameters and
+download data. That's it. You can review raw data immediately,
+save it to an ASCII file for later processing, or export directly
+to an exchange format.</p>
+
+<p>If you have a lot of data to process, or are more technically
+inclined, the same features are available as command-line programs
+or a programming library (just <code>import
+totalopenstation</code> in your app).</p>
+
+<h2>My total station doesn't work with TOPS!</h2>
+
+<p>Your total station model or preferred format is not supported
+yet? Total Open Station
+is <a href="https://github.com/steko/totalopenstation/">open
+source</a>, you can help adding it.</p>
+
+<p>If you still find yourself unable to use the program as you
+would like, <a href="mailto:info@iosa.it">get in touch with us</a>.</p>
+
+<p>Total Open Station is a IOSA project.</p>
+
+</div>

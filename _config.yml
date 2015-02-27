@@ -1,0 +1,13 @@
+name: Total Open Station
+markdown: redcarpet
+highlighter: rouge
+
+# Setup
+title: Total Open Station
+description: 'Total Open Station downloads data from total stations.'
+url: http://tops.iosa.it/
+
+
+author:
+  name: 'Stefano Costa'
+  url: http://steko.iosa.it/
