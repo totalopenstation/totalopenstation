@@ -1,5 +1,5 @@
 name: Total Open Station
-markdown: redcarpet
+markdown: kramdown
 highlighter: rouge
 
 # Setup
