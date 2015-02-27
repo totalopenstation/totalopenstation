@@ -1,5 +1,0 @@
-^docs/_build/
-\.py[co]$
-^(build|dist|totalopenstation\.egg-info)/
-.~$
-
