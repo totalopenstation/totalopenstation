@@ -26,12 +26,16 @@ import sys
 from time import sleep
 from threading import Event, Thread
 
+from totalopenstation.utils.upref import UserPrefs
 
 class Connector(serial.Serial, Thread):
 
     def __init__(self, port=None, baudrate=9600, bytesize=8, parity='N',
                 stopbits=1, timeout=None, xonxoff=0, rtscts=0,
                 writeTimeout=None, dsrdtr=None):
+
+        self.upref = UserPrefs()
+        sleeptime = self.upref.getvalue('sleeptime')
 
         Thread.__init__(self)
         self.dl_started = Event()
@@ -58,11 +62,11 @@ class Connector(serial.Serial, Thread):
         # looks like there is a maximum buffer of 4096 characters, so we have
         # to wait for a short time and iterate the process until finished
 
-        sleep(0.1)
+        sleep(sleeptime)
 
         while self.inWaiting() > 0:
             result = result + self.read(self.inWaiting())
-            sleep(0.3) # TODO determine sleep time from baudrate
+            sleep(sleeptime)
 
         self.result = result
 
@@ -75,7 +79,7 @@ class Connector(serial.Serial, Thread):
         '''
 
         while self.inWaiting() == 0:
-            sleep(0.1)
+            sleep(sleeptime)
         self.dl_started.set()
         try:
             self.download()
