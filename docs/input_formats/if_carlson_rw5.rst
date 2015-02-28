@@ -1,6 +1,6 @@
-===================================================================
- :mod:`carlson_rw5` -- Carlson SurvCE Raw Data File Format (*.RW5)
-===================================================================
+=================================================================
+ :mod:`carlson_rw5` -- Carlson SurvCE Raw Data File Format (RW5)
+=================================================================
 
 .. module:: carlson_rw5
     :platform: any
@@ -11,7 +11,9 @@
 Carlson RW5 is an exchange format used by the Carlson SurvCE software.
 
 The official documentation about the format is provided on the
-`Carlson website< http://update.carlsonsw.com/kbase_attach/372/>`_.
+`Carlson website`_.
+
+.. _Carlson website: http://update.carlsonsw.com/kbase_attach/372/
 
 RW5 is a rich format for raw data about the entire field operation of
 total stations and even GPS. At the moment, a minimal subset of the
