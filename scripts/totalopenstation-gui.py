@@ -368,8 +368,9 @@ class Tops:
         self.myParent.config(menu=self.menubar)
 
         topsmenu = Menu(self.menubar, tearoff=0)
-        topsmenu.add_command(label=_("Connect"), command=self.connect_action)
-        topsmenu.add_command(label=_("Process data"), command=self.process_action)
+        topsmenu.add_command(label=_("Connect"), command=self.connect)
+        topsmenu.add_command(label=_("Process data"), command=self.process)
+        topsmenu.add_separator()
         topsmenu.add_command(label=_("Quit"), command=self.on_app_close)
 
         filemenu = Menu(self.menubar, tearoff=0)
@@ -694,7 +695,7 @@ class Tops:
                                     ipadx=5,
                                     ipady=5)
 
-    def connect_action(self, event):
+    def connect(self):
 
         chosen_model = self.optionMODEL_value.get()
         chosen_port = self.option1_value.get()
@@ -751,7 +752,10 @@ class Tops:
                         mc.close()
                         showinfo(_('Success!'),
                                  _('Download finished!\nYou have %d bytes of data.') % len(result))
-    
+
+    def connect_action(self, event):
+        self.connect()
+
     def open_a_file(self):
         try:
             d = tkFileDialog.askopenfilename()
@@ -763,10 +767,13 @@ class Tops:
 
     def open_action(self, event):
         self.open_a_file()
-        
-    def process_action(self, event):
+
+    def process(self):
         data = self.text_area.get("1.0", END)
         d = ProcessDialog(self.myParent, data)
+
+    def process_action(self, event):
+        self.process()
 
     def save_a_file(self):
         try:
