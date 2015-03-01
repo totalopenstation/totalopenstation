@@ -119,12 +119,13 @@ class AboutDialog(tkSimpleDialog.Dialog):
     def body(self, master):
         title = "Total Open Station %s" % totalopenstation.__version__
         message = _("""
-Total Open Station is copyright 2008-2012 Luca Bianconi, Stefano Costa
-and the IOSA project.
+Total Open Station is copyright 2008-2015 Luca Bianconi, Stefano Costa
+and the IOSA project, under the GNU GPL v3 or any later version.
 
 http://tops.iosa.it/
 
-The application logo is copyright 2008 Lapo Calamandrei.""")
+The application logo is copyright 2008 Lapo Calamandrei under the same
+license.""")
 
         self.logo_data = logo_data
         self.logo = PhotoImage(data=self.logo_data)
@@ -654,7 +655,7 @@ class Tops:
                                  command=self.text_area.yview)
         self.text_area['yscrollcommand'] = self.scrollY.set
         self.scrollY.pack(side=RIGHT, expand=YES, fill=Y, anchor=W)
-        
+
         # init stuff
         self.myParent.title("Total Open Station")
         self.myParent.protocol("WM_DELETE_WINDOW", self.on_app_close)
@@ -662,7 +663,7 @@ class Tops:
         self.myParent.mainloop()
 
     def on_click_language(self):
-        ''' 
+        '''
             open select language dialog
         '''
         pass
@@ -671,7 +672,7 @@ class Tops:
         '''Callback function to ask confirmation before quitting the application.'''
 
         if askokcancel("Quit","Do you really want to quit application ?"):
-            self.myParent.destroy()	
+            self.myParent.destroy()
 
     def exit_action(self, event):
         self.on_app_close()
@@ -783,16 +784,16 @@ class Tops:
             oc = of.write(data)
         except:
             pass
-            
+
     def save_action(self, event):
         self.save_a_file()
 
     def about(self):
         d = AboutDialog(self.myParent)
-    
+
     def about_action(self, event):
         self.about()
-        
+
     def replace_text(self, text):
         self.text_area.delete("1.0", END)
         self.text_area.insert(END, text.replace('\r', ''))
@@ -811,4 +812,3 @@ atexit.register(Tops.upref.setvalues,
                  'port': Tops.option1_value.get(),
                  'sleeptime': Tops.option6_value.get(),
                  })
-
