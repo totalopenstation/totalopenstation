@@ -7,10 +7,19 @@
 Translations
 ============
 
+The main tool we use for translating Total Open Station is `Transifex`_.
+
 When the release is approaching and the source strings are not going
 to change, declare string freeze. Source messages should be updated
 with one of ``xgettext``, ``pygettext`` or Babel_ (with the
-``extract_messages`` command), producing ``totalopenstation.pot``.
+``extract_messages`` command), producing ``totalopenstation.pot``, e.g.::
+
+    xgettext  scripts/*.py -o locale/totalopenstation.pot
+
+The resulting PO template file mut be uploaded to Transifex for translators
+to work with::
+
+    tx push -s
 
 If there is an existing translation, ``msgmerge`` or Babel
 ``update_catalog`` should be used to update.

@@ -5,11 +5,7 @@
 ===============================
 
 There are a few different ways to install Total Open Station,
-depending on your operating system. If you are on GNU/Linux or Mac
-OSX, you should already have Python installed on your
-system.
-
-Instructions for Microsoft Windows are at the end of this page.
+depending on your operating system.
 
 GNU/Linux distributions
 =======================
@@ -23,9 +19,95 @@ Total Open Station is packaged for OpenSUSE. Installing is as easy as::
    $ sudo zypper refresh
    $ sudo zypper install TotalOpenStation
 
+Debian and Ubuntu
+-----------------
 
-Using pip (recommended)
-=======================
+Total Open Station is included in Debian and Ubuntu, just::
+
+    sudo apt-get install totalopenstation
+
+as usual. Please note that the version provided by your distribution may not
+be the latest release.
+
+Mac OSX
+=======
+
+Download Python 2 from the official website, and follow `this document on the
+Python.org website <https://www.python.org/download/mac/tcltk/>`_, that will
+help you choosing the correct version of Python to use.
+
+.. warning::
+
+   Do not use the pre-installed Python that comes with the OSX operating system.
+
+Microsoft Windows
+=================
+
+Two packages need to be installed before the actual installation of
+Total Open Station, because the program is written in the Python
+programming language which is not installed by default on Windows.
+
+.. warning::
+
+   You might need administrator privileges to be able to install all
+   the programs.
+
+Install Python
+--------------
+
+Check whether your Windows is 32 bit (``x86``, common for older versions like
+Windows XP) or 64 bit (``x86-64``). Then download the latest Python installer
+for **Python 2** (not Python 3):
+
+- `Python Releases for Windows`_
+
+When you've got the installer donwloaded on your computer, install
+it. You don’t need to use Python directly, but it is needed for the
+program to work.
+
+.. _Python Releases for Windows: https://www.python.org/downloads/windows/
+
+Install pySerial
+----------------
+
+Download pySerial_ and install it. As with Python, you don’t need
+to use it directly, but it is needed for the program to work. Please make
+sure you are installing pySerial version 2.7 or a later version.
+
+.. _pySerial: http://pyserial.sourceforge.net/
+
+
+Install Total Open Station
+--------------------------
+
+Download the most recent version of Total Open Station from `PyPI`_ and install it.
+You will find the totalopenstation-gui script in :file:`C:/Python27/Scripts/`
+unless you have changed the standard installation options (not
+recommended). You can create a shortcut to the program on your desktop
+if you like.
+
+To upgrade to a newer version, just go to `PyPI`_ again, download the latest
+version and install it as with the first one. The old version will get
+overwritten. No data will be lost!
+
+.. _`PyPI`: https://pypi.python.org/pypi/totalopenstation/
+
+Install the Prolific PL2032 drivers
+-----------------------------------
+
+(optional, but recommended).
+
+Most USB-serial adapters are made with the Prolific chipset. If
+plugging the cable gives you errors about missing drivers for your
+hardware, drivers for Windows can be downloaded from the `Prolific
+website`_.
+
+.. _`Prolific website`:
+   http://www.prolific.com.tw/eng/downloads.asp?ID=31
+
+
+Using pip (for the latest version)
+==================================
 
 Until your operating system's packaging tools (e.g. apt or
 yum) allow you to install Total Open Station along with other
@@ -99,7 +181,7 @@ Using the procedure described above it is fairly easy to create
 another, separate environment. Once the new environment is *active*,
 the command for installing a development version is::
 
-    pip install -e hg+https://bitbucket.org/steko/totalopenstation#egg=totalopenstation
+    pip install -e git+https://github.com/steko/totalopenstation#egg=totalopenstation
 
 Developers may ask you to install from another repository, but the
 concept stays the same. This mechanism is very flexible and allows to
@@ -115,8 +197,7 @@ From your terminal, type::
 
     totalopenstation-gui.py
 
-and the program should start. Please report any errors to the `mailing
-list`_
+and the program should start. Please report any errors to the `issue tracker`_.
 
 The next time you want to run the program, follow these steps:
 
@@ -125,92 +206,4 @@ The next time you want to run the program, follow these steps:
 #. ``source tops-environment/bin/activate`` to enter the virtualenv
 #. ``totalopenstation-gui.py`` will start the program
 
-.. _`mailing list`: https://lists.berlios.de/mailman/listinfo/tops-dev
-
-Microsoft Windows
-=================
-
-Three packages need to be installed before the actual installation of
-Total Open Station, because the program is written in the Python
-programming language which is not installed by default on Windows.
-
-.. warning::
-
-   You might need administrator privileges to be able to install all
-   the programs.
-
-Install Python
---------------
-
-Check whether your Windows is 32 bit (common) or 64 bit. Then download
-the right Python installer (direct link to the installation download):
-
-- `32-bit Python installer`_
-- `64-bit Python installer`_
-
-When you've got the installer donwloaded on your computer, install
-it. You don’t need to use Python directly, but it is needed for the
-program to work.
-
-.. _`32-bit Python installer`: http://python.org/ftp/python/2.7.2/python-2.7.2.msi
-.. _`64-bit Python installer`: http://python.org/ftp/python/2.7.2/python-2.7.2.amd64.msi
-
-Install PythonWin
------------------
-
-Download PythonWin_ from and install it. Again, you don’t
-need to use it directly, but it is needed for the program to work.
-
-Be sure to choose the right version, that is, the one that matches
-your operating system (either 32 bit or 64 bit) and your Python
-version (2.7 if you followed the above steps).
-
-.. _PythonWin: http://sourceforge.net/projects/pywin32/files/pywin32/Build%20217/
-
-Install pySerial
-----------------
-
-Download pySerial_ and install it. As with PythonWin, you don’t need
-to use it directly, but it is needed for the program to work. Do NOT
-install pySerial 2.5 because it doesn’t work correctly on Windows.
-
-.. _pySerial: http://sourceforge.net/projects/pyserial/files/pyserial/2.4/pyserial-2.4.win32.exe/download
-
-
-Install Total Open Station
---------------------------
-
-Download the most recent version of `Total Open Station`_ and install it.
-You will find the totalopenstation-gui script in C:/Python27/Scripts/
-unless you have changed the standard installation options (not
-recommended). You can create a shortcut to the program on your desktop
-if you like.
-
-To upgrade to a newer version, just go to
-http://pypi.python.org/pypi/totalopenstation, download the latest
-version and install it as with the first one. The old version will get
-overwritten. No data will be lost!
-
-.. _`Total Open Station`: http://pypi.python.org/packages/any/t/totalopenstation/totalopenstation-0.3.linux-x86_64.exe#md5=85f144de2e06e6fffc7c6d1fac095167
-
-
-Install the Prolific PL2032 drivers
------------------------------------
-
-(optional, but recommended).
-
-Most USB-serial adapters are made with the Prolific chipset. If
-plugging the cable gives you errors about missing drivers for your
-hardware, drivers for Windows can be downloaded from the `Prolific
-website`_.
-
-.. _`Prolific website`:
-   http://www.prolific.com.tw/eng/downloads.asp?ID=31
-
-Running the program
--------------------
-
-Total Open Station will be installed at
-:file:`C:/Python27/Scripts/totalopenstation-gui.py`. Double-click on this
-file to start the program. You can create a shortcut if you want. We
-are still working on providing an installer that will do it for you.
+.. _issue tracker: https://github.com/steko/totalopenstation/issues

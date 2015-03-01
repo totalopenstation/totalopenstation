@@ -43,12 +43,44 @@ team through our dedicated support channel and `mailing list`_.
 .. _`mailing list`: https://lists.berlios.de/mailman/listinfo/tops-dev
 
 Documentation
-=============
+===============
 
-The :ref:`contents` includes both the user's manual and the
-developer's manual, and it is made with Sphinx_, as the whole website.
 
-.. _Sphinx: http://sphinx.pocoo.org/
+User manual
+-----------
+
+.. toctree::
+   :maxdepth: 1
+   :glob:
+
+   installing
+   running
+   getting_sample_data
+   models
+   formats
+   glossary
+   library
+   faq
+
+Total Open Station development
+------------------------------
+
+.. toctree::
+   :maxdepth: 1
+   :glob:
+
+   contributing
+   users
+   release
+   roadmap
+
+Indices and tables
+------------------
+
+* :ref:`genindex`
+* :ref:`modindex`
+* :ref:`search`
+
 
 Who is doing this?
 ==================
@@ -59,6 +91,6 @@ Stefano Costa and Luca Bianconi, archaeologists.
 .. _IOSA: http://www.iosa.it/
 
 Total Open Station is licensed under the GNU General Public License
-version 3.
+version 3 or, at your option, any later version.
 
 The application icons are copyright by Lapo Calamandrei 2008.
