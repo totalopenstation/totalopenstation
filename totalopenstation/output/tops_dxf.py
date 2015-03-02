@@ -127,9 +127,3 @@ class OutputFormat:
 
         result += '  0\nENDSEC\n  0\nEOF\n'
         return result
-
-
-if __name__ == "__main__":
-    TotalOpenDXF(
-        [(1, 2, 3, 4, 'qwerty'),
-         ("2.3", 42, 45, 12, 'asdfg')])

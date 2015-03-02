@@ -44,8 +44,3 @@ class OutputFormat:
         self.writer.writerow(('PID', 'x', 'y', 'z', 'TEXT'))
         self.writer.writerows(self.data)
         return self.output.getvalue()
-
-if __name__ == "__main__":
-    TotalOpenCSV(
-        [(1, 2, 3, 4, 'qwerty'),
-         ("2.3", 42, 45, 12, 'asdfg')])

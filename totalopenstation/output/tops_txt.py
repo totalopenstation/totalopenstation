@@ -44,9 +44,3 @@ class OutputFormat:
         lines = [to_txt(e) for e in self.data]
         output = "".join(lines)
         return output
-
-if __name__ == "__main__":
-    TotalOpenTXT(
-        [(1, 2, 3, 4, 'qwerty'),
-         ("2.3", 42, 45, 12, 'asdfg')],
-    'p.txt')
