@@ -18,7 +18,7 @@
 # along with Total Open Station.  If not, see
 # <http://www.gnu.org/licenses/>.
 
-from . import Parser, Point
+from . import Feature, Parser, Point
 
 
 class FormatParser(Parser):
@@ -43,5 +43,6 @@ class FormatParser(Parser):
         if line[0:2] == '08':   # Measurement
             desc = line[63:70].strip()
 
-        p = Point(id, x, y, z, desc)
-        return p
+        point = Point(x, y, z)
+        feature = Feature(geometry=point, properties={'desc': desc}, id=id)
+        return feature

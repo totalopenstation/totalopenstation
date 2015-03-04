@@ -18,7 +18,7 @@
 # along with Total Open Station.  If not, see
 # <http://www.gnu.org/licenses/>.
 
-from . import Parser, Point
+from . import Feature, Parser, Point
 from polar import BasePoint, PolarPoint
 
 
@@ -77,8 +77,12 @@ class FormatParser(Parser):
                                text=text,
                                coordorder='NEZ'
                                )
-                return p.to_point()
+                f = Feature(geometry=p.to_point(),
+                            properties={'desc': text},
+                            id=pid)
+                return f
         else:
             x, y, z = [float(c)/1000 for c in (x, y, z)]
-            p = Point(pid, x, y, z, text)
-            return p
+            p = Point(x, y, z)
+            f = Feature(geometry=p, properties={'desc': text}, id=pid)
+            return f

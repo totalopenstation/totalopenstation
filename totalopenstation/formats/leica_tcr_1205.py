@@ -19,7 +19,7 @@
 # along with Total Open Station.  If not, see
 # <http://www.gnu.org/licenses/>.
 
-from . import Parser, Point
+from . import Feature, Parser, Point
 
 
 class FormatParser(Parser):
@@ -51,9 +51,10 @@ class FormatParser(Parser):
         else:
             text = ""
 
-        p = Point(str(tokens[0]),
-                  float(tokens[1]),
-                  float(tokens[2]),
-                  float(tokens[3]),
-                  text)
-        return p
+        p = Point(tokens[1],
+                  tokens[2],
+                  tokens[3])
+        f = Feature(geometry=p,
+                    properties={'desc': text},
+                    id=tokens[0].strip())
+        return f
