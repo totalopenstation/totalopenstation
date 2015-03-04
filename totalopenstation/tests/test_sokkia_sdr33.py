@@ -10,10 +10,16 @@ class TestSokkiaParser(unittest.TestCase):
             self.fp = FormatParser(testdata.read())
 
     def test_point(self):
-        self.assertEqual(self.fp.points[0][0], 31)
-        self.assertAlmostEqual(self.fp.points[0][2], 509.970)
-        self.assertAlmostEqual(self.fp.points[0][1], 937.274)
-        self.assertAlmostEqual(self.fp.points[0][3], 20.053)
-        self.assertEqual(self.fp.points[0][4], '11')
-        self.assertEqual(self.fp.points[1][4], '11')
+        self.assertAlmostEqual(self.fp.points[0].geometry.coords[0][1], 509.970)
+        self.assertAlmostEqual(self.fp.points[0].geometry.y, 509.970)
+        self.assertAlmostEqual(self.fp.points[0].geometry.coords[0][0], 937.274)
+        self.assertAlmostEqual(self.fp.points[0].geometry.coords[0][2], 20.053)
 
+    def test_feature(self):
+        self.assertEqual(self.fp.points[0].id, 31)
+        self.assertEqual(self.fp.points[0].properties['desc'], '11')
+        self.assertEqual(self.fp.points[1].properties['desc'], '11')
+
+    def test_linestring(self):
+        self.ls = self.fp.build_linestring()
+        self.assertAlmostEqual(self.ls.coords[0][0], 937.274)

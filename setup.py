@@ -30,7 +30,7 @@ setup(
         'Topic :: Scientific/Engineering :: GIS',
         ],
     keywords='survey geodimeter',
-    install_requires=['pyserial'],
+    install_requires=['pyserial', 'pygeoif'],
     include_package_data = True,
     zip_safe = False,
 )

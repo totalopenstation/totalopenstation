@@ -30,11 +30,12 @@ class TestPolar(unittest.TestCase):
                              coordorder='NEZ')
 
     def test_polar(self):
+        p0_test = Point(0.0, -9.0, 1.0)
+        self.assertAlmostEqual(self.p0.to_point().x, p0_test.x)
+        self.assertAlmostEqual(self.p0.to_point().y, p0_test.y)
+        self.assertAlmostEqual(self.p0.to_point().z, p0_test.z)
 
-        for i, j in zip(self.p0.to_point().tuplepoint,
-                        Point(1, 0.0, -9.0, 1.0, 'Test Point').tuplepoint):
-            self.assertAlmostEqual(i, j)
-
-        for i, j in zip(self.p1.to_point().tuplepoint,
-                     Point(2, 12.5454572076, 21.1222392859, -0.5, 'Real Point').tuplepoint):
-            self.assertAlmostEqual(i, j)
+        p1_test = Point(12.5454572076, 21.1222392859, -0.5)
+        self.assertAlmostEqual(self.p1.to_point().x, p1_test.x)
+        self.assertAlmostEqual(self.p1.to_point().y, p1_test.y)
+        self.assertAlmostEqual(self.p1.to_point().z, p1_test.z)
