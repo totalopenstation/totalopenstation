@@ -42,5 +42,9 @@ class OutputFormat:
 
     def process(self):
         self.writer.writerow(('PID', 'x', 'y', 'z', 'TEXT'))
-        self.writer.writerows(self.data)
+        self.writer.writerows((p.id,
+                               p.geometry.x,
+                               p.geometry.y,
+                               p.geometry.z,
+                               p.properties['desc']) for p in self.data)
         return self.output.getvalue()
