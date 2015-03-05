@@ -48,6 +48,13 @@ class OutputFormat:
 
         result = ''
 
+        # header
+        result += '999\nDXF created from Total Open Station\n'
+        result += '  0\nSECTION\n'
+        result += '  2\nHEADER\n'
+        result += '  9\n$ACADVER\n'
+        result += '  1\nAC1009\n' # R11
+
         # extract layer list
         codes = set([p[4] for p in self.data])
         codes = [c.replace('.','_') for c in codes]
