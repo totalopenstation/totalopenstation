@@ -46,5 +46,5 @@ class OutputFormat:
                                p.geometry.x,
                                p.geometry.y,
                                p.geometry.z,
-                               p.properties['desc']) for p in self.data)
+                               p.desc) for p in self.data)
         return self.output.getvalue()

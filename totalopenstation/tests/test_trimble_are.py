@@ -16,5 +16,5 @@ class TestTrimbleAREParser(unittest.TestCase):
 
     def test_feature(self):
         self.assertEqual(self.fp.points[1].id, '3')
-        self.assertEqual(self.fp.points[1].properties['desc'], 'FIX')
-        self.assertEqual(self.fp.points[0].properties['desc'], 'TEST')
+        self.assertEqual(self.fp.points[1].desc, 'FIX')
+        self.assertEqual(self.fp.points[0].desc, 'TEST')

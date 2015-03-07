@@ -33,15 +33,21 @@ class LineString(geometry.LineString):
 class Feature:
     '''A GeoJSON-like Feature object.'''
 
-    def __init__(self, geometry, properties, id=None):
+    def __init__(self, geometry, desc, id=None, **properties):
         self.geometry = geometry # do more extensive validation
-        self.properties = properties
+        self.desc = desc
         self.id = id
-        self.__geo_interface__ = {
-            'type': 'Feature',
-            'geometry': self.geometry.__geo_interface__,
-            'properties': self.properties,
-            'id': self.id}
+        self.properties = properties
+
+    @property
+    def __geo_interface__(self):
+        properties = self.properties
+        properties['desc'] = self.desc
+        return {
+        'type': 'Feature',
+        'geometry': self.geometry.__geo_interface__,
+        'properties': properties,
+        'id': self.id}
 
 
 class Parser:

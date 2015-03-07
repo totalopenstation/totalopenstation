@@ -78,11 +78,11 @@ class FormatParser(Parser):
                                coordorder='NEZ'
                                )
                 f = Feature(geometry=p.to_point(),
-                            properties={'desc': text},
+                            desc=text,
                             id=pid)
                 return f
         else:
             x, y, z = [float(c)/1000 for c in (x, y, z)]
             p = Point(x, y, z)
-            f = Feature(geometry=p, properties={'desc': text}, id=pid)
+            f = Feature(geometry=p, desc=text, id=pid)
             return f

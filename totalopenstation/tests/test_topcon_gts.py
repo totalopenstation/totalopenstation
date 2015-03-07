@@ -16,5 +16,5 @@ class TestTopconGTSParser(unittest.TestCase):
 
     def test_feature(self):
         self.assertEqual(self.fp.points[0].id, '2')
-        self.assertEqual(self.fp.points[0].properties['desc'], '00099')
-        self.assertEqual(self.fp.points[1].properties['desc'], '00101')
+        self.assertEqual(self.fp.points[0].desc, '00099')
+        self.assertEqual(self.fp.points[1].desc, '00101')

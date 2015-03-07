@@ -16,8 +16,8 @@ class TestLeicaGSI16Parser(unittest.TestCase):
 
     def test_feature(self):
         self.assertEqual(self.fp.points[0].id, '0002')
-        self.assertEqual(self.fp.points[0].properties['desc'], 'GDEM5415')
-        self.assertEqual(self.fp.points[1].properties['desc'], 'GDEM5416')
+        self.assertEqual(self.fp.points[0].desc, 'GDEM5415')
+        self.assertEqual(self.fp.points[1].desc, 'GDEM5416')
 
     def test_linestring(self):
         self.ls = self.fp.build_linestring()

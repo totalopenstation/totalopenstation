@@ -49,7 +49,7 @@ class OutputFormat:
         result = ''
 
         # extract layer list
-        codes = set([p.properties['desc'] for p in self.data])
+        codes = set([p.desc for p in self.data])
         codes = [c.replace('.','_') for c in codes]
         layers = dict(enumerate(codes))
         colors = dict(zip(layers.values(), layers.keys()))
@@ -92,7 +92,7 @@ class OutputFormat:
         result += '  0\nSECTION\n  2\nENTITIES\n'
 
         for p in self.data:
-            p_layer = p.properties['desc']
+            p_layer = p.desc
             geom = p.geometry
             if geom.geom_type == 'Point':
                 if self.separate_layers is True:

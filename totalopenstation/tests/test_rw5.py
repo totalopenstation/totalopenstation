@@ -15,5 +15,5 @@ class TestCarlsonRW5Parser(unittest.TestCase):
 
     def test_feature(self):
         self.assertEqual(self.pts[0].id, '108')
-        self.assertEqual(self.pts[1].properties['desc'], 'LIGHT POLE')
-        self.assertEqual(self.pts[0].properties['desc'], 'FENCE1')
+        self.assertEqual(self.pts[1].desc, 'LIGHT POLE')
+        self.assertEqual(self.pts[0].desc, 'FENCE1')

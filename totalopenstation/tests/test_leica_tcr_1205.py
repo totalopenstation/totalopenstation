@@ -16,8 +16,8 @@ class TestLeicaTCR1205Parser(unittest.TestCase):
 
     def test_feature(self):
         self.assertEqual(self.fp.points[1].id, '10001')
-        self.assertEqual(self.fp.points[1].properties['desc'], 'Line0001')
-        self.assertEqual(self.fp.points[2].properties['desc'], 'Line0001')
+        self.assertEqual(self.fp.points[1].desc, 'Line0001')
+        self.assertEqual(self.fp.points[2].desc, 'Line0001')
 
     def test_linestring(self):
         self.ls = self.fp.build_linestring()

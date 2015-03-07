@@ -20,4 +20,4 @@ SS,4,1.500,7.620,105.5898,104.3960,P"""
 
     def test_feature(self):
         self.assertEqual(self.fp.points[2].id, '4')
-        self.assertEqual(self.fp.points[2].properties['desc'], 'P')
+        self.assertEqual(self.fp.points[2].desc, 'P')

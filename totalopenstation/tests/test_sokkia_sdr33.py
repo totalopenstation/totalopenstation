@@ -17,8 +17,8 @@ class TestSokkiaParser(unittest.TestCase):
 
     def test_feature(self):
         self.assertEqual(self.fp.points[0].id, 31)
-        self.assertEqual(self.fp.points[0].properties['desc'], '11')
-        self.assertEqual(self.fp.points[1].properties['desc'], '11')
+        self.assertEqual(self.fp.points[0].desc, '11')
+        self.assertEqual(self.fp.points[1].desc, '11')
 
     def test_linestring(self):
         self.ls = self.fp.build_linestring()

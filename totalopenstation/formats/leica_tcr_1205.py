@@ -55,6 +55,6 @@ class FormatParser(Parser):
                   tokens[2],
                   tokens[3])
         f = Feature(geometry=p,
-                    properties={'desc': text},
+                    desc=text,
                     id=tokens[0].strip())
         return f

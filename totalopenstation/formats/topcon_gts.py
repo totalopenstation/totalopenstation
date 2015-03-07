@@ -66,7 +66,7 @@ class FormatParser:
                            text=text,
                            coordorder=coordorder)
             f = Feature(geometry=p.to_point(),
-                        properties={'desc': text},
+                        desc=text,
                         id=pid)
             points.append(f)
         return points

@@ -16,5 +16,5 @@ class TestLeicaTCR705Parser(unittest.TestCase):
 
     def test_feature(self):
         self.assertEqual(self.fp.points[1].id, '101')
-        self.assertEqual(self.fp.points[1].properties['desc'], 'WALL01')
-        self.assertEqual(self.fp.points[0].properties['desc'], 'WALL01')
+        self.assertEqual(self.fp.points[1].desc, 'WALL01')
+        self.assertEqual(self.fp.points[0].desc, 'WALL01')

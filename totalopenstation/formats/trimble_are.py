@@ -55,7 +55,7 @@ class FormatParser(Parser):
                       tokens['x'],
                       tokens['z'])
             f = Feature(geometry=p,
-                        properties={'desc': tokens['p']},
+                        desc=tokens['p'],
                         id=tokens['n'])
         except KeyError:
             pass
