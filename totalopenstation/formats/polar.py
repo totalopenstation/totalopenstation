@@ -43,6 +43,15 @@ def polar_to_cartesian(base_x, base_y, base_z, dist, angle, z_angle, ih, th):
     return dict(x=target_x, y=target_y, z=target_z)
 
 
+def dms_to_deg(angle):
+    '''Convert degrees in DDD.MMSS format to decimal format.'''
+
+    angle_d, angle_ms = angle.split('.')
+    angle_m, angle_s = angle_ms[:2], angle_ms[2:]
+    angle = float(angle_d) + float(angle_m) / 60 + float(angle_s) / 3600
+    return angle
+
+
 class PolarPoint:
     '''A point geometry defined by polar coordinates.'''
 
@@ -59,16 +68,21 @@ class PolarPoint:
                  text,                # point description
                  coordorder):   # cartesian coordinates order (NEZ, ENZ)
         self.dist = float(dist)
-        angle = float(angle)
-        z_angle = float(z_angle)
         self.th = float(th)
         self.angle_type = angle_type
         if angle_type == 'deg':
+            angle = float(angle)
+            z_angle = float(z_angle)
             self.angle = radians(angle)
             self.z_angle = radians(z_angle)
-        if angle_type == 'gon':
+        elif angle_type == 'gon':
+            angle = float(angle)
+            z_angle = float(z_angle)
             self.angle = radians(angle * 0.9)
             self.z_angle = radians(z_angle * 0.9)
+        elif angle_type == 'dms':
+            self.angle = radians(dms_to_deg(angle))
+            self.z_angle = radians(dms_to_deg(z_angle))
         self.pid = pid
         self.text = text
         if any((coordorder == v for v in PolarPoint.COORDINATE_ORDER)):

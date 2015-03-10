@@ -36,8 +36,14 @@ class FormatParser:
         points = []
         for row in self.rows:
             fs = row.split(',')
-            if fs[0] == 'CO' and fs[1].startswith('Coord Order:'):
-                coordorder = fs[1].split(':')[-1].strip()
+            if fs[0] == 'CO':
+                if fs[1].startswith('Coord Order:'):
+                    coordorder = fs[1].split(':')[-1].strip()
+                if fs[1].startswith('Angle Units:'):
+                    if fs[1].endswith('Gons'):
+                        angle_units = 'gon'
+                    elif fs[1].endswith('DDDMMSS'):
+                        angle_units = 'dms'
             if fs[0] == 'ST':
                 x = fs[6]   # FIXME NEZ coord order shouldn't be hardcoded
                 y = fs[7]
@@ -57,7 +63,7 @@ class FormatParser:
                                angle=angle,
                                z_angle=z_angle,
                                th=th,
-                               angle_type='gon',
+                               angle_type=angle_units,
                                base_point=bp,
                                pid=pid,
                                text=text,
