@@ -19,21 +19,35 @@
 # along with Total Open Station.  If not, see
 # <http://www.gnu.org/licenses/>.
 
+from pygeoif import geometry
 
-class Point:
 
-    def __init__(self, p_id, x, y, z, text):
+class Point(geometry.Point):
+    pass
 
-        self.p_id = p_id
-        self.x = x
-        self.y = y
-        self.z = z
-        self.text = text
 
-        self.tuplepoint = (self.p_id, self.x, self.y, self.z, self.text)
+class LineString(geometry.LineString):
+    pass
 
-    def __str__(self):
-        return 'Point(%(p_id)s, %(x)s, %(y)s, %(z)s, %(text)s)' % self.__dict__
+
+class Feature:
+    '''A GeoJSON-like Feature object.'''
+
+    def __init__(self, geometry, desc, id=None, **properties):
+        self.geometry = geometry # do more extensive validation
+        self.desc = desc
+        self.id = id
+        self.properties = properties
+
+    @property
+    def __geo_interface__(self):
+        properties = self.properties
+        properties['desc'] = self.desc
+        return {
+        'type': 'Feature',
+        'geometry': self.geometry.__geo_interface__,
+        'properties': properties,
+        'id': self.id}
 
 
 class Parser:
@@ -42,15 +56,14 @@ class Parser:
     This means that if you plan to load data from a file you have to
     pass the output of open(file).read() to this class.'''
 
-    def __init__(self, data, swapXY=False):
+    def __init__(self, data):
 
         self.data = data
         self.d = self.split_points()
-        self.swapXY = swapXY
 
         valid_lines = filter(self.is_point, self.d)
         fg_lines = map(self.get_point, valid_lines)
-        self.points = [p.tuplepoint for p in fg_lines if p is not None]
+        self.points = [p for p in fg_lines if p is not None]
 
     def is_point(self, point):
         """Action for finding which parts of the source file are points.
@@ -77,6 +90,11 @@ class Parser:
         Override this method if the format is different."""
 
         return self.data.splitlines()
+
+    def build_linestring(self):
+        '''Join all Point objects into a LineString.'''
+
+        return LineString(map(lambda f: f.geometry, self.points))
 
 
 BUILTIN_INPUT_FORMATS = {

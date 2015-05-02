@@ -20,13 +20,13 @@
 # along with Total Open Station.  If not, see
 # <http://www.gnu.org/licenses/>.
 
-from . import Parser, Point
+from . import Feature, Parser, Point
 
 
 class FormatParser(Parser):
 
     def __init__(self, data):
-        Parser.__init__(self, data, swapXY=True)
+        Parser.__init__(self, data)
 
     def is_point(self, line):
         is_point = False
@@ -51,15 +51,16 @@ class FormatParser(Parser):
         tokens['text'] = lines[0]
 
         try:
-            p = Point(tokens['n'],
+            p = Point(tokens['y'],
                       tokens['x'],
-                      tokens['y'],
-                      tokens['z'],
-                      tokens['p'])
+                      tokens['z'])
+            f = Feature(geometry=p,
+                        desc=tokens['p'],
+                        id=tokens['n'])
         except KeyError:
             pass
         else:
-            return p
+            return f
 
     def split_points(self):
         splitted_points = self.data.split('0=')

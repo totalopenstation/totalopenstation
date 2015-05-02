@@ -16,7 +16,8 @@ SS,4,1.500,7.620,105.5898,104.3960,P"""
         self.fp = FormatParser(testdata)
 
     def test_points(self):
-        self.assertAlmostEqual(self.fp.points[0][1], 8.9092817528619808)
+        self.assertAlmostEqual(self.fp.points[0].geometry.x, 8.9092817528619808)
 
-    def test_shorter(self):
-        self.assertEqual(self.fp.points[2][4], 'P')
+    def test_feature(self):
+        self.assertEqual(self.fp.points[2].id, '4')
+        self.assertEqual(self.fp.points[2].desc, 'P')

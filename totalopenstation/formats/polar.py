@@ -20,7 +20,7 @@
 
 from math import cos, sin, radians
 
-from . import Point
+from . import Feature, Point
 
 
 def polar_to_cartesian(base_x, base_y, base_z, dist, angle, z_angle, ih, th):
@@ -96,13 +96,19 @@ class PolarPoint:
         if self.coordorder == 'NEZ':
             cart_coords['x'], cart_coords['y'] = cart_coords['y'], cart_coords['x']
 
-        cart_point = Point(self.pid,
-                           cart_coords['x'],
+        cart_point = Point(cart_coords['x'],
                            cart_coords['y'],
-                           cart_coords['z'],
-                           self.text)
+                           cart_coords['z'])
 
         return cart_point
+
+    def as_feature(self):
+        '''Wrap geometry and other properties like id, description in a Feature.'''
+
+        feature = Feature(geometry=self.to_point(),
+                          properties={'desc': self.desc},
+                          id=self.pid)
+        return feature
 
 
 class BasePoint:

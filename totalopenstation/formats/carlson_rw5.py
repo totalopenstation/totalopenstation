@@ -20,6 +20,7 @@
 
 from decimal import Decimal
 
+from . import Feature
 from .polar import BasePoint, PolarPoint
 
 
@@ -55,7 +56,6 @@ class FormatParser:
 
         for row in self.rows:
             rec = record(row)
-            print(rec)
             if rec['type'] == 'OC':
                 northing = float(rec['N ']) # extra whitespace
                 easting = float(rec['E '])  # extra whitespace
@@ -84,7 +84,11 @@ class FormatParser:
                                pid=pid,
                                text=desc,
                                coordorder='NEZ')
-                points.append(p.to_point().tuplepoint)
+                point = p.to_point()
+                feature = Feature(geometry=point,
+                                  desc=desc,
+                                  id=pid)
+                points.append(feature)
         return points
 
     points = property(_points)

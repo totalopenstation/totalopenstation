@@ -56,7 +56,7 @@ class OutputFormat:
         result += '  1\nAC1009\n' # R11
 
         # extract layer list
-        codes = set([p[4] for p in self.data])
+        codes = set([p.desc for p in self.data])
         codes = [c.replace('.','_') for c in codes]
         layers = dict(enumerate(codes))
         colors = dict(zip(layers.values(), layers.keys()))
@@ -99,38 +99,58 @@ class OutputFormat:
         result += '  0\nSECTION\n  2\nENTITIES\n'
 
         for p in self.data:
-            p_id, p_x, p_y, p_z, p_layer = p
-            if self.separate_layers is True:
-                layer_point = "%s_PUNTI" % p_layer
-                layer_z_text = "%s_QUOTE" % p_layer
-                layer_id_text = "%s_NUMERI" % p_layer
+            p_layer = p.desc
+            geom = p.geometry
+            if geom.geom_type == 'Point':
+                if self.separate_layers is True:
+                    layer_point = "%s_PUNTI" % p_layer
+                    layer_z_text = "%s_QUOTE" % p_layer
+                    layer_id_text = "%s_NUMERI" % p_layer
+                else:
+                    layer_point = layer_z_text = layer_id_text = p_layer
+                p_yz = str(float(geom.y) - (self.text_height * 1.2))
+
+                # add point
+                result += '  0\nPOINT\n'
+                result += '  8\n%s\n' % layer_point
+                result += ' 10\n%s\n' % geom.x
+                result += ' 20\n%s\n' % geom.y
+
+                # add ID number
+                result += '  0\nTEXT\n'
+                result += '  1\n%s\n' % p.id
+                result += '  8\n%s\n' % layer_id_text
+                result += ' 10\n%s\n' % geom.x
+                result += ' 20\n%s\n' % geom.y
+                result += ' 40\n%01.2f\n' % self.text_height
+                result += ' 62\n256\n'
+
+                # add Z value as string
+                result += '  0\nTEXT\n'
+                result += '  1\n%s\n' % geom.z
+                result += '  8\n%s\n' % layer_z_text
+                result += ' 10\n%s\n' % geom.x
+                result += ' 20\n%s\n' % p_yz
+                result += ' 40\n%01.2f\n' % self.text_height
+                result += ' 62\n256\n'
+            elif geom.geom_type == 'LineString':
+                result += '  0\nPOLYLINE\n'
+                result += '  8\n%s\n' % p_layer
+                result += '  6\nCONTINUOUS\n'
+                result += ' 62\n256\n'
+                result += ' 66\n1\n'
+                result += ' 70\n0\n'
+                for v in geom.coords:
+                    result += '  0\nVERTEX\n'
+                    result += '  8\n%s\n' % p_layer
+                    result += ' 10\n%s\n' % v[0] # x
+                    result += ' 20\n%s\n' % v[1] # y
+                    try:
+                        result += ' 30\n%s\n' % v[2] # z
+                    except IndexError:
+                        result += ' 30\n0\n'
+                result += '  0\nSEQEND\n'
             else:
-                layer_point = layer_z_text = layer_id_text = p_layer
-            p_yz = str(float(p_y) - (self.text_height * 1.2))
-
-            # add point
-            result += '  0\nPOINT\n'
-            result += '  8\n%s\n' % layer_point
-            result += ' 10\n%s\n' % p_x
-            result += ' 20\n%s\n' % p_y
-
-            # add ID number
-            result += '  0\nTEXT\n'
-            result += '  1\n%s\n' % p_id
-            result += '  8\n%s\n' % layer_id_text
-            result += ' 10\n%s\n' % p_x
-            result += ' 20\n%s\n' % p_y
-            result += ' 40\n%01.2f\n' % self.text_height
-            result += ' 62\n256\n'
-
-            # add Z value as string
-            result += '  0\nTEXT\n'
-            result += '  1\n%s\n' % p_z
-            result += '  8\n%s\n' % layer_z_text
-            result += ' 10\n%s\n' % p_x
-            result += ' 20\n%s\n' % p_yz
-            result += ' 40\n%01.2f\n' % self.text_height
-            result += ' 62\n256\n'
-
+                raise NotImplementedError
         result += '  0\nENDSEC\n  0\nEOF\n'
         return result
