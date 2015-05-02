@@ -8,4 +8,4 @@ Yesterday we released Total Open Station 0.3.1, a bugfix release for 0.3 that wa
 
 Apart from the 5 bugs that were fixed, this release brings several incremental improvements that happened after the 0.3 release, most importantly a cleaner source code that will be instrumental for moving forward with the next release, the much awaited 0.4. The most important news is really that we are revamping the development of TOPS.
 
-In the meantime, we moved to GitHub, hoping that new and old contributors will find it easier to submit issues and improvements. As always, we are happy to receive sample datasets for new total station formats.
+In the meantime, we moved to [GitHub](https://github.com/steko/totalopenstation), hoping that new and old contributors will find it easier to submit issues and improvements. As always, we are happy to receive sample datasets for new total station formats.
