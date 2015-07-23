@@ -1,7 +1,7 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
 # filename: upref.py
-# Copyright 2010,2013 Stefano Costa <steko@iosa.it>
+# Copyright 2015 Stefano Costa <steko@iosa.it>
 # Copyright 2010 Luca Bianconi <luxetluc@yahoo.it>
 #
 # This file is part of Total Open Station.
@@ -40,7 +40,7 @@ class UserPrefs(ConfigParser):
     OPTIONS = {
         'model': '',
         'port': '',
-        'sleeptime': 1.0,       # added in 0.3.1
+        'sleeptime': '1.0',       # added in 0.3.1
     }
 
     def __init__(self):
@@ -68,7 +68,7 @@ class UserPrefs(ConfigParser):
         logging.info('User preferences do not exist!')
         self.add_section('topsconfig')
         for k,v in self.OPTIONS.items():
-            self.set('topsconfig', k, v)
+            self.set('DEFAULT', k, v)
         logging.info('Created new user preferences file with default values')
 
     def write(self):
@@ -85,13 +85,10 @@ class UserPrefs(ConfigParser):
 
         return current_options
 
-    def getvalue(self, key):
+    def getvalue(self, option):
         ''' get specific config file value '''
 
-        try:
-            value = self.get('topsconfig', key)
-        except NoOptionError:
-            value = self.OPTIONS[key] # use default value
+        value = self.get('topsconfig', option)
         return value
 
     def setvalues(self, values):

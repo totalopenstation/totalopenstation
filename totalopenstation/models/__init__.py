@@ -35,7 +35,7 @@ class Connector(serial.Serial, Thread):
                 writeTimeout=None, dsrdtr=None):
 
         self.upref = UserPrefs()
-        sleeptime = self.upref.getvalue('sleeptime')
+        sleeptime = float(self.upref.getvalue('sleeptime'))
 
         Thread.__init__(self)
         self.dl_started = Event()
