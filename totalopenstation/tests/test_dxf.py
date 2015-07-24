@@ -22,6 +22,8 @@ class TestCSVOutput(unittest.TestCase):
 
     def test_output(self):
         self.output = OutputFormat(self.data, separate_layers=False).process()
-        with open('/home/steko/test.dxf', 'wb') as f:
-            f.write(self.output)
-        #self.assertEqual(self.output.splitlines()[1], '1,12.8,76.3,56.2,"TEST POINT"')
+        self.assertEqual(self.output.splitlines()[1], 'DXF created from Total Open Station')
+        self.assertEqual(self.output.splitlines()[65], 'TESTPOINT')
+        self.assertEqual(self.output.splitlines()[101], 'TESTPOINT2')
+        self.assertEqual(self.output.splitlines()[137], 'TESTLINE')
+        self.assertEqual(self.output.splitlines()[181], 'EOF')
