@@ -26,8 +26,8 @@ import importlib
 
 from optparse import OptionParser
 
-from totalopenstation.formats import BUILTIN_INPUT_FORMATS
-from totalopenstation.output import BUILTIN_OUTPUT_FORMATS
+import totalopenstation.formats
+import totalopenstation.output
 
 
 t = gettext.translation('totalopenstation', './locale', fallback=True)
@@ -57,6 +57,11 @@ parser.add_option("-f",
                 dest="informat",
                 help=_("select input FORMAT"),
                 metavar="FORMAT")
+parser.add_option("--2d",
+                  action="store_true",
+                  dest="xy_only",
+                  help=_("Exclude Z coordinates, output only 2D data"),
+                  metavar="ONLY2D")
 parser.add_option("-t",
                 "--output-format",
                 action="store",
@@ -83,15 +88,13 @@ parser.add_option(
 def list_formats():
     '''Print a list of the supported input and output formats.'''
 
-    from totalopenstation.formats import BUILTIN_INPUT_FORMATS
-
     mod_string = "List of supported input formats:\n" + "-" * 30 + "\n"
-    for k, v in sorted(BUILTIN_INPUT_FORMATS.items()):
+    for k, v in sorted(totalopenstation.formats.BUILTIN_INPUT_FORMATS.items()):
         mod_string += k.ljust(20) + v[2] + "\n"
     mod_string += "\n\n"
 
     mod_string += "List of supported output formats:\n" + "-" * 30 + "\n"
-    for k, v in sorted(BUILTIN_OUTPUT_FORMATS.items()):
+    for k, v in sorted(totalopenstation.output.BUILTIN_OUTPUT_FORMATS.items()):
         mod_string += k.ljust(20) + v[2] + "\n"
     mod_string += "\n"
     return mod_string
@@ -106,7 +109,7 @@ def exit_with_error(message):
 
 if options.informat:
     try:
-        inputclass = BUILTIN_INPUT_FORMATS[options.informat]
+        inputclass = totalopenstation.formats.BUILTIN_INPUT_FORMATS[options.informat]
     except KeyError, message:
         exit_with_error(_('%s is not a valid input format') % message)
     else:
@@ -122,7 +125,7 @@ else:
 
 if options.outformat:
     try:
-        outputclass = BUILTIN_OUTPUT_FORMATS[options.outformat]
+        outputclass = totalopenstation.output.BUILTIN_OUTPUT_FORMATS[options.outformat]
     except KeyError, message:
         exit_with_error('%s is not a valid output format' % message)
     else:
@@ -148,6 +151,15 @@ def main(infile):
 
     parsed_data = inputclass(infile)
     parsed_points = parsed_data.points
+
+    # processing options
+    if options.xy_only:
+        for feature in parsed_points:
+            geom_cls = getattr(totalopenstation.formats, feature.geometry.geom_type)
+            try:
+                feature.geometry = geom_cls(feature.geometry.x, feature.geometry.y)
+            except:
+                feature.geometry = geom_cls([(p.x, p.y) for p in feature.geometry.geoms])
     output = outputclass(parsed_points)
 
     def write_to_file(outfile):

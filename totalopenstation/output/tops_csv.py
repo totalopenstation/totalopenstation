@@ -28,11 +28,7 @@ class OutputFormat:
     """
     Exports points data in CSV format.
 
-    ``data`` should be an iterable (e.g. list) containing one iterable
-    (e.g.  tuple) for each point. The default order is PID, x, x, z,
-    TEXT.
-
-    This is consistent with our current standard.
+    ``data`` should be an iterable containing Feature objects.
     """
 
     def __init__(self, data):
@@ -41,10 +37,19 @@ class OutputFormat:
         self.writer = csv.writer(self.output, quoting=csv.QUOTE_NONNUMERIC)
 
     def process(self):
-        self.writer.writerow(('PID', 'x', 'y', 'z', 'TEXT'))
-        self.writer.writerows((p.id,
-                               p.geometry.x,
-                               p.geometry.y,
-                               p.geometry.z,
-                               p.desc) for p in self.data)
+        try:
+            self.data[0].geometry.z
+        except ValueError:
+            self.writer.writerow(('PID', 'x', 'y', 'TEXT'))
+            self.writer.writerows((feature.id,
+                                   feature.geometry.x,
+                                   feature.geometry.y,
+                                   feature.desc) for feature in self.data)
+        else:
+            self.writer.writerow(('PID', 'x', 'y', 'z', 'TEXT'))
+            self.writer.writerows((feature.id,
+                                   feature.geometry.x,
+                                   feature.geometry.y,
+                                   feature.geometry.z,
+                                   feature.desc) for feature in self.data)
         return self.output.getvalue()
