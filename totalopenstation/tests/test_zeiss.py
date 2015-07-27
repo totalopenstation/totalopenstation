@@ -10,8 +10,8 @@ class TestZeissParser(unittest.TestCase):
 
     def test_zeiss(self):
         self.assertTrue(self.fp.is_point(self.fp.data))
-        self.assertEqual(self.fp.points[0].y, 72.702)
-        self.assertEqual(self.fp.points[0].x, -92.823)
+        self.assertEqual(self.fp.points[0].geometry.y, 72.702)
+        self.assertEqual(self.fp.points[0].geometry.x, -92.823)
         self.assertEqual(len(self.fp.points), 1)
 
 class TestZeissExceptionValue(unittest.TestCase):

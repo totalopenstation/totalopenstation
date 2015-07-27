@@ -19,7 +19,7 @@
 # along with Total Open Station.  If not, see
 # <http://www.gnu.org/licenses/>.
 
-from . import Parser, Point
+from . import Feature, Parser, Point
 
 
 class FormatParser(Parser):
@@ -82,5 +82,6 @@ class FormatParser(Parser):
         # wrong values(the inverted ones)but directly the right ones!
 
         p = Point(y, x, z)
+        f = Feature(geometry=p, id=point_id, desc=text)
 
-        return p
+        return f
