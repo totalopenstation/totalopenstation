@@ -68,3 +68,20 @@ A *built distribution* is made using (e.g. for Windows installer)::
 We are currently following the `Python Packaging User Guide
 <https://packaging.python.org/en/latest/distributing.html>`_ and
 distributing sources and *wheels*.
+
+Windows portable app
+====================
+
+A portable Windows app is built with PyInstaller:
+
+1. follow the instructions for `installing PyInstaller on Windows`_ (including
+   PyWin32, pip-Win and creating a virtual environment)
+2. in the virtual environment, cd into the root directory of the
+   totalopenstation source code and ``pip install .`` to install the current
+   version of totalopenstation
+3. run ``pyinstaller totalopenstation-gui.spec``
+4. this will create the file ``dist/totalopenstation.exe``, a portable
+   single-file executable that will run from any compatible Windows system,
+   even from USB sticks
+
+.. _`installing PyInstaller on Windows`: https://htmlpreview.github.io/?https://github.com/pyinstaller/pyinstaller/blob/develop/doc/Manual.html#installing-in-windows
