@@ -19,11 +19,18 @@
 # <http://www.gnu.org/licenses/>.
 
 from . import Feature, Parser, Point
-from polar import BasePoint, PolarPoint
+from .polar import BasePoint, PolarPoint
+
+# Distance units depend of the last digit
+# 0, 6 and 8 are in mm, 1/10mm and 1/100mm
+# 1 and 7 are in ft and 1/10000ft converted in m
+UNITS = {"angle": {'21', '22', '25'},
+         "distance": {'31', '32', '33', '81', '84', '87', '88'},
+         "2": "gon", "3": "deg", "4": "dms", "5": "mil",
+         "0": 1000, "1": 1000 / 3.28084, "6": 10000, "7": 10000 / 3.28084, "8": 100000}
 
 
 class FormatParser(Parser):
-
     def is_point(self, line):
 
         # apparently GSI files are very "clean", and all lines contain data
@@ -43,7 +50,7 @@ class FormatParser(Parser):
                 'info': t[2:6],
                 'sign': t[6],
                 'data': t[7:],
-                }
+            }
             tdict[data['wordindex']] = data
 
         try:
@@ -57,12 +64,15 @@ class FormatParser(Parser):
             z = tdict['83']['sign'] + tdict['83']['data']
         except KeyError:
             try:
-                #angle_type = tdict['21']['info']
-                angle = float(tdict['21']['sign'] + tdict['21']['data'])/100000
-                z_angle = float(tdict['22']['sign'] + tdict['22']['data'])/100000
-                dist = float(tdict['31']['sign'] + tdict['31']['data'])/1000
-                th = float(tdict['87']['sign'] + tdict['87']['data'])/1000
-                ih = float(tdict['88']['sign'] + tdict['88']['data'])/1000
+                angle_type = list(UNITS['angle'] & set(tdict.keys()))[0]
+                angle_type = UNITS[tdict[angle_type]['info'][3]]
+                angle = float(tdict['21']['sign'] + tdict['21']['data']) / 100000
+                z_angle = float(tdict['22']['sign'] + tdict['22']['data']) / 100000
+                dist_type = list(UNITS['distance'] & set(tdict.keys()))[0]
+                dist_type = UNITS[tdict[dist_type]['info'][3]]
+                dist = float(tdict['31']['sign'] + tdict['31']['data']) / dist_type
+                th = float(tdict['87']['sign'] + tdict['87']['data']) / dist_type
+                ih = float(tdict['88']['sign'] + tdict['88']['data']) / dist_type
             except KeyError:
                 return None
             else:
@@ -71,7 +81,7 @@ class FormatParser(Parser):
                                angle=angle,
                                z_angle=z_angle,
                                th=th,
-                               angle_type='deg',
+                               angle_type=angle_type,
                                base_point=bp,
                                pid=pid,
                                text=text,
@@ -82,7 +92,9 @@ class FormatParser(Parser):
                             id=pid)
                 return f
         else:
-            x, y, z = [float(c)/1000 for c in (x, y, z)]
+            dist_type = list(UNITS['distance'] & set(tdict.keys()))[0]
+            dist_type = UNITS[tdict[dist_type]['info'][3]]
+            x, y, z = [float(c) / dist_type for c in (x, y, z)]
             p = Point(x, y, z)
             f = Feature(geometry=p, desc=text, id=pid)
             return f
