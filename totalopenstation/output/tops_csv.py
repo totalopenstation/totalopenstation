@@ -20,7 +20,10 @@
 # <http://www.gnu.org/licenses/>.
 
 import csv
-import cStringIO
+try:
+    from cStringIO import StringIO
+except ImportError:
+    from io import StringIO
 
 
 class OutputFormat:
@@ -37,7 +40,7 @@ class OutputFormat:
 
     def __init__(self, data):
         self.data = data
-        self.output = cStringIO.StringIO()
+        self.output = StringIO()
         self.writer = csv.writer(self.output, quoting=csv.QUOTE_NONNUMERIC)
 
     def process(self):

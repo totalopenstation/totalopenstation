@@ -83,6 +83,11 @@ class PolarPoint:
         elif angle_type == 'dms':
             self.angle = radians(dms_to_deg(angle))
             self.z_angle = radians(dms_to_deg(z_angle))
+        elif angle_type == "mil":
+            angle = float(angle)
+            z_angle = float(z_angle)
+            self.angle = radians(angle * 0.05625)
+            self.z_angle = radians(z_angle * 0.05625)
         self.pid = pid
         self.text = text
         if any((coordorder == v for v in PolarPoint.COORDINATE_ORDER)):
