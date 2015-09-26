@@ -69,10 +69,11 @@ class FormatParser(Parser):
                 angle_units = UNITS[tdict[angle_code]['info'][3]]
                 if angle_units == "dms":
                     # angle should be a string for polar.py
-                    angle = tdict['21']['data']
-                    angle = tdict['21']['sign'] + angle[:len(angle)-5] + "." + angle[len(angle)-5:]
-                    z_angle = tdict['22']['data']
-                    z_angle = tdict['22']['sign'] + z_angle[:len(z_angle)-5] + "." + z_angle[len(z_angle)-5:]
+                    angle_data = tdict['21']['data']
+                    angle = tdict['21']['sign'] + angle_data[:len(angle_data)-5] + "." + angle_data[len(angle_data)-5:]
+                    z_angle_data = tdict['22']['data']
+                    z_angle = tdict['22']['sign'] + z_angle_data[:len(z_angle_data)-5] + "." + \
+                              z_angle_data[len(z_angle_data)-5:]
                 elif angle_units == "mil":
                     angle = float(tdict['21']['sign'] + tdict['21']['data'])/10000
                     z_angle = float(tdict['22']['sign'] + tdict['22']['data'])/10000
