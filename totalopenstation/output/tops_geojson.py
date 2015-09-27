@@ -18,7 +18,7 @@
 # along with Total Open Station.  If not, see
 # <http://www.gnu.org/licenses/>.
 
-import geojson
+import json
 
 
 def output_geojson(data):
@@ -37,7 +37,7 @@ def output_geojson(data):
     return geojson.dumps(fc)
 
 
-class TotalOpenGEOJSON:
+class OutputFormat:
     '''A GeoJSON output driver.
 
     Depends on the geojson package http://pypi.python.org/pypi/geojson/
@@ -53,4 +53,4 @@ class TotalOpenGEOJSON:
 
     def process(self):
 
-        return output_geojson(self.data)
+        return json.dumps(self.data.__geo_interface__)

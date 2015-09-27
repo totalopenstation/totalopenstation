@@ -49,6 +49,9 @@ class Feature:
         'properties': properties,
         'id': self.id}
 
+class FeatureCollection(geometry.FeatureCollection):
+    pass
+
 
 class Parser:
     '''Parses a *single* string of raw data.
