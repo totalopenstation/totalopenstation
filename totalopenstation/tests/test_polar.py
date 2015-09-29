@@ -31,8 +31,14 @@ class TestPolar(unittest.TestCase):
                              coordorder='NEZ')
 
         self.p2 = PolarPoint(dist=13.825,
-                             angle='35.45100',
-                             z_angle='91.17510',
+                             angle={"D": '+35',
+                                    "M": '45',
+                                    "S": '10',
+                                    "milliseconds": '0'},
+                             z_angle={"D": '+91',
+                                      "M": '17',
+                                      "S": '51',
+                                      "milliseconds": '0'},
                              th=1.300,
                              angle_type='dms',
                              base_point=self.bp1,

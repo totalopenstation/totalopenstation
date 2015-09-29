@@ -46,9 +46,8 @@ def polar_to_cartesian(base_x, base_y, base_z, dist, angle, z_angle, ih, th):
 def dms_to_deg(angle):
     '''Convert degrees in DDD.MMSS format to decimal format.'''
 
-    angle_d, angle_ms = angle.split('.')
-    angle_m, angle_s, angle_mls = angle_ms[:2], angle_ms[2:4], angle_ms[4:]
-    angle = float(angle_d) + float(angle_m) / 60 + float(angle_s) / 3600 + float(angle_mls) / 1000 / 3600
+    angle = float(angle["D"]) + float(angle["M"]) / 60 + float(angle["S"]) / 3600 + \
+            float(angle["milliseconds"]) / 1000 / 3600
     return angle
 
 
