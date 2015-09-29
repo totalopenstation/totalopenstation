@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 # filename: polar.py
 # Copyright 2010, 2014 Stefano Costa <steko@iosa.it>
+# Copyright 2015 Damien Gaignon <damien.gaignon@gmail.com>
 
 # This file is part of Total Open Station.
 

@@ -5,7 +5,7 @@
 .. module:: leica_gsi
     :platform: any
     :synopsis: Read data in the GSI8 and GSI16 formats
-.. moduleauthor:: Stefano Costa
+.. moduleauthor:: Stefano Costa, Damien Gaignon
 .. versionadded:: 0.4
 
 GSI is a very popular data format, used by many Leica total stations. It is
@@ -30,8 +30,6 @@ Support for raw measurements is still incomplete, namely it lacks support for
 base station points, except in some specific cases when the base point
 coordinates are directly associated with each measurement.
 
-Measurement units (both for distances and angles) are not supported yet.
-
 Acknowledgements
 ================
 
@@ -41,5 +39,5 @@ on the SurveyTools QGIS plugin developed by Stefan Ziegler.
 
 .. seealso::
 
-   `GSI Online for Leica TPS <http://www.leica-geosystems.com/media/new/product_solution/gsi_manual.pdf>`_ 
+   `GSI Online for Leica TPS <http://www.leica-geosystems.com/media/new/product_solution/gsi_manual.pdf>`_
       Documentation for GSI from Leica.
