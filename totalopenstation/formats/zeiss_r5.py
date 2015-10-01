@@ -70,7 +70,7 @@ class FormatParser:
                         except KeyError:
                             continue
                     finally:
-                        feature = Feature(geometry=point,
+                        feature = Feature(point,
                                           desc=rec['desc'],
                                           id=rec['id'])
                         points.append(feature)

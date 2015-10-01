@@ -82,6 +82,6 @@ class FormatParser(Parser):
         # wrong values(the inverted ones)but directly the right ones!
 
         p = Point(y, x, z)
-        f = Feature(geometry=p, id=point_id, desc=text)
+        f = Feature(p, id=point_id, desc=text)
 
         return f

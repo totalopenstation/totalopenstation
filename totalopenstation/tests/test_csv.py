@@ -7,10 +7,10 @@ class TestCSVOutput(unittest.TestCase):
 
     def setUp(self):
         self.data = [
-            Feature(geometry=Point(12.8, 76.3, 56.2),
+            Feature(Point(12.8, 76.3, 56.2),
                     desc='TEST POINT',
                     id=1),
-            Feature(geometry=Point(19.8, 26.3, 46.2),
+            Feature(Point(19.8, 26.3, 46.2),
                     desc='TEST POINT #2',
                     id=2),
         ]
