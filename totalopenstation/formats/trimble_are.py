@@ -54,7 +54,7 @@ class FormatParser(Parser):
             p = Point(tokens['y'],
                       tokens['x'],
                       tokens['z'])
-            f = Feature(geometry=p,
+            f = Feature(p,
                         desc=tokens['p'],
                         id=tokens['n'])
         except KeyError:

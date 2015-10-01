@@ -85,7 +85,7 @@ class FormatParser:
                                text=desc,
                                coordorder='NEZ')
                 point = p.to_point()
-                feature = Feature(geometry=point,
+                feature = Feature(point,
                                   desc=desc,
                                   id=pid)
                 points.append(feature)

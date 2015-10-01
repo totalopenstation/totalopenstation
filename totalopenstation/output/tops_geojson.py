@@ -31,7 +31,7 @@ def output_geojson(data):
         x, y, z = [float(c) for c in x, y, z]
         p = geojson.Point([x, y, z])
         prop = dict(text=text)
-        f = geojson.Feature(id=pid, geometry=p, properties=prop)
+        f = geojson.Feature(id=pid, geom=p, properties=prop)
         fs.append(f)
     fc = geojson.FeatureCollection(fs)
     return geojson.dumps(fc)

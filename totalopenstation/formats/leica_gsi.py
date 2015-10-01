@@ -98,7 +98,7 @@ class FormatParser(Parser):
                                text=text,
                                coordorder='NEZ'
                                )
-                f = Feature(geometry=p.to_point(),
+                f = Feature(p.to_point(),
                             desc=text,
                             id=pid)
                 return f
@@ -107,5 +107,5 @@ class FormatParser(Parser):
             dist_units = UNITS[tdict[dist_code]['info'][3]]
             x, y, z = [float(c)/dist_units for c in (x, y, z)]
             p = Point(x, y, z)
-            f = Feature(geometry=p, desc=text, id=pid)
+            f = Feature(p, desc=text, id=pid)
             return f

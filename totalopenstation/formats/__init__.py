@@ -19,37 +19,30 @@
 # along with Total Open Station.  If not, see
 # <http://www.gnu.org/licenses/>.
 
-from pygeoif import geometry
+from pygeoif import geometry as g
 
 
-class Point(geometry.Point):
+class Point(g.Point):
     pass
 
 
-class LineString(geometry.LineString):
+class LineString(g.LineString):
     pass
 
 
-class Feature:
+class Feature(g.Feature):
     '''A GeoJSON-like Feature object.'''
 
-    def __init__(self, geometry, desc, id=None, **properties):
-        self.geometry = geometry # do more extensive validation
-        self.desc = desc
-        self.id = id
-        self.properties = properties
+    def __init__(self, geom, desc, id=None, **properties):
+        g.Feature.__init__(self, geom, properties, feature_id=id)
+        self.properties['desc'] = desc
 
     @property
-    def __geo_interface__(self):
-        properties = self.properties
-        properties['desc'] = self.desc
-        return {
-        'type': 'Feature',
-        'geometry': self.geometry.__geo_interface__,
-        'properties': properties,
-        'id': self.id}
+    def desc(self):
+        return self.properties['desc']
 
-class FeatureCollection(geometry.FeatureCollection):
+
+class FeatureCollection(g.FeatureCollection):
     pass
 
 

@@ -44,5 +44,5 @@ class FormatParser(Parser):
             desc = line[63:70].strip()
 
         point = Point(x, y, z)
-        feature = Feature(geometry=point, desc=desc, id=id)
+        feature = Feature(point, desc=desc, id=id)
         return feature
