@@ -69,12 +69,28 @@ class FormatParser(Parser):
                 angle_code = list(UNITS['angle'] & set(tdict.keys()))[0]
                 angle_units = UNITS[tdict[angle_code]['info'][3]]
                 if angle_units == "dms":
-                    # angle should be a string for polar.py
                     angle_data = tdict['21']['data']
-                    angle = tdict['21']['sign'] + angle_data[:len(angle_data)-5] + "." + angle_data[len(angle_data)-5:]
+                    if len(angle_data) == 8:
+                        angle = {"D": tdict['21']['sign'] + angle_data[:3],
+                                 "M": angle_data[3:5],
+                                 "S": angle_data[5:7],
+                                 "milliseconds": angle_data[7:]}
+                    else:
+                        angle = {"D": tdict['21']['sign'] + angle_data[:11],
+                                 "M": angle_data[11:13],
+                                 "S": angle_data[13:15],
+                                 "milliseconds": angle_data[15:]}
                     z_angle_data = tdict['22']['data']
-                    z_angle = tdict['22']['sign'] + z_angle_data[:len(z_angle_data)-5] + "." + \
-                              z_angle_data[len(z_angle_data)-5:]
+                    if len(z_angle_data) == 8:
+                        z_angle = {"D": tdict['21']['sign'] + z_angle_data[:3],
+                                   "M": z_angle_data[3:5],
+                                   "S": z_angle_data[5:7],
+                                   "milliseconds": z_angle_data[7:]}
+                    else:
+                        z_angle = {"D": tdict['21']['sign'] + z_angle_data[:11],
+                                   "M": z_angle_data[11:13],
+                                   "S": z_angle_data[13:15],
+                                   "milliseconds": z_angle_data[15:]}
                 elif angle_units == "mil":
                     angle = float(tdict['21']['sign'] + tdict['21']['data'])/10000
                     z_angle = float(tdict['22']['sign'] + tdict['22']['data'])/10000
