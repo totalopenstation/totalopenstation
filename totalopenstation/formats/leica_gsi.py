@@ -43,6 +43,7 @@ class FormatParser(Parser):
     def _points(self):
         points = []
         bp = None
+        ldata = len(self.line[0].split()[0].lstrip('*')[7:])
         for line in self.line:
             tokens = line.split()
             tdict = {}
@@ -71,28 +72,15 @@ class FormatParser(Parser):
                         angle_code = list(UNITS['angle'] & set(tdict.keys()))[0]
                         angle_units = UNITS[tdict[angle_code]['info'][3]]
                         if angle_units == "dms":
-                            angle_data = tdict['21']['data']
-                            if len(angle_data) == 8:
-                                angle = {"D": tdict['21']['sign'] + angle_data[:3],
-                                         "M": angle_data[3:5],
-                                         "S": angle_data[5:7],
-                                         "milliseconds": angle_data[7:]}
-                            else:
-                                angle = {"D": tdict['21']['sign'] + angle_data[:11],
-                                         "M": angle_data[11:13],
-                                         "S": angle_data[13:15],
-                                         "milliseconds": angle_data[15:]}
-                            z_angle_data = tdict['22']['data']
-                            if len(z_angle_data) == 8:
-                                z_angle = {"D": tdict['21']['sign'] + z_angle_data[:3],
-                                           "M": z_angle_data[3:5],
-                                           "S": z_angle_data[5:7],
-                                           "milliseconds": z_angle_data[7:]}
-                            else:
-                                z_angle = {"D": tdict['21']['sign'] + z_angle_data[:11],
-                                           "M": z_angle_data[11:13],
-                                           "S": z_angle_data[13:15],
-                                           "milliseconds": z_angle_data[15:]}
+                            angle_data, z_angle_data = tdict['21']['data'], tdict['22']['data']
+                            angle = {"D": tdict['21']['sign'] + angle_data[:ldata-5],
+                                     "M": angle_data[ldata-5:ldata-3],
+                                     "S": angle_data[ldata-3:ldata-1],
+                                     "milliseconds": angle_data[ldata-1:]}
+                            z_angle = {"D": tdict['22']['sign'] + z_angle_data[:ldata-5],
+                                     "M": z_angle_data[ldata-5:ldata-3],
+                                     "S": z_angle_data[ldata-3:ldata-1],
+                                     "milliseconds": z_angle_data[ldata-1:]}
                         elif angle_units == "mil":
                             angle = float(tdict['21']['sign'] + tdict['21']['data'])/10000
                             z_angle = float(tdict['22']['sign'] + tdict['22']['data'])/10000
