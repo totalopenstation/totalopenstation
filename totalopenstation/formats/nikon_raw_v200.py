@@ -18,7 +18,7 @@
 # along with Total Open Station.  If not, see
 # <http://www.gnu.org/licenses/>.
 
-from . import Feature
+from . import Feature, Point
 from .polar import BasePoint, PolarPoint
 
 
@@ -49,6 +49,11 @@ class FormatParser:
                 y = fs[7]
                 z = fs[5]
                 bp = BasePoint(x=x, y=y, z=z, ih=0)
+                p = Point(x, y, z)
+                f = Feature(p,
+                            desc='ST',
+                            id=fs[1])
+                points.append(f)
             if fs[0] == 'SS':
                 if angle_units == 'dms':
                     angle = {"D": fs[4].split('.')[0],
