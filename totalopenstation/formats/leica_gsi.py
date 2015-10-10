@@ -116,9 +116,9 @@ class FormatParser(Parser):
                         else:
                             bp = BasePoint(x=xst, y=yst, z=zst, ih=ih)
                             p = Point(xst, yst, zst)
-                            f = Feature(geometry=p,
-                                    desc='ST',
-                                    id=pid)
+                            f = Feature(p,
+                                        desc='ST',
+                                        id=pid)
                             points.append(f)
                     else:
                         if bp is None:
