@@ -54,3 +54,7 @@ docs/_build/
 # PyBuilder
 target/
 
+.spyderproject
+.spyderworkspace
+sample_data/test.txt
+totalopenstation.psp
