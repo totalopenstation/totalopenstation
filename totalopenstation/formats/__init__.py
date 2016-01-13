@@ -41,6 +41,10 @@ class Feature(g.Feature):
     def desc(self):
         return self.properties['desc']
 
+    @property
+    def point_name(self):
+        return self.properties['point_name']
+
 
 class FeatureCollection(g.FeatureCollection):
     pass
