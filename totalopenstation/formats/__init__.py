@@ -92,6 +92,9 @@ class Parser:
 
         return LineString(map(lambda f: f.geometry, self.points))
 
+    def raw_line(self):
+        pass
+
 
 BUILTIN_INPUT_FORMATS = {
     'carlson_rw5': ('carlson_rw5', 'FormatParser', 'Carlson RW5'),
