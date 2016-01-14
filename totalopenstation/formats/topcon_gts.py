@@ -24,6 +24,7 @@
 
 from . import Feature
 from polar import BasePoint, PolarPoint
+from totalopenstation.utils.conversion import deg_to_gon
 
 
 class FormatParser:
@@ -54,13 +55,12 @@ class FormatParser:
                 continue
             coordorder = 'NEZ'
             dist = float(fs[2].split('m')[0])
-            angle = float(fs[3][:-1]) / 10000
-            z_angle = float(fs[4][:-3]) / 10000
+            angle = deg_to_gon(float(fs[3][:-1]) / 10000)
+            z_angle = deg_to_gon(float(fs[4][:-3]) / 10000)
             p = PolarPoint(dist=dist,
                            angle=angle,
                            z_angle=z_angle,
                            th=th,
-                           angle_type='deg',
                            base_point=bp,
                            pid=pid,
                            text=text,

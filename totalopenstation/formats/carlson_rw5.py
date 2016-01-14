@@ -79,7 +79,6 @@ class FormatParser:
                                angle=angle,
                                z_angle=z_angle,
                                th=th,
-                               angle_type='gon',
                                base_point=bp,
                                pid=pid,
                                text=desc,

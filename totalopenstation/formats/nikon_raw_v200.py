@@ -20,6 +20,7 @@
 
 from . import Feature, Point
 from .polar import BasePoint, PolarPoint
+from totalopenstation.utils.conversion import dms_to_gon
 
 
 class FormatParser:
@@ -56,17 +57,17 @@ class FormatParser:
                 points.append(f)
             if fs[0] == 'SS':
                 if angle_units == 'dms':
-                    angle = {"D": fs[4].split('.')[0],
+                    angle = dms_to_gon({"D": fs[4].split('.')[0],
                              "M": fs[4].split('.')[1][:2],
                              "S": fs[4].split('.')[1][2:],
-                             "milliseconds": '0'}
-                    z_angle = {"D": fs[5].split('.')[0],
+                             "milliseconds": '0'})
+                    z_angle = dms_to_gon({"D": fs[5].split('.')[0],
                                "M": fs[5].split('.')[1][:2],
                                "S": fs[5].split('.')[1][2:],
-                               "milliseconds": '0'}
+                               "milliseconds": '0'})
                 else:
-                    angle = fs[4]
-                    z_angle = fs[5]
+                    angle = float(fs[4])
+                    z_angle = float(fs[5])
                 dist = fs[3]
                 th = fs[2]
                 pid = fs[1]
@@ -78,7 +79,6 @@ class FormatParser:
                                angle=angle,
                                z_angle=z_angle,
                                th=th,
-                               angle_type=angle_units,
                                base_point=bp,
                                pid=pid,
                                text=text,

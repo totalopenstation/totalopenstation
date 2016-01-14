@@ -22,6 +22,7 @@
 from math import cos, sin, radians
 
 from . import Feature, Point
+from totalopenstation.utils.conversion import gon_to_rad
 
 
 def polar_to_cartesian(base_x, base_y, base_z, dist, angle, z_angle, ih, th):
@@ -44,16 +45,10 @@ def polar_to_cartesian(base_x, base_y, base_z, dist, angle, z_angle, ih, th):
     return dict(x=target_x, y=target_y, z=target_z)
 
 
-def dms_to_deg(angle):
-    '''Convert degrees in DDD.MMSS format to decimal format.'''
-
-    angle = float(angle["D"]) + float(angle["M"]) / 60 + float(angle["S"]) / 3600 + \
-            float(angle["milliseconds"]) / 1000 / 3600
-    return angle
-
-
 class PolarPoint:
-    '''A point geometry defined by polar coordinates.'''
+    '''A point geometry defined by polar coordinates.
+
+    Angles are in Gon'''
 
     COORDINATE_ORDER = ('NEZ', 'ENZ')
 
@@ -62,32 +57,14 @@ class PolarPoint:
                  angle,               # horizontal angle
                  z_angle,             # vertical angle
                  th,                  # target height
-                 angle_type,          # degrees or gons
                  base_point,          # BasePoint object
                  pid,                 # point ID
                  text,                # point description
                  coordorder):   # cartesian coordinates order (NEZ, ENZ)
         self.dist = float(dist)
         self.th = float(th)
-        self.angle_type = angle_type
-        if angle_type == 'deg':
-            angle = float(angle)
-            z_angle = float(z_angle)
-            self.angle = radians(angle)
-            self.z_angle = radians(z_angle)
-        elif angle_type == 'gon':
-            angle = float(angle)
-            z_angle = float(z_angle)
-            self.angle = radians(angle * 0.9)
-            self.z_angle = radians(z_angle * 0.9)
-        elif angle_type == 'dms':
-            self.angle = radians(dms_to_deg(angle))
-            self.z_angle = radians(dms_to_deg(z_angle))
-        elif angle_type == "mil":
-            angle = float(angle)
-            z_angle = float(z_angle)
-            self.angle = radians(angle * 0.05625)
-            self.z_angle = radians(z_angle * 0.05625)
+        self.angle = gon_to_rad(angle)
+        self.z_angle = gon_to_rad(z_angle)
         self.pid = pid
         self.text = text
         if any((coordorder == v for v in PolarPoint.COORDINATE_ORDER)):

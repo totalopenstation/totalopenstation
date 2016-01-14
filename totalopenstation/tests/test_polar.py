@@ -2,6 +2,7 @@ import unittest
 
 from totalopenstation.formats import Point
 from totalopenstation.formats.polar import BasePoint, PolarPoint
+from totalopenstation.utils.conversion import deg_to_gon, dms_to_gon
 
 
 class TestPolar(unittest.TestCase):
@@ -11,10 +12,9 @@ class TestPolar(unittest.TestCase):
         self.bp1 = BasePoint(x='0', y='0', z='0', ih='1.324')
 
         self.p0 = PolarPoint(dist=9,
-                             angle=180,
-                             z_angle=90,
+                             angle=deg_to_gon(180),
+                             z_angle=deg_to_gon(90),
                              th=0,
-                             angle_type='deg',
                              base_point=self.bp0,
                              pid=1,
                              text='Test Point',
@@ -24,23 +24,21 @@ class TestPolar(unittest.TestCase):
                              angle=34.120,
                              z_angle=100,
                              th=1.500,
-                             angle_type='gon',
                              base_point=self.bp0,
                              pid=2,
                              text='Real Point',
                              coordorder='NEZ')
 
         self.p2 = PolarPoint(dist=13.825,
-                             angle={"D": '+35',
+                             angle=dms_to_gon({"D": '+35',
                                     "M": '45',
                                     "S": '10',
-                                    "milliseconds": '0'},
-                             z_angle={"D": '+91',
+                                    "milliseconds": '0'}),
+                             z_angle=dms_to_gon({"D": '+91',
                                       "M": '17',
                                       "S": '51',
-                                      "milliseconds": '0'},
+                                      "milliseconds": '0'}),
                              th=1.300,
-                             angle_type='dms',
                              base_point=self.bp1,
                              pid=3,
                              text='Real Point',
