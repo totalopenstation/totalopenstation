@@ -127,7 +127,6 @@ class FormatParser(Parser):
                                        angle=angle,
                                        z_angle=z_angle,
                                        th=th,
-                                       angle_type=angle_units,
                                        base_point=bp,
                                        pid=pid,
                                        text=text,
