@@ -300,12 +300,12 @@ class Survey:
                                label="attrib%s" % (i + 1),
                                value=str(kwargs["attrib"][i]))
 
-        return xml.tostring(self.survey)
+
     def to_string(self):
         """
         :return:
         """
-
+        return xml.tostring(self.survey)
 
 class Structure:
     """
