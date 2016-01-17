@@ -24,6 +24,7 @@ import xml.etree.ElementTree as xml
 # Template file
 TEMPLATE = "../data/template.xml"
 
+
 class Survey:
     """
     Populate the survey tag of LandXML.
@@ -38,22 +39,22 @@ class Survey:
         - ObservationGroupX
 
     """
+
     def __init__(self):
         """
         Initialize the Survey header tag
         """
         self.survey = xml.Element("Survey")
-        #survey_header
         xml.SubElement(self.survey, "SurveyHeader",
                        name="from TOPS")
         self.id = 0
 
     def _tag_position(self, tag):
         tags = ("SurveyHeader", "Equipment", "CgPoints", "InstrumentSetup")
-        pos= 0
+        pos = 0
 
         for index in range(tags.index(tag)):
-            if self.survey.find("./%s" % tags[index]) != None:
+            if self.survey.find("./%s" % tags[index]) is not None:
                 pos += 1
             else:
                 pos = 1
@@ -63,7 +64,7 @@ class Survey:
 
         return pos
 
-    def Equipment(self, **kwargs):
+    def equipment(self, **kwargs):
         """
         Populate the Equipment tag.
 
@@ -77,10 +78,10 @@ class Survey:
         pos = self._tag_position('Equipment')
 
         # Creation of Equipment tag, subelement of Survey
-        equipment= xml.Element("Equipment")
-        self.survey.insert(pos,  equipment)
+        equipment = xml.Element("Equipment")
+        self.survey.insert(pos, equipment)
 
-    def CgPoint(self, **kwargs):
+    def cg_point(self, **kwargs):
         """
         Populate the CgPoints and CgPoint tags.
 
@@ -101,13 +102,13 @@ class Survey:
 
         # Creation of CgPoints tag, subelement of Survey if it does not exist
         cgpoints = self.survey.find("./CgPoints")
-        if cgpoints == None:
+        if cgpoints is None:
             cgpoints = xml.Element("CgPoints")
-            self.survey.insert(pos,  cgpoints)
+            self.survey.insert(pos, cgpoints)
 
         # Creation of CgPoint tag, subelement of CgPoints
         cgpoint = xml.SubElement(cgpoints, "CgPoint")
-         # Fill of CgPoint attributs
+        # Fill of CgPoint attributes
         if "point_name" in kwargs:
             cgpoint.set("name", str(kwargs["point_name"]))
         if "pid" in kwargs:
@@ -118,7 +119,7 @@ class Survey:
                                          str(kwargs["z"]))
         # attrib is not mandatory in CgPoints so this is a feature
         if "attrib" in kwargs:
-            if cgpoints.find("./Feature") == None:
+            if cgpoints.find("./Feature") is None:
                 feature = xml.SubElement(cgpoints, "Feature")
             feature = cgpoints.find("./Feature")
             # feature_property
@@ -127,7 +128,7 @@ class Survey:
                                label="attrib%s" % (i + 1),
                                value=str(kwargs["attrib"][i]))
 
-    def Setup(self, **kwargs):
+    def setup(self, **kwargs):
         """
         Populate the InstrumentSetup and ObservationGroup tags.
 
@@ -161,7 +162,7 @@ class Survey:
                                        id="setup" + str(self.id),
                                        stationName="",
                                        instrumentHeight="")
-        # Fill of InstrumentSetup attributs
+        # Fill of InstrumentSetup attributes
         if "point_name" in kwargs:
             instrument_setup.set("stationName", str(kwargs["point_name"]))
         if "ih" in kwargs:
@@ -170,7 +171,7 @@ class Survey:
             instrument_setup.set("orientationAzimuth", str(kwargs["hz0"]))
         # attrib is not mandatory in InstrumentSetup so this is a feature
         if "attrib" in kwargs:
-            if instrument_setup.find("./Feature") == None:
+            if instrument_setup.find("./Feature") is None:
                 feature = xml.SubElement(instrument_setup, "Feature")
             # feature_property
             for i in range(len(kwargs["attrib"])):
@@ -180,7 +181,7 @@ class Survey:
 
         # Creation of InstrumentPoint tag, subelement of InstrumentSetup
         instrument_point = xml.SubElement(instrument_setup, "InstrumentPoint")
-        # Fill of InstrumentPoint attributs
+        # Fill of InstrumentPoint attributes
         if "pid" in kwargs:
             instrument_point.set("pntRef", str(kwargs["pid"]))
         if "instru_x" in kwargs:
@@ -204,7 +205,7 @@ class Survey:
             if "back_x" in kwargs:
                 # Creation of BacksightPoint tag, subelement of Backsight
                 backsight_point = xml.SubElement(backsight, "BacksightPoint")
-                # Fill of BacksightPoint attributs
+                # Fill of BacksightPoint attributes
                 if "back_name" in kwargs:
                     backsight_point.set("name", str(kwargs["back_name"]))
                 if "back_x" in kwargs:
@@ -218,7 +219,7 @@ class Survey:
         # ID can be raise
         self.id += 1
 
-    def RawObservation(self, **kwargs):
+    def raw_observation(self, **kwargs):
         """
         Populate the RawObservation tag.
 
@@ -243,25 +244,25 @@ class Survey:
 
         # kwargs = {key: str(value) if value != None else value for key,value in kwargs.items()}
         # When creating a RawObservation tag, it should verified that an ObservationGroup tag exists
-        if self.survey.find("./ObservationGroup[@id='o0']") == None:
+        if self.survey.find("./ObservationGroup[@id='o0']") is None:
             self.Setup()
         observation_group = self.survey.find("./ObservationGroup[@id='o%s']" % str(self.id - 1))
         # Creation of RawObservation tag, subelement of ObservationGroup
         raw_observation = xml.SubElement(observation_group, "RawObservation")
-        # Fill of RawObservation attributs
+        # Fill of RawObservation attributes
         if "th" in kwargs:
             raw_observation.set("targetHeight", str(kwargs["th"]))
         if "angle" in kwargs:
             raw_observation.set("horizAngle", str(kwargs["angle"]))
         if "z_angle" in kwargs:
             raw_observation.set("zenithAngle", str(kwargs["z_angle"]))
-        if "slope_dist" in kwargs and kwargs["slope_dist"] != None:
+        if "slope_dist" in kwargs and kwargs["slope_dist"] is not None:
             raw_observation.set("slopeDistance", str(kwargs["slope_dist"]))
-        if "horizontal_dist" in kwargs and kwargs["horizontal_dist"] != None:
+        if "horizontal_dist" in kwargs and kwargs["horizontal_dist"] is not None:
             raw_observation.set("horizDistance", str(kwargs["horizontal_dist"]))
         # Creation of TargetPoint tag, subelement of RawObservation
         target_point = xml.SubElement(raw_observation, "TargetPoint")
-        # Fill of TargetPoint attributs
+        # Fill of TargetPoint attributes
         if "point_name" in kwargs:
             target_point.set("desc", str(kwargs["point_name"]))
         if "pid" in kwargs:
@@ -271,16 +272,16 @@ class Survey:
                                               str(kwargs["y"]),
                                               str(kwargs["z"]))
         # targetHeight is not mandatory in RawObservation so this is a feature
-        if "ih" in kwargs and kwargs["ih"] != None:
-            if raw_observation.find("./Feature") == None:
+        if "ih" in kwargs and kwargs["ih"] is not None:
+            if raw_observation.find("./Feature") is None:
                 feature = xml.SubElement(raw_observation, "Feature")
             # feature_property
             xml.SubElement(feature, "Property",
                            label="instrumentHeight",
                            value=str(kwargs["ih"]))
         # ppm or prism_constant are not mandatory in RawObservation so this is a feature
-        if "ppm" in kwargs and kwargs["ppm"] != None:
-            if raw_observation.find("./Feature") == None:
+        if "ppm" in kwargs and kwargs["ppm"] is not None:
+            if raw_observation.find("./Feature") is None:
                 feature = xml.SubElement(raw_observation, "Feature")
             # feature_property
             xml.SubElement(feature, "Property",
@@ -291,7 +292,7 @@ class Survey:
                            value=str(kwargs["prism_constant"]))
         # attrib is not mandatory in RawObservation so this is a feature
         if "attrib" in kwargs:
-            if raw_observation.find("./Feature") == None:
+            if raw_observation.find("./Feature") is None:
                 feature = xml.SubElement(raw_observation, "Feature")
             # feature_property
             for i in range(len(kwargs["attrib"])):
@@ -299,8 +300,11 @@ class Survey:
                                label="attrib%s" % (i + 1),
                                value=str(kwargs["attrib"][i]))
 
-    def ToStr(self):
         return xml.tostring(self.survey)
+    def to_string(self):
+        """
+        :return:
+        """
 
 
 class Structure:

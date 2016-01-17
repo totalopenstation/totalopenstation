@@ -22,7 +22,7 @@
 from . import Feature, Parser, Point
 from .polar import BasePoint, PolarPoint
 from totalopenstation.utils.conversion import dms_to_gon, deg_to_gon, \
-                                                mil_to_gon, horizontal_to_slope
+    mil_to_gon, horizontal_to_slope
 from totalopenstation.formats.landxml import Survey
 
 # Distance units depend of the last digit
@@ -36,11 +36,13 @@ UNITS = {"angle": {'21', '22', '25'},
 
 
 class FormatParser(Parser):
-    '''A FormatParser for Leica GSI data format.
+    """
+    A FormatParser for Leica GSI data format.
 
     It doesn't inherit from the base Parser class because the internal
     procedure is quite different, but it implements the same API so it
-    can work nicely with other parts of the library.'''
+    can work nicely with other parts of the library.
+    """
 
     def __init__(self, data):
         self.line = data.splitlines()
@@ -86,9 +88,9 @@ class FormatParser(Parser):
             y = None
             z = None
         else:
-            x = float(x_sign + x_data)/units
-            y = float(y_sign + y_data)/units
-            z = float(z_sign + z_data)/units
+            x = float(x_sign + x_data) / units
+            y = float(y_sign + y_data) / units
+            z = float(z_sign + z_data) / units
 
         return x, y, z
 
@@ -102,16 +104,16 @@ class FormatParser(Parser):
             angle = None
         else:
             if units == "dms":
-                angle = dms_to_gon({"D": angle_sign + angle_data[:ldata-5],
-                         "M": angle_data[ldata-5:ldata-3],
-                         "S": angle_data[ldata-3:ldata-1],
-                         "milliseconds": angle_data[ldata-1:]})
+                angle = dms_to_gon({"D": angle_sign + angle_data[:ldata - 5],
+                                    "M": angle_data[ldata - 5:ldata - 3],
+                                    "S": angle_data[ldata - 3:ldata - 1],
+                                    "milliseconds": angle_data[ldata - 1:]})
             elif units == "mil":
-                angle = mil_to_gon(float(angle_sign + angle_data)/10000)
+                angle = mil_to_gon(float(angle_sign + angle_data) / 10000)
             elif units == "deg":
-                angle = deg_to_gon(float(angle_sign + angle_data)/100000)
+                angle = deg_to_gon(float(angle_sign + angle_data) / 100000)
             else:
-                angle = float(angle_sign + angle_data)/100000
+                angle = float(angle_sign + angle_data) / 100000
 
         return angle
 
@@ -120,8 +122,8 @@ class FormatParser(Parser):
         Get the ppm and the prism constant of the parsed line
         """
         try:
-            ppm_sign, ppm_data = self.tdict['51']['sign'], self.tdict['51']['data'][:ldata-4]
-            pc_sign, pc_data = self.tdict['51']['data'][ldata-4], self.tdict['51']['data'][ldata-3:]
+            ppm_sign, ppm_data = self.tdict['51']['sign'], self.tdict['51']['data'][:ldata - 4]
+            pc_sign, pc_data = self.tdict['51']['data'][ldata - 4], self.tdict['51']['data'][ldata - 3:]
         except KeyError:
             try:
                 ppm_sign, ppm_data = self.tdict['59']['sign'], self.tdict['59']['data']
@@ -130,9 +132,9 @@ class FormatParser(Parser):
                 ppm = None
                 prism_constant = None
         if ppm_sign:
-            ppm = float(ppm_sign + ppm_data)/10
+            ppm = float(ppm_sign + ppm_data) / 10
         if pc_sign:
-            prism_constant = float(pc_sign + pc_data)/10000
+            prism_constant = float(pc_sign + pc_data) / 10000
 
         return ppm, prism_constant
 
@@ -145,12 +147,12 @@ class FormatParser(Parser):
         except KeyError:
             value = None
         else:
-            value = float(value_sign + value_data)/units
+            value = float(value_sign + value_data) / units
 
         return value
 
     def _points(self):
-        survey=Survey()
+        survey = Survey()
 
         bp = None
         ldata = len(self.line[0].split()[0].lstrip('*')[7:])
@@ -164,7 +166,7 @@ class FormatParser(Parser):
                     'info': t[2:6],
                     'sign': t[6],
                     'data': t[7:],
-                    }
+                }
                 self.tdict[data['wordindex']] = data
 
             try:
@@ -197,10 +199,10 @@ class FormatParser(Parser):
                         except KeyError:
                             slope_dist = None
                         try:
-                            horizontal_dist =  self.tdict['32']
+                            horizontal_dist = self.tdict['32']
                         except KeyError:
                             horizontal_dist = None
-                        if horizontal_dist == None and slope_dist == None:
+                        if horizontal_dist is None and slope_dist is None:
                             raise KeyError
                         th = self.tdict['87']
                     except KeyError:
@@ -215,27 +217,27 @@ class FormatParser(Parser):
                             x, y, z = self._get_coordinates("84", UNITS[dist_units])
                             ih = self._get_value("88", UNITS[dist_units])
                             bp = BasePoint(x=x, y=y, z=z, ih=ih)
-                            survey.CgPoint(point_name=text,
-                                           pid=pid,
-                                           x=x,
-                                           y=y,
-                                           z=z,
-                                           attrib=["Station"])
+                            survey.cg_point(point_name=text,
+                                            pid=pid,
+                                            x=x,
+                                            y=y,
+                                            z=z,
+                                            attrib=["Station"])
                     else:
                         angle = self._get_angle("21", angle_units, ldata)
                         z_angle = self._get_angle("22", angle_units, ldata)
                         if slope_dist:
                             slope_dist = self._get_value("31", UNITS[dist_units])
                         if horizontal_dist:
-                             horizontal_dist = self._get_value("32", UNITS[dist_units])
-                             # Need to convert horizontal distance to slope distance
-                             slope_dist = horizontal_to_slope(horizontal_dist, z_angle)
+                            horizontal_dist = self._get_value("32", UNITS[dist_units])
+                            # Need to convert horizontal distance to slope distance
+                            slope_dist = horizontal_to_slope(horizontal_dist, z_angle)
                         th = self._get_value("87", UNITS[dist_units])
                         # Polar data may have point coordinates (not used)
                         x, y, z = self._get_coordinates("81", UNITS[dist_units])
                         # Polar data may have instrument height
                         ih = self._get_value("88", UNITS[dist_units])
-                        if ih == None:
+                        if ih is None:
                             ih = 0.0
                         if bp is None:
                             bp = BasePoint(x=0.0, y=0.0, z=0.0, ih=ih)
@@ -248,24 +250,25 @@ class FormatParser(Parser):
                                        text=text,
                                        coordorder='NEZ')
                         point = p.to_point()
-                        survey.CgPoint(point_name=text,
-                                       pid=pid,
-                                       x=point.x,
-                                       y=point.y,
-                                       z=point.z,
-                                       attrib=["Point"])
+                        survey.cg_point(point_name=text,
+                                        pid=pid,
+                                        x=point.x,
+                                        y=point.y,
+                                        z=point.z,
+                                        attrib=["Point"])
                 else:
-                    x, y, z = self._get_coordinates("81",UNITS[dist_units])
-                    survey.CgPoint(point_name=text,
-                                   pid=pid,
-                                   x=x,
-                                   y=y,
-                                   z=z,
-                                   attrib=["Point"])
+                    x, y, z = self._get_coordinates("81", UNITS[dist_units])
+                    survey.cg_point(point_name=text,
+                                    pid=pid,
+                                    x=x,
+                                    y=y,
+                                    z=z,
+                                    attrib=["Point"])
         return survey
 
     def raw_line(self):
-        '''Extract all GSI data.
+        """
+        Extract all GSI data.
 
         Based on the "GSI ONLINE for Leica TPS" document.
 
@@ -284,9 +287,9 @@ class FormatParser(Parser):
             - get comments
             - add an option to link the comment to either previous or next line
             - add the possibility to customize code
-        '''
+        """
 
-        survey=Survey()
+        survey = Survey()
         ldata = len(self.line[0].split()[0].lstrip('*')[7:])
 
         for line in self.line:
@@ -299,7 +302,7 @@ class FormatParser(Parser):
                     'info': t[2:6],
                     'sign': t[6],
                     'data': t[7:],
-                    }
+                }
                 self.tdict[data['wordindex']] = data
 
             try:
@@ -310,7 +313,7 @@ class FormatParser(Parser):
                     comments = self.tdict['41']
                 except KeyError:
                     print("The line %s will not be computed as the code '%s' is not known") \
-                            % (pid, line[0:2])
+                         % (pid, line[0:2])
                 else:
                     # Compute comments
                     comments = self._get_comments()
@@ -341,10 +344,10 @@ class FormatParser(Parser):
                         except KeyError:
                             slope_dist = None
                         try:
-                            horizontal_dist =  self.tdict['32']
+                            horizontal_dist = self.tdict['32']
                         except KeyError:
                             horizontal_dist = None
-                        if horizontal_dist == None and slope_dist == None:
+                        if horizontal_dist is None and slope_dist is None:
                             raise KeyError
                         th = self.tdict['87']
                     except KeyError:
@@ -367,11 +370,11 @@ class FormatParser(Parser):
                             # Point coordinates may have remarks or attributes
                             attrib = self._get_attrib()
 
-                            survey.CgPoint(point_name=text,
-                                           pid=pid,
-                                           x=x,
-                                           y=y,
-                                           z=z)
+                            survey.cg_point(point_name=text,
+                                            pid=pid,
+                                            x=x,
+                                            y=y,
+                                            z=z)
                     else:
                         # Compute polar data
                         angle = self._get_angle("21", angle_units, ldata)
@@ -379,7 +382,7 @@ class FormatParser(Parser):
                         if slope_dist:
                             slope_dist = self._get_value("31", UNITS[dist_units])
                         if horizontal_dist:
-                             horizontal_dist = self._get_value("32", UNITS[dist_units])
+                            horizontal_dist = self._get_value("32", UNITS[dist_units])
                         th = self._get_value("87", UNITS[dist_units])
                         # Polar data may have point coordinates
                         x, y, z = self._get_coordinates("81", UNITS[dist_units])
@@ -390,20 +393,20 @@ class FormatParser(Parser):
                         # Polar data may have remarks or attributes
                         attrib = self._get_attrib()
 
-                        survey.RawObservation(pid=pid,
-                                              point_name=text,
-                                              angle=angle,
-                                              z_angle=z_angle,
-                                              slope_dist=slope_dist,
-                                              horizontal_dist=horizontal_dist,
-                                              th=th,
-                                              ih=ih,
-                                              ppm=ppm,
-                                              prism_constant=prism_constant,
-                                              x=x,
-                                              y=y,
-                                              z=z,
-                                              attrib=attrib)
+                        survey.raw_observation(pid=pid,
+                                               point_name=text,
+                                               angle=angle,
+                                               z_angle=z_angle,
+                                               slope_dist=slope_dist,
+                                               horizontal_dist=horizontal_dist,
+                                               th=th,
+                                               ih=ih,
+                                               ppm=ppm,
+                                               prism_constant=prism_constant,
+                                               x=x,
+                                               y=y,
+                                               z=z,
+                                               attrib=attrib)
                 else:
                     # Compute station data
                     x, y, z = self._get_coordinates("84", UNITS[dist_units])
@@ -413,7 +416,7 @@ class FormatParser(Parser):
                     # Station data may have remarks or attributes
                     attrib = self._get_attrib()
 
-                    survey.Setup(pid=pid,
+                    survey.setup(pid=pid,
                                  point_name=text,
                                  ih=ih,
                                  hz0=hz0,
