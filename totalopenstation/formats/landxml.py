@@ -20,9 +20,36 @@
 # <http://www.gnu.org/licenses/>.
 
 import xml.etree.ElementTree as xml
+import time
+import re
 
 # Template file
 TEMPLATE = "../data/template.xml"
+
+
+def _indent(elem, level=0):
+    """
+    A function to indent a XML Element for pretty printing
+    :param elem: The element to parse
+    :param level: The level of the element in the hierarchy
+    :return: The element ready to be pretty printed
+    """
+    i = "\n" + (level + 1)*"\t"
+    j = "\n" + level*"\t"
+    count = 1
+    if len(elem):
+        if elem.text is None or elem.text.strip() is None:
+            elem.text = i
+        for subelem in elem:
+            _indent(subelem, level+1)
+            if subelem.tail is None or subelem.tail.strip() is None:
+                subelem.tail = i
+            elif re.match(r"\s", subelem.tail):
+                subelem.tail = i
+            count += 1
+        if count == len(elem) + 1:
+            subelem.tail = j
+    return elem
 
 
 class Survey:
@@ -300,7 +327,6 @@ class Survey:
                                label="attrib%s" % (i + 1),
                                value=str(kwargs["attrib"][i]))
 
-
     def to_string(self):
         """
         :return:
@@ -319,5 +345,8 @@ class Structure:
     def append(self, xml_data):
         self.root.append(xml_data)
 
-    def ToStr(self):
-        return xml.tostring(self.root)
+    def to_string(self):
+        self.root.set("date", time.strftime("%Y-%m-%d"))
+        self.root.set("time", time.strftime("%H:%M:%S"))
+        pretty_xml = _indent(self.root)
+        return xml.tostring(pretty_xml)
