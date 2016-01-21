@@ -152,7 +152,7 @@ class FormatParser(Parser):
         return value
 
     def _points(self):
-        survey = Survey()
+        root = Survey()
 
         bp = None
         ldata = len(self.line[0].split()[0].lstrip('*')[7:])
@@ -217,12 +217,12 @@ class FormatParser(Parser):
                             x, y, z = self._get_coordinates("84", UNITS[dist_units])
                             ih = self._get_value("88", UNITS[dist_units])
                             bp = BasePoint(x=x, y=y, z=z, ih=ih)
-                            survey.cg_point(point_name=text,
-                                            pid=pid,
-                                            x=x,
-                                            y=y,
-                                            z=z,
-                                            attrib=["Station"])
+                            root.cg_point(point_name=text,
+                                          pid=pid,
+                                          x=x,
+                                          y=y,
+                                          z=z,
+                                          attrib=["Station"])
                     else:
                         angle = self._get_angle("21", angle_units, ldata)
                         z_angle = self._get_angle("22", angle_units, ldata)
@@ -250,21 +250,21 @@ class FormatParser(Parser):
                                        text=text,
                                        coordorder='NEZ')
                         point = p.to_point()
-                        survey.cg_point(point_name=text,
-                                        pid=pid,
-                                        x=point.x,
-                                        y=point.y,
-                                        z=point.z,
-                                        attrib=["Point"])
+                        root.cg_point(point_name=text,
+                                      pid=pid,
+                                      x=point.x,
+                                      y=point.y,
+                                      z=point.z,
+                                      attrib=["Point"])
                 else:
                     x, y, z = self._get_coordinates("81", UNITS[dist_units])
-                    survey.cg_point(point_name=text,
-                                    pid=pid,
-                                    x=x,
-                                    y=y,
-                                    z=z,
-                                    attrib=["Point"])
-        return survey
+                    root.cg_point(point_name=text,
+                                  pid=pid,
+                                  x=x,
+                                  y=y,
+                                  z=z,
+                                  attrib=["Point"])
+        return root
 
     def raw_line(self):
         """
@@ -289,7 +289,7 @@ class FormatParser(Parser):
             - add the possibility to customize code
         """
 
-        survey = Survey()
+        root = Survey()
         ldata = len(self.line[0].split()[0].lstrip('*')[7:])
 
         for line in self.line:
@@ -370,11 +370,11 @@ class FormatParser(Parser):
                             # Point coordinates may have remarks or attributes
                             attrib = self._get_attrib()
 
-                            survey.cg_point(point_name=text,
-                                            pid=pid,
-                                            x=x,
-                                            y=y,
-                                            z=z)
+                            root.cg_point(point_name=text,
+                                          pid=pid,
+                                          x=x,
+                                          y=y,
+                                          z=z)
                     else:
                         # Compute polar data
                         angle = self._get_angle("21", angle_units, ldata)
@@ -393,20 +393,20 @@ class FormatParser(Parser):
                         # Polar data may have remarks or attributes
                         attrib = self._get_attrib()
 
-                        survey.raw_observation(pid=pid,
-                                               point_name=text,
-                                               angle=angle,
-                                               z_angle=z_angle,
-                                               slope_dist=slope_dist,
-                                               horizontal_dist=horizontal_dist,
-                                               th=th,
-                                               ih=ih,
-                                               ppm=ppm,
-                                               prism_constant=prism_constant,
-                                               x=x,
-                                               y=y,
-                                               z=z,
-                                               attrib=attrib)
+                        root.raw_observation(pid=pid,
+                                             point_name=text,
+                                             angle=angle,
+                                             z_angle=z_angle,
+                                             slope_dist=slope_dist,
+                                             horizontal_dist=horizontal_dist,
+                                             th=th,
+                                             ih=ih,
+                                             ppm=ppm,
+                                             prism_constant=prism_constant,
+                                             x=x,
+                                             y=y,
+                                             z=z,
+                                             attrib=attrib)
                 else:
                     # Compute station data
                     x, y, z = self._get_coordinates("84", UNITS[dist_units])
@@ -416,15 +416,15 @@ class FormatParser(Parser):
                     # Station data may have remarks or attributes
                     attrib = self._get_attrib()
 
-                    survey.setup(pid=pid,
-                                 point_name=text,
-                                 ih=ih,
-                                 hz0=hz0,
-                                 instru_x=x,
-                                 instru_y=y,
-                                 instru_z=z,
-                                 attrib=attrib)
+                    root.setup(pid=pid,
+                               point_name=text,
+                               ih=ih,
+                               hz0=hz0,
+                               instru_x=x,
+                               instru_y=y,
+                               instru_z=z,
+                               attrib=attrib)
 
-        return survey
+        return root
 
     points = property(_points)
