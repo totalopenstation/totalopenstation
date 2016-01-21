@@ -23,6 +23,8 @@ import xml.etree.ElementTree as xml
 import time
 import re
 
+from . import Parser
+
 # Template file
 TEMPLATE = "../data/template.xml"
 
@@ -355,3 +357,23 @@ class LandXML:
         self.root.set("time", time.strftime("%H:%M:%S"))
         pretty_xml = _indent(self.root)
         return xml.tostring(pretty_xml)
+
+
+class FormatParser(Parser):
+    """
+    A FormatParser for LandXML data format.
+
+    As the model data is in LandXML format, only Survey tags is kept.
+    To open a complete LandXML file, use the LandXML.open
+
+    It doesn't inherit from the base Parser class because the internal
+    procedure is quite different, but it implements the same API so it
+    can work nicely with other parts of the library.
+    """
+
+    def __init__(self, data):
+        self.line = xml.fromstring(data)
+
+    def raw_line(self):
+        survey = self.line.find("Survey")
+        return survey
