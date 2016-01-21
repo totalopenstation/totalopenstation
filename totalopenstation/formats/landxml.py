@@ -26,6 +26,9 @@ import re
 # Template file
 TEMPLATE = "../data/template.xml"
 
+DEFAULT_NS = "http://www.landxml.org/schema/LandXML-1.1"
+DECLARATION = '<?xml version="1.0" encoding="UTF-8"?>'
+
 
 def _indent(elem, level=0):
     """
@@ -333,12 +336,14 @@ class Survey:
         """
         return xml.tostring(self.survey)
 
-class Structure:
+
+class LandXML:
     """
     Create the LandXML file.
     """
 
     def __init__(self):
+        xml.register_namespace('', DEFAULT_NS)
         tree = xml.parse(TEMPLATE)
         self.root = tree.getroot()
 

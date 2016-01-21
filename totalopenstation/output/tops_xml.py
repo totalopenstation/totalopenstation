@@ -19,7 +19,7 @@
 # along with Total Open Station.  If not, see
 # <http://www.gnu.org/licenses/>.
 
-from totalopenstation.formats.landxml import Structure
+from totalopenstation.formats.landxml import LandXML
 
 class OutputFormat:
 
@@ -58,7 +58,7 @@ class OutputFormat:
                 survey.CgPoint(**kwargs)
             if feature.desc == "ST":
                 survey.Setup(**kwargs)"""
-        root = Structure()
-        root.append(self.data)
+        xml = LandXML()
+        xml.append(self.data)
 
-        return root.ToStr()
+        return xml.to_string()
