@@ -202,7 +202,7 @@ class Survey:
         if "hz0" in kwargs:
             instrument_setup.set("orientationAzimuth", str(kwargs["hz0"]))
         # attrib is not mandatory in InstrumentSetup so this is a feature
-        if "attrib" in kwargs:
+        if "attrib" in kwargs and kwargs["attrib"]:
             if instrument_setup.find("./Feature") is None:
                 feature = xml.SubElement(instrument_setup, "Feature")
             # feature_property
@@ -277,7 +277,7 @@ class Survey:
         # kwargs = {key: str(value) if value != None else value for key,value in kwargs.items()}
         # When creating a RawObservation tag, it should verified that an ObservationGroup tag exists
         if self.survey.find("./ObservationGroup[@id='o0']") is None:
-            self.Setup()
+            self.setup()
         observation_group = self.survey.find("./ObservationGroup[@id='o%s']" % str(self.id - 1))
         # Creation of RawObservation tag, subelement of ObservationGroup
         raw_observation = xml.SubElement(observation_group, "RawObservation")
