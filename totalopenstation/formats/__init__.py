@@ -37,6 +37,10 @@ class Feature(g.Feature):
         g.Feature.__init__(self, geom, properties, feature_id=id)
         self.properties['desc'] = desc
 
+    @g.Feature.geometry.setter
+    def geometry(self, value):
+        self._geometry = value
+
     @property
     def desc(self):
         return self.properties['desc']
