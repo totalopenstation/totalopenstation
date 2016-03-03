@@ -21,8 +21,7 @@
 
 from . import Feature, Parser, Point
 from .polar import BasePoint, PolarPoint
-from totalopenstation.utils.conversion import dms_to_gon, deg_to_gon, \
-                                                mil_to_gon, horizontal_to_slope
+from totalopenstation.utils.conversion import horizontal_to_slope
 
 # Distance units depend of the last digit
 # 0, 6 and 8 are in mm, 1/10mm and 1/100mm
@@ -227,8 +226,8 @@ class FormatParser(Parser):
                         if horizontal_dist:
                              horizontal_dist = self._get_value("32", UNITS[dist_units])
                              # Need to convert horizontal distance to slope distance
-                             slope_dist = horizontal_to_slope(horizontal_dist, z_angle)
                         th = self._get_value("87", UNITS[dist_units])
+                             slope_dist = horizontal_to_slope(horizontal_dist, z_angle, angle_unit)
                         # Polar data may have point coordinates (not used)
                         x, y, z = self._get_coordinates("81", UNITS[dist_units])
                         # Polar data may have instrument height
@@ -237,7 +236,8 @@ class FormatParser(Parser):
                             ih = 0.0
                         if bp is None:
                             bp = BasePoint(x=0.0, y=0.0, z=0.0, ih=ih)
-                        p = PolarPoint(dist=slope_dist,
+                        p = PolarPoint(angle_unit=angle_unit,
+                                       dist=slope_dist,
                                        angle=angle,
                                        z_angle=z_angle,
                                        th=th,

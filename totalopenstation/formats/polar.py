@@ -19,13 +19,13 @@
 # along with Total Open Station.  If not, see
 # <http://www.gnu.org/licenses/>.
 
-from math import cos, sin, radians
+from math import cos, sin
 
 from . import Feature, Point
-from totalopenstation.utils.conversion import gon_to_rad
+from totalopenstation.utils.conversion import to_rad
 
 
-def polar_to_cartesian(base_x, base_y, base_z, dist, angle, z_angle, ih, th):
+def polar_to_cartesian(angle_unit, base_x, base_y, base_z, dist, angle, z_angle, ih, th):
     '''Convert polar coordinates to cartesian.
 
     Needs base point coordinates, measurement angles and distance.
@@ -37,6 +37,8 @@ def polar_to_cartesian(base_x, base_y, base_z, dist, angle, z_angle, ih, th):
     - the vertical ``z_angle`` is hardcoded with zero at zenith
     '''
 
+    angle = to_rad(angle, angle_unit)
+    z_angle = to_rad(z_angle, angle_unit)
     dist_r = sin(z_angle) * dist
     target_x = base_x + cos(angle) * dist_r
     target_y = base_y + sin(angle) * dist_r
@@ -46,13 +48,12 @@ def polar_to_cartesian(base_x, base_y, base_z, dist, angle, z_angle, ih, th):
 
 
 class PolarPoint:
-    '''A point geometry defined by polar coordinates.
-
-    Angles are in Gon'''
+    '''A point geometry defined by polar coordinates.'''
 
     COORDINATE_ORDER = ('NEZ', 'ENZ')
 
     def __init__(self,
+                 angle_unit,          # angle unit
                  dist,                # inclined distance
                  angle,               # horizontal angle
                  z_angle,             # vertical angle
@@ -61,10 +62,11 @@ class PolarPoint:
                  pid,                 # point ID
                  text,                # point description
                  coordorder):   # cartesian coordinates order (NEZ, ENZ)
+        self.angle_unit = angle_unit
         self.dist = float(dist)
         self.th = float(th)
-        self.angle = gon_to_rad(angle)
-        self.z_angle = gon_to_rad(z_angle)
+        self.angle = float(angle)
+        self.z_angle = float(z_angle)
         self.pid = pid
         self.text = text
         if any((coordorder == v for v in PolarPoint.COORDINATE_ORDER)):
@@ -80,14 +82,15 @@ class PolarPoint:
     def to_point(self):
         '''Convert from PolarPoint to (cartesian) Point object'''
 
-        cart_coords = polar_to_cartesian(self.base_x,
-                                    self.base_y,
-                                    self.base_z,
-                                    self.dist,
-                                    self.angle,
-                                    self.z_angle,
-                                    self.ih,
-                                    self.th)
+        cart_coords = polar_to_cartesian(self.angle_unit,
+                                         self.base_x,
+                                         self.base_y,
+                                         self.base_z,
+                                         self.dist,
+                                         self.angle,
+                                         self.z_angle,
+                                         self.ih,
+                                         self.th)
 
         if self.coordorder == 'NEZ':
             cart_coords['x'], cart_coords['y'] = cart_coords['y'], cart_coords['x']
