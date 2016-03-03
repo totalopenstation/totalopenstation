@@ -30,7 +30,8 @@ UNITS = {"angle": {'21', '22', '25'},
          "distance": {'31', '32', '33', '81', '84', '87', '88'},
          "2": "gon", "3": "deg", "4": "dms", "5": "mil",
          "0": "meter", "1": "feet", "6": "dmeter", "7": "dfeet", "8": "mmeter",
-         "meter": 1000, "feet": 1000 / 3.28084, "dmeter": 10000, "dfeet": 10000 / 3.28084, "mmeter": 100000}
+         "gon": 100000,"deg": 100000,"dms": 100000,"mil": 10000,
+         "meter": 1000, "feet": 1000, "dmeter": 10000, "dfeet": 10000, "mmeter": 100000}
 
 
 class FormatParser(Parser):
@@ -99,17 +100,7 @@ class FormatParser(Parser):
         except KeyError:
             angle = None
         else:
-            if units == "dms":
-                angle = dms_to_gon({"D": angle_sign + angle_data[:ldata-5],
-                         "M": angle_data[ldata-5:ldata-3],
-                         "S": angle_data[ldata-3:ldata-1],
-                         "milliseconds": angle_data[ldata-1:]})
-            elif units == "mil":
-                angle = mil_to_gon(float(angle_sign + angle_data)/10000)
-            elif units == "deg":
-                angle = deg_to_gon(float(angle_sign + angle_data)/100000)
-            else:
-                angle = float(angle_sign + angle_data)/100000
+            angle = float(angle_sign + angle_data)/units
 
         return angle
 
@@ -216,11 +207,12 @@ class FormatParser(Parser):
                             f = Feature(p,
                                         desc='ST',
                                         id=pid,
-                                        point_name=text)
+                                        point_name=text,
+                                        dist_units=dist_units)
                             points.append(f)
                     else:
-                        angle = self._get_angle("21", angle_units, ldata)
-                        z_angle = self._get_angle("22", angle_units, ldata)
+                        angle = self._get_angle("21", UNITS[angle_units], ldata)
+                        z_angle = self._get_angle("22", UNITS[angle_units], ldata)
                         if slope_dist:
                             slope_dist = self._get_value("31", UNITS[dist_units])
                         if horizontal_dist:
@@ -270,9 +262,7 @@ class FormatParser(Parser):
             - direct point : 11, 81, 82, 83
             - computed point : 11, 21, 22, 31 or 32 [, 51], 87 [, 88] [, 81, 82, 83]
 
-        Units after computation:
-            - angle in gon
-            - distance in meter
+        Units are unchanged, format of the original parsed file
 
         TODO:
             - get coordinates order (NEZ or ENZ)
@@ -300,7 +290,7 @@ class FormatParser(Parser):
 
             try:
                 pid = self.tdict['11']['info']
-                text = self.tdict['11']['data'].lstrip('0')
+                point_name = self.tdict['11']['data'].lstrip('0')
             except KeyError:
                 try:
                     comments = self.tdict['41']
@@ -370,13 +360,14 @@ class FormatParser(Parser):
                             f = Feature(p,
                                         desc='PT',
                                         id=pid,
-                                        point_name=text,
+                                        point_name=point_name,
+                                        dist_units=dist_units,
                                         attrib=attrib)
                             points.append(f)
                     else:
                         # Compute polar data
-                        angle = self._get_angle("21", angle_units, ldata)
-                        z_angle = self._get_angle("22", angle_units, ldata)
+                        angle = self._get_angle("21", UNITS[angle_units], ldata)
+                        z_angle = self._get_angle("22", UNITS[angle_units], ldata)
                         if slope_dist:
                             slope_dist = self._get_value("31", UNITS[dist_units])
                         if horizontal_dist:
@@ -398,7 +389,9 @@ class FormatParser(Parser):
                         f = Feature(p,
                                     desc='PO',
                                     id=pid,
-                                    point_name=text,
+                                    point_name=point_name,
+                                    angle_units=angle_units,
+                                    dist_units=dist_units,
                                     angle=angle,
                                     z_angle=z_angle,
                                     slope_dist=slope_dist,
@@ -414,7 +407,7 @@ class FormatParser(Parser):
                     x, y, z = self._get_coordinates("84", UNITS[dist_units])
                     ih = self._get_value("88", UNITS[dist_units])
                     # Station data may have an azimuth angle
-                    hz0 = self._get_angle("25", angle_units, ldata)
+                    hz0 = self._get_angle("25", UNITS[angle_units], ldata)
                     # Station data may have remarks or attributes
                     attrib = self._get_attrib()
 
@@ -425,7 +418,9 @@ class FormatParser(Parser):
                     f = Feature(p,
                                 desc='ST',
                                 id=pid,
-                                point_name=text,
+                                point_name=point_name,
+                                angle_units=angle_units,
+                                dist_units=dist_units,
                                 ih=ih,
                                 hz0=hz0,
                                 attrib=attrib)

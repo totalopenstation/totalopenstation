@@ -105,7 +105,7 @@ class PolarPoint:
         '''Wrap geometry and other properties like id, description in a Feature.'''
 
         feature = Feature(self.to_point(),
-                          properties={'desc': self.desc},
+                          properties={'desc': self.desc, 'angle_unit': self.angle_unit},
                           id=self.pid)
         return feature
 
