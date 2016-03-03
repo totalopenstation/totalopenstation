@@ -70,7 +70,7 @@ class FormatParser(Parser):
 
         return attrib
 
-    def _get_coordinates(self, first_coor, units):
+    def _get_coordinates(self, first_coor, unit):
         """
         Get all coordinates of the parsed line
         """
@@ -85,13 +85,13 @@ class FormatParser(Parser):
             y = None
             z = None
         else:
-            x = float(x_sign + x_data)/units
-            y = float(y_sign + y_data)/units
-            z = float(z_sign + z_data)/units
+            x = float(x_sign + x_data)/unit
+            y = float(y_sign + y_data)/unit
+            z = float(z_sign + z_data)/unit
 
         return x, y, z
 
-    def _get_angle(self, angle, units, ldata):
+    def _get_angle(self, angle, unit, ldata):
         """
         Get an angle of the parsed line
         """
@@ -100,7 +100,7 @@ class FormatParser(Parser):
         except KeyError:
             angle = None
         else:
-            angle = float(angle_sign + angle_data)/units
+            angle = float(angle_sign + angle_data)/unit
 
         return angle
 
@@ -125,7 +125,7 @@ class FormatParser(Parser):
 
         return ppm, prism_constant
 
-    def _get_value(self, value, units):
+    def _get_value(self, value, unit):
         """
         Get a value of the parsed line
         """
@@ -134,7 +134,7 @@ class FormatParser(Parser):
         except KeyError:
             value = None
         else:
-            value = float(value_sign + value_data)/units
+            value = float(value_sign + value_data)/unit
 
         return value
 
@@ -164,12 +164,12 @@ class FormatParser(Parser):
                 # Get angle and distance units
                 try:
                     angle_code = list(UNITS['angle'] & set(self.tdict.keys()))[0]
-                    angle_units = UNITS[self.tdict[angle_code]['info'][3]]
+                    angle_unit = UNITS[self.tdict[angle_code]['info'][3]]
                 except IndexError:
                     pass
                 try:
                     dist_code = list(UNITS['distance'] & set(self.tdict.keys()))[0]
-                    dist_units = UNITS[self.tdict[dist_code]['info'][3]]
+                    dist_unit = UNITS[self.tdict[dist_code]['info'][3]]
                 except IndexError:
                     pass
                 # Beginning of the parsing
@@ -200,31 +200,31 @@ class FormatParser(Parser):
                             pass
                         else:
                             # Compute station data
-                            x, y, z = self._get_coordinates("84", UNITS[dist_units])
-                            ih = self._get_value("88", UNITS[dist_units])
+                            x, y, z = self._get_coordinates("84", UNITS[dist_unit])
+                            ih = self._get_value("88", UNITS[dist_unit])
                             bp = BasePoint(x=x, y=y, z=z, ih=ih)
                             p = Point(x, y, z)
                             f = Feature(p,
                                         desc='ST',
                                         id=pid,
                                         point_name=text,
-                                        dist_units=dist_units)
+                                        dist_unit=dist_unit)
                             points.append(f)
                     else:
-                        angle = self._get_angle("21", UNITS[angle_units], ldata)
-                        z_angle = self._get_angle("22", UNITS[angle_units], ldata)
+                        angle = self._get_angle("21", UNITS[angle_unit], ldata)
+                        z_angle = self._get_angle("22", UNITS[angle_unit], ldata)
                         if slope_dist:
-                            slope_dist = self._get_value("31", UNITS[dist_units])
+                            slope_dist = self._get_value("31", UNITS[dist_unit])
                         if horizontal_dist:
-                             horizontal_dist = self._get_value("32", UNITS[dist_units])
+                             horizontal_dist = self._get_value("32", UNITS[dist_unit])
                              # Need to convert horizontal distance to slope distance
-                        th = self._get_value("87", UNITS[dist_units])
                              slope_dist = horizontal_to_slope(horizontal_dist, z_angle, angle_unit)
+                        th = self._get_value("87", UNITS[dist_unit])
                         # Polar data may have point coordinates (not used)
-                        x, y, z = self._get_coordinates("81", UNITS[dist_units])
+                        x, y, z = self._get_coordinates("81", UNITS[dist_unit])
                         # Polar data may have instrument height
-                        ih = self._get_value("88", UNITS[dist_units])
-                        if ih == None:
+                        ih = self._get_value("88", UNITS[dist_unit])
+                        if ih is None:
                             ih = 0.0
                         if bp is None:
                             bp = BasePoint(x=0.0, y=0.0, z=0.0, ih=ih)
@@ -243,7 +243,7 @@ class FormatParser(Parser):
                                     point_name=text)
                         points.append(f)
                 else:
-                    x, y, z = self._get_coordinates("81",UNITS[dist_units])
+                    x, y, z = self._get_coordinates("81",UNITS[dist_unit])
                     p = Point(x, y, z)
                     f = Feature(p,
                                 desc='PT',
@@ -304,12 +304,12 @@ class FormatParser(Parser):
                 # Get angle and distance units
                 try:
                     angle_code = list(UNITS['angle'] & set(self.tdict.keys()))[0]
-                    angle_units = UNITS[self.tdict[angle_code]['info'][3]]
+                    angle_unit = UNITS[self.tdict[angle_code]['info'][3]]
                 except IndexError:
                     pass
                 try:
                     dist_code = list(UNITS['distance'] & set(self.tdict.keys()))[0]
-                    dist_units = UNITS[self.tdict[dist_code]['info'][3]]
+                    dist_unit = UNITS[self.tdict[dist_code]['info'][3]]
                 except IndexError:
                     pass
                 # Beginning of the parsing
@@ -349,7 +349,7 @@ class FormatParser(Parser):
                                 attrib = self._get_attrib()
                         else:
                             # Compute point coordinates
-                            x, y, z = self._get_coordinates("81", UNITS[dist_units])
+                            x, y, z = self._get_coordinates("81", UNITS[dist_unit])
                             # Point coordinates may have remarks or attributes
                             attrib = self._get_attrib()
 
@@ -361,22 +361,22 @@ class FormatParser(Parser):
                                         desc='PT',
                                         id=pid,
                                         point_name=point_name,
-                                        dist_units=dist_units,
+                                        dist_unit=dist_unit,
                                         attrib=attrib)
                             points.append(f)
                     else:
                         # Compute polar data
-                        angle = self._get_angle("21", UNITS[angle_units], ldata)
-                        z_angle = self._get_angle("22", UNITS[angle_units], ldata)
+                        angle = self._get_angle("21", UNITS[angle_unit], ldata)
+                        z_angle = self._get_angle("22", UNITS[angle_unit], ldata)
                         if slope_dist:
-                            slope_dist = self._get_value("31", UNITS[dist_units])
+                            slope_dist = self._get_value("31", UNITS[dist_unit])
                         if horizontal_dist:
-                             horizontal_dist = self._get_value("32", UNITS[dist_units])
-                        th = self._get_value("87", UNITS[dist_units])
+                             horizontal_dist = self._get_value("32", UNITS[dist_unit])
+                        th = self._get_value("87", UNITS[dist_unit])
                         # Polar data may have point coordinates
-                        x, y, z = self._get_coordinates("81", UNITS[dist_units])
+                        x, y, z = self._get_coordinates("81", UNITS[dist_unit])
                         # Polar data may have instrument height
-                        ih = self._get_value("88", UNITS[dist_units])
+                        ih = self._get_value("88", UNITS[dist_unit])
                         # Polar data may have constant data
                         ppm, prism_constant = self._get_edm_accuracy()
                         # Polar data may have remarks or attributes
@@ -390,8 +390,8 @@ class FormatParser(Parser):
                                     desc='PO',
                                     id=pid,
                                     point_name=point_name,
-                                    angle_units=angle_units,
-                                    dist_units=dist_units,
+                                    angle_unit=angle_unit,
+                                    dist_unit=dist_unit,
                                     angle=angle,
                                     z_angle=z_angle,
                                     slope_dist=slope_dist,
@@ -404,10 +404,10 @@ class FormatParser(Parser):
                         points.append(f)
                 else:
                     # Compute station data
-                    x, y, z = self._get_coordinates("84", UNITS[dist_units])
-                    ih = self._get_value("88", UNITS[dist_units])
+                    x, y, z = self._get_coordinates("84", UNITS[dist_unit])
+                    ih = self._get_value("88", UNITS[dist_unit])
                     # Station data may have an azimuth angle
-                    hz0 = self._get_angle("25", UNITS[angle_units], ldata)
+                    hz0 = self._get_angle("25", UNITS[angle_unit], ldata)
                     # Station data may have remarks or attributes
                     attrib = self._get_attrib()
 
@@ -419,8 +419,8 @@ class FormatParser(Parser):
                                 desc='ST',
                                 id=pid,
                                 point_name=point_name,
-                                angle_units=angle_units,
-                                dist_units=dist_units,
+                                angle_unit=angle_unit,
+                                dist_unit=dist_unit,
                                 ih=ih,
                                 hz0=hz0,
                                 attrib=attrib)
