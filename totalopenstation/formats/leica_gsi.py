@@ -188,7 +188,7 @@ class FormatParser(Parser):
                             horizontal_dist =  self.tdict['32']
                         except KeyError:
                             horizontal_dist = None
-                        if horizontal_dist == None and slope_dist == None:
+                        if horizontal_dist is None and slope_dist is None:
                             raise KeyError
                         th = self.tdict['87']
                     except KeyError:
@@ -327,10 +327,10 @@ class FormatParser(Parser):
                         except KeyError:
                             slope_dist = None
                         try:
-                            horizontal_dist =  self.tdict['32']
+                            horizontal_dist = self.tdict['32']
                         except KeyError:
                             horizontal_dist = None
-                        if horizontal_dist == None and slope_dist == None:
+                        if horizontal_dist is None and slope_dist is None:
                             raise KeyError
                         th = self.tdict['87']
                     except KeyError:
