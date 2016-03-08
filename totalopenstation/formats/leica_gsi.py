@@ -30,7 +30,7 @@ UNITS = {"angle": {'21', '22', '25'},
          "distance": {'31', '32', '33', '81', '84', '87', '88'},
          "2": "gon", "3": "deg", "4": "dms", "5": "mil",
          "0": "meter", "1": "feet", "6": "dmeter", "7": "dfeet", "8": "mmeter",
-         "gon": 100000,"deg": 100000,"dms": 100000,"mil": 10000,
+         "gon": 100000, "deg": 100000, "dms": 100000, "mil": 10000,
          "meter": 1000, "feet": 1000, "dmeter": 10000, "dfeet": 10000, "mmeter": 100000}
 
 
@@ -85,9 +85,9 @@ class FormatParser(Parser):
             y = None
             z = None
         else:
-            x = float(x_sign + x_data)/unit
-            y = float(y_sign + y_data)/unit
-            z = float(z_sign + z_data)/unit
+            x = float(x_sign + x_data) / unit
+            y = float(y_sign + y_data) / unit
+            z = float(z_sign + z_data) / unit
 
         return x, y, z
 
@@ -100,7 +100,7 @@ class FormatParser(Parser):
         except KeyError:
             angle = None
         else:
-            angle = float(angle_sign + angle_data)/unit
+            angle = float(angle_sign + angle_data) / unit
 
         return angle
 
@@ -134,7 +134,7 @@ class FormatParser(Parser):
         except KeyError:
             value = None
         else:
-            value = float(value_sign + value_data)/unit
+            value = float(value_sign + value_data) / unit
 
         return value
 
@@ -152,7 +152,7 @@ class FormatParser(Parser):
                     'info': t[2:6],
                     'sign': t[6],
                     'data': t[7:],
-                    }
+                }
                 self.tdict[data['wordindex']] = data
 
             try:
@@ -185,7 +185,7 @@ class FormatParser(Parser):
                         except KeyError:
                             slope_dist = None
                         try:
-                            horizontal_dist =  self.tdict['32']
+                            horizontal_dist = self.tdict['32']
                         except KeyError:
                             horizontal_dist = None
                         if horizontal_dist is None and slope_dist is None:
@@ -216,9 +216,9 @@ class FormatParser(Parser):
                         if slope_dist:
                             slope_dist = self._get_value("31", UNITS[dist_unit])
                         if horizontal_dist:
-                             horizontal_dist = self._get_value("32", UNITS[dist_unit])
-                             # Need to convert horizontal distance to slope distance
-                             slope_dist = horizontal_to_slope(horizontal_dist, z_angle, angle_unit)
+                            horizontal_dist = self._get_value("32", UNITS[dist_unit])
+                            # Need to convert horizontal distance to slope distance
+                            slope_dist = horizontal_to_slope(horizontal_dist, z_angle, angle_unit)
                         th = self._get_value("87", UNITS[dist_unit])
                         # Polar data may have point coordinates (not used)
                         x, y, z = self._get_coordinates("81", UNITS[dist_unit])
@@ -243,7 +243,7 @@ class FormatParser(Parser):
                                     point_name=text)
                         points.append(f)
                 else:
-                    x, y, z = self._get_coordinates("81",UNITS[dist_unit])
+                    x, y, z = self._get_coordinates("81", UNITS[dist_unit])
                     p = Point(x, y, z)
                     f = Feature(p,
                                 desc='PT',
@@ -285,7 +285,7 @@ class FormatParser(Parser):
                     'info': t[2:6],
                     'sign': t[6],
                     'data': t[7:],
-                    }
+                }
                 self.tdict[data['wordindex']] = data
 
             try:
@@ -295,8 +295,8 @@ class FormatParser(Parser):
                 try:
                     comments = self.tdict['41']
                 except KeyError:
-                    print("The line %s will not be computed as the code '%s' is not known") \
-                            % (pid, line[0:2])
+                    print"The line %s will not be computed as the code '%s' is not known"\
+                          % (pid, line[0:2])
                 else:
                     # Compute comments
                     comments = self._get_comments()
@@ -371,7 +371,7 @@ class FormatParser(Parser):
                         if slope_dist:
                             slope_dist = self._get_value("31", UNITS[dist_unit])
                         if horizontal_dist:
-                             horizontal_dist = self._get_value("32", UNITS[dist_unit])
+                            horizontal_dist = self._get_value("32", UNITS[dist_unit])
                         th = self._get_value("87", UNITS[dist_unit])
                         # Polar data may have point coordinates
                         x, y, z = self._get_coordinates("81", UNITS[dist_unit])
