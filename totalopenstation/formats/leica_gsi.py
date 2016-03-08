@@ -91,7 +91,7 @@ class FormatParser(Parser):
 
         return x, y, z
 
-    def _get_angle(self, angle, unit, ldata):
+    def _get_angle(self, angle, unit):
         """
         Get an angle of the parsed line
         """
@@ -104,24 +104,24 @@ class FormatParser(Parser):
 
         return angle
 
-    def _get_edm_accuracy(self):
+    def _get_edm_accuracy(self, ldata):
         """
         Get the ppm and the prism constant of the parsed line
         """
         try:
-            ppm_sign, ppm_data = self.tdict['51']['sign'], self.tdict['51']['data'][:4]
-            pc_sign, pc_data = self.tdict['51']['data'][4], self.tdict['51']['data'][5:]
+            ppm_sign, ppm_data = self.tdict['51']['sign'], self.tdict['51']['data'][:ldata-4]
+            pc_sign, pc_data = self.tdict['51']['data'][ldata-4], self.tdict['51']['data'][ldata-3:]
         except KeyError:
             try:
                 ppm_sign, ppm_data = self.tdict['59']['sign'], self.tdict['59']['data']
-                pc_sign, pc_data = self.tdict['58']['data'][4], self.tdict['58']['data']
+                pc_sign, pc_data = self.tdict['58']['sign'], self.tdict['58']['data']
             except KeyError:
                 ppm = None
                 prism_constant = None
         if ppm_sign:
-            ppm = float(ppm_sign + ppm_data)/10
+            ppm = float(ppm_sign + ppm_data)
         if pc_sign:
-            prism_constant = float(pc_sign + pc_data)/10000
+            prism_constant = float(pc_sign + pc_data)
 
         return ppm, prism_constant
 
@@ -211,8 +211,8 @@ class FormatParser(Parser):
                                         dist_unit=dist_unit)
                             points.append(f)
                     else:
-                        angle = self._get_angle("21", UNITS[angle_unit], ldata)
-                        z_angle = self._get_angle("22", UNITS[angle_unit], ldata)
+                        angle = self._get_angle("21", UNITS[angle_unit])
+                        z_angle = self._get_angle("22", UNITS[angle_unit])
                         if slope_dist:
                             slope_dist = self._get_value("31", UNITS[dist_unit])
                         if horizontal_dist:
@@ -366,19 +366,19 @@ class FormatParser(Parser):
                             points.append(f)
                     else:
                         # Compute polar data
-                        angle = self._get_angle("21", UNITS[angle_unit], ldata)
-                        z_angle = self._get_angle("22", UNITS[angle_unit], ldata)
+                        angle = self._get_angle("21", UNITS[angle_unit])
+                        z_angle = self._get_angle("22", UNITS[angle_unit])
                         if slope_dist:
                             slope_dist = self._get_value("31", UNITS[dist_unit])
                         if horizontal_dist:
                             horizontal_dist = self._get_value("32", UNITS[dist_unit])
                         th = self._get_value("87", UNITS[dist_unit])
                         # Polar data may have point coordinates
-                        x, y, z = self._get_coordinates("81", UNITS[dist_unit])
+                        x, y, z = self._get_coordinates("81",UNITS[dist_unit])
                         # Polar data may have instrument height
                         ih = self._get_value("88", UNITS[dist_unit])
                         # Polar data may have constant data
-                        ppm, prism_constant = self._get_edm_accuracy()
+                        ppm, prism_constant = self._get_edm_accuracy(ldata)
                         # Polar data may have remarks or attributes
                         attrib = self._get_attrib()
 
@@ -407,7 +407,7 @@ class FormatParser(Parser):
                     x, y, z = self._get_coordinates("84", UNITS[dist_unit])
                     ih = self._get_value("88", UNITS[dist_unit])
                     # Station data may have an azimuth angle
-                    hz0 = self._get_angle("25", UNITS[angle_unit], ldata)
+                    hz0 = self._get_angle("25", UNITS[angle_unit])
                     # Station data may have remarks or attributes
                     attrib = self._get_attrib()
 
