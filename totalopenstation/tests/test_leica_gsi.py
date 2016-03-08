@@ -15,7 +15,7 @@ class TestLeicaGSI16Parser(unittest.TestCase):
         self.assertAlmostEqual(self.fp.points[0].geometry.z, -0.2890493)
 
     def test_feature(self):
-        self.assertEqual(self.fp.points[0].id, '0002')
+        self.assertEqual(self.fp.points[0].id, 2)
         self.assertEqual(self.fp.points[0].point_name, 'GDEM5415')
         self.assertEqual(self.fp.points[0].desc, 'PT')
         self.assertEqual(self.fp.points[1].point_name, 'GDEM5416')
@@ -38,7 +38,7 @@ class TestLeicaGSI8Parser(unittest.TestCase):
         self.assertAlmostEqual(self.fp.points[0].geometry.z, 3.079)
 
     def test_feature(self):
-        self.assertEqual(self.fp.points[0].id, '0001')
+        self.assertEqual(self.fp.points[0].id, 1)
         self.assertEqual(self.fp.points[0].desc, 'PT')
         self.assertEqual(self.fp.points[0].point_name, '1')
         self.assertEqual(self.fp.points[1].desc, 'PT')

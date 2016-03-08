@@ -156,7 +156,7 @@ class FormatParser(Parser):
                 self.tdict[data['wordindex']] = data
 
             try:
-                pid = self.tdict['11']['info']
+                pid = int(self.tdict['11']['info'])
                 text = self.tdict['11']['data'].lstrip('0')
             except KeyError:
                 pass
@@ -289,7 +289,7 @@ class FormatParser(Parser):
                 self.tdict[data['wordindex']] = data
 
             try:
-                pid = self.tdict['11']['info']
+                pid = int(self.tdict['11']['info'])
                 point_name = self.tdict['11']['data'].lstrip('0')
             except KeyError:
                 try:
