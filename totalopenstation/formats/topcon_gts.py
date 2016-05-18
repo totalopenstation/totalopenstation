@@ -22,9 +22,9 @@
 # along with Total Open Station.  If not, see
 # <http://www.gnu.org/licenses/>.
 
-from . import Feature
 from polar import BasePoint, PolarPoint
-from totalopenstation.utils.conversion import deg_to_gon
+from totalopenstation.formats.conversion import deg_to_gon
+from . import Feature
 
 
 class FormatParser:

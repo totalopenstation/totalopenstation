@@ -19,9 +19,9 @@
 # along with Total Open Station.  If not, see
 # <http://www.gnu.org/licenses/>.
 
+from totalopenstation.formats.conversion import horizontal_to_slope
 from . import Feature, Parser, Point
 from .polar import BasePoint, PolarPoint
-from totalopenstation.utils.conversion import horizontal_to_slope
 
 # Distance units depend of the last digit
 # 0, 6 and 8 are in mm, 1/10mm and 1/100mm

@@ -18,9 +18,9 @@
 # along with Total Open Station.  If not, see
 # <http://www.gnu.org/licenses/>.
 
+from totalopenstation.formats.conversion import dms_to_gon
 from . import Feature, Point
 from .polar import BasePoint, PolarPoint
-from totalopenstation.utils.conversion import dms_to_gon
 
 
 class FormatParser:

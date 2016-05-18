@@ -18,11 +18,9 @@
 # along with Total Open Station.  If not, see
 # <http://www.gnu.org/licenses/>.
 
-from decimal import Decimal
-
+from totalopenstation.formats.conversion import horizontal_to_slope
 from . import Feature
 from .polar import Point, BasePoint, PolarPoint
-from totalopenstation.utils.conversion import horizontal_to_slope
 
 # ussfeet = US Survey Feet
 #

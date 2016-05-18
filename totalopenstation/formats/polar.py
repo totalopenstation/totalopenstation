@@ -21,8 +21,8 @@
 
 from math import cos, sin
 
+from totalopenstation.formats.conversion import to_rad
 from . import Feature, Point
-from totalopenstation.utils.conversion import to_rad
 
 
 def polar_to_cartesian(angle_unit, base_x, base_y, base_z, dist, angle, z_angle, ih, th):
