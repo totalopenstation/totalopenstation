@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 # filename: formats/carlson_rw5.py
 # Copyright 2014 Stefano Costa <steko@iosa.it>
+# Copyright 2016 Damien Gaignon <damien.gaignon@gmail.com>
 
 # This file is part of Total Open Station.
 
