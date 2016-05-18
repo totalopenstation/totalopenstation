@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # filename: formats/leica_gsi.py
 # Copyright 2012 Stefano Costa <steko@iosa.it>
-# Copyright 2015 Damien Gaignon <damien.gaignon@gmail.com>
+# Copyright 2015-2016 Damien Gaignon <damien.gaignon@gmail.com>
 
 # This file is part of Total Open Station.
 

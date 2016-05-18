@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 # filename: tops_csv.py
 # Copyright 2008, 2009, 2011 Stefano Costa <steko@iosa.it>
+# Copyright 2016 Damien Gaignon <damien.gaignon@gmail.com>
 #
 # This file is part of Total Open Station.
 #
