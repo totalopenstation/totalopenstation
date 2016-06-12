@@ -21,6 +21,7 @@
 # <http://www.gnu.org/licenses/>.
 
 from pygeoif import geometry as g
+from math import pi
 
 
 class Point(g.Point):
@@ -122,6 +123,14 @@ BUILTIN_INPUT_FORMATS = {
     'trimble_are': ('trimble_are', 'FormatParser', 'Trimble AREA'),
     'zeiss_r5': ('zeiss_r5', 'FormatParser', 'Zeiss R5'),
     'zeiss_rec_500': ('zeiss_rec_500', 'FormatParser', 'Zeiss REC 500'),
+    }
+
+UNITS_CIRCLE = {
+    'dms': 360,
+    'deg': 360,
+    'gon': 400,
+    'mil': 6400,
+    'rad': 2 * pi,
     }
 
 UNKNOWN_STATION = Point(10000, 10000, 100)

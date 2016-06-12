@@ -7,8 +7,8 @@ from totalopenstation.formats.polar import BasePoint, PolarPoint
 class TestPolar(unittest.TestCase):
 
     def setUp(self):
-        self.bp0 = BasePoint(x='0', y='0', z='0', ih='1.0')
-        self.bp1 = BasePoint(x='0', y='0', z='0', ih='1.324')
+        self.bp0 = BasePoint(x='0', y='0', z='0', ih='1.0', b_zero_st='0.0')
+        self.bp1 = BasePoint(x='0', y='0', z='0', ih='1.324', b_zero_st='0.0')
 
         self.p0 = PolarPoint(angle_unit='deg',
                              dist=9,

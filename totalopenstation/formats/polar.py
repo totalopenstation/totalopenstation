@@ -22,10 +22,10 @@
 from math import cos, sin
 
 from totalopenstation.formats.conversion import to_rad
-from . import Feature, Point
+from . import Feature, Point, UNITS_CIRCLE
 
 
-def polar_to_cartesian(angle_unit, base_x, base_y, base_z, dist, angle, z_angle, ih, th):
+def polar_to_cartesian(angle_unit, base_x, base_y, base_z, dist, azimuth, z_angle, ih, th):
     '''Convert polar coordinates to cartesian.
 
     Needs base point coordinates, measurement angles and distance.
@@ -37,11 +37,13 @@ def polar_to_cartesian(angle_unit, base_x, base_y, base_z, dist, angle, z_angle,
     - the vertical ``z_angle`` is hardcoded with zero at zenith
     '''
 
-    angle = to_rad(angle, angle_unit)
+    azimuth = to_rad(azimuth, angle_unit)
     z_angle = to_rad(z_angle, angle_unit)
     dist_r = sin(z_angle) * dist
-    target_x = base_x + cos(angle) * dist_r
-    target_y = base_y + sin(angle) * dist_r
+    dX = sin(azimuth) * dist_r
+    dY = cos(azimuth) * dist_r
+    target_x = base_x + dX
+    target_y = base_y + dY
     target_z = base_z + ih + (cos(z_angle) * dist) - th
 
     return dict(x=target_x, y=target_y, z=target_z)
@@ -77,16 +79,19 @@ class PolarPoint:
             self.base_x, self.base_y = self.base_y, self.base_x
         self.base_z = base_point.z
         self.ih = base_point.ih
+        self.b_zero_st = base_point.b_zero_st
 
     def to_point(self):
         '''Convert from PolarPoint to (cartesian) Point object'''
+
+        azimuth = (self.b_zero_st + self.angle) % UNITS_CIRCLE[self.angle_unit]
 
         cart_coords = polar_to_cartesian(self.angle_unit,
                                          self.base_x,
                                          self.base_y,
                                          self.base_z,
                                          self.dist,
-                                         self.angle,
+                                         azimuth,
                                          self.z_angle,
                                          self.ih,
                                          self.th)
@@ -115,8 +120,9 @@ class BasePoint:
     TODO: find out whether ih is more commonly coupled to a base point or
     to each single point.'''
 
-    def __init__(self, x, y, z, ih):
+    def __init__(self, x, y, z, ih, b_zero_st):
         self.x = float(x)
         self.y = float(y)
         self.z = float(z)
         self.ih = float(ih)
+        self.b_zero_st = float(b_zero_st)

@@ -92,7 +92,7 @@ class FormatParser:
                 elevation = float(rec['EL'])
                 station_point = Point(easting, northing, elevation)
                 points_coord[station_name] = station_point
-                bp = BasePoint(x=easting, y=northing, z=elevation, ih=0)
+                bp = BasePoint(x=easting, y=northing, z=elevation, ih=0, b_zero_st=0.0)
                 base_points[station_name] = bp
             # Look for line of sight values
             # Finalize station computing

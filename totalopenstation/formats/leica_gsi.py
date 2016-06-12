@@ -202,7 +202,7 @@ class FormatParser(Parser):
                             # Compute station data
                             x, y, z = self._get_coordinates("84", UNITS[dist_unit])
                             ih = self._get_value("88", UNITS[dist_unit])
-                            bp = BasePoint(x=x, y=y, z=z, ih=ih)
+                            bp = BasePoint(x=x, y=y, z=z, ih=ih, b_zero_st=0.0)
                             p = Point(x, y, z)
                             f = Feature(p,
                                         desc='ST',
@@ -227,7 +227,7 @@ class FormatParser(Parser):
                         if ih is None:
                             ih = 0.0
                         if bp is None:
-                            bp = BasePoint(x=0.0, y=0.0, z=0.0, ih=ih)
+                            bp = BasePoint(x=0.0, y=0.0, z=0.0, ih=ih, b_zero_st=0.0)
                         p = PolarPoint(angle_unit=angle_unit,
                                        dist=slope_dist,
                                        angle=angle,
