@@ -12,14 +12,14 @@ class TestNikonParser(unittest.TestCase):
             self.fp2 = FormatParser(testdata2.read())
 
     def test_points(self):
-        self.assertAlmostEqual(self.fp.points[1].geometry.x, 8.9092817528619808)
+        self.assertAlmostEqual(self.fp.points[1].geometry.x, 0.0)
 
     def test_basepoint(self):
         self.assertAlmostEqual(self.fp.points[0].geometry.x, 0.0)
         self.assertAlmostEqual(self.fp.points[0].geometry.y, 0.0)
-        self.assertAlmostEqual(self.fp2.points[7].geometry.x, 322.5024)
-        self.assertAlmostEqual(self.fp2.points[7].geometry.y, 322.5024)
+        self.assertAlmostEqual(self.fp2.points[7].geometry.x, 9936.99390187)
+        self.assertAlmostEqual(self.fp2.points[7].geometry.y, 10036.06473563)
 
     def test_feature(self):
-        self.assertEqual(self.fp.points[3].id, '4')
-        self.assertEqual(self.fp.points[3].desc, 'P')
+        self.assertEqual(self.fp.points[3].id, 3)
+        self.assertEqual(self.fp.points[3].desc, 'PT')
