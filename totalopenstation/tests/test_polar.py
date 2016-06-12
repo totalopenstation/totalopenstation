@@ -18,7 +18,7 @@ class TestPolar(unittest.TestCase):
                              base_point=self.bp0,
                              pid=1,
                              text='Test Point',
-                             coordorder='NEZ')
+                             coordorder='ENZ')
 
         self.p1 = PolarPoint(angle_unit='gon',
                              dist=24.567,
@@ -38,7 +38,7 @@ class TestPolar(unittest.TestCase):
                              base_point=self.bp1,
                              pid=3,
                              text='Real Point',
-                             coordorder='NEZ')
+                             coordorder='ENZ')
 
     def test_polar(self):
         p0_test = Point(0.0, -9.0, 1.0)
@@ -46,7 +46,7 @@ class TestPolar(unittest.TestCase):
         self.assertAlmostEqual(self.p0.to_point().y, p0_test.y)
         self.assertAlmostEqual(self.p0.to_point().z, p0_test.z)
 
-        p1_test = Point(12.5454572076, 21.1222392859, -0.5)
+        p1_test = Point(21.1222392859, 12.5454572076, -0.5)
         self.assertAlmostEqual(self.p1.to_point().x, p1_test.x)
         self.assertAlmostEqual(self.p1.to_point().y, p1_test.y)
         self.assertAlmostEqual(self.p1.to_point().z, p1_test.z)

@@ -50,8 +50,6 @@ def polar_to_cartesian(angle_unit, base_x, base_y, base_z, dist, angle, z_angle,
 class PolarPoint:
     '''A point geometry defined by polar coordinates.'''
 
-    COORDINATE_ORDER = ('NEZ', 'ENZ')
-
     def __init__(self,
                  angle_unit,          # angle unit
                  dist,                # inclined distance
@@ -69,13 +67,14 @@ class PolarPoint:
         self.z_angle = float(z_angle)
         self.pid = pid
         self.text = text
-        if any((coordorder == v for v in PolarPoint.COORDINATE_ORDER)):
-            self.coordorder = coordorder
-        else:
-            raise ValueError('Invalid coordinate order')
+        self.coordorder = coordorder
+
         # base point data
         self.base_x = base_point.x
         self.base_y = base_point.y
+        # For NEZ coordinate system, an inversion should be done before calculation
+        if self.coordorder == "NEZ":
+            self.base_x, self.base_y = self.base_y, self.base_x
         self.base_z = base_point.z
         self.ih = base_point.ih
 
@@ -92,7 +91,7 @@ class PolarPoint:
                                          self.ih,
                                          self.th)
 
-        if self.coordorder == 'NEZ':
+        if self.coordorder == "NEZ":
             cart_coords['x'], cart_coords['y'] = cart_coords['y'], cart_coords['x']
 
         cart_point = Point(cart_coords['x'],

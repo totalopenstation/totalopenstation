@@ -236,7 +236,7 @@ class FormatParser(Parser):
                                        base_point=bp,
                                        pid=pid,
                                        text=text,
-                                       coordorder='NEZ')
+                                       coordorder='ENZ')
                         f = Feature(p.to_point(),
                                     desc='PT',
                                     id=pid,

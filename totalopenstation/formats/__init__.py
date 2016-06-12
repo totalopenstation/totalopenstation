@@ -105,6 +105,12 @@ class Parser:
         pass
 
 
+def check_coordorder(coordorder):
+    if any((coordorder == v for v in COORDINATE_ORDER)):
+        return coordorder
+    else:
+        raise ValueError('Invalid coordinate order')
+
 BUILTIN_INPUT_FORMATS = {
     'carlson_rw5': ('carlson_rw5', 'FormatParser', 'Carlson RW5'),
     'leica_gsi': ('leica_gsi', 'FormatParser', 'Leica GSI'),
@@ -120,3 +126,5 @@ BUILTIN_INPUT_FORMATS = {
 
 UNKNOWN_STATION = Point(10000, 10000, 100)
 UNKNOWN_POINT = Point(-1, -1, -1)
+
+COORDINATE_ORDER = ('NEZ', 'ENZ')
