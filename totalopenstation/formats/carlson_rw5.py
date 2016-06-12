@@ -261,6 +261,8 @@ class FormatParser:
                     station_point
                 except NameError:
                     station_point = UNKNOWN_STATION
+                    station_name = 'station' & pid
+                    points_coord[station_name] = station_point
                 stf = Feature(station_point,
                               desc='ST',
                               id=pid,
