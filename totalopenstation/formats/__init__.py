@@ -117,3 +117,6 @@ BUILTIN_INPUT_FORMATS = {
     'zeiss_r5': ('zeiss_r5', 'FormatParser', 'Zeiss R5'),
     'zeiss_rec_500': ('zeiss_rec_500', 'FormatParser', 'Zeiss REC 500'),
     }
+
+UNKNOWN_STATION = Point(10000, 10000, 100)
+UNKNOWN_POINT = Point(-1, -1, -1)

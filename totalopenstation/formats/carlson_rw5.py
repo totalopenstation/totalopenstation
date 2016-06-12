@@ -20,8 +20,8 @@
 # <http://www.gnu.org/licenses/>.
 
 from totalopenstation.formats.conversion import horizontal_to_slope
-from . import Feature
-from .polar import Point, BasePoint, PolarPoint
+from . import Feature, Point, UNKNOWN_STATION, UNKNOWN_POINT
+from .polar import BasePoint, PolarPoint
 
 # ussfeet = US Survey Feet
 #
@@ -103,7 +103,7 @@ class FormatParser:
                 try:
                     station_point
                 except NameError:
-                    station_point = Point(0, 0, 0)
+                    station_point = UNKNOWN_STATION
                 stf = Feature(station_point,
                               desc='ST',
                               id=pid,
@@ -260,7 +260,7 @@ class FormatParser:
                 try:
                     station_point
                 except NameError:
-                    station_point = Point(0, 0, 0)
+                    station_point = UNKNOWN_STATION
                 stf = Feature(station_point,
                               desc='ST',
                               id=pid,
@@ -292,7 +292,7 @@ class FormatParser:
                 try:
                     point = points_coord[point_name]
                 except KeyError:
-                    point = Point(0, 0, 0)
+                    point = UNKNOWN_POINT
                 f = Feature(point,
                             desc='BS',
                             id=pid,
@@ -349,7 +349,7 @@ class FormatParser:
                 try:
                     point = points_coord[point_name]
                 except KeyError:
-                    point = Point(0, 0, 0)
+                    point = UNKNOWN_POINT
                 f = Feature(point,
                             desc='PO',
                             id=pid,

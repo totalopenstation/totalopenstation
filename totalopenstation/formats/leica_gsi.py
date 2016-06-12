@@ -20,7 +20,7 @@
 # <http://www.gnu.org/licenses/>.
 
 from totalopenstation.formats.conversion import horizontal_to_slope
-from . import Feature, Parser, Point
+from . import Feature, Parser, Point, UNKNOWN_STATION, UNKNOWN_POINT
 from .polar import BasePoint, PolarPoint
 
 # Distance units depend of the last digit
@@ -356,7 +356,7 @@ class FormatParser(Parser):
                             if x:
                                 p = Point(x, y, z)
                             else:
-                                p = Point(0, 0, 0)
+                                p = UNKNOWN_POINT
                             f = Feature(p,
                                         desc='PT',
                                         id=pid,
@@ -385,7 +385,7 @@ class FormatParser(Parser):
                         if x:
                             p = Point(x, y, z)
                         else:
-                            p = Point(0, 0, 0)
+                            p = UNKNOWN_POINT
                         f = Feature(p,
                                     desc='PO',
                                     id=pid,
@@ -414,7 +414,7 @@ class FormatParser(Parser):
                     if x:
                         p = Point(x, y, z)
                     else:
-                        p = Point(0, 0, 0)
+                        p = UNKNOWN_STATION
                     f = Feature(p,
                                 desc='ST',
                                 id=pid,
