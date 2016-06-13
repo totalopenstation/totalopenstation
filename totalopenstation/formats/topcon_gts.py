@@ -41,7 +41,7 @@ class FormatParser:
 
     def _points(self):
         points = []
-        bp = BasePoint(x=0, y=0, z=0, ih=0)
+        bp = BasePoint(x=0, y=0, z=0, ih=0, b_zero_st=0.0 )
         for row in self.rows:
             fs = row.split('+')
             try:
@@ -57,7 +57,8 @@ class FormatParser:
             dist = float(fs[2].split('m')[0])
             angle = deg_to_gon(float(fs[3][:-1]) / 10000)
             z_angle = deg_to_gon(float(fs[4][:-3]) / 10000)
-            p = PolarPoint(dist=dist,
+            p = PolarPoint(angle_unit="gon",
+                           dist=dist,
                            angle=angle,
                            z_angle=z_angle,
                            th=th,
