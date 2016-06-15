@@ -219,6 +219,7 @@ class FormatParser:
         points_coord = {}
         points = []
         pid = 0
+        station_id = 1
 
         for row in self.rows:
             rec = _record(row)
@@ -261,7 +262,7 @@ class FormatParser:
                     station_point
                 except NameError:
                     station_point = UNKNOWN_STATION
-                    station_name = 'station' & pid
+                    station_name = 'station_' + str(station_id)
                     points_coord[station_name] = station_point
                 stf = Feature(station_point,
                               desc='ST',
@@ -352,6 +353,11 @@ class FormatParser:
                     point = points_coord[point_name]
                 except KeyError:
                     point = UNKNOWN_POINT
+                try:
+                    station_name
+                except UnboundLocalError:
+                    station_name = 'station_' + str(station_id)
+                    station_id += 1
                 f = Feature(point,
                             desc='PO',
                             id=pid,
@@ -364,6 +370,7 @@ class FormatParser:
                             slope_dist=slope_dist,
                             horizontal_dist=horizontal_dist,
                             th=th,
+                            station_name=station_name,
                             attrib=attrib)
                 points.append(f)
                 pid += 1

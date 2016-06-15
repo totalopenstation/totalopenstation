@@ -274,6 +274,7 @@ class FormatParser(Parser):
 
         points = []
         ldata = len(self.line[0].split()[0].lstrip('*')[7:])
+        station_id = 1
 
         for line in self.line:
             tokens = line.split()
@@ -386,6 +387,12 @@ class FormatParser(Parser):
                             p = Point(x, y, z)
                         else:
                             p = UNKNOWN_POINT
+
+                        try:
+                            station_name
+                        except UnboundLocalError:
+                            station_name = 'station_' + str(station_id)
+                            station_id += 1
                         f = Feature(p,
                                     desc='PO',
                                     id=pid,
@@ -400,6 +407,7 @@ class FormatParser(Parser):
                                     ih=ih,
                                     ppm=ppm,
                                     prism_constant=prism_constant,
+                                    st_name=station_name,
                                     attrib=attrib)
                         points.append(f)
                 else:
@@ -413,8 +421,11 @@ class FormatParser(Parser):
 
                     if x:
                         p = Point(x, y, z)
+                        station_name = point_name
                     else:
                         p = UNKNOWN_STATION
+                        station_name = "station_" + str(station_id)
+                        station_id += 1
                     f = Feature(p,
                                 desc='ST',
                                 id=pid,

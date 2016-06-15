@@ -43,10 +43,10 @@ class OutputFormat:
             self.data[0].geometry.z
         except ValueError:
             self.writer.writerow(('PID', 'type', 'Point Name', 'x', 'y', 'angle', 'z_angle', 'distance',
-                                 'th', 'ih', 'circle'))
+                                 'th', 'ih', 'circle', 'station'))
         else:
             self.writer.writerow(('PID', 'type', 'Point Name', 'x', 'y', 'z', 'angle', 'z_angle', 'distance',
-                                  'th', 'ih', 'circle'))
+                                  'th', 'ih', 'circle', 'station'))
         for feature in self.data:
             row = [feature.id,
                    feature.desc,
@@ -85,6 +85,10 @@ class OutputFormat:
                            dist,
                            feature.properties["th"]])
                 row.extend([""] * 2)
+                try:
+                    row.extend([feature.properties["st_name"]])
+                except KeyError:
+                    row.extend([""])
             self.writer.writerow(row)
 
         return self.output.getvalue()
