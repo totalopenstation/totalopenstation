@@ -61,8 +61,11 @@ class OutputFormat:
                 row.extend([""] * 6)
             if feature.desc == "ST":
                 row.extend([""] * 4)
-                row.extend([feature.properties["ih"],
-                           ""])
+                try:
+                    row.extend([feature.properties["ih"],
+                               ""])
+                except KeyError:
+                    row.extend([""] * 2)
             if feature.desc == "BS":
                 row.extend([""] * 5)
                 row.extend([feature.properties["circle"]])
