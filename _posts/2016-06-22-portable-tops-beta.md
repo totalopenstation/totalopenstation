@@ -1,6 +1,6 @@
 ---
 layout: post
-title: " Portable TOPS for Windows, beta release"
+title: "Portable TOPS for Windows, beta release"
 date: 2016-06-22 18:59 CEST
 ---
 
