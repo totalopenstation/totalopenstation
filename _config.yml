@@ -13,3 +13,4 @@ author:
 gems:
   - jekyll-feed
   - jekyll-mentions
+  - jekyll-seo-tag
