@@ -118,9 +118,11 @@ class FormatParser(Parser):
             except KeyError:
                 ppm = None
                 prism_constant = None
-        if ppm_sign:
+            else:
+                ppm = float(ppm_sign + ppm_data)
+                prism_constant = float(pc_sign + pc_data)
+        else:
             ppm = float(ppm_sign + ppm_data)
-        if pc_sign:
             prism_constant = float(pc_sign + pc_data)
 
         return ppm, prism_constant
