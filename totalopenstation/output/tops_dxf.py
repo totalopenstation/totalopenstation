@@ -54,6 +54,7 @@ class OutputFormat:
         result += '  2\nHEADER\n'
         result += '  9\n$ACADVER\n'
         result += '  1\nAC1009\n' # R11
+        result += '  0\nENDSEC\n'
 
         # extract layer list
         codes = set([p.desc for p in self.data])
