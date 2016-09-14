@@ -2,6 +2,7 @@
 # filename: formats/__init__.py
 # Copyright 2008-2010 Stefano Costa <steko@iosa.it>
 # Copyright 2008 Luca Bianconi <luxetluc@yahoo.it>
+# Copyright 2015-2016 Damien Gaignon <damien.gaignon@gmail.com>
 
 # This file is part of Total Open Station.
 
@@ -36,6 +37,10 @@ class Feature(g.Feature):
     def __init__(self, geom, desc, id=None, **properties):
         g.Feature.__init__(self, geom, properties, feature_id=id)
         self.properties['desc'] = desc
+
+    @g.Feature.geometry.setter
+    def geometry(self, value):
+        self._geometry = value
 
     @property
     def desc(self):

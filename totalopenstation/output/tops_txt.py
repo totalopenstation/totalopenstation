@@ -22,17 +22,16 @@
 
 
 def to_txt(d):
-    string = "%s %s %s\n" % (d[1], d[2], d[3])
+    string = "%s %s %s\n" % (d.geometry.x, d.geometry.y, d.geometry.z)
     return string
 
 class OutputFormat:
 
     """
-    Exports points data in TXT (comma-separated) format line by line.
+    Exports points data in TXT (space-separated) format line by line.
 
     ``data`` should be an iterable (e.g. list) containing one iterable
-    (e.g.  tuple) for each point. The default order is PID, x, y, z,
-    TEXT.
+    (e.g.  tuple) for each point. The default order is x, y, z.
 
     This is consistent with our current standard.
     """

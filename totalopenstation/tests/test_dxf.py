@@ -23,7 +23,7 @@ class TestCSVOutput(unittest.TestCase):
     def test_output(self):
         self.output = OutputFormat(self.data, separate_layers=False).process()
         self.assertEqual(self.output.splitlines()[1], 'DXF created from Total Open Station')
-        self.assertEqual(self.output.splitlines()[65], 'TESTPOINT')
-        self.assertEqual(self.output.splitlines()[101], 'TESTPOINT2')
-        self.assertEqual(self.output.splitlines()[137], 'TESTLINE')
-        self.assertEqual(self.output.splitlines()[181], 'EOF')
+        self.assertEqual(self.output.splitlines()[67], 'TESTPOINT')
+        self.assertEqual(self.output.splitlines()[103], 'TESTPOINT2')
+        self.assertEqual(self.output.splitlines()[139], 'TESTLINE')
+        self.assertEqual(self.output.splitlines()[183], 'EOF')

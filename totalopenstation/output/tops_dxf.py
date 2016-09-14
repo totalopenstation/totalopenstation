@@ -54,12 +54,13 @@ class OutputFormat:
         result += '  2\nHEADER\n'
         result += '  9\n$ACADVER\n'
         result += '  1\nAC1009\n' # R11
+        result += '  0\nENDSEC\n'
 
         # extract layer list
         codes = set([p.desc for p in self.data])
         codes = [c.replace('.','_') for c in codes]
         layers = dict(enumerate(codes))
-        colors = dict(zip(layers.values(), layers.keys()))
+        colors = dict((i, j % 255) for i, j in zip(layers.values(), layers.keys()))
 
         # layer table
         result += '  0\nSECTION\n  2\nTABLES\n  0\nTABLE\n  2\nLAYER\n'
