@@ -22,8 +22,9 @@
 # along with Total Open Station.  If not, see
 # <http://www.gnu.org/licenses/>.
 
-from . import Feature
 from polar import BasePoint, PolarPoint
+from totalopenstation.formats.conversion import deg_to_gon
+from . import Feature
 
 
 class FormatParser:
@@ -40,7 +41,7 @@ class FormatParser:
 
     def _points(self):
         points = []
-        bp = BasePoint(x=0, y=0, z=0, ih=0)
+        bp = BasePoint(x=0, y=0, z=0, ih=0, b_zero_st=0.0 )
         for row in self.rows:
             fs = row.split('+')
             try:
@@ -54,13 +55,13 @@ class FormatParser:
                 continue
             coordorder = 'NEZ'
             dist = float(fs[2].split('m')[0])
-            angle = float(fs[3][:-1]) / 10000
-            z_angle = float(fs[4][:-3]) / 10000
-            p = PolarPoint(dist=dist,
+            angle = deg_to_gon(float(fs[3][:-1]) / 10000)
+            z_angle = deg_to_gon(float(fs[4][:-3]) / 10000)
+            p = PolarPoint(angle_unit="gon",
+                           dist=dist,
                            angle=angle,
                            z_angle=z_angle,
                            th=th,
-                           angle_type='deg',
                            base_point=bp,
                            pid=pid,
                            text=text,

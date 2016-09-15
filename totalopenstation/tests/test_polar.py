@@ -7,44 +7,38 @@ from totalopenstation.formats.polar import BasePoint, PolarPoint
 class TestPolar(unittest.TestCase):
 
     def setUp(self):
-        self.bp0 = BasePoint(x='0', y='0', z='0', ih='1.0')
-        self.bp1 = BasePoint(x='0', y='0', z='0', ih='1.324')
+        self.bp0 = BasePoint(x='0', y='0', z='0', ih='1.0', b_zero_st='0.0')
+        self.bp1 = BasePoint(x='0', y='0', z='0', ih='1.324', b_zero_st='0.0')
 
-        self.p0 = PolarPoint(dist=9,
+        self.p0 = PolarPoint(angle_unit='deg',
+                             dist=9,
                              angle=180,
                              z_angle=90,
                              th=0,
-                             angle_type='deg',
                              base_point=self.bp0,
                              pid=1,
                              text='Test Point',
-                             coordorder='NEZ')
+                             coordorder='ENZ')
 
-        self.p1 = PolarPoint(dist=24.567,
+        self.p1 = PolarPoint(angle_unit='gon',
+                             dist=24.567,
                              angle=34.120,
                              z_angle=100,
                              th=1.500,
-                             angle_type='gon',
                              base_point=self.bp0,
                              pid=2,
                              text='Real Point',
                              coordorder='NEZ')
 
-        self.p2 = PolarPoint(dist=13.825,
-                             angle={"D": '+35',
-                                    "M": '45',
-                                    "S": '10',
-                                    "milliseconds": '0'},
-                             z_angle={"D": '+91',
-                                      "M": '17',
-                                      "S": '51',
-                                      "milliseconds": '0'},
+        self.p2 = PolarPoint(angle_unit='dms',
+                             dist=13.825,
+                             angle=35.45100,
+                             z_angle=91.17510,
                              th=1.300,
-                             angle_type='dms',
                              base_point=self.bp1,
                              pid=3,
                              text='Real Point',
-                             coordorder='NEZ')
+                             coordorder='ENZ')
 
     def test_polar(self):
         p0_test = Point(0.0, -9.0, 1.0)
@@ -52,7 +46,7 @@ class TestPolar(unittest.TestCase):
         self.assertAlmostEqual(self.p0.to_point().y, p0_test.y)
         self.assertAlmostEqual(self.p0.to_point().z, p0_test.z)
 
-        p1_test = Point(12.5454572076, 21.1222392859, -0.5)
+        p1_test = Point(21.1222392859, 12.5454572076, -0.5)
         self.assertAlmostEqual(self.p1.to_point().x, p1_test.x)
         self.assertAlmostEqual(self.p1.to_point().y, p1_test.y)
         self.assertAlmostEqual(self.p1.to_point().z, p1_test.z)

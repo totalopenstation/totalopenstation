@@ -70,6 +70,11 @@ parser.add_option("-t",
                 dest="outformat",
                 help=_("select input FORMAT"),
                 metavar="FORMAT")
+parser.add_option("-r",
+                "--raw",
+                action="store_true",
+                dest="raw",
+                help=_("Enhanced parsed file process"))
 parser.add_option(
                 "--overwrite",
                 action="store_true",
@@ -151,7 +156,10 @@ def main(infile):
     '''After setting up all parameters, finally try to process input data.'''
 
     parsed_data = inputclass(infile)
-    parsed_points = parsed_data.points
+    if options.raw:
+        parsed_points = parsed_data.raw_line()
+    else:
+        parsed_points = parsed_data.points
 
     # processing options
     if options.xy_only:
