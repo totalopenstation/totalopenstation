@@ -20,14 +20,15 @@
 
 import json
 
+from totalopenstation.formats import FeatureCollection
 
 class OutputFormat:
     '''A GeoJSON output driver.'''
 
     def __init__(self, data):
 
-        self.data = data
+        self.feature_collection = FeatureCollection(data)
 
     def process(self):
 
-        return json.dumps(self.data.__geo_interface__)
+        return json.dumps(self.feature_collection.__geo_interface__)
