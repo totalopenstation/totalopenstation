@@ -19,12 +19,13 @@
 # along with Total Open Station.  If not, see
 # <http://www.gnu.org/licenses/>.
 
-from math import cos, sin, radians
+from math import cos, sin
 
-from . import Feature, Point
+from totalopenstation.formats.conversion import to_rad
+from . import Feature, Point, UNITS_CIRCLE
 
 
-def polar_to_cartesian(base_x, base_y, base_z, dist, angle, z_angle, ih, th):
+def polar_to_cartesian(angle_unit, base_x, base_y, base_z, dist, azimuth, z_angle, ih, th):
     '''Convert polar coordinates to cartesian.
 
     Needs base point coordinates, measurement angles and distance.
@@ -36,83 +37,66 @@ def polar_to_cartesian(base_x, base_y, base_z, dist, angle, z_angle, ih, th):
     - the vertical ``z_angle`` is hardcoded with zero at zenith
     '''
 
+    azimuth = to_rad(azimuth, angle_unit)
+    z_angle = to_rad(z_angle, angle_unit)
     dist_r = sin(z_angle) * dist
-    target_x = base_x + cos(angle) * dist_r
-    target_y = base_y + sin(angle) * dist_r
+    dX = sin(azimuth) * dist_r
+    dY = cos(azimuth) * dist_r
+    target_x = base_x + dX
+    target_y = base_y + dY
     target_z = base_z + ih + (cos(z_angle) * dist) - th
 
     return dict(x=target_x, y=target_y, z=target_z)
 
 
-def dms_to_deg(angle):
-    '''Convert degrees in DDD.MMSS format to decimal format.'''
-
-    angle = float(angle["D"]) + float(angle["M"]) / 60 + float(angle["S"]) / 3600 + \
-            float(angle["milliseconds"]) / 1000 / 3600
-    return angle
-
-
 class PolarPoint:
     '''A point geometry defined by polar coordinates.'''
 
-    COORDINATE_ORDER = ('NEZ', 'ENZ')
-
     def __init__(self,
+                 angle_unit,          # angle unit
                  dist,                # inclined distance
                  angle,               # horizontal angle
                  z_angle,             # vertical angle
                  th,                  # target height
-                 angle_type,          # degrees or gons
                  base_point,          # BasePoint object
                  pid,                 # point ID
                  text,                # point description
                  coordorder):   # cartesian coordinates order (NEZ, ENZ)
+        self.angle_unit = angle_unit
         self.dist = float(dist)
         self.th = float(th)
-        self.angle_type = angle_type
-        if angle_type == 'deg':
-            angle = float(angle)
-            z_angle = float(z_angle)
-            self.angle = radians(angle)
-            self.z_angle = radians(z_angle)
-        elif angle_type == 'gon':
-            angle = float(angle)
-            z_angle = float(z_angle)
-            self.angle = radians(angle * 0.9)
-            self.z_angle = radians(z_angle * 0.9)
-        elif angle_type == 'dms':
-            self.angle = radians(dms_to_deg(angle))
-            self.z_angle = radians(dms_to_deg(z_angle))
-        elif angle_type == "mil":
-            angle = float(angle)
-            z_angle = float(z_angle)
-            self.angle = radians(angle * 0.05625)
-            self.z_angle = radians(z_angle * 0.05625)
+        self.angle = float(angle)
+        self.z_angle = float(z_angle)
         self.pid = pid
         self.text = text
-        if any((coordorder == v for v in PolarPoint.COORDINATE_ORDER)):
-            self.coordorder = coordorder
-        else:
-            raise ValueError('Invalid coordinate order')
+        self.coordorder = coordorder
+
         # base point data
         self.base_x = base_point.x
         self.base_y = base_point.y
+        # For NEZ coordinate system, an inversion should be done before calculation
+        if self.coordorder == "NEZ":
+            self.base_x, self.base_y = self.base_y, self.base_x
         self.base_z = base_point.z
         self.ih = base_point.ih
+        self.b_zero_st = base_point.b_zero_st
 
     def to_point(self):
         '''Convert from PolarPoint to (cartesian) Point object'''
 
-        cart_coords = polar_to_cartesian(self.base_x,
-                                    self.base_y,
-                                    self.base_z,
-                                    self.dist,
-                                    self.angle,
-                                    self.z_angle,
-                                    self.ih,
-                                    self.th)
+        azimuth = (self.b_zero_st + self.angle) % UNITS_CIRCLE[self.angle_unit]
 
-        if self.coordorder == 'NEZ':
+        cart_coords = polar_to_cartesian(self.angle_unit,
+                                         self.base_x,
+                                         self.base_y,
+                                         self.base_z,
+                                         self.dist,
+                                         azimuth,
+                                         self.z_angle,
+                                         self.ih,
+                                         self.th)
+
+        if self.coordorder == "NEZ":
             cart_coords['x'], cart_coords['y'] = cart_coords['y'], cart_coords['x']
 
         cart_point = Point(cart_coords['x'],
@@ -125,7 +109,7 @@ class PolarPoint:
         '''Wrap geometry and other properties like id, description in a Feature.'''
 
         feature = Feature(self.to_point(),
-                          properties={'desc': self.desc},
+                          properties={'desc': self.desc, 'angle_unit': self.angle_unit},
                           id=self.pid)
         return feature
 
@@ -136,8 +120,9 @@ class BasePoint:
     TODO: find out whether ih is more commonly coupled to a base point or
     to each single point.'''
 
-    def __init__(self, x, y, z, ih):
+    def __init__(self, x, y, z, ih, b_zero_st):
         self.x = float(x)
         self.y = float(y)
         self.z = float(z)
         self.ih = float(ih)
+        self.b_zero_st = float(b_zero_st)

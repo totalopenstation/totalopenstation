@@ -21,6 +21,7 @@
 # <http://www.gnu.org/licenses/>.
 
 from pygeoif import geometry as g
+from math import pi
 
 
 class Point(g.Point):
@@ -45,6 +46,10 @@ class Feature(g.Feature):
     @property
     def desc(self):
         return self.properties['desc']
+
+    @property
+    def point_name(self):
+        return self.properties['point_name']
 
 
 class FeatureCollection(g.FeatureCollection):
@@ -97,6 +102,15 @@ class Parser:
 
         return LineString(map(lambda f: f.geometry, self.points))
 
+    def raw_line(self):
+        pass
+
+
+def check_coordorder(coordorder):
+    if any((coordorder == v for v in COORDINATE_ORDER)):
+        return coordorder
+    else:
+        raise ValueError('Invalid coordinate order')
 
 BUILTIN_INPUT_FORMATS = {
     'carlson_rw5': ('carlson_rw5', 'FormatParser', 'Carlson RW5'),
@@ -110,3 +124,16 @@ BUILTIN_INPUT_FORMATS = {
     'zeiss_r5': ('zeiss_r5', 'FormatParser', 'Zeiss R5'),
     'zeiss_rec_500': ('zeiss_rec_500', 'FormatParser', 'Zeiss REC 500'),
     }
+
+UNITS_CIRCLE = {
+    'dms': 360,
+    'deg': 360,
+    'gon': 400,
+    'mil': 6400,
+    'rad': 2 * pi,
+    }
+
+UNKNOWN_STATION = Point(10000, 10000, 100)
+UNKNOWN_POINT = Point(-1, -1, -1)
+
+COORDINATE_ORDER = ('NEZ', 'ENZ')
