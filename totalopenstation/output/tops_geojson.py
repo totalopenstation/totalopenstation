@@ -20,37 +20,15 @@
 
 import json
 
-
-def output_geojson(data):
-    '''A GeoJSON output driver.'''
-
-    fs = []
-
-    for point in data:
-        pid, x, y, z, text = point
-        x, y, z = [float(c) for c in x, y, z]
-        p = geojson.Point([x, y, z])
-        prop = dict(text=text)
-        f = geojson.Feature(id=pid, geom=p, properties=prop)
-        fs.append(f)
-    fc = geojson.FeatureCollection(fs)
-    return geojson.dumps(fc)
-
+from totalopenstation.formats import FeatureCollection
 
 class OutputFormat:
-    '''A GeoJSON output driver.
-
-    Depends on the geojson package http://pypi.python.org/pypi/geojson/
-
-    FIXME This is an example of how classes are probably useless for
-    coding output formats. A transition towards an eventual new
-    structure could be done in 2 passages, the first being making the
-    current classes empty wrappers around a function.'''
+    '''A GeoJSON output driver.'''
 
     def __init__(self, data):
 
-        self.data = data
+        self.feature_collection = FeatureCollection(data)
 
     def process(self):
 
-        return json.dumps(self.data.__geo_interface__)
+        return json.dumps(self.feature_collection.__geo_interface__)
