@@ -43,7 +43,9 @@ class FormatParser:
         base_points = {}
         points = []
         pid = 0
-
+        st = 0
+        cocircle = coih = False
+        
         for row in self.rows:
             fs = row.split(',')
             # Get angle and distance units
@@ -54,6 +56,36 @@ class FormatParser:
                     angle_unit = UNITS["angle"][fs[1].split(':')[1].strip()]
                 if fs[1].startswith('Dist Units:'):
                     dist_unit = UNITS["distance"][fs[1].split(':')[1].strip()]
+                # For fast setting, Trimble M3 can use comments for station
+                if fs[1].startswith('TI  HOLD') or fs[1].startswith('TI  Hz'):
+                    circle = fs[1].split('Hz')[1].strip().split()[0]
+                    cocircle = True
+                if fs[1].startswith('TI  INPUT'):
+                    try:
+                        ih = fs[1].split('ih')[1].strip().split()[0]
+                    except IndexError:
+                        ih = ih
+                    coih = True
+                if cocircle and coih:
+                    station_name = "st{}".format(st)
+                    try:
+                        station_point = points_coord[station_name]
+                    except KeyError:
+                        station_point = UNKNOWN_STATION
+                        points_coord[station_name] = station_point
+                    f = Feature(station_point,
+                            desc='ST',
+                            id=pid,
+                            point_name=station_name,
+                            dist_unit=dist_unit,
+                            ih=ih)
+                    points.append(f)
+                    b_zero_st = 0.0
+                    bp = BasePoint(x=station_point.x, y=station_point.y, z=station_point.z, ih=ih, b_zero_st=b_zero_st)
+                    base_points[station_name] = bp
+                    st += 1
+                    pid += 1
+                    cocircle = coih = False
 
             # Look for point coordinates
             if fs[0] in ('UP','MP', 'CC', 'RE', 'MC'):
@@ -210,6 +242,8 @@ class FormatParser:
         points_coord = {}
         points = []
         pid = 0
+        st = 0
+        cocircle = coih = False
 
         for row in self.rows:
             fs = row.split(',')
@@ -221,6 +255,33 @@ class FormatParser:
                     angle_unit = UNITS["angle"][fs[1].split(':')[1].strip()]
                 if fs[1].startswith('Dist Units:'):
                     dist_unit = UNITS["distance"][fs[1].split(':')[1].strip()]
+                # For fast setting, Trimble M3 can use comments for station
+                if fs[1].startswith('TI  HOLD') or fs[1].startswith('TI  Hz'):
+                    circle = fs[1].split('Hz')[1].strip().split()[0]
+                    cocircle = True
+                if fs[1].startswith('TI  INPUT'):
+                    try:
+                        ih = fs[1].split('ih')[1].strip().split()[0]
+                    except IndexError:
+                        ih = ih
+                    coih = True
+            if cocircle and coih:
+                station_name = "st{}".format(st)
+                try:
+                    station_point = points_coord[station_name]
+                except KeyError:
+                    station_point = UNKNOWN_STATION
+                    points_coord[station_name] = station_point
+                f = Feature(station_point,
+                        desc='ST',
+                        id=pid,
+                        point_name=station_name,
+                        dist_unit=dist_unit,
+                        ih=ih)
+                points.append(f)
+                st += 1
+                pid += 1
+                cocircle = coih = False
 
             # Look for point coordinates
             if fs[0] in ('UP','MP', 'CC', 'RE', 'MC'):
