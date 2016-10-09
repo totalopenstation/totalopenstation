@@ -55,6 +55,8 @@ User manual
 
    installing
    running
+   totalopenstation-cli-connector
+   totalopenstation-cli-parser
    getting_sample_data
    models
    formats
@@ -72,7 +74,6 @@ Total Open Station development
    contributing
    users
    release
-   roadmap
 
 Indices and tables
 ------------------
