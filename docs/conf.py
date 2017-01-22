@@ -73,7 +73,9 @@ release = '0.4.0beta2'
 
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
-exclude_patterns = ['_build']
+exclude_patterns = ['_build',
+                    'global.rst',
+]
 
 # The reST default role (used for this markup: `text`) to use for all
 # documents.
@@ -99,6 +101,9 @@ pygments_style = 'sphinx'
 # If true, keep warnings as "system message" paragraphs in the built documents.
 #keep_warnings = False
 
+rst_prolog = """
+.. include:: /global.rst
+"""
 
 # -- Options for HTML output ----------------------------------------------
 
