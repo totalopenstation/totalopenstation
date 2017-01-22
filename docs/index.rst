@@ -91,6 +91,8 @@ Stefano Costa and Luca Bianconi, archaeologists.
 
 .. _IOSA: http://www.iosa.it/
 
+Damien Gaignon, land surveyor, has joined the project in september 2015.
+
 Total Open Station is licensed under the GNU General Public License
 version 3 or, at your option, any later version.
 

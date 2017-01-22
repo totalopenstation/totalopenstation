@@ -49,7 +49,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'Total Open Station'
-copyright = u'2016 Stefano Costa and Luca Bianconi'
+copyright = u'2015-2017, Stefano Costa, Luca Bianconi and Damien Gaignon'
 author = u'Stefano Costa'
 
 # The version info for the project you're documenting, acts as replacement for
@@ -203,7 +203,7 @@ latex_elements = {
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
   ('index', 'TotalOpenStation.tex', u'Total Open Station Documentation',
-   u'Stefano Costa, Luca Bianconi', 'manual'),
+   u'Stefano Costa, Luca Bianconi, Damien Gaignon', 'manual'),
 ]
 
 # The name of an image file (relative to this directory) to place at the top of
@@ -255,7 +255,7 @@ man_pages = [
 #  dir menu entry, description, category)
 texinfo_documents = [
   ('index', 'TotalOpenStation', u'Total Open Station Documentation',
-   u'Stefano Costa, Luca Bianconi', 'TotalOpenStation', 'One line description of project.',
+   u'Stefano Costa, Luca Bianconi, Damien Gaignon', 'TotalOpenStation', 'One line description of project.',
    'Miscellaneous'),
 ]
 
