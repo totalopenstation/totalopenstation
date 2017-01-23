@@ -1,6 +1,8 @@
-=====================
- Getting sample data
-=====================
+.. _getting_sample_data:
+
+===================
+Getting sample data
+===================
 
 Even when your device is not listed among the supported ones, Total
 Open Station can still be useful, particularly for:
