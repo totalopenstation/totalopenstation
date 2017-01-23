@@ -1,8 +1,8 @@
 .. _if_new:
 
-===========================
- Adding a new input format
-===========================
+=========================
+Adding a new input format
+=========================
 
 There are hundreds of survey data formats out there. One by one, we
 will get them added into Total Open Station. Here's a general process

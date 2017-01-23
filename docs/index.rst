@@ -3,9 +3,9 @@
    file completely to your liking, but it should at least contain the
    root `toctree` directive.
 
-====================
- Total Open Station
-====================
+==================
+Total Open Station
+==================
 
 Total Open Station (TOPS for friends) is a free software program for
 downloading and processing data from total station devices.
@@ -43,7 +43,7 @@ team through our dedicated support channel and `mailing list`_.
 .. _`mailing list`: https://lists.berlios.de/mailman/listinfo/tops-dev
 
 Documentation
-===============
+=============
 
 
 User manual
@@ -64,8 +64,8 @@ User manual
    library
    faq
 
-Total Open Station development
-------------------------------
+Development
+-----------
 
 .. toctree::
    :maxdepth: 1

@@ -1,8 +1,8 @@
 .. _input_formats:
 
-===============
- Input formats
-===============
+=============
+Input formats
+=============
 
 .. versionadded:: 0.2
    Total Open Station supports a number of input data formats, which
