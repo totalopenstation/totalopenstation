@@ -55,9 +55,9 @@ User manual
 
    installing
    interfaces/main
+   input_formats/main
    getting_sample_data
    models
-   formats
    glossary
    library
    faq
@@ -77,6 +77,7 @@ Indices and tables
 ------------------
 
 * :ref:`genindex`
+* :ref:`Implemented Formats <implemented_formats>`
 * :ref:`modindex`
 * :ref:`search`
 
