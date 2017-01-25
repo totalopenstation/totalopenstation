@@ -54,9 +54,7 @@ User manual
    :glob:
 
    installing
-   running
-   totalopenstation-cli-connector
-   totalopenstation-cli-parser
+   interfaces/main
    getting_sample_data
    models
    formats
