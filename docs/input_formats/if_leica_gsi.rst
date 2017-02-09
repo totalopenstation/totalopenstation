@@ -479,6 +479,16 @@ Most of the time, a GSI file is composed of three type of lines:
 
 WI in [] are optional.
 
+Module documentation
+====================
+
+.. automodule:: formats.leica_gsi
+   :members:
+   :undoc-members:
+   :show-inheritance:
+   :platform: any
+   :synopsis: Read data in the GSI8 and GSI16 formats
+
 
 Known limitations
 =================
