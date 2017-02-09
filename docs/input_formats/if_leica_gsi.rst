@@ -1,4 +1,4 @@
-.. _if
+.. _if_leica_gsi:
 
 =======================
 :mod:`leica_gsi` -- GSI
