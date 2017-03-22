@@ -50,12 +50,32 @@ def _record(recstr):
     return record_fields
 
 class FormatParser:
+    '''The FormatParser for Carlson RW5 data format.
+
+    Args:
+        data (str): A string representing the file to be parsed.
+
+    Attributes:
+        rows (list): A list of each lines of the file being parsed which do not begin with '-- '.
+    '''
 
     def __init__(self, data):
         self.rows = (r for r in data.splitlines() if not r.startswith('-- '))
         # Text comments, but not comment records ------------------------^
 
     def _points(self):
+        '''Extract all RW5 data.
+
+        This parser is based on the information in :ref:`if_carlson_rw5`
+
+        Returns:
+            A list of GeoJSON-like Feature object representing points coordinates.
+
+        Raises:
+
+        Notes:
+            Sometimes needed records are commented so it is needed to parse also comments
+        '''
         points_coord = {}
         base_points = {}
         points = []
@@ -197,23 +217,21 @@ class FormatParser:
     def raw_line(self):
         '''Extract all Carlson RW5 data.
 
-        Based on the "Tripod Data Systems, Inc. Raw Data Record Specification Survey Pro™ Version 3.6" document.
+        This parser is based on the information in :ref:`if_carlson_rw5`
 
-        Information needed are:
-            - station :
-            - backsight :
-            - direct point :
-            - computed point :
+        Returns:
+            A list of GeoJSON-like Feature object representing points coordinates.
 
-        Notes :
-            - sometimes needed records are commented so it is needed to parse also comments
+        Raises:
 
-        Units are unchanged, format of the original parsed file
+        Notes:
+            Information needed are:
+                - station : Occupy Point and Line of Sight
+                - backsight : Backsight
+                - direct point : Store Point
+                - computed point : Foresight Direct/Reverse, Traverse/Sideshot, Backsight Direct/Reverse
 
-        TODO:
-            - add all missing code
-            - get comments
-            - add the possibility to customize code
+            Sometimes needed records are commented so it is needed to parse also comments
         '''
 
         points_coord = {}
