@@ -1,8 +1,8 @@
 .. _if_new:
 
-===========================
- Adding a new input format
-===========================
+=========================
+Adding a new input format
+=========================
 
 There are hundreds of survey data formats out there. One by one, we
 will get them added into Total Open Station. Here's a general process
@@ -58,6 +58,6 @@ and parser. The development of Total Open Station is not in a stable
 shape, so expect the API to change in future versions. However, please
 understand that a new format parser is not the right place to do that.
 
-Experiments are welcome. Mercurial allows for easy branching: you are
+Experiments are welcome. Git allows for easy branching: you are
 encouraged to clone our repository and go crazy with new features,
 formats.

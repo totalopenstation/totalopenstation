@@ -1,8 +1,8 @@
-.. _totalopenstation-cli-parser:
+.. _cli-parser:
 
-=============================
- totalopenstation-cli-parser
-=============================
+===========================
+TotalOpenStation CLI Parser
+===========================
 
 This is a command line application to convert raw data to common formats for
 use in CAD or GIS environments.
