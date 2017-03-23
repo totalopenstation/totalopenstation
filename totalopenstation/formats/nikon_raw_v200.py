@@ -29,16 +29,31 @@ UNITS = {"angle": {"DDDMMSS": "dms", "Gons": "gon", "Degrees": "deg"},
 
 
 class FormatParser:
-    '''A FormatParser for Nikon RAW data format V2.00.
+    '''The FormatParser for Nikon Raw v2.00 data.
 
-    It doesn't inherit from the base Parser class because the internal
-    procedure is quite different, but it implements the same API so it
-    can work nicely with other parts of the library.'''
+    Args:
+        data (str): A string representing the file to be parsed.
+
+    Attributes:
+        rows (list): A list of each lines of the file being parsed.
+    '''
 
     def __init__(self, data):
         self.rows = data.splitlines()
 
     def _points(self):
+        '''Extract all Nikon RAW data format V2.00.
+
+        This parser is based on the information in :ref:`if_nikon_raw`
+
+        Returns:
+            A list of GeoJSON-like Feature object representing points coordinates.
+
+        Raises:
+
+        Notes:
+            Sometimes needed records are commented so it is needed to parse also comments
+        '''
         points_coord = {}
         base_points = {}
         points = []
@@ -224,20 +239,23 @@ class FormatParser:
     def raw_line(self):
         '''Extract all Nikon Raw v2.00 data.
 
-        Based on the "Total Station Nivo Series - Nivo3.M and Nivo5.M" document.
+        This parser is based on the information in :ref:`if_nikon_raw`
 
-        Information needed are:
-            - station :
-            - backsight :
-            - direct point :
-            - computed point :
+        Returns:
+            A list of GeoJSON-like Feature object representing points coordinates.
 
-        Units are unchanged, format of the original parsed file
+        Raises:
 
-        TODO:
-            - add all missing code
-            - get comments
-            - add the possibility to customize code
+        Notes:
+            Information needed are:
+                - station : Station record
+                - backsight : Control point record
+                - direct point : Uploaded point or Manually input point or Calculated coordinate or Resection point
+                - computed point : Sideshot, Stakeout, Face 1 or 2
+  		  
+           Sometimes needed records are commented so it is needed to parse also comments like
+                - coordinates order
+                - units
         '''
         points_coord = {}
         points = []
