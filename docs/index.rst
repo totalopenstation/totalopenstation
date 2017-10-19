@@ -3,9 +3,9 @@
    file completely to your liking, but it should at least contain the
    root `toctree` directive.
 
-====================
- Total Open Station
-====================
+==================
+Total Open Station
+==================
 
 Total Open Station (TOPS for friends) is a free software program for
 downloading and processing data from total station devices.
@@ -43,7 +43,7 @@ team through our dedicated support channel and `mailing list`_.
 .. _`mailing list`: https://lists.berlios.de/mailman/listinfo/tops-dev
 
 Documentation
-===============
+=============
 
 
 User manual
@@ -54,16 +54,22 @@ User manual
    :glob:
 
    installing
-   running
-   getting_sample_data
-   models
-   formats
+   interfaces/main
+   input_formats/main
+   models/main
    glossary
    library
    faq
 
-Total Open Station development
-------------------------------
+.. toctree::
+   :hidden:
+
+   interfaces/cli_connector
+   interfaces/cli_parser
+   interfaces/gui_main
+
+Development
+-----------
 
 .. toctree::
    :maxdepth: 1
@@ -72,12 +78,18 @@ Total Open Station development
    contributing
    users
    release
-   roadmap
+
+.. toctree::
+   :hidden:
+
+   input_formats/new
 
 Indices and tables
 ------------------
 
 * :ref:`genindex`
+* :ref:`Implemented Formats <implemented_formats>`
+* :ref:`Implemented Models <implemented_models>`
 * :ref:`modindex`
 * :ref:`search`
 
@@ -89,6 +101,8 @@ Total Open Station is mainly developed as part of the IOSA_ project by
 Stefano Costa and Luca Bianconi, archaeologists.
 
 .. _IOSA: http://www.iosa.it/
+
+Damien Gaignon, land surveyor, has joined the project in september 2015.
 
 Total Open Station is licensed under the GNU General Public License
 version 3 or, at your option, any later version.
