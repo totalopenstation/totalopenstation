@@ -47,6 +47,8 @@ source_suffix = '.rst'
 # The master toctree document.
 master_doc = 'index'
 
+
+
 # General information about the project.
 project = u'Total Open Station'
 copyright = u'2015-2017, Stefano Costa, Luca Bianconi and Damien Gaignon'

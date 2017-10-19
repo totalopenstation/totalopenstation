@@ -12,7 +12,7 @@ different format and number of fields. Recorded points are in rows
 that start with the ``SS`` string, while fixed base points start with
 the ``ST`` string.
 
-.. literalinclude:: ../../sample_data/nikon_raw_v200.tops
+.. literalinclude:: ../../sample_data/nikon_raw_v200/nikon_raw_v200.tops
 
 Acknowledgements
 ================

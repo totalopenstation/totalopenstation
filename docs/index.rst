@@ -61,6 +61,13 @@ User manual
    library
    faq
 
+.. toctree::
+   :hidden:
+
+   interfaces/cli_connector
+   interfaces/cli_parser
+   interfaces/gui_main
+
 Development
 -----------
 
@@ -71,6 +78,11 @@ Development
    contributing
    users
    release
+
+.. toctree::
+   :hidden:
+
+   input_formats/new
 
 Indices and tables
 ------------------

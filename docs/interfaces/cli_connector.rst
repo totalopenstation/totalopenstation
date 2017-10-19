@@ -25,7 +25,7 @@ Options
 Using totalopenstation-cli-connector
 ------------------------------------
 
-The :option:`--model` and :option:`--port` options are mandatory.
+The ``--model`` and ``--port`` options are mandatory.
 
 In most cases the default parameters for serial connection should work, but
 you should know how your total station is set, or alternatively you should

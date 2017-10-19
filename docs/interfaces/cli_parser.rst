@@ -39,7 +39,7 @@ Output goes to stdout by default, but it is recommended to use the -o option.
 Raw parsing
 -----------
 
-The :option:`--raw` option is useful when exporting to CSV for processing in
+The ``--raw`` option is useful when exporting to CSV for processing in
 other programs, and will export all field records found in the raw data from
 the total station. It only makes sense for certain input formats where the
 original measurements are stored, namely:
