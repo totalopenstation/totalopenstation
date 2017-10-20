@@ -482,7 +482,7 @@ WI in [] are optional.
 Module documentation
 ====================
 
-.. automodule:: formats.leica_gsi
+.. automodule:: totalopenstation.formats.leica_gsi
    :members:
    :undoc-members:
    :show-inheritance:
