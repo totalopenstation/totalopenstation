@@ -41,6 +41,7 @@ Formats known are :
    :glob:
 
    if_*
+   tds
 
 Other formats
 =============
