@@ -68,21 +68,21 @@ class OutputFormat:
             if self.separate_layers is True:
                 result += '  0\nLAYER\n'           # start definition of LAYER
                 result += '  5\n10\n'              # LAYER handle
-                result += '  2\n%s_POINT\n' % l    # LAYER name
+                result += '  2\n%s_POINTS\n' % l    # LAYER name
                 result += ' 70\n0\n'              # LAYER is not frozen
                 result += ' 62\n%s\n' % (int(colors[l]) + 1) # LAYER color
                 result += '  6\nCONTINUOUS\n'      # LAYER linetype
 
                 result += '  0\nLAYER\n'           # same as above
                 result += '  5\n10\n'
-                result += '  2\n%s_QUOTE\n' % l
+                result += '  2\n%s_Z_COORDS\n' % l
                 result += ' 70\n0\n'
                 result += ' 62\n%s\n' % (int(colors[l]) + 1)
                 result += '  6\nCONTINUOUS\n'
 
                 result += '  0\nLAYER\n'           # ditto
                 result += '  5\n10\n'
-                result += '  2\n%s_NUMBER\n' % l
+                result += '  2\n%s_LABELS\n' % l
                 result += ' 70\n0\n'
                 result += ' 62\n%s\n' % (int(colors[l]) + 1)
                 result += '  6\nCONTINUOUS\n'
@@ -104,9 +104,9 @@ class OutputFormat:
             geom = p.geometry
             if geom.geom_type == 'Point':
                 if self.separate_layers is True:
-                    layer_point = "%s_POINT" % p_layer
-                    layer_z_text = "%s_QUOTE" % p_layer
-                    layer_id_text = "%s_NUMBER" % p_layer
+                    layer_point = "%s_POINTS" % p_layer
+                    layer_z_text = "%s_Z_COORD" % p_layer
+                    layer_id_text = "%s_LABELS" % p_layer
                 else:
                     layer_point = layer_z_text = layer_id_text = p_layer
                 p_yz = str(float(geom.y) - (self.text_height * 1.2))
