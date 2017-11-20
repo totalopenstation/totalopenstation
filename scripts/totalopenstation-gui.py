@@ -1,8 +1,8 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
 # filename: totalopenstation-gui.py
-# Copyright 2008-2014 Stefano Costa <steko@iosa.it>
-# Copyright 2010,2012 Luca Bianconi <luxetluc@yahoo.it>
+# Copyright © 2008-2014 Stefano Costa <steko@iosa.it>
+# Copyright © 2010,2012 Luca Bianconi <luxetluc@yahoo.it>
 #
 # This file is part of Total Open Station.
 #
@@ -45,7 +45,7 @@ _ = t.lgettext
 def scan():
     """scan for available ports. return a list of tuples (num, name).
 
-    Part of pySerial (http://pyserial.sf.net)  (C)2002-2003 <cliechti@gmx.net>
+    Part of pySerial (http://pyserial.sf.net)  © 2002-2003 <cliechti@gmx.net>
     """
 
     # TODO move this function in a separate module together with scanwin32.py
@@ -119,12 +119,12 @@ class AboutDialog(tkSimpleDialog.Dialog):
     def body(self, master):
         title = "Total Open Station %s" % totalopenstation.__version__
         message = _("""
-Total Open Station is copyright 2008-2015 Luca Bianconi, Stefano Costa
+Total Open Station is copyright © 2008-2017 Luca Bianconi, Stefano Costa
 and the IOSA project, under the GNU GPL v3 or any later version.
 
 http://tops.iosa.it/
 
-The application logo is copyright 2008 Lapo Calamandrei under the same
+The application logo is copyright © 2008 Lapo Calamandrei under the same
 license.""")
 
         self.logo_data = logo_data
@@ -669,7 +669,7 @@ class Tops:
         pass
 
     def on_app_close(self):
-        '''Callback function to ask confirmation before quitting the application.'''
+        '''Callback function to ask for confirmation before quitting the application.'''
 
         if askokcancel("Quit","Do you really want to quit application ?"):
             self.myParent.destroy()
@@ -736,7 +736,7 @@ class Tops:
                     st = DownloadDialog(self.myParent)
                     sleeptime = float(self.option6_value.get())
                     if st.result:
-                        self.status.set(_("Waiting for data: please start transfer from your total station menu."))
+                        self.status.set(_("Waiting for data: Please start the transfer from your total station menu."))
                         while mc.inWaiting() == 0:
                             sleep(sleeptime)
                         n = mc.inWaiting()
