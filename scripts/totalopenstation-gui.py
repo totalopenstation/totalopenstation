@@ -119,7 +119,7 @@ class AboutDialog(tkSimpleDialog.Dialog):
     def body(self, master):
         title = "Total Open Station %s" % totalopenstation.__version__
         message = _("""
-Total Open Station is copyright © 2008-2017 Luca Bianconi, Stefano Costa
+Total Open Station is copyright © 2008-2015 Luca Bianconi, Stefano Costa
 and the IOSA project, under the GNU GPL v3 or any later version.
 
 http://tops.iosa.it/
