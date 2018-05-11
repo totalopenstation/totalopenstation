@@ -5,7 +5,7 @@ chardet==3.0.4
 docutils==0.14
 idna==2.6
 imagesize==1.0.0
-Jinja2==2.9.6
+Jinja2==2.10
 MarkupSafe==1.0
 pudb==2017.1.4
 pygeoif==0.7
