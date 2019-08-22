@@ -3,12 +3,12 @@ name: Total Open Station
 # Setup
 title: Total Open Station
 description: 'Total Open Station downloads data from total stations.'
-url: http://tops.iosa.it/
+url: https://tops.iosa.it/
 
 
 author:
   name: 'Stefano Costa'
-  url: http://steko.iosa.it/
+  url: https://steko.iosa.it/
 
 gems:
   - jekyll-feed
