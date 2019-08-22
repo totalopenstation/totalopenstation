@@ -1,7 +1,7 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
 # filename: totalopenstation-gui.py
-# Copyright 2008-2014 Stefano Costa <steko@iosa.it>
+# Copyright 2008-2019 Stefano Costa <steko@iosa.it>
 # Copyright 2010,2012 Luca Bianconi <luxetluc@yahoo.it>
 #
 # This file is part of Total Open Station.
@@ -119,10 +119,11 @@ class AboutDialog(tkSimpleDialog.Dialog):
     def body(self, master):
         title = "Total Open Station %s" % totalopenstation.__version__
         message = _("""
-Total Open Station is copyright 2008-2015 Luca Bianconi, Stefano Costa
-and the IOSA project, under the GNU GPL v3 or any later version.
+Total Open Station is copyright 2008-2019 Stefano Costa, Damien
+Gaignon, Luca Bianconi and the IOSA project, under the GNU GPL v3
+or any later version.
 
-http://tops.iosa.it/
+https://tops.iosa.it/
 
 The application logo is copyright 2008 Lapo Calamandrei under the same
 license.""")
