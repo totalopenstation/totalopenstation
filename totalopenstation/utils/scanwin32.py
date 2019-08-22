@@ -80,7 +80,7 @@ SetupDiGetDeviceRegistryProperty.argtypes = [HDEVINFO, PSP_DEVINFO_DATA, DWORD, 
 SetupDiGetDeviceRegistryProperty.restype = BOOL
 
 
-GUID_CLASS_COMPORT = GUID(0x86e0d1e0L, 0x8089, 0x11d0,
+GUID_CLASS_COMPORT = GUID(0x86e0d1e0, 0x8089, 0x11d0,
     (ctypes.c_ubyte*8)(0x9c, 0xe4, 0x08, 0x00, 0x3e, 0x30, 0x1f, 0x73))
 
 DIGCF_PRESENT = 2
@@ -183,10 +183,10 @@ def comports(available_only=True):
 if __name__ == '__main__':
     import serial
     for port, desc, hwid in comports():
-        print "%s: %s (%s)" % (port, desc, hwid)
-        print " "*10, serial.Serial(port) #test open
+        print("%s: %s (%s)" % (port, desc, hwid))
+        print(" "*10, serial.Serial(port)) #test open
     
     # list of all ports the system knows
-    print "-"*60
+    print("-"*60)
     for port, desc, hwid in comports(False):
-        print "%-10s: %s (%s)" % (port, desc, hwid)
+        print("%-10s: %s (%s)" % (port, desc, hwid))

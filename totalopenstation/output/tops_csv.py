@@ -21,7 +21,7 @@
 # <http://www.gnu.org/licenses/>.
 
 import csv
-import cStringIO
+import io
 
 
 class OutputFormat:
@@ -34,7 +34,7 @@ class OutputFormat:
 
     def __init__(self, data):
         self.data = data
-        self.output = cStringIO.StringIO()
+        self.output = io.StringIO()
         self.writer = csv.writer(self.output, quoting=csv.QUOTE_NONNUMERIC)
 
     def process(self):

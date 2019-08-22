@@ -66,23 +66,23 @@ if isinstance(modelclass, tuple):
         mod, cls, name = modelclass
         modelclass = getattr(
             __import__('totalopenstation.models.' + mod, None, None, [cls]), cls)
-    except ImportError, msg:
+    except ImportError as msg:
         sys.exit(_('Error loading the required model module: %s' % msg))
 
 station = modelclass(options.port)
 try:
     station.close()  # sometimes the port will be already open for no reason
     station.open()
-except serial.SerialException, detail:
+except serial.SerialException as detail:
     sys.exit(detail)
 
-print "Now you can start download from %s device" % options.model
+print("Now you can start download from %s device" % options.model)
 
 station.start()
 station.dl_started.wait()
-print "Download started..."
+print("Download started...")
 station.dl_finished.wait()
-print "Download finished..."
+print("Download finished...")
 result = station.result
 
 if options.outfile:
@@ -90,7 +90,7 @@ if options.outfile:
         e = open(options.outfile, 'w')
         e.write(result)
         e.close()
-        print "Downloaded data saved to out file %s" % options.outfile
+        print("Downloaded data saved to out file %s" % options.outfile)
     else:
         sys.exit("Specified output file already exists\n")
 else:
