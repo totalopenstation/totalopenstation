@@ -95,6 +95,6 @@ class UserPrefs(ConfigParser):
         ''' set specific config file value '''
 
         for k, v in list(values.items()):
-            self.set('topsconfig', k, v)
+            self.set('topsconfig', str(k), str(v))
 
         self.write()
