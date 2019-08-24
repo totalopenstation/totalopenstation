@@ -50,9 +50,9 @@ master_doc = 'index'
 
 
 # General information about the project.
-project = u'Total Open Station'
-copyright = u'2015-2019, Stefano Costa, Damien Gaignon and Luca Bianconi'
-author = u'Stefano Costa'
+project = 'Total Open Station'
+copyright = '2015-2019, Stefano Costa, Damien Gaignon and Luca Bianconi'
+author = 'Stefano Costa'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -209,8 +209,8 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-  ('index', 'TotalOpenStation.tex', u'Total Open Station Documentation',
-   u'Stefano Costa, Damien Gaignon, Luca Bianconi', 'manual'),
+  ('index', 'TotalOpenStation.tex', 'Total Open Station Documentation',
+   'Stefano Costa, Damien Gaignon, Luca Bianconi', 'manual'),
 ]
 
 # The name of an image file (relative to this directory) to place at the top of
@@ -261,8 +261,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-  ('index', 'TotalOpenStation', u'Total Open Station Documentation',
-   u'Stefano Costa, Damien Gaignon, Luca Bianconi', 'TotalOpenStation', 'Total Open Station downloads data from your total station into common formats',
+  ('index', 'TotalOpenStation', 'Total Open Station Documentation',
+   'Stefano Costa, Damien Gaignon, Luca Bianconi', 'TotalOpenStation', 'Total Open Station downloads data from your total station into common formats',
    'Miscellaneous'),
 ]
 
