@@ -301,7 +301,7 @@ class ProcessDialog(tkinter.simpledialog.Dialog):
         sd = tkinter.filedialog.asksaveasfilename(defaultextension='.%s' % of_lower)
 
         try:
-            sd_file = open(sd, 'wb')
+            sd_file = open(sd, 'w')
         except TypeError:
             showwarning(_("No output file specified"),
                         _("No processing settings entered!\n"))
