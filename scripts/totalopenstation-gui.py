@@ -39,7 +39,7 @@ from totalopenstation.output import BUILTIN_OUTPUT_FORMATS
 from totalopenstation.utils.upref import UserPrefs
 
 t = gettext.translation('totalopenstation', './locale', fallback=True)
-_ = t.lgettext
+_ = t.gettext
 
 
 def scan():

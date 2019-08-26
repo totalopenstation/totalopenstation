@@ -32,7 +32,7 @@ import totalopenstation.output
 
 
 t = gettext.translation('totalopenstation', './locale', fallback=True)
-_ = t.lgettext
+_ = t.gettext
 
 usage = _("usage: %prog [option] arg1 [option] arg2 ...")
 
