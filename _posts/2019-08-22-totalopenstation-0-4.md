@@ -14,7 +14,7 @@ Find it on PyPI at <https://pypi.python.org/pypi/totalopenstation> as usual.
 Windows users, please note that the TOPS-on-a-USB-stick version will have to
 wait a few days more, but the [beta version](https://tops.iosa.it/2016/06/22/portable-tops-beta.html) is equally functional.
 
-## What's new in Total Open Station 0.4
+### What's new in Total Open Station 0.4
 
 The new version brings read support for 4 new formats:
 
