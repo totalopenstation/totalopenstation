@@ -29,7 +29,7 @@ setup(
         'Topic :: Scientific/Engineering :: GIS',
         ],
     keywords='survey geodimeter',
-    install_requires=['pyserial==3.4', 'pygeoif==0.7', 'fastkml==1.12.0'],
+    install_requires=['pyserial==3.4', 'pygeoif==0.7', 'fastkml==1.11'],
     include_package_data = True,
     zip_safe = False,
 )
