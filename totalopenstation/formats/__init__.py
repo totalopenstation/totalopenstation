@@ -67,8 +67,8 @@ class Parser:
         self.data = data
         self.d = self.split_points()
 
-        valid_lines = filter(self.is_point, self.d)
-        fg_lines = map(self.get_point, valid_lines)
+        valid_lines = list(filter(self.is_point, self.d))
+        fg_lines = list(map(self.get_point, valid_lines))
         self.points = [p for p in fg_lines if p is not None]
 
     def is_point(self, point):
@@ -100,7 +100,7 @@ class Parser:
     def build_linestring(self):
         '''Join all Point objects into a LineString.'''
 
-        return LineString(map(lambda f: f.geometry, self.points))
+        return LineString([f.geometry for f in self.points])
 
     def raw_line(self):
         pass

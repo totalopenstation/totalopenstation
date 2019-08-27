@@ -348,8 +348,8 @@ class FormatParser(Parser):
                 try:
                     comments = self.tdict['41']
                 except KeyError:
-                    print"The line %s will not be computed as the code '%s' is not known"\
-                          % (pid, line[0:2])
+                    print("The line %s will not be computed as the code '%s' is not known"\
+                          % (pid, line[0:2]))
                 else:
                     # Compute comments
                     comments = self._get_comments()

@@ -32,7 +32,7 @@ import totalopenstation.output
 
 
 t = gettext.translation('totalopenstation', './locale', fallback=True)
-_ = t.lgettext
+_ = t.gettext
 
 usage = _("usage: %prog [option] arg1 [option] arg2 ...")
 
@@ -116,7 +116,7 @@ def exit_with_error(message):
 if options.informat:
     try:
         inputclass = totalopenstation.formats.BUILTIN_INPUT_FORMATS[options.informat]
-    except KeyError, message:
+    except KeyError as message:
         exit_with_error(_('%s is not a valid input format') % message)
     else:
         if isinstance(inputclass, tuple):
@@ -124,7 +124,7 @@ if options.informat:
                 # builtin format parser
                 mod, cls, name = inputclass
                 inputclass = getattr(importlib.import_module('totalopenstation.formats.' + mod), cls)
-            except ImportError, message:
+            except ImportError as message:
                 exit_with_error(message)
 else:
     sys.exit(_("Please specify an input format"))
@@ -132,7 +132,7 @@ else:
 if options.outformat:
     try:
         outputclass = totalopenstation.output.BUILTIN_OUTPUT_FORMATS[options.outformat]
-    except KeyError, message:
+    except KeyError as message:
         exit_with_error('%s is not a valid output format' % message)
     else:
         if isinstance(outputclass, tuple):
@@ -140,7 +140,7 @@ if options.outformat:
                 # builtin output builder
                 mod, cls, name = outputclass
                 outputclass = getattr(importlib.import_module('totalopenstation.output.' + mod), cls)
-            except ImportError, message:
+            except ImportError as message:
                 exit_with_error(message)
 
 if options.infile:
@@ -179,12 +179,12 @@ def main(infile):
     if options.outfile:
         if not os.path.exists(options.outfile):
             write_to_file(options.outfile)
-            print _("Downloaded data saved to out file %s") % options.outfile
+            print(_("Downloaded data saved to out file %s") % options.outfile)
         else:
             if options.overwrite:
                 write_to_file(options.outfile)
-                print _("Downloaded data saved to file %s,") % options.outfile,
-                print _("overwriting the existing file")
+                print(_("Downloaded data saved to file %s,") % options.outfile, end=' ')
+                print(_("overwriting the existing file"))
             else:
                 sys.exit(_("Specified output file already exists\n"))
     else:

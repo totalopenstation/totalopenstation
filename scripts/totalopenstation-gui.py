@@ -26,10 +26,10 @@ import atexit
 
 from time import sleep
 
-from Tkinter import *
-from tkMessageBox import showwarning, showinfo, askokcancel
-import tkSimpleDialog
-import tkFileDialog
+from tkinter import *
+from tkinter.messagebox import showwarning, showinfo, askokcancel
+import tkinter.simpledialog
+import tkinter.filedialog
 
 import totalopenstation
 
@@ -39,7 +39,7 @@ from totalopenstation.output import BUILTIN_OUTPUT_FORMATS
 from totalopenstation.utils.upref import UserPrefs
 
 t = gettext.translation('totalopenstation', './locale', fallback=True)
-_ = t.lgettext
+_ = t.gettext
 
 
 def scan():
@@ -114,7 +114,7 @@ class StatusBar(Frame):
         self.label.config(text="")
         self.label.update_idletasks()
 
-class AboutDialog(tkSimpleDialog.Dialog):
+class AboutDialog(tkinter.simpledialog.Dialog):
 
     def body(self, master):
         title = "Total Open Station %s" % totalopenstation.__version__
@@ -148,7 +148,7 @@ license.""")
         box.pack()
 
 
-class DownloadDialog(tkSimpleDialog.Dialog):
+class DownloadDialog(tkinter.simpledialog.Dialog):
 
     def body(self, master):
         title = "Total Open Station download"
@@ -167,11 +167,11 @@ the total station menu.""")
         self.result = True
 
 
-class ConnectDialog(tkSimpleDialog.Dialog):
+class ConnectDialog(tkinter.simpledialog.Dialog):
 
     def __init__(self, parent, cs):
         self.conn_str = cs
-        tkSimpleDialog.Dialog.__init__(self, parent)
+        tkinter.simpledialog.Dialog.__init__(self, parent)
 
     def body(self, master):
         title = _("waiting for data from device")
@@ -189,12 +189,12 @@ class ConnectDialog(tkSimpleDialog.Dialog):
         Label(master, text=message2, fg="red").pack()
 
 
-class ProcessDialog(tkSimpleDialog.Dialog):
+class ProcessDialog(tkinter.simpledialog.Dialog):
 
     def __init__(self, parent, data):
         self.data = data
         self.format = ''
-        tkSimpleDialog.Dialog.__init__(self, parent)
+        tkinter.simpledialog.Dialog.__init__(self, parent)
 
     def body(self, master):
         title = _("Choose output format and destination file")
@@ -277,7 +277,7 @@ class ProcessDialog(tkSimpleDialog.Dialog):
                 mod, cls, name = inputclass
                 inputclass = getattr(
                     __import__('totalopenstation.formats.' + mod, None, None, [cls]), cls)
-            except ImportError, msg:
+            except ImportError as msg:
                 showwarning(_('Import error'),
                             _('Error loading the required input module: %s' % msg))
 
@@ -290,7 +290,7 @@ class ProcessDialog(tkSimpleDialog.Dialog):
                 mod, cls, name = outputclass
                 outputclass = getattr(
                     __import__('totalopenstation.output.' + mod, None, None, [cls]), cls)
-            except ImportError, msg:
+            except ImportError as msg:
                 showwarning(_('Import error'),
                             _('Error loading the required output module: %s' % msg))
 
@@ -298,10 +298,10 @@ class ProcessDialog(tkSimpleDialog.Dialog):
         parsed_data = inputclass(self.data)
         parsed_points = parsed_data.points
         output = outputclass(parsed_points)
-        sd = tkFileDialog.asksaveasfilename(defaultextension='.%s' % of_lower)
+        sd = tkinter.filedialog.asksaveasfilename(defaultextension='.%s' % of_lower)
 
         try:
-            sd_file = open(sd, 'wb')
+            sd_file = open(sd, 'w')
         except TypeError:
             showwarning(_("No output file specified"),
                         _("No processing settings entered!\n"))
@@ -309,16 +309,16 @@ class ProcessDialog(tkSimpleDialog.Dialog):
             sd_file.write(output.process())
             sd_file.close()
 
-class PreferencesDialog(tkSimpleDialog.Dialog):
+class PreferencesDialog(tkinter.simpledialog.Dialog):
     '''A dialog to change preferences and options.'''
 
 
 
-class ErrorDialog(tkSimpleDialog.Dialog):
+class ErrorDialog(tkinter.simpledialog.Dialog):
 
     def __init__(self, parent, message):
         self.message = message
-        tkSimpleDialog.Dialog.__init__(self, parent)
+        tkinter.simpledialog.Dialog.__init__(self, parent)
 
     def body(self, master):
         title = _("Error")
@@ -485,7 +485,7 @@ class Tops:
         self.optionMODEL_entry.menu = Menu(self.optionMODEL_entry, tearoff=0)
         self.optionMODEL_entry["menu"] = self.optionMODEL_entry.menu
 
-        for k, (l, m, n) in BUILTIN_MODELS.items():
+        for k, (l, m, n) in list(BUILTIN_MODELS.items()):
             self.optionMODEL_entry.menu.add_radiobutton(
                 label=n,
                 variable=self.optionMODEL_value,
@@ -722,7 +722,7 @@ class Tops:
                     mod, cls, name = modelclass
                     modelclass = getattr(
                         __import__('totalopenstation.models.' + mod, None, None, [cls]), cls)
-                except ImportError, msg:
+                except ImportError as msg:
                     showwarning(_('Import error'),
                                 _('Error loading the required model module: %s' % msg))
 
@@ -731,7 +731,7 @@ class Tops:
                 try:
                     mc.close()  # sometimes the port will be already open for no reason
                     mc.open()
-                except serial.SerialException, detail:
+                except serial.SerialException as detail:
                     e = ErrorDialog(self.myParent, detail)
                 else:
                     st = DownloadDialog(self.myParent)
@@ -760,7 +760,7 @@ class Tops:
 
     def open_a_file(self):
         try:
-            d = tkFileDialog.askopenfilename()
+            d = tkinter.filedialog.askopenfilename()
             of = open(d, 'r')
             oc = of.read()
             self.replace_text(oc)
@@ -779,7 +779,7 @@ class Tops:
 
     def save_a_file(self):
         try:
-            sd = tkFileDialog.asksaveasfilename(defaultextension='.tops')
+            sd = tkinter.filedialog.asksaveasfilename(defaultextension='.tops')
             data = self.text_area.get("1.0", END)
             of = open(sd, 'w')
             oc = of.write(data)

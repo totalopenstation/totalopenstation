@@ -60,7 +60,7 @@ class OutputFormat:
         codes = set([p.desc for p in self.data])
         codes = [c.replace('.','_') for c in codes]
         layers = dict(enumerate(codes))
-        colors = dict((i, j % 255) for i, j in zip(layers.values(), layers.keys()))
+        colors = dict((i, j % 255) for i, j in zip(list(layers.values()), list(layers.keys())))
 
         # layer table
         result += '  0\nSECTION\n  2\nTABLES\n  0\nTABLE\n  2\nLAYER\n'

@@ -25,7 +25,7 @@ import logging
 import os
 import os.path
 
-from ConfigParser import ConfigParser, NoSectionError, NoOptionError
+from configparser import ConfigParser, NoSectionError, NoOptionError
 
 
 class UserPrefs(ConfigParser):
@@ -67,7 +67,7 @@ class UserPrefs(ConfigParser):
         self.write()
         logging.info('User preferences do not exist!')
         self.add_section('topsconfig')
-        for k,v in self.OPTIONS.items():
+        for k,v in list(self.OPTIONS.items()):
             self.set('DEFAULT', k, v)
         logging.info('Created new user preferences file with default values')
 
@@ -80,7 +80,7 @@ class UserPrefs(ConfigParser):
         ''' get config file values '''
 
         current_options = {}
-        for k in self.OPTIONS.keys():
+        for k in list(self.OPTIONS.keys()):
             current_options[k] = self.getvalue(k)
 
         return current_options
@@ -94,7 +94,7 @@ class UserPrefs(ConfigParser):
     def setvalues(self, values):
         ''' set specific config file value '''
 
-        for k, v in values.items():
-            self.set('topsconfig', k, v)
+        for k, v in list(values.items()):
+            self.set('topsconfig', str(k), str(v))
 
         self.write()
