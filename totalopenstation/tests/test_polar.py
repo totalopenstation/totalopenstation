@@ -11,6 +11,8 @@ class TestPolar(unittest.TestCase):
         self.bp1 = BasePoint(x='0', y='0', z='0', ih='1.324', b_zero_st='0.0')
 
         self.p0 = PolarPoint(angle_unit='deg',
+                             z_angle_type='z',
+                             dist_type='s',
                              dist=9,
                              angle=180,
                              z_angle=90,
@@ -21,6 +23,8 @@ class TestPolar(unittest.TestCase):
                              coordorder='ENZ')
 
         self.p1 = PolarPoint(angle_unit='gon',
+                             z_angle_type='z',
+                             dist_type='s',
                              dist=24.567,
                              angle=34.120,
                              z_angle=100,
@@ -31,6 +35,8 @@ class TestPolar(unittest.TestCase):
                              coordorder='NEZ')
 
         self.p2 = PolarPoint(angle_unit='dms',
+                             z_angle_type='z',
+                             dist_type='s',
                              dist=13.825,
                              angle=35.45100,
                              z_angle=91.17510,
