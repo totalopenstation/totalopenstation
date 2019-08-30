@@ -63,7 +63,8 @@ class FormatParser:
         self.rows = (r for r in data.splitlines() if not r.startswith('-- '))
         # Text comments, but not comment records ------------------------^
 
-    def _points(self):
+    @property
+    def points(self):
         '''Extract all RW5 data.
 
         This parser is based on the information in :ref:`if_carlson_rw5`
@@ -394,5 +395,3 @@ class FormatParser:
                 pid += 1
 
         return points
-
-    points = property(_points)

@@ -170,7 +170,8 @@ class FormatParser(Parser):
 
         return value
 
-    def _points(self):
+    @property
+    def points(self):
         '''Extract all GSI data.
 
         This parser is based on the information in :ref:`if_leica_gsi`
@@ -491,5 +492,3 @@ class FormatParser(Parser):
                     points.append(f)
 
         return points
-
-    points = property(_points)

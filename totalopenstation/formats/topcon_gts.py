@@ -39,7 +39,8 @@ class FormatParser:
         clean_data = ''.join([l[1:-5] for l in data.splitlines()])
         self.rows = clean_data.split(',')
 
-    def _points(self):
+    @property
+    def points(self):
         points = []
         bp = BasePoint(x=0, y=0, z=0, ih=0, b_zero_st=0.0 )
         for row in self.rows:
@@ -71,5 +72,3 @@ class FormatParser:
                         id=pid)
             points.append(f)
         return points
-
-    points = property(_points)
