@@ -236,6 +236,7 @@ class FormatParser:
                 points_coord[station_name] = point
         return points
 
+    @property
     def raw_line(self):
         '''Extract all Nikon Raw v2.00 data.
 

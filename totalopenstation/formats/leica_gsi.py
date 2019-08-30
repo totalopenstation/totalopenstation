@@ -303,6 +303,7 @@ class FormatParser(Parser):
                     points.append(f)
         return points
 
+    @property
     def raw_line(self):
         '''Extract all GSI data.
 

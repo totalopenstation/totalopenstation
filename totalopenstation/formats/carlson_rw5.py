@@ -213,6 +213,7 @@ class FormatParser:
                 pid += 1
         return points
 
+    @property
     def raw_line(self):
         '''Extract all Carlson RW5 data.
 

@@ -102,7 +102,13 @@ class Parser:
 
         return LineString([f.geometry for f in self.points])
 
+    @property
     def raw_line(self):
+        """Action for parsing a source file and for retrieving raw data.
+
+        This method **must** be overridden in the child class
+        to have a working parser."""
+
         pass
 
 
