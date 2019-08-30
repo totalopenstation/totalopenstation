@@ -153,26 +153,25 @@ class FormatParser:
                 attrib = [rec['note']]
                 # Angle is recorded as azimuth or horizontal angle
                 try:
-                    azimuth = float(rec['AZ'])
+                    angle = float(rec['AZ'])
                 except KeyError:
-                    azimuth = None
-                # Angle is either Bearing, Angle Right or Left, Deflection Right or Left
-                try:
-                    angle = float(rec['BR'])
-                except KeyError:
+                    # Angle is either Bearing, Angle Right or Left, Deflection Right or Left
                     try:
-                        angle = float(rec['AR'])
+                        angle = float(rec['BR'])
                     except KeyError:
                         try:
-                            angle = float(rec['AL'])
+                            angle = float(rec['AR'])
                         except KeyError:
                             try:
-                                angle = float(rec['DR'])
+                                angle = float(rec['AL'])
                             except KeyError:
                                 try:
-                                    angle = float(rec['DL'])
+                                    angle = float(rec['DR'])
                                 except KeyError:
-                                    angle = None
+                                    try:
+                                        angle = float(rec['DL'])
+                                    except KeyError:
+                                        angle = None
                 # Vertical angle is either Zenith, Vertical angle or Change elevation
                 try:
                     z_angle = float(rec['ZE'])
