@@ -184,6 +184,12 @@ class FormatParser:
                             z_angle = float(rec['CE'])
                         except KeyError:
                             raise ValueError('There is no vertical angle value')
+                        else:
+                            z_angle_type = 'dh'
+                    else:
+                        z_angle_type = 'v'
+                else:
+                    z_angle_type= 'z'
                 try:
                     dist = float(rec['SD'])
                 except KeyError:
@@ -192,9 +198,13 @@ class FormatParser:
                     except KeyError:
                         raise ValueError('There is no distance value')
                     else:
-                        dist = horizontal_to_slope(dist, z_angle, angle_unit)
+                        dist_type = "h"
+                else:
+                    dist_type = 's'
                 attrib = [rec['note']]
                 p = PolarPoint(angle_unit=angle_unit,
+                               z_angle_type=z_angle_type,
+                               dist_type=dist_type,
                                dist=dist,
                                angle=angle,
                                z_angle=z_angle,
@@ -359,14 +369,23 @@ class FormatParser:
                             z_angle = float(rec['CE'])
                         except KeyError:
                             z_angle = None
+                        else:
+                            z_angle_type = 'dh'
+                    else:
+                        z_angle_type = 'v'
+                else:
+                    z_angle_type = 'z'
                 try:
-                    slope_dist = float(rec['SD'])
+                    dist = float(rec['SD'])
                 except KeyError:
-                    slope_dist = None
-                try:
-                    horizontal_dist = float(rec['HD'])
-                except KeyError:
-                    horizontal_dist = None
+                    try:
+                        dist = float(rec['HD'])
+                    except KeyError:
+                        dist = None
+                    else:
+                        dist_type = 'h'
+                else:
+                    dist_type = 's'
                 attrib = [rec['note']]
                 try:
                     point = points_coord[point_name]
@@ -382,12 +401,13 @@ class FormatParser:
                             id=pid,
                             point_name=point_name,
                             angle_unit=angle_unit,
+                            z_angle_type=z_angle_type,
                             dist_unit=dist_unit,
+                            dist_type=dist_type,
                             azimuth=azimuth,
                             angle=angle,
                             z_angle=z_angle,
-                            slope_dist=slope_dist,
-                            horizontal_dist=horizontal_dist,
+                            dist=dist,
                             th=th,
                             station_name=station_name,
                             attrib=attrib)
