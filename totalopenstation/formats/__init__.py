@@ -68,7 +68,7 @@ class Parser:
 
         self.data = data
 
-    def is_point(self, point):
+    def is_point(self, line):
         """Action for finding which parts of the source file are points.
 
         This method **must** be overridden in the child class
@@ -76,7 +76,7 @@ class Parser:
 
         pass
 
-    def get_point(self, point):
+    def get_point(self, line):
         """Action for getting points from source file.
 
         This method **must** be overridden in the child class

@@ -36,8 +36,8 @@ class FormatParser(Parser):
 
     def get_point(self, chunk):
         tokens = {}
-        lines = chunk.splitlines()
-        for i in lines:
+        rows = chunk.splitlines()
+        for i in rows:
             if i.startswith('5='):
                 tokens['n'] = i.split('=')[1]
             if i.startswith('4='):
@@ -48,7 +48,7 @@ class FormatParser(Parser):
                 tokens['y'] = i.split('=')[1]
             if i.startswith('39='):
                 tokens['z'] = i.split('=')[1]
-        tokens['text'] = lines[0]
+        tokens['text'] = rows[0]
 
         try:
             p = Point(tokens['y'],
