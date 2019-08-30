@@ -171,7 +171,7 @@ class FormatParser:
                                     try:
                                         angle = float(rec['DL'])
                                     except KeyError:
-                                        angle = None
+                                        raise ValueError('There is no horizontal angle value')
                 # Vertical angle is either Zenith, Vertical angle or Change elevation
                 try:
                     z_angle = float(rec['ZE'])
@@ -182,14 +182,14 @@ class FormatParser:
                         try:
                             z_angle = float(rec['CE'])
                         except KeyError:
-                            z_angle = None
+                            raise ValueError('There is no vertical angle value')
                 try:
                     dist = float(rec['SD'])
                 except KeyError:
                     try:
                         dist = float(rec['HD'])
                     except KeyError:
-                        dist = None
+                        raise ValueError('There is no distance value')
                     else:
                         dist = horizontal_to_slope(dist, z_angle, angle_unit)
                 attrib = [rec['note']]
