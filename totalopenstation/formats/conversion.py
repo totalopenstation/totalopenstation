@@ -132,7 +132,7 @@ def to_rad(angle, angle_unit):
     elif angle_unit == "deg":
         return deg_to_rad(angle)
     else:
-       return gon_to_rad(angle)
+        return gon_to_rad(angle)
 
 
 def to_deg(angle, angle_unit):
@@ -144,7 +144,7 @@ def to_deg(angle, angle_unit):
     elif angle_unit == "rad":
         return rad_to_deg(angle)
     else:
-       return gon_to_deg(angle)
+        return gon_to_deg(angle)
 
 
 def to_gon(angle, angle_unit):
@@ -156,7 +156,7 @@ def to_gon(angle, angle_unit):
     elif angle_unit == "rad":
         return rad_to_gon(angle)
     else:
-       return deg_to_gon(angle)
+        return deg_to_gon(angle)
 
 
 def to_dms(angle, angle_unit):
@@ -168,7 +168,7 @@ def to_dms(angle, angle_unit):
     elif angle_unit == "rad":
         return rad_to_dms(angle)
     else:
-       return deg_to_dms(angle)
+        return deg_to_dms(angle)
 
 
 def to_mil(angle, angle_unit):
@@ -180,7 +180,7 @@ def to_mil(angle, angle_unit):
     elif angle_unit == "rad":
         return rad_to_mil(angle)
     else:
-       return deg_to_mil(angle)
+        return deg_to_mil(angle)
 
 
 def horizontal_to_slope(dist, angle, angle_unit):
