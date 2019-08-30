@@ -48,4 +48,4 @@ class TestLeicaGSI8Parser(unittest.TestCase):
         self.ls = self.fp.build_linestring()
         self.assertAlmostEqual(self.ls.coords[0][0], 515.836)
         self.assertAlmostEqual(self.ls.coords[3][2], 2.553)
-        self.assertAlmostEqual(self.ls.bounds[0], -7.4662080)
+        self.assertAlmostEqual(self.ls.bounds[0], -7.4660913)
