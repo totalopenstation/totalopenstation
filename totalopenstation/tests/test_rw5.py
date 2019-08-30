@@ -1,6 +1,11 @@
 import unittest
 
+import pytest
+
 from totalopenstation.formats.carlson_rw5 import FormatParser
+
+from . import BaseTestOutput
+
 
 class TestCarlsonRW5Parser(unittest.TestCase):
     def setUp(self):
@@ -21,3 +26,12 @@ class TestCarlsonRW5Parser(unittest.TestCase):
         self.assertEqual(self.pts[2].id, 2)
         self.assertEqual(self.pts[4].properties['attrib'][0], 'LIGHT POLE')
         self.assertEqual(self.pts[3].desc, 'PT')
+
+
+
+class TestRW5Output(BaseTestOutput):
+
+    @pytest.fixture
+    def setup(self):
+        with open('sample_data/Leica1200.rw5') as testdata:
+            self.fp = FormatParser(testdata.read())

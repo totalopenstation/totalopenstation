@@ -1,6 +1,10 @@
 import unittest
 
+import pytest
+
 from totalopenstation.formats.sokkia_sdr33 import FormatParser
+
+from . import BaseTestOutput
 
 
 class TestSokkiaParser(unittest.TestCase):
@@ -23,3 +27,11 @@ class TestSokkiaParser(unittest.TestCase):
     def test_linestring(self):
         self.ls = self.fp.build_linestring()
         self.assertAlmostEqual(self.ls.coords[0][0], 937.274)
+
+
+class TestSokkiaOutput(BaseTestOutput):
+
+    @pytest.fixture
+    def setup(self):
+        with open('sample_data/sokkia_sdr33.tops') as testdata:
+            self.fp = FormatParser(testdata.read())

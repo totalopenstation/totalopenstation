@@ -1,6 +1,11 @@
 import unittest
 
+import pytest
+
 from totalopenstation.formats.zeiss_r5 import FormatParser
+
+from . import BaseTestOutput
+
 
 class TestZeissR5(unittest.TestCase):
     def setUp(self):
@@ -17,3 +22,10 @@ class TestZeissR5(unittest.TestCase):
     def test_feature(self):
         self.assertEqual(self.feature.id, '1108')
         self.assertEqual(self.feature.desc, '67R')
+
+
+class TestZeissR5Output(BaseTestOutput):
+    @pytest.fixture
+    def setup(self):
+        with open('sample_data/zeiss_elta_r55-R5.tops') as testdata:
+            self.fp = FormatParser(testdata.read())
