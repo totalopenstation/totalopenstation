@@ -41,7 +41,8 @@ class FormatParser:
     def __init__(self, data):
         self.rows = data.splitlines()
 
-    def _points(self):
+    @property
+    def points(self):
         '''Extract all Nikon RAW data format V2.00.
 
         This parser is based on the information in :ref:`if_nikon_raw`
@@ -236,6 +237,7 @@ class FormatParser:
                 points_coord[station_name] = point
         return points
 
+    @property
     def raw_line(self):
         '''Extract all Nikon Raw v2.00 data.
 
@@ -454,6 +456,3 @@ class FormatParser:
                 points.append(f)
                 pid += 1
         return points
-
-
-    points = property(_points)

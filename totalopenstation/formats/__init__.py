@@ -63,15 +63,12 @@ class Parser:
     pass the output of open(file).read() to this class.'''
 
     def __init__(self, data):
+        """Init method which **should** be overridden in the child class
+        to have a working parser."""
 
         self.data = data
-        self.d = self.split_points()
 
-        valid_lines = list(filter(self.is_point, self.d))
-        fg_lines = list(map(self.get_point, valid_lines))
-        self.points = [p for p in fg_lines if p is not None]
-
-    def is_point(self, point):
+    def is_point(self, line):
         """Action for finding which parts of the source file are points.
 
         This method **must** be overridden in the child class
@@ -79,7 +76,7 @@ class Parser:
 
         pass
 
-    def get_point(self, point):
+    def get_point(self, line):
         """Action for getting points from source file.
 
         This method **must** be overridden in the child class
@@ -102,7 +99,28 @@ class Parser:
 
         return LineString([f.geometry for f in self.points])
 
+    @property
+    def points(self):
+        """Action for parsing a source file and for finding points.
+
+        This method **could** be overridden in the child class
+        to have a working parser."""
+
+
+        self.d = self.split_points()
+
+        valid_lines = filter(self.is_point, self.d)
+        fg_lines = map(self.get_point, valid_lines)
+
+        return [p for p in fg_lines if p is not None]
+
+    @property
     def raw_line(self):
+        """Action for parsing a source file and for retrieving raw data.
+
+        This method **must** be overridden in the child class
+        to have a working parser."""
+
         pass
 
 

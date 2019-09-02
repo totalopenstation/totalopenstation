@@ -45,7 +45,7 @@ class FormatParser(Parser):
     '''
 
     def __init__(self, data):
-        self.line = data.splitlines()
+        self.rows = data.splitlines()
 
     def _get_comments(self):
         """
@@ -170,7 +170,8 @@ class FormatParser(Parser):
 
         return value
 
-    def _points(self):
+    @property
+    def points(self):
         '''Extract all GSI data.
 
         This parser is based on the information in :ref:`if_leica_gsi`
@@ -192,9 +193,8 @@ class FormatParser(Parser):
         
         points = []
         bp = None
-        ldata = len(self.line[0].split()[0].lstrip('*')[7:])
-        for line in self.line:
-            tokens = line.split()
+        for row in self.rows:
+            tokens = row.split()
             self.tdict = {}
             for t in tokens:
                 t = t.lstrip('*')
@@ -303,6 +303,7 @@ class FormatParser(Parser):
                     points.append(f)
         return points
 
+    @property
     def raw_line(self):
         '''Extract all GSI data.
 
@@ -325,11 +326,12 @@ class FormatParser(Parser):
         '''
 
         points = []
-        ldata = len(self.line[0].split()[0].lstrip('*')[7:])
+        # GSI files handles 8 or 16 bits data block. This will check the size
+        ldata = len(self.rows[0].split()[0].lstrip('*')[7:])
         station_id = 1
 
-        for line in self.line:
-            tokens = line.split()
+        for row in self.rows:
+            tokens = row.split()
             self.tdict = {}
             for t in tokens:
                 t = t.lstrip('*')
@@ -349,7 +351,7 @@ class FormatParser(Parser):
                     comments = self.tdict['41']
                 except KeyError:
                     print("The line %s will not be computed as the code '%s' is not known"\
-                          % (pid, line[0:2]))
+                          % (pid, row[0:2]))
                 else:
                     # Compute comments
                     comments = self._get_comments()
@@ -490,5 +492,3 @@ class FormatParser(Parser):
                     points.append(f)
 
         return points
-
-    points = property(_points)
