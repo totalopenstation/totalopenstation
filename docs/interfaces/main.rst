@@ -8,6 +8,9 @@ There are two ways to use Total Open Station, from the command line or
 as a user-friendly program. Each mode of operation has its drawbacks,
 and both are constantly used and tested.
 
+
+
+
 Graphical User Interface
 ========================
 
@@ -43,3 +46,11 @@ raw data.
 
 These two programs also provide a basic but complete example of how to
 use Total Open Station as a programming library.
+
+
+.. toctree::
+  :maxdepth: 1
+
+  cli_connector
+  cli_parser
+  gui_main

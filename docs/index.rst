@@ -50,39 +50,26 @@ User manual
 -----------
 
 .. toctree::
-   :maxdepth: 1
-   :glob:
+   :maxdepth: 2
 
    installing
    interfaces/main
    input_formats/main
    models/main
+   users
    glossary
-   library
    faq
-
-.. toctree::
-   :hidden:
-
-   interfaces/cli_connector
-   interfaces/cli_parser
-   interfaces/gui_main
 
 Development
 -----------
 
 .. toctree::
    :maxdepth: 1
-   :glob:
 
    contributing
-   users
-   release
-
-.. toctree::
-   :hidden:
-
    input_formats/new
+   library
+   release
 
 Indices and tables
 ------------------
