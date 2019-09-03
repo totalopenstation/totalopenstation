@@ -21,7 +21,7 @@
 # along with Total Open Station.  If not, see
 # <http://www.gnu.org/licenses/>.
 
-from math import sin, pi
+from math import sin,cos, pi
 
 
 def deg_to_gon(angle):
@@ -183,6 +183,23 @@ def to_mil(angle, angle_unit):
         return deg_to_mil(angle)
 
 
-def horizontal_to_slope(dist, angle, angle_unit):
+def vertical_to_zenithal(angle, angle_unit):
+    '''Convert angle from vertical (reference is horizontal) to
+    zenithal (reference is north)'''
+    if angle_unit == "dms":
+        return to_dms(90 - to_deg(angle, angle_unit), "deg")
+    elif angle_unit == "gon":
+        return 100 - angle
+    elif angle_unit == "rad":
+        return (pi / 2) - angle
+    else:
+        return 90 - angle
+
+def horizontal_to_slope(dist, angle, angle_unit, angle_type="z"):
+    '''Convert distance to slope from horizontal
+    Angle is considered zenithal by default'''
     angle = to_rad(angle, angle_unit)
-    return dist / sin (angle)
+    if angle_type == "z":
+        return dist / sin (angle)
+    else:
+        return dist / cos (angle)

@@ -19,7 +19,6 @@
 # along with Total Open Station.  If not, see
 # <http://www.gnu.org/licenses/>.
 
-from totalopenstation.formats.conversion import horizontal_to_slope
 from . import Feature, Parser, Point, UNKNOWN_STATION, UNKNOWN_POINT
 from .polar import BasePoint, PolarPoint
 
@@ -189,6 +188,7 @@ class FormatParser(Parser):
                 - station : 11, 84, 85, 86, 88
                 - direct point : 11, 81, 82, 83
                 - computed point : 11, 21, 22, 31 or 32, 87 [, 88] [, 81, 82, 83]
+            Angles are considered as zenithal
         '''
         
         points = []
@@ -230,17 +230,19 @@ class FormatParser(Parser):
                 except KeyError:
                     try:
                         angle, z_angle = self.tdict['21'], self.tdict['22']
+                        z_angle_type = 'z'
                         # 31 or/and 32
                         try:
-                            slope_dist = self.tdict['31']
+                            dist = self.tdict['31']
                         except KeyError:
-                            slope_dist = None
-                        try:
-                            horizontal_dist = self.tdict['32']
-                        except KeyError:
-                            horizontal_dist = None
-                        if horizontal_dist is None and slope_dist is None:
-                            raise KeyError
+                            try:
+                                dist = self.tdict['32']
+                            except KeyError:
+                                dist = None
+                            else:
+                                dist_type = 'h'
+                        else:
+                            dist_type = 's'
                         th = self.tdict['87']
                     except KeyError:
                         try:
@@ -264,12 +266,10 @@ class FormatParser(Parser):
                     else:
                         angle = self._get_angle("21", UNITS[angle_unit])
                         z_angle = self._get_angle("22", UNITS[angle_unit])
-                        if slope_dist:
-                            slope_dist = self._get_value("31", UNITS[dist_unit])
-                        if horizontal_dist:
-                            horizontal_dist = self._get_value("32", UNITS[dist_unit])
-                            # Need to convert horizontal distance to slope distance
-                            slope_dist = horizontal_to_slope(horizontal_dist, z_angle, angle_unit)
+                        if dist_type == 's':
+                            dist = self._get_value("31", UNITS[dist_unit])
+                        else:
+                            dist = self._get_value("32", UNITS[dist_unit])
                         th = self._get_value("87", UNITS[dist_unit])
                         # Polar data may have point coordinates (not used)
                         x, y, z = self._get_coordinates("81", UNITS[dist_unit])
@@ -280,7 +280,9 @@ class FormatParser(Parser):
                         if bp is None:
                             bp = BasePoint(x=0.0, y=0.0, z=0.0, ih=ih, b_zero_st=0.0)
                         p = PolarPoint(angle_unit=angle_unit,
-                                       dist=slope_dist,
+                                       z_angle_type=z_angle_type,
+                                       dist_type=dist_type,
+                                       dist=dist,
                                        angle=angle,
                                        z_angle=z_angle,
                                        th=th,
@@ -323,6 +325,7 @@ class FormatParser(Parser):
                 - station : 11 [, 25], 84, 85, 86 [, 87], 88
                 - direct point : 11, 81, 82, 83
                 - computed point : 11, 21, 22, 31 or 32 [, 51], 87 [, 88] [, 81, 82, 83]
+            Angles are considered as zenithal
         '''
 
         points = []
@@ -378,15 +381,16 @@ class FormatParser(Parser):
                         angle, z_angle = self.tdict['21'], self.tdict['22']
                         # 31 or/and 32
                         try:
-                            slope_dist = self.tdict['31']
+                            dist = self.tdict['31']
                         except KeyError:
-                            slope_dist = None
-                        try:
-                            horizontal_dist = self.tdict['32']
-                        except KeyError:
-                            horizontal_dist = None
-                        if horizontal_dist is None and slope_dist is None:
-                            raise KeyError
+                            try:
+                                dist = self.tdict['32']
+                            except KeyError:
+                                dist = None
+                            else:
+                                dist_type = 'h'
+                        else:
+                            dist_type = 's'
                         th = self.tdict['87']
                     except KeyError:
                         # Otherwise look for point coordinates only
@@ -423,10 +427,11 @@ class FormatParser(Parser):
                         # Compute polar data
                         angle = self._get_angle("21", UNITS[angle_unit])
                         z_angle = self._get_angle("22", UNITS[angle_unit])
-                        if slope_dist:
-                            slope_dist = self._get_value("31", UNITS[dist_unit])
-                        if horizontal_dist:
-                            horizontal_dist = self._get_value("32", UNITS[dist_unit])
+                        z_angle_type = 'z'
+                        if dist_type == 's':
+                            dist = self._get_value("31", UNITS[dist_unit])
+                        else:
+                            dist = self._get_value("32", UNITS[dist_unit])
                         th = self._get_value("87", UNITS[dist_unit])
                         # Polar data may have point coordinates
                         x, y, z = self._get_coordinates("81",UNITS[dist_unit])
@@ -452,11 +457,12 @@ class FormatParser(Parser):
                                     id=pid,
                                     point_name=point_name,
                                     angle_unit=angle_unit,
+                                    z_angle_type=z_angle_type,
                                     dist_unit=dist_unit,
+                                    dist_type=dist_type,
                                     angle=angle,
                                     z_angle=z_angle,
-                                    slope_dist=slope_dist,
-                                    horizontal_dist=horizontal_dist,
+                                    dist=dist,
                                     th=th,
                                     ih=ih,
                                     ppm=ppm,

@@ -17,8 +17,8 @@ class TestNikonParser(unittest.TestCase):
     def test_basepoint(self):
         self.assertAlmostEqual(self.fp.points[0].geometry.x, 0.0)
         self.assertAlmostEqual(self.fp.points[0].geometry.y, 0.0)
-        self.assertAlmostEqual(self.fp2.points[7].geometry.x, 9936.99390187)
-        self.assertAlmostEqual(self.fp2.points[7].geometry.y, 10036.06473563)
+        self.assertAlmostEqual(self.fp2.points[7].geometry.x, 10000.08905808)
+        self.assertAlmostEqual(self.fp2.points[7].geometry.y, 10000.30257267)
 
     def test_feature(self):
         self.assertEqual(self.fp.points[3].id, 3)

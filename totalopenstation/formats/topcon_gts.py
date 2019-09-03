@@ -58,7 +58,9 @@ class FormatParser:
             dist = float(fs[2].split('m')[0])
             angle = deg_to_gon(float(fs[3][:-1]) / 10000)
             z_angle = deg_to_gon(float(fs[4][:-3]) / 10000)
-            p = PolarPoint(angle_unit="gon",
+            p = PolarPoint(angle_unit='gon',
+                           z_angle_type='z',
+                           dist_type='s',
                            dist=dist,
                            angle=angle,
                            z_angle=z_angle,
