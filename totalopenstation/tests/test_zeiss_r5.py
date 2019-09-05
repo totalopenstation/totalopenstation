@@ -9,7 +9,7 @@ from . import BaseTestOutput
 
 class TestZeissR5(unittest.TestCase):
     def setUp(self):
-        with open('sample_data/zeiss_elta_r55-R5.tops') as testdata:
+        with open('sample_data/zeiss_elta_r55/zeiss_elta_r55-R5.tops') as testdata:
             self.fp = FormatParser(testdata.read())
             self.feature = self.fp.points[11]
             self.point = self.feature.geometry

@@ -45,7 +45,7 @@ _ = t.gettext
 def scan():
     """scan for available ports. return a list of tuples (num, name).
 
-    Part of pySerial (http://pyserial.sf.net)  (C)2002-2003 <cliechti@gmx.net>
+    Part of pySerial (http://pyserial.sf.net) Copytight 2002-2003 <cliechti@gmx.net>
     """
 
     # TODO move this function in a separate module together with scanwin32.py
@@ -670,7 +670,7 @@ class Tops:
         pass
 
     def on_app_close(self):
-        '''Callback function to ask confirmation before quitting the application.'''
+        '''Callback function to ask for confirmation before quitting the application.'''
 
         if askokcancel("Quit","Do you really want to quit application ?"):
             self.myParent.destroy()
@@ -737,7 +737,7 @@ class Tops:
                     st = DownloadDialog(self.myParent)
                     sleeptime = float(self.option6_value.get())
                     if st.result:
-                        self.status.set(_("Waiting for data: please start transfer from your total station menu."))
+                        self.status.set(_("Waiting for data: Please start the transfer from your total station menu."))
                         while mc.inWaiting() == 0:
                             sleep(sleeptime)
                         n = mc.inWaiting()

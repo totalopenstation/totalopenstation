@@ -157,7 +157,7 @@ def main(infile):
 
     parsed_data = inputclass(infile)
     if options.raw:
-        parsed_points = parsed_data.raw_line()
+        parsed_points = parsed_data.raw_line
     else:
         parsed_points = parsed_data.points
 

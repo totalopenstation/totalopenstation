@@ -19,13 +19,13 @@
 # along with Total Open Station.  If not, see
 # <http://www.gnu.org/licenses/>.
 
-from math import cos, sin
+from math import cos, sin, tan
 
 from totalopenstation.formats.conversion import to_rad
 from . import Feature, Point, UNITS_CIRCLE
 
 
-def polar_to_cartesian(angle_unit, base_x, base_y, base_z, dist, azimuth, z_angle, ih, th):
+def polar_to_cartesian(angle_unit, z_angle_type, dist_type, base_x, base_y, base_z, dist, azimuth, z_angle, ih, th):
     '''Convert polar coordinates to cartesian.
 
     Needs base point coordinates, measurement angles and distance.
@@ -34,17 +34,33 @@ def polar_to_cartesian(angle_unit, base_x, base_y, base_z, dist, azimuth, z_angl
     Some important caveats of the current implementation:
 
     - the horizontal ``angle`` is hardcoded with zero azimuth at North
-    - the vertical ``z_angle`` is hardcoded with zero at zenith
     '''
 
-    azimuth = to_rad(azimuth, angle_unit)
-    z_angle = to_rad(z_angle, angle_unit)
-    dist_r = sin(z_angle) * dist
-    dX = sin(azimuth) * dist_r
-    dY = cos(azimuth) * dist_r
+    if z_angle_type == 'dh':
+        dZ = z_angle
+    if z_angle_type == 'v':
+        if dist_type == 'h':
+            dZ = dist * tan(to_rad(z_angle, angle_unit))
+        else:
+            dZ = dist * sin(to_rad(z_angle, angle_unit))
+    if z_angle_type == 'z':
+        if dist_type == 'h':
+            dZ = dist / tan(to_rad(z_angle, angle_unit))
+        else:
+            dZ = dist * cos(to_rad(z_angle, angle_unit))
+    if dist_type == 's':
+        if z_angle_type == 'dh':
+            dist = (dist ** 2 - z_angle ** 2) ** (0.5)
+        if z_angle_type == 'v':
+            dist = dist * cos(to_rad(z_angle, angle_unit))
+        if z_angle_type == 'z':
+            dist = dist *  sin(to_rad(z_angle, angle_unit))
+    dX = dist * sin(to_rad(azimuth, angle_unit))
+    dY = dist * cos(to_rad(azimuth, angle_unit))
+
     target_x = base_x + dX
     target_y = base_y + dY
-    target_z = base_z + ih + (cos(z_angle) * dist) - th
+    target_z = base_z + ih + dZ - th
 
     return dict(x=target_x, y=target_y, z=target_z)
 
@@ -54,6 +70,8 @@ class PolarPoint:
 
     def __init__(self,
                  angle_unit,          # angle unit
+                 z_angle_type,        # type of angle z, v or dh
+                 dist_type,           # type of distance h or s
                  dist,                # inclined distance
                  angle,               # horizontal angle
                  z_angle,             # vertical angle
@@ -63,6 +81,8 @@ class PolarPoint:
                  text,                # point description
                  coordorder):   # cartesian coordinates order (NEZ, ENZ)
         self.angle_unit = angle_unit
+        self.z_angle_type = z_angle_type
+        self.dist_type = dist_type
         self.dist = float(dist)
         self.th = float(th)
         self.angle = float(angle)
@@ -87,6 +107,8 @@ class PolarPoint:
         azimuth = (self.b_zero_st + self.angle) % UNITS_CIRCLE[self.angle_unit]
 
         cart_coords = polar_to_cartesian(self.angle_unit,
+                                         self.z_angle_type,
+                                         self.dist_type,
                                          self.base_x,
                                          self.base_y,
                                          self.base_z,
@@ -109,8 +131,9 @@ class PolarPoint:
         '''Wrap geometry and other properties like id, description in a Feature.'''
 
         feature = Feature(self.to_point(),
-                          properties={'desc': self.desc, 'angle_unit': self.angle_unit},
-                          id=self.pid)
+                          properties={'angle_unit': self.angle_unit},
+                          id=self.pid,
+                          desc=self.desc)
         return feature
 
 

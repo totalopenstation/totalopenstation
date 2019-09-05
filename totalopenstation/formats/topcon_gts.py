@@ -39,7 +39,8 @@ class FormatParser:
         clean_data = ''.join([l[1:-5] for l in data.splitlines()])
         self.rows = clean_data.split(',')
 
-    def _points(self):
+    @property
+    def points(self):
         points = []
         bp = BasePoint(x=0, y=0, z=0, ih=0, b_zero_st=0.0 )
         for row in self.rows:
@@ -57,7 +58,9 @@ class FormatParser:
             dist = float(fs[2].split('m')[0])
             angle = deg_to_gon(float(fs[3][:-1]) / 10000)
             z_angle = deg_to_gon(float(fs[4][:-3]) / 10000)
-            p = PolarPoint(angle_unit="gon",
+            p = PolarPoint(angle_unit='gon',
+                           z_angle_type='z',
+                           dist_type='s',
                            dist=dist,
                            angle=angle,
                            z_angle=z_angle,
@@ -71,5 +74,3 @@ class FormatParser:
                         id=pid)
             points.append(f)
         return points
-
-    points = property(_points)

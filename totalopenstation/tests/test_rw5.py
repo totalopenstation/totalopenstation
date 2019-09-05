@@ -9,7 +9,7 @@ from . import BaseTestOutput
 
 class TestCarlsonRW5Parser(unittest.TestCase):
     def setUp(self):
-        with open('sample_data/Leica1200.rw5') as testdata:
+        with open('sample_data/carlson_rw5/Leica1200.rw5') as testdata:
             fp = FormatParser(testdata.read())
             self.pts = list(fp.points)
 

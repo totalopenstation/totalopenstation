@@ -41,7 +41,8 @@ class FormatParser:
     def __init__(self, data):
         self.rows = data.splitlines()
 
-    def _points(self):
+    @property
+    def points(self):
         '''Extract all Nikon RAW data format V2.00.
 
         This parser is based on the information in :ref:`if_nikon_raw`
@@ -53,6 +54,9 @@ class FormatParser:
 
         Notes:
             Sometimes needed records are commented so it is needed to parse also comments
+
+            Angles are considered as vertical
+            Distances are slope distances
         '''
         points_coord = {}
         base_points = {}
@@ -164,6 +168,8 @@ class FormatParser:
                 except IndexError:
                     attrib = []
                 p = PolarPoint(angle_unit=angle_unit,
+                               z_angle_type='v',
+                               dist_type='s',
                                dist=dist,
                                angle=angle,
                                z_angle=z_angle,
@@ -190,6 +196,8 @@ class FormatParser:
                 angle = float(fs[5])
                 z_angle = float(fs[6])
                 p = PolarPoint(angle_unit=angle_unit,
+                               z_angle_type='v',
+                               dist_type='s',
                                dist=dist,
                                angle=angle,
                                z_angle=z_angle,
@@ -216,6 +224,8 @@ class FormatParser:
                 z_angle = float(fs[6])
                 attrib = [fs[8]]
                 p = PolarPoint(angle_unit=angle_unit,
+                               z_angle_type='v',
+                               dist_type='s',
                                dist=dist,
                                angle=angle,
                                z_angle=z_angle,
@@ -236,6 +246,7 @@ class FormatParser:
                 points_coord[station_name] = point
         return points
 
+    @property
     def raw_line(self):
         '''Extract all Nikon Raw v2.00 data.
 
@@ -256,6 +267,9 @@ class FormatParser:
            Sometimes needed records are commented so it is needed to parse also comments like
                 - coordinates order
                 - units
+
+           Angles are considered as vertical
+           Distances are slope distances
         '''
         points_coord = {}
         points = []
@@ -369,7 +383,7 @@ class FormatParser:
                         fs[i] = 0
                 point_name = fs[1]
                 th = float(fs[2])
-                slope_dist = float(fs[3])
+                dist = float(fs[3])
                 angle = float(fs[4])
                 z_angle = float(fs[5])
                 try:
@@ -377,7 +391,6 @@ class FormatParser:
                 except IndexError:
                     attrib = []
                 azimuth = None
-                horizontal_dist = None
                 try:
                     point = points_coord[point_name]
                 except KeyError:
@@ -387,12 +400,13 @@ class FormatParser:
                             id=pid,
                             point_name=point_name,
                             angle_unit=angle_unit,
+                            z_angle_type='v',
                             dist_unit=dist_unit,
+                            dist_type='s',
                             azimuth=azimuth,
                             angle=angle,
                             z_angle=z_angle,
-                            slope_dist=slope_dist,
-                            horizontal_dist=horizontal_dist,
+                            dist=dist,
                             th=th,
                             attrib=attrib)
                 points.append(f)
@@ -401,11 +415,10 @@ class FormatParser:
             if fs[0] == 'SO':
                 point_name = fs[1]
                 th = float(fs[3])
-                slope_dist = float(fs[4])
+                dist = float(fs[4])
                 angle = float(fs[5])
                 z_angle = float(fs[6])
                 azimuth = None
-                horizontal_dist = None
                 try:
                     point = points_coord[point_name]
                 except KeyError:
@@ -415,12 +428,13 @@ class FormatParser:
                             id=pid,
                             point_name=point_name,
                             angle_unit=angle_unit,
+                            z_angle_type='v',
                             dist_unit=dist_unit,
+                            dist_type='s',
                             azimuth=azimuth,
                             angle=angle,
                             z_angle=z_angle,
-                            slope_dist=slope_dist,
-                            horizontal_dist=horizontal_dist,
+                            dist=dist,
                             th=th)
                 points.append(f)
                 pid += 1
@@ -428,12 +442,11 @@ class FormatParser:
             if fs[0] == 'CP':
                 point_name = fs[1]
                 th = float(fs[3])
-                slope_dist = float(fs[4])
+                dist = float(fs[4])
                 angle = float(fs[5])
                 z_angle = float(fs[6])
                 attrib = fs[8]
                 azimuth = None
-                horizontal_dist = None
                 try:
                     point = points_coord[point_name]
                 except KeyError:
@@ -443,17 +456,15 @@ class FormatParser:
                             id=pid,
                             point_name=point_name,
                             angle_unit=angle_unit,
+                            z_angle_type='v',
                             dist_unit=dist_unit,
+                            dist_type='s',
                             azimuth=azimuth,
                             angle=angle,
                             z_angle=z_angle,
-                            slope_dist=slope_dist,
-                            horizontal_dist=horizontal_dist,
+                            dist=dist,
                             th=th,
                             attrib=attrib)
                 points.append(f)
                 pid += 1
         return points
-
-
-    points = property(_points)

@@ -63,7 +63,8 @@ class FormatParser:
         self.rows = (r for r in data.splitlines() if not r.startswith('-- '))
         # Text comments, but not comment records ------------------------^
 
-    def _points(self):
+    @property
+    def points(self):
         '''Extract all RW5 data.
 
         This parser is based on the information in :ref:`if_carlson_rw5`
@@ -153,26 +154,25 @@ class FormatParser:
                 attrib = [rec['note']]
                 # Angle is recorded as azimuth or horizontal angle
                 try:
-                    azimuth = float(rec['AZ'])
+                    angle = float(rec['AZ'])
                 except KeyError:
-                    azimuth = None
-                # Angle is either Bearing, Angle Right or Left, Deflection Right or Left
-                try:
-                    angle = float(rec['BR'])
-                except KeyError:
+                    # Angle is either Bearing, Angle Right or Left, Deflection Right or Left
                     try:
-                        angle = float(rec['AR'])
+                        angle = float(rec['BR'])
                     except KeyError:
                         try:
-                            angle = float(rec['AL'])
+                            angle = float(rec['AR'])
                         except KeyError:
                             try:
-                                angle = float(rec['DR'])
+                                angle = float(rec['AL'])
                             except KeyError:
                                 try:
-                                    angle = float(rec['DL'])
+                                    angle = float(rec['DR'])
                                 except KeyError:
-                                    angle = None
+                                    try:
+                                        angle = float(rec['DL'])
+                                    except KeyError:
+                                        raise ValueError('There is no horizontal angle value')
                 # Vertical angle is either Zenith, Vertical angle or Change elevation
                 try:
                     z_angle = float(rec['ZE'])
@@ -183,18 +183,28 @@ class FormatParser:
                         try:
                             z_angle = float(rec['CE'])
                         except KeyError:
-                            z_angle = None
+                            raise ValueError('There is no vertical angle value')
+                        else:
+                            z_angle_type = 'dh'
+                    else:
+                        z_angle_type = 'v'
+                else:
+                    z_angle_type= 'z'
                 try:
                     dist = float(rec['SD'])
                 except KeyError:
                     try:
                         dist = float(rec['HD'])
                     except KeyError:
-                        dist = None
+                        raise ValueError('There is no distance value')
                     else:
-                        dist = horizontal_to_slope(dist, z_angle, angle_unit)
+                        dist_type = "h"
+                else:
+                    dist_type = 's'
                 attrib = [rec['note']]
                 p = PolarPoint(angle_unit=angle_unit,
+                               z_angle_type=z_angle_type,
+                               dist_type=dist_type,
                                dist=dist,
                                angle=angle,
                                z_angle=z_angle,
@@ -214,6 +224,7 @@ class FormatParser:
                 pid += 1
         return points
 
+    @property
     def raw_line(self):
         '''Extract all Carlson RW5 data.
 
@@ -358,14 +369,23 @@ class FormatParser:
                             z_angle = float(rec['CE'])
                         except KeyError:
                             z_angle = None
+                        else:
+                            z_angle_type = 'dh'
+                    else:
+                        z_angle_type = 'v'
+                else:
+                    z_angle_type = 'z'
                 try:
-                    slope_dist = float(rec['SD'])
+                    dist = float(rec['SD'])
                 except KeyError:
-                    slope_dist = None
-                try:
-                    horizontal_dist = float(rec['HD'])
-                except KeyError:
-                    horizontal_dist = None
+                    try:
+                        dist = float(rec['HD'])
+                    except KeyError:
+                        dist = None
+                    else:
+                        dist_type = 'h'
+                else:
+                    dist_type = 's'
                 attrib = [rec['note']]
                 try:
                     point = points_coord[point_name]
@@ -381,12 +401,13 @@ class FormatParser:
                             id=pid,
                             point_name=point_name,
                             angle_unit=angle_unit,
+                            z_angle_type=z_angle_type,
                             dist_unit=dist_unit,
+                            dist_type=dist_type,
                             azimuth=azimuth,
                             angle=angle,
                             z_angle=z_angle,
-                            slope_dist=slope_dist,
-                            horizontal_dist=horizontal_dist,
+                            dist=dist,
                             th=th,
                             station_name=station_name,
                             attrib=attrib)
@@ -394,5 +415,3 @@ class FormatParser:
                 pid += 1
 
         return points
-
-    points = property(_points)
