@@ -20,9 +20,13 @@
 # along with Total Open Station.  If not, see
 # <http://www.gnu.org/licenses/>.
 
+import logging
+
 from pygeoif import geometry as g
 from math import pi
 
+
+logger = logging.getLogger("tops")
 
 class Point(g.Point):
     pass
@@ -128,7 +132,7 @@ def check_coordorder(coordorder):
     if any((coordorder == v for v in COORDINATE_ORDER)):
         return coordorder
     else:
-        raise ValueError('Invalid coordinate order')
+        logger.info('Invalid coordinate order')
 
 BUILTIN_INPUT_FORMATS = {
     'carlson_rw5': ('carlson_rw5', 'FormatParser', 'Carlson RW5'),
