@@ -33,5 +33,5 @@ class TestRW5Output(BaseTestOutput):
 
     @pytest.fixture
     def setup(self):
-        with open('sample_data/Leica1200.rw5') as testdata:
+        with open('sample_data/carlson_rw5/Leica1200.rw5') as testdata:
             self.fp = FormatParser(testdata.read())

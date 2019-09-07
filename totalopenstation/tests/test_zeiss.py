@@ -42,5 +42,5 @@ class TestZeissExceptionIndex(unittest.TestCase):
 class TestZeissRecOutput(BaseTestOutput):
     @pytest.fixture
     def setup(self):
-        with open('sample_data/zeiss_elta_r55-REC_500.tops') as testdata:
+        with open('sample_data/zeiss_elta_r55/zeiss_elta_r55-REC_500.tops') as testdata:
             self.fp = FormatParser(testdata.read())
