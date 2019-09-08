@@ -1,6 +1,10 @@
 import unittest
 
+import pytest
+
 from totalopenstation.formats.leica_tcr_705 import FormatParser
+
+from . import BaseTestOutput
 
 
 class TestLeicaTCR705Parser(unittest.TestCase):
@@ -18,3 +22,11 @@ class TestLeicaTCR705Parser(unittest.TestCase):
         self.assertEqual(self.fp.points[1].id, '101')
         self.assertEqual(self.fp.points[1].desc, 'WALL01')
         self.assertEqual(self.fp.points[0].desc, 'WALL01')
+
+
+class TestLeicaTCR705Output(BaseTestOutput):
+
+    @pytest.fixture
+    def setup(self):
+        with open('sample_data/leica_tcr_705') as testdata:
+            self.fp = FormatParser(testdata.read())

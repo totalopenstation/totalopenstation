@@ -1,6 +1,10 @@
 import unittest
 
+import pytest
+
 from totalopenstation.formats.leica_gsi import FormatParser
+
+from . import BaseTestOutput
 
 
 class TestLeicaGSI16Parser(unittest.TestCase):
@@ -26,6 +30,15 @@ class TestLeicaGSI16Parser(unittest.TestCase):
         self.assertAlmostEqual(self.ls.coords[0][0], 8.0757244)
 
 
+class TestLeicaGSI16Output(BaseTestOutput):
+
+    @pytest.fixture
+    def setup(self):
+        with open('sample_data/leica_gsi/leica_gsi16_gurob.gsi') as testdata:
+
+            self.fp = FormatParser(testdata.read())
+
+
 class TestLeicaGSI8Parser(unittest.TestCase):
 
     def setUp(self):
@@ -49,3 +62,11 @@ class TestLeicaGSI8Parser(unittest.TestCase):
         self.assertAlmostEqual(self.ls.coords[0][0], 515.836)
         self.assertAlmostEqual(self.ls.coords[3][2], 2.553)
         self.assertAlmostEqual(self.ls.bounds[0], -7.4660913)
+
+
+class TestLeicaGSI8Output(BaseTestOutput):
+
+    @pytest.fixture
+    def setup(self):
+        with open('sample_data/leica_gsi/leica_gsi16_gurob.gsi') as testdata:
+            self.fp = FormatParser(testdata.read())

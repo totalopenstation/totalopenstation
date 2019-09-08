@@ -1,6 +1,10 @@
 import unittest
 
+import pytest
+
 from totalopenstation.formats.leica_tcr_1205 import FormatParser
+
+from . import BaseTestOutput
 
 
 class TestLeicaTCR1205Parser(unittest.TestCase):
@@ -24,3 +28,11 @@ class TestLeicaTCR1205Parser(unittest.TestCase):
         self.assertAlmostEqual(self.ls.coords[6][0], 450403.738)
         self.assertAlmostEqual(self.ls.coords[6][1], 205883.360)
         self.assertAlmostEqual(self.ls.coords[6][2], 61.318)
+
+
+class TestLeicaTCR1205Output(BaseTestOutput):
+
+    @pytest.fixture
+    def setup(self):
+        with open('sample_data/leica_tcr_1205') as testdata:
+            self.fp = FormatParser(testdata.read())
