@@ -20,10 +20,10 @@
 # <http://www.gnu.org/licenses/>.
 
 
-def to_dat(e):
-    if e[4].endswith("R"):
-        string = "%s %s %s %s\r\n" % (e[0], e[0], e[1], e[2])
-        return string
+def to_dat(point):
+    if point.desc.endswith("R"):
+        result = "{p.id} {p.id} {p.geometry.x} {p.geometry.y}\r\n".format(p=point)
+        return result
     else:
         return ''
 
@@ -33,16 +33,13 @@ class OutputFormat:
     """
     Exports points data in DAT format suitable for use with Archis.
 
-    ``data`` should be an iterable (e.g. list) containing one iterable (e.g.
-    tuple) for each point. The default order is PID, x, x, z, TEXT.
-
-    This is consistent with our current standard.
+    ``data`` must be an iterable containing Feature objects.
     """
 
     def __init__(self, data):
         self.data = data
 
     def process(self):
-        lines = [to_dat(e) for e in self.data]
+        lines = [to_dat(point) for point in self.data]
         output = "".join(lines)
         return output
