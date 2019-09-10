@@ -1,7 +1,7 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
 # filename: tops_csv.py
-# Copyright 2008, 2009, 2011 Stefano Costa <steko@iosa.it>
+# Copyright 2019 Stefano Costa <steko@iosa.it>
 # Copyright 2016 Damien Gaignon <damien.gaignon@gmail.com>
 #
 # This file is part of Total Open Station.
@@ -49,10 +49,13 @@ class OutputFormat:
                                   'th', 'ih', 'circle', 'station'))
         for feature in self.data:
             row = [feature.id,
-                   feature.desc,
-                   feature.point_name,
-                   feature.geometry.x,
-                   feature.geometry.y]
+                   feature.desc]
+            try:  # not all input formats include point_name
+                row.append(feature.point_name)
+            except KeyError:
+                row.append('')
+            row.extend([feature.geometry.x,
+                        feature.geometry.y])
             try:
                 row.append(feature.geometry.z)
             except ValueError:
