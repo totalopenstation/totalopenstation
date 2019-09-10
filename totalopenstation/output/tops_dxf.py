@@ -126,14 +126,20 @@ class OutputFormat:
                 result += ' 40\n%01.2f\n' % self.text_height
                 result += ' 62\n256\n'
 
-                # add Z value as string
-                result += '  0\nTEXT\n'
-                result += '  1\n%s\n' % geom.z
-                result += '  8\n%s\n' % layer_z_text
-                result += ' 10\n%s\n' % geom.x
-                result += ' 20\n%s\n' % p_yz
-                result += ' 40\n%01.2f\n' % self.text_height
-                result += ' 62\n256\n'
+                try:
+                    geom.z
+                except ValueError:
+                    pass
+                else:
+                    # add Z value as string
+                    result += '  0\nTEXT\n'
+                    result += '  1\n%s\n' % geom.z
+                    result += '  8\n%s\n' % layer_z_text
+                    result += ' 10\n%s\n' % geom.x
+                    result += ' 20\n%s\n' % p_yz
+                    result += ' 40\n%01.2f\n' % self.text_height
+                    result += ' 62\n256\n'
+
             elif geom.geom_type == 'LineString':
                 result += '  0\nPOLYLINE\n'
                 result += '  8\n%s\n' % p_layer
