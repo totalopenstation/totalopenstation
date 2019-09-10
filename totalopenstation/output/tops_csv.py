@@ -38,7 +38,6 @@ class OutputFormat:
         self.writer = csv.writer(self.output, quoting=csv.QUOTE_NONNUMERIC)
 
     def process(self):
-        rows = []
         try:
             self.data[0].geometry.z
         except ValueError:
