@@ -21,11 +21,8 @@
 
 
 def to_dat(point):
-    if point.desc.endswith("R"):
-        result = "{p.id} {p.id} {p.geometry.x} {p.geometry.y}\r\n".format(p=point)
-        return result
-    else:
-        return ''
+    result = "{p.id} {p.id} {p.geometry.x} {p.geometry.y}\r\n".format(p=point)
+    return result
 
 
 class OutputFormat:
