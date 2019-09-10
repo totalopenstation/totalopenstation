@@ -41,6 +41,14 @@ class OutputFormat:
         self.writer.writeheader()
 
     def process(self):
+
+        def value_or_empty(property_name):
+            try:
+                value = feature.properties[property_name]
+            except KeyError:
+                value = ''
+            return value
+
         for feature in self.data:
             row = {
                 'pid': feature.id,
@@ -59,15 +67,9 @@ class OutputFormat:
             except KeyError:
                 row['point_name'] = ''
 
-            try:  # not all input formats include instrument height
-                row['ih'] = feature.properties['ih']
-            except KeyError:
-                row['ih'] = ''
-
-            try:  # not all input formats include circle FIXME what is circle?
-                row['circle'] = feature.properties['circle']
-            except KeyError:
-                row['circle'] = ''
+            # a few cases with simple yes/no logic
+            for prop in ['ih', 'circle', 'z_angle', 'th']:
+                row[prop] = value_or_empty(prop)
 
             try:  # not all input formats include azimuth/angle
                 row['angle'] = feature.properties['azimuth']
@@ -84,16 +86,6 @@ class OutputFormat:
                     row['distance'] = feature.properties['horizontal_dist']
                 except KeyError:
                     row['distance'] = ''
-
-            try:  # not all input formats include z_angle
-                row['z_angle'] = feature.properties['z_angle']
-            except KeyError:
-                row['z_angle'] = ''
-
-            try:  # not all input formats include target height
-                row['th'] = feature.properties['th']
-            except KeyError:
-                row['th'] = ''
 
             try:  # not all input formats include station name
                 row['station'] = feature.properties['st_name']
