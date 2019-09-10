@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 # filename: tops_txt.py
 # Copyright 2008 Luca Bianconi<lc.bianconi@googlemail.com>
-# Copyright 2008,2011 Stefano Costa <steko@iosa.it>
+# Copyright 2019 Stefano Costa <steko@iosa.it>
 #
 # This file is part of Total Open Station.
 #
@@ -22,7 +22,10 @@
 
 
 def to_txt(d):
-    string = "%s %s %s\n" % (d.geometry.x, d.geometry.y, d.geometry.z)
+    try:
+        string = "{geom.x} {geom.y} {geom.z}\n".format(geom=d.geometry)
+    except ValueError:
+        string = "{geom.x} {geom.y}\n".format(geom=d.geometry)
     return string
 
 class OutputFormat:
@@ -30,10 +33,7 @@ class OutputFormat:
     """
     Exports points data in TXT (space-separated) format line by line.
 
-    ``data`` should be an iterable (e.g. list) containing one iterable
-    (e.g.  tuple) for each point. The default order is x, y, z.
-
-    This is consistent with our current standard.
+    ``data`` should be an iterable of Feature objects.
     """
 
     def __init__(self, data):
