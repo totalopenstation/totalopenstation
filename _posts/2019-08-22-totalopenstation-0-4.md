@@ -11,8 +11,8 @@ No open bugs were left and this release is mature enough to hit the repositories
 
 Find it on PyPI at <https://pypi.python.org/pypi/totalopenstation> as usual.
 
-Windows users, please note that the TOPS-on-a-USB-stick version will have to
-wait a few days more, but the [beta version](https://tops.iosa.it/2016/06/22/portable-tops-beta.html) is equally functional.
+Windows users can find the portable app (TOPS-on-a-USB-stick version) from the
+[GitHub release page](https://github.com/steko/totalopenstation/releases/tag/v0.4.0).
 
 ### What's new in Total Open Station 0.4
 
