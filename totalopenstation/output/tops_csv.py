@@ -56,29 +56,19 @@ class OutputFormat:
                 row['z'] = ''
 
             # a few cases with simple yes/no logic
-            for p in ['point_name', 'ih', 'circle', 'z_angle', 'th']:
-                row[p] = feature.properties[p] if p in feature.properties else ''
+            for prop in ['point_name', 'ih', 'circle', 'z_angle', 'th']:
+                row[prop] = feature.properties.get(prop, '')  # empty string as default value
 
-            try:  # not all input formats include azimuth/angle
-                row['angle'] = feature.properties['azimuth']
-            except KeyError:
-                try:
-                    row['angle'] = feature.properties['angle']
-                except KeyError:
-                    row['angle'] = ''
+            # not all input formats include azimuth/angle
+            row['angle'] = feature.properties.get('azimuth',
+                                                  feature.properties.get('angle', ''))
 
-            try:  # not all input formats include distance
-                row['dist'] = feature.properties['slope_dist']
-            except KeyError:
-                try:
-                    row['distance'] = feature.properties['horizontal_dist']
-                except KeyError:
-                    row['distance'] = ''
+            # not all input formats include distance
+            row['dist'] = feature.properties.get('slope_dist',
+                                                 feature.properties.get('distance', ''))
 
-            try:  # not all input formats include station name
-                row['station'] = feature.properties['st_name']
-            except KeyError:
-                row['station'] = ''
+            # not all input formats include station name
+            row['station'] = feature.properties.get('st_name', '')
 
             self.writer.writerow(row)
 
