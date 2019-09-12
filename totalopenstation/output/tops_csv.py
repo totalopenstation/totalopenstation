@@ -64,8 +64,8 @@ class OutputFormat:
                                                   feature.properties.get('angle', ''))
 
             # not all input formats include distance
-            row['dist'] = feature.properties.get('slope_dist',
-                                                 feature.properties.get('distance', ''))
+            row['distance'] = feature.properties.get('slope_dist',
+                                                 feature.properties.get('horizontal_dist', ''))
 
             # not all input formats include station name
             row['station'] = feature.properties.get('st_name', '')
