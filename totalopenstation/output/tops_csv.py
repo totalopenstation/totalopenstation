@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 # filename: tops_csv.py
 # Copyright 2019 Stefano Costa <steko@iosa.it>
-# Copyright 2016 Damien Gaignon <damien.gaignon@gmail.com>
+# Copyright 2019 Damien Gaignon <damien.gaignon@gmail.com>
 #
 # This file is part of Total Open Station.
 #
@@ -62,14 +62,9 @@ class OutputFormat:
             except ValueError:
                 row['z'] = ''
 
-            try:  # not all input formats include point_name
-                row['point_name'] = feature.point_name
-            except KeyError:
-                row['point_name'] = ''
-
             # a few cases with simple yes/no logic
-            for prop in ['ih', 'circle', 'z_angle', 'th']:
-                row[prop] = value_or_empty(prop)
+            for p in ['point_name', 'ih', 'circle', 'z_angle', 'th']:
+                row[p] = feature.properties[p] if p in feature.properties else ''
 
             try:  # not all input formats include azimuth/angle
                 row['angle'] = feature.properties['azimuth']
