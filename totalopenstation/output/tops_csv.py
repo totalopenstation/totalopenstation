@@ -42,13 +42,6 @@ class OutputFormat:
 
     def process(self):
 
-        def value_or_empty(property_name):
-            try:
-                value = feature.properties[property_name]
-            except KeyError:
-                value = ''
-            return value
-
         for feature in self.data:
             row = {
                 'pid': feature.id,
