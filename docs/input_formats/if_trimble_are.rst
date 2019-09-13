@@ -1,3 +1,5 @@
+.. _if_trimble_are:
+
 =====================
  Trimble AREA format
 =====================

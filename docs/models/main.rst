@@ -15,7 +15,7 @@ Implemented models
    :maxdepth: 1
    :glob:
    
-   model_*
+   model_implemented
 
 Getting sample data
 ===================
