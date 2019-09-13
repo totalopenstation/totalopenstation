@@ -10,9 +10,9 @@ Public License v3`_ or (at your option) any later version.
 .. _`General Public License v3`: http://www.gnu.org/licenses/gpl-3.0.html
 
 Development is tracked with git. The main development repository is at
-GitHub where it's easy to fork the source code for your own experiments.
+`GitHub`_ where it's easy to fork the source code for your own experiments.
 
-.. GitHub: https://github.com/steko/totalopenstation
+
 
 Coding standards
 ================

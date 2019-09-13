@@ -40,7 +40,6 @@ If you are having problems with getting started, try first our
 :ref:`faq`. If that doesn't help, get in touch with the development
 team through our dedicated `support channel`_.
 
-.. _`support channel`: https://gitter.im/steko/totalopenstation
 
 Documentation
 =============
