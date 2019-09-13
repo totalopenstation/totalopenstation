@@ -30,8 +30,9 @@ files.
 Getting started with Total Open Station
 =======================================
 
-Total Open Station 0.3 is in now available as a development preview and
+Total Open Station |version| is in now available and
 can be installed on all major operating systems.
+A development version could be build from source.
 
 Detailed instructions are available at the :ref:`installing` page.
 
