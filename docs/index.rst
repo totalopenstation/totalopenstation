@@ -38,9 +38,9 @@ Detailed instructions are available at the :ref:`installing` page.
 
 If you are having problems with getting started, try first our
 :ref:`faq`. If that doesn't help, get in touch with the development
-team through our dedicated support channel and `mailing list`_.
+team through our dedicated `support channel`_.
 
-.. _`mailing list`: https://lists.berlios.de/mailman/listinfo/tops-dev
+.. _`support channel`: https://gitter.im/steko/totalopenstation
 
 Documentation
 =============
