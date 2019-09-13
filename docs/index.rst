@@ -14,8 +14,7 @@ This is a task which is usually done by proprietary, dedicated and
 Windows™-only software, but TOPS is different by nature, because:
 
 - it is **free software** released under the GNU GPLv3 license;
-- it works on *any* operating system, including mobile platforms like
-  OpenMoko;
+- it works on *any* operating system;
 - it is designed to support as many devices and formats as possible, all
   within the same program, opposed to having one program per device.
 
