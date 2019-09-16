@@ -30,7 +30,7 @@ files.
 Getting started with Total Open Station
 =======================================
 
-Total Open Station |version| is in now available and
+Total Open Station |version| is now available and
 can be installed on all major operating systems.
 A development version could be build from source.
 
