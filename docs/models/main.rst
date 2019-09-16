@@ -4,18 +4,40 @@
 Models
 ======
 
-General concepts here about models and abstract classes.
+Total Open Station handle the retrieving of data from stations by serial link.
+Parameters of connection for some models are directly implemented in Total Open Station.
+
+Other models could be linked using the connect window (GUI only).
 
 .. _implemented_models:
 
 Implemented models
 ==================
 
+Those following models have there connection tested and data are retrieved correctly.
+
 .. toctree::
    :maxdepth: 1
    :glob:
-   
+
    model_implemented
+
+Other models
+============
+
+A connect window is available in the GUI to be able to set parameters and retrieve
+data from non implemented models.
+
+Unimplemented :term:`models <model>` can be integrated to Total Open Station.
+
+The best way to have your model included in the next version of
+Total Open Station is to fill a issue in the `bug tracker`_ and attach
+the values obtained following the `Getting sample data`_ guide.
+
+If you can write Python code, you can also write a module by yourself using
+the existing ones as a guide and submit a `pull request`_.
+If you write a module, we will be happy to receive it and include it in the Total Open Station source tree.
+
 
 Getting sample data
 ===================
@@ -31,29 +53,15 @@ Open Station can still be useful, particularly for:
 2. retrieving **sample data** from unknown models and submit them to
    allow support of those models in future releases of the program.
 
-To do this, you can just use the main Total Open Station
-executable.
+To do this, you can just use the main Total Open Station executable.
 
 
 .. warning::
 
-   Remember: Total Open Station is no wizard, and you have to tune the
+   Remember: Total Open Station has no wizard, and you have to tune the
    serial port options using your prior knowledge of your total
    station (e.g. read the manual that came with it, look at other
    programs' options).
-
-Other models
-============
-
-Unimplemented :term:`models <model>` can be added to TotalOpenStation.
-
-The best way to have your model included in the next version of
-TotalOpenStation is to file a support request in the bug tracker and attach
-some sample data dumps obtained with the Helper application.
-
-If you can write Python code, you can also write a module by yourself using
-the existing ones as a guide. Should you write a module, we will be happy to
-receive it and include it in the TotalOpenStation source tree.
 
 .. seealso::
     The :ref:`contributing` page to find out how to join the project and
