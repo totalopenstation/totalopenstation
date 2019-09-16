@@ -1,8 +1,8 @@
 .. _gui-main:
 
-====================
-TotalOpenStation GUI
-====================
+======================
+Total Open Station GUI
+======================
 
 Downloading raw data
 --------------------
