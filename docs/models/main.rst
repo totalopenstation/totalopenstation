@@ -38,6 +38,7 @@ If you can write Python code, you can also write a module by yourself using
 the existing ones as a guide and submit a `pull request`_.
 If you write a module, we will be happy to receive it and include it in the Total Open Station source tree.
 
+.. _getting_sample_data:
 
 Getting sample data
 ===================
@@ -66,4 +67,3 @@ To do this, you can just use the main Total Open Station executable.
 .. seealso::
     The :ref:`contributing` page to find out how to join the project and
     participate actively to the development.
-   
