@@ -1,8 +1,8 @@
 .. _if_nikon_raw:
 
-========================
- Nikon RAW format V2.00
-========================
+===============================================
+:mod:`nikon_raw_v200` -- Nikon RAW format V2.00
+===============================================
 
 .. moduleauthor:: Stefano Costa
 .. versionadded:: 0.3.3

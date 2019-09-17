@@ -2,9 +2,9 @@
 
 .. _if_carlson_rw5:
 
-=========================================
-Carlson SurvCE Raw Data File Format (RW5)
-=========================================
+===============================================================
+:mod:`carlson_rw5` -- Carlson SurvCE Raw Data File Format (RW5)
+===============================================================
 
 .. moduleauthor:: Stefano Costa, Filip Kłosowski
 .. versionadded:: 0.4

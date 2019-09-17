@@ -1,8 +1,8 @@
 .. _if_leica_tcr_1205:
 
-================
- Leica TCR 1205
-================
+=======================================
+:mod:`leica_tcr_1205` -- Leica TCR 1205
+=======================================
 
 :moduleauthor: Stefano Costa
 :moduleauthor: Luca Bianconi
