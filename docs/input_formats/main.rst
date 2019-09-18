@@ -28,7 +28,7 @@ Total Open Station.
 
 Cartesian coordinates just need to be extracted from ASCII data.
 
-.. _implemented_formats:
+.. _implemented_if:
 
 Implemented formats
 ===================

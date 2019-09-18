@@ -54,6 +54,7 @@ User manual
    installing
    interfaces/main
    input_formats/main
+   output_formats/main
    models/main
    users
    glossary
@@ -74,8 +75,9 @@ Indices and tables
 ------------------
 
 * :ref:`genindex`
-* :ref:`Implemented Formats <implemented_formats>`
+* :ref:`Implemented Input Formats <implemented_if>`
 * :ref:`Implemented Models <implemented_models>`
+* :ref:`Implemented Output Formats <implemented_of>`
 * :ref:`modindex`
 * :ref:`search`
 
