@@ -2,9 +2,6 @@
 :mod:`leica_tcr_1205` -- Leica TCR 1205
 =======================================
 
-.. module:: leica_trc_1205
-    :platform: Unix, Windows
-    :synopsis: Get and read data from the Leica TCR 1205 total station.
 
 .. moduleauthor:: Stefano Costa <steko@iosa.it>
 .. moduleauthor:: Luca Bianconi <luxetluc@yahoo.it>
@@ -38,9 +35,6 @@ measures.
 :mod:`nikon_npl_350` -- Nikon NPL-350
 =====================================
 
-.. module:: nikon_npl_350
-    :platform: Unix, Windows
-    :synopsis: Get data from the Nikon NPL-350 total station.
 
 .. moduleauthor:: Stefano Costa <steko@iosa.it>
 
@@ -70,9 +64,6 @@ The data format is in ASCII format.
 :mod:`trimble` -- Trimble
 =======================================
 
-.. module:: trimble
-    :platform: Unix, Windows
-    :synopsis: Get data from theTrimble total station.
 
 .. moduleauthor:: Stefano Costa <steko@iosa.it>
 
@@ -99,9 +90,6 @@ The data format is ASCII, quite simple.
 :mod:`zeiss_elta_r55` -- Zeiss Elta R55
 =======================================
 
-.. module:: zeiss_elta_r55
-    :platform: Unix, Windows
-    :synopsis: Get data from the Zeiss Elta R55 total station.
 
 .. moduleauthor:: Stefano Costa <steko@iosa.it>
 

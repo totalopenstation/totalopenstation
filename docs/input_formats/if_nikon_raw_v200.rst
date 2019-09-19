@@ -125,16 +125,6 @@ Comment/note records
 :CO: Comment record identifier (fixed text)
 :text: Comment text
 
-Module documentation
-====================
-
-.. automodule:: formats.nikon_raw_v200
-   :members:
-   :undoc-members:
-   :show-inheritance:
-   :platform: any
-   :synopsis: Read data in the Carlson RW5 format
-
 Acknowledgements
 ================
 
