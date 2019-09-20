@@ -36,3 +36,11 @@ If your native language is missing, why don't you start translating
 
 .. _Transifex: https://www.transifex.com/projects/p/totalopenstation/resource/totalopenstation-app/
 
+
+Developping |tops|
+==================
+
+    * :ref:`dev_advices`
+    * :ref:`dev_processing_data`
+    * :ref:`dev_modules`
+    * :ref:`release`
