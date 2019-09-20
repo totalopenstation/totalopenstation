@@ -64,12 +64,13 @@ Development
 -----------
 
 .. toctree::
-   :maxdepth: 1
+   :maxdepth: 2
 
-   contributing
-   input_formats/new
-   library
-   release
+
+   contributing/main
+   contributing/modules/main
+   contributing/library
+   contributing/release
 
 Indices and tables
 ------------------
