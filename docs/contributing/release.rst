@@ -4,6 +4,8 @@
  Releasing a new Total Open Station version
 ============================================
 
+.. _translations:
+
 Translations
 ============
 
@@ -45,7 +47,7 @@ Documentation
 =============
 
 The documentation is included in the source tree, and is published
-online at <http://totalopenstation.readthedocs.org/>_.
+online at `http://totalopenstation.readthedocs.org/ <http://totalopenstation.readthedocs.org/>`_.
 
 Manual pages for the three scripts provided with TOPS are not
 available at the moment.
@@ -83,6 +85,9 @@ A portable Windows app is built with PyInstaller:
 4. this will create the file ``dist/totalopenstation.exe``, a portable
    single-file executable that will run from any compatible Windows system,
    even from USB sticks
-5. an executable built on 64 bit systems will not run on 32 bit systems
+
+.. warning::
+
+    An executable built on 64 bit systems will not run on 32 bit systems
 
 .. _`installing PyInstaller on Windows`: http://pyinstaller.readthedocs.io/en/stable/installation.html#installing-in-windows

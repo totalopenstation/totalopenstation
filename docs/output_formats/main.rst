@@ -35,7 +35,7 @@ Total Open Station is to fill a support request in the `bug tracker`_ and attach
 some sample data dumps obtained from your original software.
 
 If you can write Python code, you can also write a module by yourself using
-an existing one as a guide and the :ref:`of_new` directive. 
+an existing one as a guide and the :ref:`new` directive. 
 If you write a module, we will be happy to receive it and include it in the
 Total Open Station source tree.
 
