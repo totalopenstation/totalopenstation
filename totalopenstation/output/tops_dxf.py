@@ -20,7 +20,10 @@
 # <http://www.gnu.org/licenses/>.
 
 
-class OutputFormat:
+from . import Builder
+
+
+class OutputFormat(Builder):
 
     """
     Exports points data in AutoCAD DXF format.

@@ -23,8 +23,10 @@
 import csv
 import io
 
+from . import Builder
 
-class OutputFormat:
+
+class OutputFormat(Builder):
 
     """
     Exports points data in CSV format.

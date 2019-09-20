@@ -19,6 +19,8 @@
 # along with Total Open Station.  If not, see
 # <http://www.gnu.org/licenses/>.
 
+from . import Builder
+
 
 def to_dat(e):
     if e[4].endswith("R"):
@@ -28,7 +30,7 @@ def to_dat(e):
         return ''
 
 
-class OutputFormat:
+class OutputFormat(Builder):
 
     """
     Exports points data in DAT format suitable for use with Archis.

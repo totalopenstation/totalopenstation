@@ -19,6 +19,8 @@
 # along with Total Open Station.  If not, see
 # <http://www.gnu.org/licenses/>.
 
+from . import Builder
+
 
 def to_sql(point, tablename):
     '''Generate SQL line corresponding to the input point.
@@ -43,7 +45,7 @@ def to_wkt(point):
     return wkt_representation
 
 
-class OutputFormat:
+class OutputFormat(Builder):
 
     """
     Exports points data in SQL format suitable for use with PostGIS & friends.

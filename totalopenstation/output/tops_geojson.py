@@ -22,7 +22,10 @@ import json
 
 from totalopenstation.formats import FeatureCollection
 
-class OutputFormat:
+from . import Builder
+
+
+class OutputFormat(Builder):
     '''A GeoJSON output driver.'''
 
     def __init__(self, data):
