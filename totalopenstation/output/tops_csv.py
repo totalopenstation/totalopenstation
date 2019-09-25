@@ -79,10 +79,8 @@ class OutputFormat:
                 if feature.properties["angle"] is not None:
                     angle = feature.properties["angle"]
 
-                if feature.properties["slope_dist"] is not None:
-                    dist = feature.properties["slope_dist"]
-                elif feature.properties["horizontal_dist"] is not None:
-                    dist = feature.properties["horizontal_dist"]
+                if feature.properties["dist"] is not None:
+                    dist = feature.properties["dist"]
                 row.extend([angle,
                            feature.properties["z_angle"],
                            dist,
