@@ -40,7 +40,12 @@ def to_sql(point, tablename):
 def to_wkt(point):
     x = point.geometry.x
     y = point.geometry.y
-    wkt_representation = 'POINT(%s %s)' % (x, y)
+    try:
+        point.geometry.z
+    except ValueError:
+        wkt_representation = 'POINT ({g.x} {g.y})'.format(g=point.geometry)
+    else:
+        wkt_representation = 'POINT Z ({g.x} {g.y} {g.z})'.format(g=point.geometry)
     return wkt_representation
 
 
