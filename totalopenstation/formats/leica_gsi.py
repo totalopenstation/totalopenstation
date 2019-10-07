@@ -19,6 +19,8 @@
 # along with Total Open Station.  If not, see
 # <http://www.gnu.org/licenses/>.
 
+import logging
+
 from . import Feature, Parser, Point, UNKNOWN_STATION, UNKNOWN_POINT
 from .polar import BasePoint, PolarPoint
 
@@ -353,7 +355,7 @@ class FormatParser(Parser):
                 try:
                     comments = self.tdict['41']
                 except KeyError:
-                    print("The line %s will not be computed as the code '%s' is not known"\
+                    logging.warning("The line %s will not be computed as the code '%s' is not known"\
                           % (pid, row[0:2]))
                 else:
                     # Compute comments
