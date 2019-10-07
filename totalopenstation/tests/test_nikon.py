@@ -33,5 +33,13 @@ class TestNikonRAWOutput(BaseTestOutput):
 
     @pytest.fixture
     def setup(self):
-        with open('sample_data/leica_gsi/leica_gsi16_gurob.gsi') as testdata:
+        with open('sample_data/nikon_raw_v200/nikon_raw_v200.tops') as testdata:
+            self.fp = FormatParser(testdata.read())
+
+
+class TestNikonRAW2Output(BaseTestOutput):
+
+    @pytest.fixture
+    def setup(self):
+        with open('sample_data/nikon_raw_v200/nikon_dtm.tops') as testdata:
             self.fp = FormatParser(testdata.read())

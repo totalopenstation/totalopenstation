@@ -1,8 +1,8 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
 # filename: tops_csv.py
-# Copyright 2008, 2009, 2011 Stefano Costa <steko@iosa.it>
-# Copyright 2016 Damien Gaignon <damien.gaignon@gmail.com>
+# Copyright 2019 Stefano Costa <steko@iosa.it>
+# Copyright 2019 Damien Gaignon <damien.gaignon@gmail.com>
 #
 # This file is part of Total Open Station.
 #
@@ -35,61 +35,41 @@ class OutputFormat:
     def __init__(self, data):
         self.data = data
         self.output = io.StringIO()
-        self.writer = csv.writer(self.output, quoting=csv.QUOTE_NONNUMERIC)
+        fieldnames = ['pid', 'type', 'point_name', 'x', 'y', 'z', 'angle', 'z_angle', 'distance',
+                      'th', 'ih', 'circle', 'station']
+        self.writer = csv.DictWriter(self.output, quoting=csv.QUOTE_NONNUMERIC, fieldnames=fieldnames)
+        self.writer.writeheader()
 
     def process(self):
-        rows = []
-        try:
-            self.data[0].geometry.z
-        except ValueError:
-            self.writer.writerow(('PID', 'type', 'Point Name', 'x', 'y', 'angle', 'z_angle', 'distance',
-                                 'th', 'ih', 'circle', 'station'))
-        else:
-            self.writer.writerow(('PID', 'type', 'Point Name', 'x', 'y', 'z', 'angle', 'z_angle', 'distance',
-                                  'th', 'ih', 'circle', 'station'))
-        for feature in self.data:
-            row = [feature.id,
-                   feature.desc,
-                   feature.point_name,
-                   feature.geometry.x,
-                   feature.geometry.y]
-            try:
-                row.append(feature.geometry.z)
-            except ValueError:
-                pass
-            if feature.desc == "PT":
-                row.extend([""] * 6)
-            if feature.desc == "ST":
-                row.extend([""] * 4)
-                try:
-                    row.extend([feature.properties["ih"],
-                               ""])
-                except KeyError:
-                    row.extend([""] * 2)
-            if feature.desc == "BS":
-                row.extend([""] * 5)
-                row.extend([feature.properties["circle"]])
-            if feature.desc == "PO":
-                try:
-                    feature.properties["azimuth"]
-                except KeyError:
-                    pass
-                else:
-                    angle = feature.properties["azimuth"]
-                if feature.properties["angle"] is not None:
-                    angle = feature.properties["angle"]
 
-                if feature.properties["dist"] is not None:
-                    dist = feature.properties["dist"]
-                row.extend([angle,
-                           feature.properties["z_angle"],
-                           dist,
-                           feature.properties["th"]])
-                row.extend([""] * 2)
-                try:
-                    row.extend([feature.properties["st_name"]])
-                except KeyError:
-                    row.extend([""])
+        for feature in self.data:
+            row = {
+                'pid': feature.id,
+                'type': feature.desc,
+                'x' : feature.geometry.x,
+                'y': feature.geometry.y
+            }
+
+            try:  # not all input formats include z coordinates
+                row['z'] = feature.geometry.z
+            except ValueError:
+                row['z'] = ''
+
+            # a few cases with simple yes/no logic
+            for prop in ['point_name', 'ih', 'circle', 'z_angle', 'th']:
+                row[prop] = feature.properties.get(prop, '')  # empty string as default value
+
+            # not all input formats include azimuth/angle
+            row['angle'] = feature.properties.get('azimuth',
+                                                  feature.properties.get('angle', ''))
+
+            # not all input formats include distance
+            row['distance'] = feature.properties.get('slope_dist',
+                                                 feature.properties.get('horizontal_dist', ''))
+
+            # not all input formats include station name
+            row['station'] = feature.properties.get('st_name', '')
+
             self.writer.writerow(row)
 
         return self.output.getvalue()

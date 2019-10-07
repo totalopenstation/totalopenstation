@@ -1,7 +1,7 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
 # filename: tops_sql.py
-# Copyright 2008-2010 Stefano Costa <steko@iosa.it>
+# Copyright 2019 Stefano Costa <steko@iosa.it>
 #
 # This file is part of Total Open Station.
 #
@@ -29,8 +29,8 @@ def to_sql(point, tablename):
     params = {
         'wkt': to_wkt(point),
         'tablename': tablename,
-        'pid': point[0],
-        'text': point[4]}
+        'pid': point.id,
+        'text': point.desc}
     sql_string = "INSERT INTO %(tablename)s" % params
     sql_string += "(point_id, point_geom, point_text) VALUES"
     sql_string += "(%(pid)s,GeomFromText('%(wkt)s'),'%(text)s');\n" % params
@@ -38,8 +38,14 @@ def to_sql(point, tablename):
 
 
 def to_wkt(point):
-    pid, x, y, z, text = point
-    wkt_representation = 'POINT(%s %s)' % (x, y)
+    x = point.geometry.x
+    y = point.geometry.y
+    try:
+        point.geometry.z
+    except ValueError:
+        wkt_representation = 'POINT ({g.x} {g.y})'.format(g=point.geometry)
+    else:
+        wkt_representation = 'POINT Z ({g.x} {g.y} {g.z})'.format(g=point.geometry)
     return wkt_representation
 
 
@@ -51,10 +57,7 @@ class OutputFormat:
     http://postgis.refractions.net/documentation/manual-1.3/ch04.html#id2986280
     has an example of loading an SQL file into a PostgreSQL database.
 
-    ``data`` should be an iterable (e.g. list) containing one iterable (e.g.
-    tuple) for each point. The default order is PID, x, x, z, TEXT.
-
-    This is consistent with our current standard.
+    ``data`` must be an iterable containing Feature objects.
     """
 
     def __init__(self, data, tablename='topsdata'):
