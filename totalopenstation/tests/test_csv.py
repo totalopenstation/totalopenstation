@@ -19,4 +19,4 @@ class TestCSVOutput(unittest.TestCase):
 
     def test_output(self):
         self.output = OutputFormat(self.data).process()
-        self.assertEqual(self.output.splitlines()[1], '1,"PT","TEST POINT",12.8,76.3,56.2,"","","","","",""')
+        self.assertEqual(self.output.splitlines()[1], '1,"PT","TEST POINT",12.8,76.3,56.2,"","","","","","",""')
