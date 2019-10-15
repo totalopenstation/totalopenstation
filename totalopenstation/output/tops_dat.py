@@ -19,13 +19,15 @@
 # along with Total Open Station.  If not, see
 # <http://www.gnu.org/licenses/>.
 
+from . import Builder
+
 
 def to_dat(point):
     result = "{p.id} {p.id} {p.geometry.x} {p.geometry.y}\r\n".format(p=point)
     return result
 
 
-class OutputFormat:
+class OutputFormat(Builder):
 
     """
     Exports points data in DAT format suitable for use with Archis.
