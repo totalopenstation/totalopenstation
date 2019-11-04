@@ -1,10 +1,10 @@
 .. _contributing:
 
 ===================================
- Contributing to |tops|
+ Contributing to Total Open Station
 ===================================
 
-|tops| is free software, released under the GNU `General
+Total Open Station is free software, released under the GNU `General
 Public License v3`_ or (at your option) any later version.
 
 .. _`General Public License v3`: http://www.gnu.org/licenses/gpl-3.0.html
@@ -30,14 +30,14 @@ Station. Translations can be easily submitted and reviewed at our
 Transifex_ page. Translators get recognition for their valuable work.
 
 If your native language is missing, why don't you start translating
-|tops| right now?
+Total Open Station right now?
 
 :ref:`More information in the release page <translations>`.
 
 .. _Transifex: https://www.transifex.com/projects/p/totalopenstation/resource/totalopenstation-app/
 
 
-Developping |tops|
+Developping Total Open Station
 ==================
 
     * :ref:`dev_advices`

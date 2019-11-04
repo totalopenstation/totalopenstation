@@ -23,7 +23,7 @@ Constants
 
 .. data:: BUILTIN_OUTPUT_FORMATS
 
-    Dictionnary that holds all output formats available in |tops|.
+    Dictionnary that holds all output formats available in Total Open Station.
 
     { |br|
     'dxf': ('tops_dxf', 'OutputFormat', 'DXF'), |br|

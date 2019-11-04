@@ -22,7 +22,7 @@ Constants
 
 * .. data:: BUILTIN_MODELS
 
-    Dictionnary that holds all models available in |tops|.
+    Dictionnary that holds all models available in Total Open Station.
     
     { |br|
     'leica_tcr_1205': ('leica_tcr_1205', 'ModelConnector', 'Leica TCR 1205'), |br|

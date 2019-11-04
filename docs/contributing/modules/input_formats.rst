@@ -22,7 +22,7 @@ Constants
 
 * .. data:: BUILTIN_INPUT_FORMATS
 
-        Dictionnary that holds all input formats available in |tops|.
+        Dictionnary that holds all input formats available in Total Open Station.
         
         { |br|
         'carlson_rw5': ('carlson_rw5', 'FormatParser', 'Carlson RW5'), |br|

@@ -1,5 +1,5 @@
 ==============================
-Developping |tops|
+Developping Total Open Station
 ==============================
 
 .. _dev_advices:
@@ -13,7 +13,7 @@ Adding a new format
 -------------------
 
 There are hundreds of survey data formats out there. One by one, we
-will get them added into |tops|. Here's a general process
+will get them added into Total Open Station. Here's a general process
 that defines some minimum requirements when implementing new formats
 as input or output.
 
@@ -32,7 +32,7 @@ description, including:
 - name of contributors
 - reference to the format if available
 
-Shortcomings of |tops| that the format exposes shouldn't
+Shortcomings of Total Open Station that the format exposes shouldn't
 be hidden, but rather made explicit both in code and documentation.
 
 Sample data
@@ -65,7 +65,7 @@ highly encouraged. Don't break current practice.
 All code implementing new formats should not break the existing
 API. Changing the API should be done at the scale of the entire
 library, to take into account the many different needs of each format
-and parser. The development of |tops| is not in a stable
+and parser. The development of Total Open Station is not in a stable
 shape, so expect the API to change in future versions. However, please
 understand that a new format parser is not the right place to do that.
 
@@ -74,7 +74,7 @@ understand that a new format parser is not the right place to do that.
 Processing data
 ===============
 
-|tops| use GeoJSON as its internal processing data following the
+Total Open Station use GeoJSON as its internal processing data following the
 `RFC 7946 <https://tools.ietf.org/html/rfc7946>`_ standard. |br|
 The library used to handle this format is
 `PyGeoif <https://github.com/cleder/pygeoif/>`_. |br|
