@@ -22,9 +22,13 @@
 # along with Total Open Station.  If not, see
 # <http://www.gnu.org/licenses/>.
 
+import logging
+
 from .polar import BasePoint, PolarPoint
 from totalopenstation.formats.conversion import deg_to_gon
 from . import Feature
+
+logger = logging.getLogger(__name__)
 
 
 class FormatParser:
