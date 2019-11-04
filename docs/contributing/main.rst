@@ -105,6 +105,8 @@ Developping with Total Open Station
 Advices
 =======
 
+.. _new:
+
 Adding a new format
 -------------------
 
