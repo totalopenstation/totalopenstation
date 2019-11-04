@@ -26,7 +26,7 @@ from pygeoif import geometry as g
 from math import pi
 
 
-logger = logging.getLogger("tops")
+logger = logging.getLogger(__name__)
 
 class Point(g.Point):
     pass

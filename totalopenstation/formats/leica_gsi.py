@@ -34,7 +34,7 @@ UNITS = {"angle": {'21', '22', '25'},
          "gon": 100000, "deg": 100000, "dms": 100000, "mil": 10000,
          "meter": 1000, "feet": 1000, "dmeter": 10000, "dfeet": 10000, "mmeter": 100000}
 
-logger = logging.getLogger("tops")
+logger = logging.getLogger(__name__)
 
 class FormatParser(Parser):
     '''The FormatParser for Leica GSI data format.

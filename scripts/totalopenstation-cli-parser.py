@@ -106,7 +106,7 @@ parser.add_option(
 
 (options, args) = parser.parse_args()
 
-logger = logging.getLogger("tops")
+logger = logging.getLogger()
 logger.setLevel(options.loglevel.upper())
 if options.logotfile:
     handler = logging.FileHandler("tops.log")

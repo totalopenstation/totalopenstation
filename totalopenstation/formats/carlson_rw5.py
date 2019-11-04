@@ -30,7 +30,7 @@ from .polar import BasePoint, PolarPoint
 UNITS = {"angle": {"0": "dms", "1": "gon"},
          "distance": {"0": "feet", "1": "meter", "2": "ussfeet"}}
 
-logger = logging.getLogger("tops")
+logger = logging.getLogger(__name__)
 
 def _record(recstr):
     fields = recstr.split(',')

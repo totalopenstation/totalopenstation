@@ -27,7 +27,7 @@ import os.path
 
 from configparser import ConfigParser, NoSectionError, NoOptionError
 
-logger = logging.getLogger("tops")
+logger = logging.getLogger(__name__)
 
 class UserPrefs(ConfigParser):
     '''Manage user preferences for GUI options and last used values.

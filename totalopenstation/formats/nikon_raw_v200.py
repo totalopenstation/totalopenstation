@@ -29,7 +29,7 @@ UNITS = {"angle": {"DDDMMSS": "dms", "Gons": "gon", "Degrees": "deg"},
          "distance": {"Feet": "feet", "Metres": "meter", "Feet US": "ussfeet"}
          }
 
-logger = logging.getLogger("tops")
+logger = logging.getLogger(__name__)
 
 
 class FormatParser:
