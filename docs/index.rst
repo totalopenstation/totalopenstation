@@ -68,9 +68,6 @@ Development
 
 
    contributing/main
-   contributing/modules/main
-   contributing/library
-   contributing/release
 
 Indices and tables
 ------------------
