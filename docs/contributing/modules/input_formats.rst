@@ -23,18 +23,11 @@ Constants
 * .. data:: BUILTIN_INPUT_FORMATS
 
         Dictionnary that holds all input formats available in Total Open Station.
+
+        Form of the dictionnary :
         
         { |br|
-        'carlson_rw5': ('carlson_rw5', 'FormatParser', 'Carlson RW5'), |br|
-        'leica_gsi': ('leica_gsi', 'FormatParser', 'Leica GSI'), |br|
-        'leica_tcr_705': ('leica_tcr_705', 'FormatParser', 'Leica TCR 705'), |br|
-        'leica_tcr_1205': ('leica_tcr_1205', 'FormatParser', 'Leica TCR 1205'), |br|
-        'nikon_raw_v200': ('nikon_raw_v200', 'FormatParser','Nikon RAW V2.00'), |br|
-        'sokkia_sdr33': ('sokkia_sdr33', 'FormatParser', 'Sokkia SDR33'), |br|
-        'topcon_gts': ('topcon_gts', 'FormatParser', 'Topcon GTS'), |br|
-        'trimble_are': ('trimble_are', 'FormatParser', 'Trimble AREA'), |br|
-        'zeiss_r5': ('zeiss_r5', 'FormatParser', 'Zeiss R5'), |br|
-        'zeiss_rec_500': ('zeiss_rec_500', 'FormatParser', 'Zeiss REC 500'), |br|
+        'parser_name': ('module_parser_name', 'FormatParser', 'Parser Name'), |br|
         }
 
 * .. data:: UNITS_CIRCLE
@@ -42,12 +35,10 @@ Constants
         Dictionnary that holds angle corresponding to the complet ride of a
         circle per units.
 
+        Form of the dictionnary :
+
             { |br|
-            'dms': 360, |br|
-            'deg': 360, |br|
-            'gon': 400, |br|
-            'mil': 6400, |br|
-            'rad': 2 * pi, |br|
+            'name': numeric value of complet ride, |br|
             }
 
 * .. data:: UNKNOWN_STATION
