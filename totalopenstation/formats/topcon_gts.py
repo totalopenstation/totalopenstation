@@ -22,7 +22,6 @@
 # along with Total Open Station.  If not, see
 # <http://www.gnu.org/licenses/>.
 
-from .. import geo_to_debug
 from .polar import BasePoint, PolarPoint
 from totalopenstation.formats.conversion import deg_to_gon
 from . import Feature
@@ -74,5 +73,5 @@ class FormatParser:
                         desc=text,
                         id=pid)
             points.append(f)
-        geo_to_debug(points)
+        logger.debug(points)
         return points

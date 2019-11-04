@@ -20,7 +20,6 @@
 
 import logging
 
-from .. import geo_to_debug
 from . import Feature, Point, UNITS_CIRCLE, UNKNOWN_STATION, UNKNOWN_POINT, check_coordorder
 from .polar import BasePoint, PolarPoint
 
@@ -251,7 +250,7 @@ class FormatParser:
                 points.append(f)
                 pid += 1
                 points_coord[station_name] = point
-        geo_to_debug(points)
+        logger.debug(points)
         return points
 
     @property
@@ -481,5 +480,5 @@ class FormatParser:
                             attrib=attrib)
                 points.append(f)
                 pid += 1
-        geo_to_debug(points)
+        logger.debug(points)
         return points

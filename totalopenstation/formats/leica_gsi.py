@@ -20,8 +20,7 @@
 # <http://www.gnu.org/licenses/>.
 
 import logging
-
-from .. import geo_to_debug
+ 
 from . import Feature, Parser, Point, UNKNOWN_STATION, UNKNOWN_POINT
 from .polar import BasePoint, PolarPoint
 
@@ -308,7 +307,7 @@ class FormatParser(Parser):
                                 id=pid,
                                 point_name=text)
                     points.append(f)
-        geo_to_debug(points)
+        logger.debug(points)
         return points
 
     @property
@@ -508,5 +507,5 @@ class FormatParser(Parser):
                                 attrib=attrib)
                     points.append(f)
 
-        geo_to_debug(points)
+        logger.debug(points)
         return points

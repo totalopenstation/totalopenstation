@@ -20,7 +20,6 @@
 
 import logging
 
-from .. import geo_to_debug
 from . import Feature, Point
 
 logger = logging.getLogger("tops")
@@ -79,5 +78,5 @@ class FormatParser:
                                           desc=rec['desc'],
                                           id=rec['id'])
                         points.append(feature)
-        geo_to_debug(points)
+        logger.debug(points)
         return points

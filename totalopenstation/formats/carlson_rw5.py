@@ -22,7 +22,6 @@
 import logging
 
 from totalopenstation.formats.conversion import horizontal_to_slope
-from .. import geo_to_debug
 from . import Feature, Point, UNKNOWN_STATION, UNKNOWN_POINT
 from .polar import BasePoint, PolarPoint
 
@@ -228,7 +227,7 @@ class FormatParser:
                             attrib=attrib)
                 points.append(f)
                 pid += 1
-        geo_to_debug(points)
+        logger.debug(points)
         return points
 
     @property
@@ -428,5 +427,5 @@ class FormatParser:
                 points.append(f)
                 pid += 1
 
-        geo_to_debug(points)
+        logger.debug(points)
         return points
