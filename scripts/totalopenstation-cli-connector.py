@@ -20,12 +20,19 @@
 # <http://www.gnu.org/licenses/>.
 
 
+import gettext
 import sys
 import os
 
 from optparse import OptionParser
 
+import serial
+
 from totalopenstation.models import BUILTIN_MODELS
+
+
+t = gettext.translation('totalopenstation', './locale', fallback=True)
+_ = t.gettext
 
 usage = "usage: %prog [option] arg1 [option] arg2 ..."
 
