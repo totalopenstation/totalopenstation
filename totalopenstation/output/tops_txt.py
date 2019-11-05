@@ -20,6 +20,8 @@
 # along with Total Open Station.  If not, see
 # <http://www.gnu.org/licenses/>.
 
+from . import Builder
+
 
 def to_txt(d):
     try:
@@ -28,7 +30,7 @@ def to_txt(d):
         string = "{geom.x} {geom.y}\n".format(geom=d.geometry)
     return string
 
-class OutputFormat:
+class OutputFormat(Builder):
 
     """
     Exports points data in TXT (space-separated) format line by line.
