@@ -1,9 +1,10 @@
-================
- Leica TCR 1205
-================
+.. _if_leica_tcr_1205:
 
-:moduleauthor: Stefano Costa
-:moduleauthor: Luca Bianconi
+=======================================
+:mod:`leica_tcr_1205` -- Leica TCR 1205
+=======================================
+
+.. moduleauthor:: Stefano Costa, Stefano Costa
 
 
 This format is used by the Leica TCR 1205 (and other similar devices),

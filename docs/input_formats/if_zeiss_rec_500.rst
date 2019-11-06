@@ -4,9 +4,6 @@
 :mod:`zeiss_rec_500` -- Zeiss REC 500
 =====================================
 
-.. module:: zeiss_rec_500
-    :platform: any
-    :synopsis: Read data in the Zeiss REC 500 format
 .. moduleauthor:: Stefano Costa
 
 

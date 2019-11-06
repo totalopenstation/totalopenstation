@@ -2,9 +2,6 @@
 :mod:`zeiss_r5` -- Zeiss R5 format
 ==================================
 
-.. module:: zeiss_r5
-    :platform: any
-    :synopsis: Read data in the Carlson RW5 data format
 .. moduleauthor:: Stefano Costa
 .. versionadded:: 0.4
 

@@ -45,14 +45,25 @@ class Feature(g.Feature):
 
     @g.Feature.geometry.setter
     def geometry(self, value):
+        '''Set the geometry attribute.
+
+        By default, geometry property return the geometry value.
+        '''
+
         self._geometry = value
 
     @property
     def desc(self):
+        '''Return the desc property
+        '''
+
         return self.properties['desc']
 
     @property
     def point_name(self):
+        '''Return the point_name property
+        '''
+
         return self.properties['point_name']
 
 
@@ -64,7 +75,15 @@ class Parser:
     '''Parses a *single* string of raw data.
 
     This means that if you plan to load data from a file you have to
-    pass the output of open(file).read() to this class.'''
+    pass the output of open(file).read() to this class.
+
+    Args:
+        data (str): A string representing the file to be parsed.
+            
+    Attributes:
+        data (str): A string representing the file to be parsed **could**
+            be overridden by the init method.
+    '''
 
     def __init__(self, data):
         """Init method which **should** be overridden in the child class
@@ -76,7 +95,11 @@ class Parser:
         """Action for finding which parts of the source file are points.
 
         This method **must** be overridden in the child class
-        to have a working parser."""
+        to have a working parser.
+        
+        Returns:
+            A boolean
+        """
 
         pass
 
@@ -84,7 +107,10 @@ class Parser:
         """Action for getting points from source file.
 
         This method **must** be overridden in the child class
-        to have a working parser."""
+        to have a working parser.
+        
+        Returns:
+            A :class:`formats.Feature` object."""
 
         pass
 
@@ -99,7 +125,11 @@ class Parser:
         return self.data.splitlines()
 
     def build_linestring(self):
-        '''Join all Point objects into a LineString.'''
+        '''Join all Point objects into a LineString.
+        
+        Returns:
+            A :class:`formats.LineString` object.
+        '''
 
         return LineString([f.geometry for f in self.points])
 
@@ -108,7 +138,11 @@ class Parser:
         """Action for parsing a source file and for finding points.
 
         This method **could** be overridden in the child class
-        to have a working parser."""
+        to have a working parser.
+        
+        Returns:
+            A list of GeoJSON-like Feature object representing points coordinates.
+        """
 
 
         self.d = self.split_points()
@@ -123,12 +157,25 @@ class Parser:
         """Action for parsing a source file and for retrieving raw data.
 
         This method **must** be overridden in the child class
-        to have a working parser."""
+        to have a working parser.
+        
+        Returns:
+            A list of GeoJSON-like Feature object representing
+            representing raw data i.e. polar coordinates and other
+            informations.
+        """
 
         pass
 
 
 def check_coordorder(coordorder):
+    '''Check if coordinates order is valid.
+
+    Args:
+        coordorder (str): A string representing the type of coordinates i.e.
+                NEZ or ENZ.
+    '''
+
     if any((coordorder == v for v in COORDINATE_ORDER)):
         return coordorder
     else:

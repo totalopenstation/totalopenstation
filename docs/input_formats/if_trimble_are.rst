@@ -1,8 +1,8 @@
-=====================
- Trimble AREA format
-=====================
+.. _if_trimble_are:
 
-:moduleauthor: Stefano Costa
-:moduleauthor: Luca Bianconi
-:moduleauthor: Alessandro Bezzi
+=========================================
+:mod:`trimble_are` -- Trimble AREA format
+=========================================
+
+.. moduleauthor:: Stefano Costa, Luca Bianconi, Alessandro Bezzi
 

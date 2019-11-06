@@ -1,8 +1,8 @@
 .. _cli-connector:
 
-==============================
-TotalOpenStation CLI Connector
-==============================
+================================
+Total Open Station CLI Connector
+================================
 
 This is a command line application to download raw data from total station
 devices.

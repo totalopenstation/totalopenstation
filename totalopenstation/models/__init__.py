@@ -29,6 +29,22 @@ from threading import Event, Thread
 from totalopenstation.utils.upref import UserPrefs
 
 class Connector(serial.Serial, Thread):
+    '''Connect to a total station.
+
+    For more information : `Pyserial documentation <https://pythonhosted.org/pyserial/pyserial_api.html#native-ports>`_
+
+    Args:
+        port: Device name or :const:`None`.
+        baudrate (int): Baud rate such as 9600 or 115200 etc.
+        bytesize: Number of data bits.
+        parity: Enable parity checking.
+        stopbits: Number of stop bits.
+        timeout (float): Set a read timeout value.
+        xonxoff (bool): Enable software flow control.
+        rtscts (bool): Enable hardware (RTS/CTS) flow control.
+        bool dsrdtr (bool): Enable hardware (DSR/DTR) flow control.
+        writeTimeout (float): Set a write timeout value.
+    '''
 
     def __init__(self, port=None, baudrate=9600, bytesize=8, parity='N',
                 stopbits=1, timeout=None, xonxoff=0, rtscts=0,
@@ -47,6 +63,9 @@ class Connector(serial.Serial, Thread):
         dsrdtr=dsrdtr)
 
     def open(self):
+        '''Open the serial link.
+        '''
+
         serial.Serial.open(self)
 
     def download(self):
@@ -71,7 +90,7 @@ class Connector(serial.Serial, Thread):
         self.result = result
 
     def fast_download(self):
-        '''Implement a `fast' download method that requires less user input.
+        '''Implement a *fast* download method that requires less user input.
 
         Inside, it calls download() itself, just wrapping it inside another
         loop that checks whether there's input coming from the serial port:

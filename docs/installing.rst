@@ -1,11 +1,17 @@
 .. _installing:
 
-===============================
- Installing Total Open Station
-===============================
+=============================
+Installing Total Open Station
+=============================
 
 There are a few different ways to install Total Open Station,
 depending on your operating system.
+
+.. warning::
+
+    Version 0.4.0 of Total Open Station is the last version built on Python2. |br|
+    **Thus no support will be done on this version after 0.5 release as Python2 has reached his EOL.** |br|
+    Version 0.5+ will be Python3 only. |br|
 
 GNU/Linux distributions
 =======================
@@ -15,9 +21,11 @@ OpenSUSE
 
 Total Open Station is packaged for OpenSUSE. Installing is as easy as::
 
-   $ sudo zypper ar http://download.opensuse.org/repositories/Application:/Geo/openSUSE_12.1/ GEO
+   $ sudo zypper ar http://download.opensuse.org/repositories/Application:/Geo/openSUSE_Leap_15.1/ GEO
    $ sudo zypper refresh
    $ sudo zypper install TotalOpenStation
+
+Change the OpenSUSE version as your wish.
 
 Debian and Ubuntu
 -----------------
@@ -32,65 +40,30 @@ be the latest release.
 Mac OSX
 =======
 
-Download Python 2 from the official website, and follow `this document on the
-Python.org website <https://www.python.org/download/mac/tcltk/>`_, that will
-help you choosing the correct version of Python to use.
+Download Python3 from the `official website <https://www.python.org/downloads/mac-osx/>`_,
+and follow `this document on the Python.org website <https://www.python.org/download/mac/tcltk/>`_,
+that will help you choosing the correct version of Python to use
+(Python 3.7.2+, 3.6.8, or 2.7.16+ have builtin Tcl/Tk).
 
 .. warning::
 
-   Do not use the pre-installed Python that comes with the OSX operating system.
+   Do not use the pre-installed Python that comes with the OSX operating system
+   which has serious bugs that can cause application crashes.
 
 Microsoft Windows
 =================
 
-Two packages need to be installed before the actual installation of
-Total Open Station, because the program is written in the Python
-programming language which is not installed by default on Windows.
+Download the most recent version of Total Open Station from `Github download
+<https://github.com/steko/totalopenstation/releases>`_ and install it.
 
-.. warning::
+The Windows version of Total Open Station is portable and everything is
+included in the executable.
 
-   You might need administrator privileges to be able to install all
-   the programs.
+To upgrade to a newer version, just go to the Github download page again
+and install it. |br|
+The old version will get overwritten. |br|
+No data will be lost!
 
-Install Python
---------------
-
-Check whether your Windows is 32 bit (``x86``, common for older versions like
-Windows XP) or 64 bit (``x86-64``). Then download the latest Python installer
-for **Python 2** (not Python 3):
-
-- `Python Releases for Windows`_
-
-When you've got the installer donwloaded on your computer, install
-it. You don’t need to use Python directly, but it is needed for the
-program to work.
-
-.. _Python Releases for Windows: https://www.python.org/downloads/windows/
-
-Install pySerial
-----------------
-
-Download pySerial_ and install it. As with Python, you don’t need
-to use it directly, but it is needed for the program to work. Please make
-sure you are installing pySerial version 2.7 or a later version.
-
-.. _pySerial: http://pyserial.sourceforge.net/
-
-
-Install Total Open Station
---------------------------
-
-Download the most recent version of Total Open Station from `PyPI`_ and install it.
-You will find the totalopenstation-gui script in :file:`C:/Python27/Scripts/`
-unless you have changed the standard installation options (not
-recommended). You can create a shortcut to the program on your desktop
-if you like.
-
-To upgrade to a newer version, just go to `PyPI`_ again, download the latest
-version and install it as with the first one. The old version will get
-overwritten. No data will be lost!
-
-.. _`PyPI`: https://pypi.python.org/pypi/totalopenstation/
 
 Install the Prolific PL2032 drivers
 -----------------------------------
@@ -100,14 +73,11 @@ Install the Prolific PL2032 drivers
 Most USB-serial adapters are made with the Prolific chipset. If
 plugging the cable gives you errors about missing drivers for your
 hardware, drivers for Windows can be downloaded from the `Prolific
-website`_.
-
-.. _`Prolific website`:
-   http://www.prolific.com.tw/eng/downloads.asp?ID=31
+website <http://www.prolific.com.tw/eng/downloads.asp?ID=31>`_.
 
 
-Using pip (for the latest version)
-==================================
+Using pip
+=========
 
 Until your operating system's packaging tools (e.g. apt or
 yum) allow you to install Total Open Station along with other
@@ -126,9 +96,13 @@ Install ``pip`` and ``virtualenv``
 First of all, make sure you have ``pip`` and ``virtualenv``
 installed. All major GNU/Linux distributions have them packaged:
 
-- Debian and derivatives (including Ubuntu): ``apt-get install
-  python-pip python-virtualenv``
-- Fedora: ``yum install python-pip python-virtualenv``
+- Debian and derivatives (including Ubuntu)::
+
+    apt-get install  python-pip python-virtualenv
+
+- Fedora::
+
+    yum install python-pip python-virtualenv
 
 Create a virtual environment
 ----------------------------
@@ -137,12 +111,12 @@ Creating a virtual environment is as easy as typing in a terminal::
 
     virtualenv tops-environment
 
-A new directory named ``tops-environment`` was created. It contains a
+A new directory named ``tops-environment`` has been created. It contains a
 minimal set of files needed to manage a Python installation that is
 isolated from the one installed on your system, helping to keep things
 clean.
 
-Now activate the environment with::
+Now, activate the environment with::
 
     source tops-environment/bin/activate
 
@@ -197,7 +171,7 @@ From your terminal, type::
 
     totalopenstation-gui.py
 
-and the program should start. Please report any errors to the `issue tracker`_.
+and the program should start. Please report any errors to the `bug tracker`_.
 
 The next time you want to run the program, follow these steps:
 
@@ -205,5 +179,3 @@ The next time you want to run the program, follow these steps:
 #. ``cd`` to the directory where the virtual environment was created
 #. ``source tops-environment/bin/activate`` to enter the virtualenv
 #. ``totalopenstation-gui.py`` will start the program
-
-.. _issue tracker: https://github.com/steko/totalopenstation/issues

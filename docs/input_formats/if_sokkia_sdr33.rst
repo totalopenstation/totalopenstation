@@ -2,9 +2,6 @@
 :mod:`sokkia_sdr33` -- Sokkia SDR 33
 ====================================
 
-.. module:: sokkia_sdr33
-    :platform: any
-    :synopsis: Read data in the Sokkia SDR33 format
 .. moduleauthor:: Stefano Costa
 .. versionadded:: 0.4
 
