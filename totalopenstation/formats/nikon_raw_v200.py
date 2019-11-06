@@ -18,6 +18,8 @@
 # along with Total Open Station.  If not, see
 # <http://www.gnu.org/licenses/>.
 
+import logging
+
 from . import Feature, Point, UNITS_CIRCLE, UNKNOWN_STATION, UNKNOWN_POINT, check_coordorder
 from .polar import BasePoint, PolarPoint
 
@@ -26,6 +28,8 @@ from .polar import BasePoint, PolarPoint
 UNITS = {"angle": {"DDDMMSS": "dms", "Gons": "gon", "Degrees": "deg"},
          "distance": {"Feet": "feet", "Metres": "meter", "Feet US": "ussfeet"}
          }
+
+logger = logging.getLogger(__name__)
 
 
 class FormatParser:
@@ -90,6 +94,7 @@ class FormatParser:
                     try:
                         station_point = points_coord[station_name]
                     except KeyError:
+                        logger.info('There is no known station')
                         station_point = UNKNOWN_STATION
                         points_coord[station_name] = station_point
                     f = Feature(station_point,
@@ -134,6 +139,7 @@ class FormatParser:
                 try:
                     station_point = points_coord[station_name]
                 except KeyError:
+                    logger.info('There is no known station')
                     station_point = UNKNOWN_STATION
                     points_coord[station_name] = station_point
                 # Look for back sight values in station values
@@ -244,6 +250,7 @@ class FormatParser:
                 points.append(f)
                 pid += 1
                 points_coord[station_name] = point
+        logger.debug(points)
         return points
 
     @property
@@ -302,6 +309,7 @@ class FormatParser:
                 try:
                     station_point = points_coord[station_name]
                 except KeyError:
+                    logger.info('There is no known station')
                     station_point = UNKNOWN_STATION
                     points_coord[station_name] = station_point
                 f = Feature(station_point,
@@ -343,6 +351,7 @@ class FormatParser:
                 try:
                     station_point = points_coord[station_name]
                 except KeyError:
+                    logger.info('There is no known station')
                     station_point = UNKNOWN_STATION
                     points_coord[station_name] = station_point
                 f = Feature(station_point,
@@ -366,6 +375,7 @@ class FormatParser:
                     try:
                         point = points_coord[point_name]
                     except KeyError:
+                        logger.info('There is no known point')
                         point = UNKNOWN_POINT
                     f = Feature(point,
                                 desc='BS',
@@ -394,6 +404,7 @@ class FormatParser:
                 try:
                     point = points_coord[point_name]
                 except KeyError:
+                    logger.info('There is no known point')
                     point = UNKNOWN_POINT
                 f = Feature(point,
                             desc='PO',
@@ -422,6 +433,7 @@ class FormatParser:
                 try:
                     point = points_coord[point_name]
                 except KeyError:
+                    logger.info('There is no known point')
                     point = UNKNOWN_POINT
                 f = Feature(point,
                             desc='PO',
@@ -450,6 +462,7 @@ class FormatParser:
                 try:
                     point = points_coord[point_name]
                 except KeyError:
+                    logger.info('There is no known point')
                     point = UNKNOWN_POINT
                 f = Feature(point,
                             desc='PO',
@@ -467,4 +480,5 @@ class FormatParser:
                             attrib=attrib)
                 points.append(f)
                 pid += 1
+        logger.debug(points)
         return points

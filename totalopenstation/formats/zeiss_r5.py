@@ -18,8 +18,11 @@
 # along with Total Open Station.  If not, see
 # <http://www.gnu.org/licenses/>.
 
+import logging
 
 from . import Feature, Point
+
+logger = logging.getLogger(__name__)
 
 
 class FormatParser:
@@ -51,6 +54,7 @@ class FormatParser:
                         record_fields[coord] = value
             elif record_fields['type'] == 'TR':
                 record_fields['desc'] = reco[3:10]
+            logger.info("record_fields : %s" % (record_fields))
             return record_fields
 
         for row in self.rows:
@@ -74,4 +78,5 @@ class FormatParser:
                                           desc=rec['desc'],
                                           id=rec['id'])
                         points.append(feature)
+        logger.debug(points)
         return points

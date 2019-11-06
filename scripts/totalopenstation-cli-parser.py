@@ -25,6 +25,8 @@ import os
 import gettext
 import importlib
 
+import logging
+
 from optparse import OptionParser
 
 import totalopenstation.formats
@@ -87,9 +89,32 @@ parser.add_option(
     dest="list",
     default=False,
     help=_("list the available input and output formats"))
+parser.add_option(
+                "--log",
+                action="store",
+                dest="loglevel",
+                default="WARNING",
+                type="string",
+                help=_("minimum log level"))
+parser.add_option(
+                "--logtofile",
+                action="store_true",
+                dest="logotfile",
+                default=False,
+                help=_("log to file"))
 
 
 (options, args) = parser.parse_args()
+
+logger = logging.getLogger()
+logger.setLevel(options.loglevel.upper())
+if options.logotfile:
+    handler = logging.FileHandler("tops.log")
+else:
+    handler = logging.StreamHandler()
+formatter = logging.Formatter('%(asctime)s -- %(filename)s -- %(levelname)s -- %(funcName)s -- %(message)s')
+handler.setFormatter(formatter)
+logger.addHandler(handler)
 
 def list_formats():
     '''Print a list of the supported input and output formats.'''
@@ -179,12 +204,12 @@ def main(infile):
     if options.outfile:
         if not os.path.exists(options.outfile):
             write_to_file(options.outfile)
-            print(_("Downloaded data saved to out file %s") % options.outfile)
+            logger.info(_("Downloaded data saved to out file %s") % options.outfile)
         else:
             if options.overwrite:
                 write_to_file(options.outfile)
-                print(_("Downloaded data saved to file %s,") % options.outfile, end=' ')
-                print(_("overwriting the existing file"))
+                logger.info(_("Downloaded data saved to file %s,") % (options.outfile))
+                logger.info(_("overwriting the existing file"))
             else:
                 sys.exit(_("Specified output file already exists\n"))
     else:

@@ -27,6 +27,7 @@ import os.path
 
 from configparser import ConfigParser, NoSectionError, NoOptionError
 
+logger = logging.getLogger(__name__).addHandler(logging.NullHandler())
 
 class UserPrefs(ConfigParser):
     '''Manage user preferences for GUI options and last used values.
@@ -65,11 +66,11 @@ class UserPrefs(ConfigParser):
 
     def initfile(self):
         self.write()
-        logging.info('User preferences do not exist!')
+        logger.info('User preferences do not exist!')
         self.add_section('topsconfig')
         for k,v in list(self.OPTIONS.items()):
             self.set('DEFAULT', k, v)
-        logging.info('Created new user preferences file with default values')
+        logger.info('Created new user preferences file with default values')
 
     def write(self):
         ''' override ConfigParser.write() method '''

@@ -19,6 +19,8 @@
 # along with Total Open Station.  If not, see
 # <http://www.gnu.org/licenses/>.
 
+import logging
+ 
 from . import Feature, Parser, Point, UNKNOWN_STATION, UNKNOWN_POINT
 from .polar import BasePoint, PolarPoint
 
@@ -32,6 +34,7 @@ UNITS = {"angle": {'21', '22', '25'},
          "gon": 100000, "deg": 100000, "dms": 100000, "mil": 10000,
          "meter": 1000, "feet": 1000, "dmeter": 10000, "dfeet": 10000, "mmeter": 100000}
 
+logger = logging.getLogger(__name__)
 
 class FormatParser(Parser):
     '''The FormatParser for Leica GSI data format.
@@ -238,6 +241,7 @@ class FormatParser(Parser):
                             try:
                                 dist = self.tdict['32']
                             except KeyError:
+                                logger.info('There is no distance value')
                                 dist = None
                             else:
                                 dist_type = 'h'
@@ -303,6 +307,7 @@ class FormatParser(Parser):
                                 id=pid,
                                 point_name=text)
                     points.append(f)
+        logger.debug(points)
         return points
 
     @property
@@ -353,7 +358,7 @@ class FormatParser(Parser):
                 try:
                     comments = self.tdict['41']
                 except KeyError:
-                    print("The line %s will not be computed as the code '%s' is not known"\
+                    logger.info("The line %s will not be computed as the code '%s' is not known"\
                           % (pid, row[0:2]))
                 else:
                     # Compute comments
@@ -386,6 +391,7 @@ class FormatParser(Parser):
                             try:
                                 dist = self.tdict['32']
                             except KeyError:
+                                logger.info('There is no distance value')
                                 dist = None
                             else:
                                 dist_type = 'h'
@@ -402,7 +408,7 @@ class FormatParser(Parser):
                                 attrib = self.tdict['71']
                             except KeyError:
                                 # No more possibilities
-                                raise KeyError("These data can not be compute.")
+                                logger.info("These data can not be compute : %s" % (self.tdict))
                             else:
                                 # Compute remark or Attrib
                                 attrib = self._get_attrib()
@@ -415,6 +421,7 @@ class FormatParser(Parser):
                             if x:
                                 p = Point(x, y, z)
                             else:
+                                logger.info('There is no known point')
                                 p = UNKNOWN_POINT
                             f = Feature(p,
                                         desc='PT',
@@ -445,11 +452,13 @@ class FormatParser(Parser):
                         if x:
                             p = Point(x, y, z)
                         else:
+                            logger.info('There is no known point')
                             p = UNKNOWN_POINT
 
                         try:
                             station_name
                         except UnboundLocalError:
+                            logger.info('There is no known station')
                             station_name = 'station_' + str(station_id)
                             station_id += 1
                         f = Feature(p,
@@ -483,6 +492,7 @@ class FormatParser(Parser):
                         p = Point(x, y, z)
                         station_name = point_name
                     else:
+                        logger.info('There is no known station')
                         p = UNKNOWN_STATION
                         station_name = "station_" + str(station_id)
                         station_id += 1
@@ -497,4 +507,5 @@ class FormatParser(Parser):
                                 attrib=attrib)
                     points.append(f)
 
+        logger.debug(points)
         return points

@@ -19,6 +19,8 @@
 # along with Total Open Station.  If not, see
 # <http://www.gnu.org/licenses/>.
 
+import logging
+
 from totalopenstation.formats.conversion import horizontal_to_slope
 from . import Feature, Point, UNKNOWN_STATION, UNKNOWN_POINT
 from .polar import BasePoint, PolarPoint
@@ -28,6 +30,7 @@ from .polar import BasePoint, PolarPoint
 UNITS = {"angle": {"0": "dms", "1": "gon"},
          "distance": {"0": "feet", "1": "meter", "2": "ussfeet"}}
 
+logger = logging.getLogger(__name__)
 
 def _record(recstr):
     fields = recstr.split(',')
@@ -47,6 +50,7 @@ def _record(recstr):
         record_fields['note'] = ''
     else:
         record_fields['note'] = record_fields['--']
+    logger.debug("record_fields : %s" % (record_fields))
     return record_fields
 
 class FormatParser:
@@ -124,6 +128,7 @@ class FormatParser:
                 try:
                     station_point
                 except NameError:
+                    logger.info('There is no known station')
                     station_point = UNKNOWN_STATION
                 stf = Feature(station_point,
                               desc='ST',
@@ -172,7 +177,7 @@ class FormatParser:
                                     try:
                                         angle = float(rec['DL'])
                                     except KeyError:
-                                        raise ValueError('There is no horizontal angle value')
+                                        logger.info('There is no horizontal angle value')
                 # Vertical angle is either Zenith, Vertical angle or Change elevation
                 try:
                     z_angle = float(rec['ZE'])
@@ -183,7 +188,7 @@ class FormatParser:
                         try:
                             z_angle = float(rec['CE'])
                         except KeyError:
-                            raise ValueError('There is no vertical angle value')
+                            logger.info('There is no vertical angle value')
                         else:
                             z_angle_type = 'dh'
                     else:
@@ -196,7 +201,7 @@ class FormatParser:
                     try:
                         dist = float(rec['HD'])
                     except KeyError:
-                        raise ValueError('There is no distance value')
+                        logger.info('There is no distance value')
                     else:
                         dist_type = "h"
                 else:
@@ -222,6 +227,7 @@ class FormatParser:
                             attrib=attrib)
                 points.append(f)
                 pid += 1
+        logger.debug(points)
         return points
 
     @property
@@ -290,6 +296,7 @@ class FormatParser:
                 try:
                     station_point
                 except NameError:
+                    logger.info('There is no known station')
                     station_point = UNKNOWN_STATION
                     station_name = 'station_' + str(station_id)
                     points_coord[station_name] = station_point
@@ -324,6 +331,7 @@ class FormatParser:
                 try:
                     point = points_coord[point_name]
                 except KeyError:
+                    logger.info('There is no known point')
                     point = UNKNOWN_POINT
                 f = Feature(point,
                             desc='BS',
@@ -357,6 +365,7 @@ class FormatParser:
                                 try:
                                     angle = float(rec['DL'])
                                 except KeyError:
+                                    logger.info('There is no horizontal angle value')
                                     angle = None
                 # Vertical angle is either Zenith, Vertical angle or Change elevation
                 try:
@@ -368,6 +377,7 @@ class FormatParser:
                         try:
                             z_angle = float(rec['CE'])
                         except KeyError:
+                            logger.info('There is no vertical angle value')
                             z_angle = None
                         else:
                             z_angle_type = 'dh'
@@ -381,6 +391,7 @@ class FormatParser:
                     try:
                         dist = float(rec['HD'])
                     except KeyError:
+                        logger.info('There is no distance value')
                         dist = None
                     else:
                         dist_type = 'h'
@@ -390,10 +401,12 @@ class FormatParser:
                 try:
                     point = points_coord[point_name]
                 except KeyError:
+                    logger.info('There is no known point')
                     point = UNKNOWN_POINT
                 try:
                     station_name
                 except UnboundLocalError:
+                    logger.info('There is no known station')
                     station_name = 'station_' + str(station_id)
                     station_id += 1
                 f = Feature(point,
@@ -414,4 +427,5 @@ class FormatParser:
                 points.append(f)
                 pid += 1
 
+        logger.debug(points)
         return points
