@@ -1,4 +1,4 @@
-.. TotalOpenStation documentation master file, created by
+.. Total Open Station documentation master file, created by
    sphinx-quickstart on Sat May 24 15:43:10 2008.  You can adapt this
    file completely to your liking, but it should at least contain the
    root `toctree` directive.
@@ -14,8 +14,7 @@ This is a task which is usually done by proprietary, dedicated and
 Windows™-only software, but TOPS is different by nature, because:
 
 - it is **free software** released under the GNU GPLv3 license;
-- it works on *any* operating system, including mobile platforms like
-  OpenMoko;
+- it works on *any* operating system;
 - it is designed to support as many devices and formats as possible, all
   within the same program, opposed to having one program per device.
 
@@ -31,16 +30,16 @@ files.
 Getting started with Total Open Station
 =======================================
 
-Total Open Station 0.3 is in now available as a development preview and
+Total Open Station |version| is now available and
 can be installed on all major operating systems.
+A development version could be build from source.
 
 Detailed instructions are available at the :ref:`installing` page.
 
 If you are having problems with getting started, try first our
 :ref:`faq`. If that doesn't help, get in touch with the development
-team through our dedicated support channel and `mailing list`_.
+team through our dedicated `support channel`_.
 
-.. _`mailing list`: https://lists.berlios.de/mailman/listinfo/tops-dev
 
 Documentation
 =============
@@ -55,6 +54,7 @@ User manual
    installing
    interfaces/main
    input_formats/main
+   output_formats/main
    models/main
    users
    glossary
@@ -64,19 +64,18 @@ Development
 -----------
 
 .. toctree::
-   :maxdepth: 1
+   :maxdepth: 2
 
-   contributing
-   input_formats/new
-   library
-   release
+
+   contributing/main
 
 Indices and tables
 ------------------
 
 * :ref:`genindex`
-* :ref:`Implemented Formats <implemented_formats>`
+* :ref:`Implemented Input Formats <implemented_if>`
 * :ref:`Implemented Models <implemented_models>`
+* :ref:`Implemented Output Formats <implemented_of>`
 * :ref:`modindex`
 * :ref:`search`
 

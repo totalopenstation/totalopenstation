@@ -1,8 +1,8 @@
 .. _if_nikon_raw:
 
-========================
- Nikon RAW format V2.00
-========================
+===============================================
+:mod:`nikon_raw_v200` -- Nikon RAW format V2.00
+===============================================
 
 .. moduleauthor:: Stefano Costa
 .. versionadded:: 0.3.3
@@ -124,16 +124,6 @@ Comment/note records
 
 :CO: Comment record identifier (fixed text)
 :text: Comment text
-
-Module documentation
-====================
-
-.. automodule:: formats.nikon_raw_v200
-   :members:
-   :undoc-members:
-   :show-inheritance:
-   :platform: any
-   :synopsis: Read data in the Carlson RW5 format
 
 Acknowledgements
 ================

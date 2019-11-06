@@ -2,9 +2,9 @@
 
 .. _if_carlson_rw5:
 
-=========================================
-Carlson SurvCE Raw Data File Format (RW5)
-=========================================
+===============================================================
+:mod:`carlson_rw5` -- Carlson SurvCE Raw Data File Format (RW5)
+===============================================================
 
 .. moduleauthor:: Stefano Costa, Filip Kłosowski
 .. versionadded:: 0.4
@@ -321,16 +321,6 @@ Traverse / Sideshot Record / Backsight Direct / Backsight Reverse / Foresight Di
 
 TOPS is capable of converting raw measurement data into local coordinates, by
 performing a sequential processing of all records in their order.
-
-Module documentation
-====================
-
-.. automodule:: formats.carlson_rw5
-   :members:
-   :undoc-members:
-   :show-inheritance:
-   :platform: any
-   :synopsis: Read data in the Carlson RW5 format
 
 Known limitations
 =================
