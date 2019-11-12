@@ -14,7 +14,7 @@ setup(
     url='https://tops.iosa.it/',
     license='GNU GPLv3',
     description='Download and export survey data from your total station',
-    long_description=open('README.txt').read(),
+    long_description=open('README.rst').read(),
     classifiers=[
         'Development Status :: 4 - Beta',
         'Environment :: Console',
