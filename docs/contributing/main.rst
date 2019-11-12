@@ -94,16 +94,16 @@ data in 50 lines of Python code, check out `TOPS in the Cloud
 `Flask <http://flask.pocoo.org/>`_ and shows how to use Total Open
 Station as a programming library.
 
-We think it's important to be able to use TOPS in this way as in any
-other way (GUI, command-line), and this is one of the reasons why
-there is no stable release yet: the TOPS API is still unstable.
+.. warning::
+    TOPS in the Cloud is not maintained and does not receive security
+    updates. Please don't use it in production.
 
-===================================
-Developping with Total Open Station
-===================================
+==================================
+Developing with Total Open Station
+==================================
 
-Advices
-=======
+General remarks
+===============
 
 .. _new:
 
@@ -308,17 +308,20 @@ distributing sources and *wheels*.
 Windows portable app
 ====================
 
-A portable Windows app is built with PyInstaller:
+A portable Windows app is built with PyInstaller. From the root
+directory of the source repository of Total Open Station:
 
-1. follow the instructions for `installing PyInstaller on Windows`_ (be sure to
-   install pip-Win and create a virtual environment)
-2. in the virtual environment, cd into the root directory of the
-   totalopenstation source code and ``pip install .`` to install the current
-   version of totalopenstation and all the dependencies
-3. run ``pyinstaller totalopenstation-gui.spec``
-4. this will create the file ``dist/totalopenstation.exe``, a portable
-   single-file executable that will run from any compatible Windows system,
-   even from USB sticks
+```
+python.exe -m venv pyinst-env
+source pyinst-env/Scripts/activate
+pip.exe install -e .
+pip.exe install PyInstaller
+pyinstaller.exe totalopenstation-gui.spec
+```
+
+This will create the file ``dist/totalopenstation.exe``, a portable
+single-file executable that will run from any compatible Windows system,
+even from USB sticks
 
 .. warning::
 
