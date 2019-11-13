@@ -1,0 +1,271 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR Stefano Costa
+# This file is distributed under the same license as the PACKAGE package.
+# 
+# Translators:
+# Falu <info@falu.me>, 2017
+msgid ""
+msgstr ""
+"Project-Id-Version: Total Open Station\n"
+"Report-Msgid-Bugs-To: info@iosa.it\n"
+"POT-Creation-Date: 2015-02-28 22:54+0100\n"
+"PO-Revision-Date: 2017-09-23 16:07+0000\n"
+"Last-Translator: Falu <info@falu.me>\n"
+"Language-Team: Hungarian (http://www.transifex.com/iosa/totalopenstation/language/hu/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: hu\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: scripts/totalopenstation-cli-connector.py:70
+#: scripts/totalopenstation-gui.py:726
+#, python-format
+msgid "Error loading the required model module: %s"
+msgstr "Hiba a szükséges modul betöltése közben: %s"
+
+#: scripts/totalopenstation-cli-parser.py:36
+msgid "usage: %prog [option] arg1 [option] arg2 ..."
+msgstr "használat: %prog [opció] arg1 [opció] arg2 ..."
+
+#: scripts/totalopenstation-cli-parser.py:44
+msgid "select input FILE  (do not specify for stdin)"
+msgstr "válassz bemenő FÁJLT (stdin használatához ne add meg)"
+
+#: scripts/totalopenstation-cli-parser.py:51
+msgid "select output FILE (do not specify for stdout)"
+msgstr "válassz kimeneti FÁJLT (stdout használatához ne add meg)"
+
+#: scripts/totalopenstation-cli-parser.py:58
+#: scripts/totalopenstation-cli-parser.py:65
+msgid "select input FORMAT"
+msgstr "válaszd ki az input FORMÁTUMOT"
+
+#: scripts/totalopenstation-cli-parser.py:72
+msgid "overwrite existing output file"
+msgstr "létező kimeneti fájl felülírása"
+
+#: scripts/totalopenstation-cli-parser.py:78
+msgid "list the available input and output formats"
+msgstr "listázza az elérhető bemeneti és kimeneti formátumokat"
+
+#: scripts/totalopenstation-cli-parser.py:104
+#, python-format
+msgid ""
+"\n"
+"Error:\n"
+"%(message)s\n"
+"\n"
+"%(formats)s"
+msgstr "\nHiba:\n%(message)s\n\n%(formats)s"
+
+#: scripts/totalopenstation-cli-parser.py:111
+#, python-format
+msgid "%s is not a valid input format"
+msgstr "%s nem érvényes bemeneti formátum"
+
+#: scripts/totalopenstation-cli-parser.py:121
+msgid "Please specify an input format"
+msgstr "Kérlek adj meg egy bemeneti formátumot"
+
+#: scripts/totalopenstation-cli-parser.py:141
+msgid "No input data!"
+msgstr "Nincs bemenő adat!"
+
+#: scripts/totalopenstation-cli-parser.py:161
+#, python-format
+msgid "Downloaded data saved to out file %s"
+msgstr "Letöltött adatok %s fájlba mentve"
+
+#: scripts/totalopenstation-cli-parser.py:165
+#, python-format
+msgid "Downloaded data saved to file %s,"
+msgstr "Letöltött adatok %s fájlba mentve,"
+
+#: scripts/totalopenstation-cli-parser.py:166
+msgid "overwriting the existing file"
+msgstr "létező fájl felülírása"
+
+#: scripts/totalopenstation-cli-parser.py:168
+msgid "Specified output file already exists\n"
+msgstr "A megadott kimeneti fájl már létezik\n"
+
+#: scripts/totalopenstation-gui.py:121
+msgid ""
+"\n"
+"Total Open Station is copyright 2008-2015 Luca Bianconi, Stefano Costa\n"
+"and the IOSA project, under the GNU GPL v3 or any later version.\n"
+"\n"
+"http://tops.iosa.it/\n"
+"\n"
+"The application logo is copyright 2008 Lapo Calamandrei under the same\n"
+"license."
+msgstr "\nA Total Open Station Luca Bianconi, Stefano Costa és az IOSA projekt \nGNU GPL v3 vagy bármelyik későbbi licenc alatti védjegye. 2008-2015\n\nhttp://tops.iosa.it/\n\nAz alkalmazás logó Lapo Calamandrei ugyanilyen licencű védjegye 2008."
+
+#: scripts/totalopenstation-gui.py:154
+msgid ""
+"\n"
+"Press OK when you're ready to download.\n"
+"\n"
+"Depending on your device, you may need to start the transfer from\n"
+"\n"
+"the total station menu."
+msgstr "\nNyomj OK-t, ha készen állsz a letöltésre.\n\nEszköztől függően szükség lehet az adatátvitel indítására a \n\nmérőállomás menüjéből."
+
+#: scripts/totalopenstation-gui.py:176
+msgid "waiting for data from device"
+msgstr "várakozás az eszköz adataira"
+
+#: scripts/totalopenstation-gui.py:177
+msgid "Connection initialized with the following parameters:\n"
+msgstr "Kapcsolat létrehozva a következő paraméterekkel:\n"
+
+#: scripts/totalopenstation-gui.py:179
+msgid ""
+"\n"
+"Start the download procedure on the device.\n"
+msgstr "\nLetöltési folyamat indítása az eszközön.\n"
+
+#: scripts/totalopenstation-gui.py:180
+msgid "Press OK when done."
+msgstr "Nyomj OK-t ha befejeződött."
+
+#: scripts/totalopenstation-gui.py:199
+msgid "Choose output format and destination file"
+msgstr "Válaszd ki a cél fájlt és a kimeneti formátumot"
+
+#: scripts/totalopenstation-gui.py:200
+msgid "Output format:\n"
+msgstr "Kimeneti formátum:\n"
+
+#: scripts/totalopenstation-gui.py:222
+msgid "Input format"
+msgstr "Bemeneti formátum"
+
+#: scripts/totalopenstation-gui.py:227 scripts/totalopenstation-gui.py:246
+msgid "choose a format"
+msgstr "válassz formátumot"
+
+#: scripts/totalopenstation-gui.py:241
+msgid "Output format"
+msgstr "Kimeneti formátum"
+
+#: scripts/totalopenstation-gui.py:280 scripts/totalopenstation-gui.py:293
+#: scripts/totalopenstation-gui.py:725
+msgid "Import error"
+msgstr "Importálási hiba"
+
+#: scripts/totalopenstation-gui.py:281
+#, python-format
+msgid "Error loading the required input module: %s"
+msgstr "Hiba a szükséges bemeneti modul betöltése közben: %s"
+
+#: scripts/totalopenstation-gui.py:294
+#, python-format
+msgid "Error loading the required output module: %s"
+msgstr "Hiba a szükséges kimeneti modul betöltése közben: %s"
+
+#: scripts/totalopenstation-gui.py:305
+msgid "No output file specified"
+msgstr "Nincs megadva kimeneti fájl"
+
+#: scripts/totalopenstation-gui.py:306
+msgid "No processing settings entered!\n"
+msgstr "Nincsenek megadva feldolgozási beállítások!\n"
+
+#: scripts/totalopenstation-gui.py:323
+msgid "Error"
+msgstr "Hiba"
+
+#: scripts/totalopenstation-gui.py:324
+msgid "Connection failed with the following error message:\n"
+msgstr "Sikertelen kapcsolódás a következő hibaüzenettel:\n"
+
+#: scripts/totalopenstation-gui.py:325
+msgid ""
+"\n"
+"Check your connection parameters and try again.\n"
+msgstr "\nEllenőrizd a kapcsolat paramétereit és próbáld újra.\n"
+
+#: scripts/totalopenstation-gui.py:337
+msgid "Cancel"
+msgstr "Mégsem"
+
+#: scripts/totalopenstation-gui.py:372 scripts/totalopenstation-gui.py:618
+msgid "Connect"
+msgstr "Kapcsolódás"
+
+#: scripts/totalopenstation-gui.py:373 scripts/totalopenstation-gui.py:634
+msgid "Process data"
+msgstr "Adatfeldolgozás"
+
+#: scripts/totalopenstation-gui.py:375
+msgid "Quit"
+msgstr "Kilépés"
+
+#: scripts/totalopenstation-gui.py:378
+msgid "Open file"
+msgstr "Fájl megnyitás"
+
+#: scripts/totalopenstation-gui.py:379 scripts/totalopenstation-gui.py:626
+msgid "Save raw data"
+msgstr "Nyers adatok mentése"
+
+#: scripts/totalopenstation-gui.py:382
+msgid "About TOPS"
+msgstr "A TOPS névjegye"
+
+#: scripts/totalopenstation-gui.py:433
+msgid "Port"
+msgstr "Port"
+
+#: scripts/totalopenstation-gui.py:471
+msgid "Total Station"
+msgstr "Mérőállomás"
+
+#: scripts/totalopenstation-gui.py:514 scripts/totalopenstation-gui.py:539
+#: scripts/totalopenstation-gui.py:562 scripts/totalopenstation-gui.py:585
+msgid "choose a value"
+msgstr "válassz egy értéket"
+
+#: scripts/totalopenstation-gui.py:533
+msgid "Bytesize"
+msgstr "Byte méret"
+
+#: scripts/totalopenstation-gui.py:556
+msgid "Parity setting"
+msgstr "Paritás"
+
+#: scripts/totalopenstation-gui.py:579
+msgid "Stop bit"
+msgstr "Stop bit"
+
+#: scripts/totalopenstation-gui.py:602
+msgid "Time lapse between data packets"
+msgstr "Adatcsomagok közötti késleltetés"
+
+#: scripts/totalopenstation-gui.py:650
+msgid ""
+"Welcome.\n"
+"Turn your device on."
+msgstr "Üdvözlet.\nKapcsold be az eszközt."
+
+#: scripts/totalopenstation-gui.py:739
+msgid "Waiting for data: please start transfer from your total station menu."
+msgstr "Várakozás az adatokra: kérlek indítsd el az átvitelt a mérőállomás menüjéből."
+
+#: scripts/totalopenstation-gui.py:750
+#, python-format
+msgid "Downloaded %d bytes"
+msgstr "%d byte letöltve"
+
+#: scripts/totalopenstation-gui.py:754
+msgid "Success!"
+msgstr "Siker!"
+
+#: scripts/totalopenstation-gui.py:755
+#, python-format
+msgid ""
+"Download finished!\n"
+"You have %d bytes of data."
+msgstr "A letöltés befejeződött!\n%d byte adat letöltve."

@@ -1,0 +1,270 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR Stefano Costa
+# This file is distributed under the same license as the PACKAGE package.
+# 
+# Translators:
+msgid ""
+msgstr ""
+"Project-Id-Version: Total Open Station\n"
+"Report-Msgid-Bugs-To: info@iosa.it\n"
+"POT-Creation-Date: 2015-02-28 22:54+0100\n"
+"PO-Revision-Date: 2010-11-30 05:29+0000\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: Dutch (Netherlands) (http://www.transifex.com/iosa/totalopenstation/language/nl_NL/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: nl_NL\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: scripts/totalopenstation-cli-connector.py:70
+#: scripts/totalopenstation-gui.py:726
+#, python-format
+msgid "Error loading the required model module: %s"
+msgstr ""
+
+#: scripts/totalopenstation-cli-parser.py:36
+msgid "usage: %prog [option] arg1 [option] arg2 ..."
+msgstr ""
+
+#: scripts/totalopenstation-cli-parser.py:44
+msgid "select input FILE  (do not specify for stdin)"
+msgstr ""
+
+#: scripts/totalopenstation-cli-parser.py:51
+msgid "select output FILE (do not specify for stdout)"
+msgstr ""
+
+#: scripts/totalopenstation-cli-parser.py:58
+#: scripts/totalopenstation-cli-parser.py:65
+msgid "select input FORMAT"
+msgstr ""
+
+#: scripts/totalopenstation-cli-parser.py:72
+msgid "overwrite existing output file"
+msgstr ""
+
+#: scripts/totalopenstation-cli-parser.py:78
+msgid "list the available input and output formats"
+msgstr ""
+
+#: scripts/totalopenstation-cli-parser.py:104
+#, python-format
+msgid ""
+"\n"
+"Error:\n"
+"%(message)s\n"
+"\n"
+"%(formats)s"
+msgstr ""
+
+#: scripts/totalopenstation-cli-parser.py:111
+#, python-format
+msgid "%s is not a valid input format"
+msgstr ""
+
+#: scripts/totalopenstation-cli-parser.py:121
+msgid "Please specify an input format"
+msgstr ""
+
+#: scripts/totalopenstation-cli-parser.py:141
+msgid "No input data!"
+msgstr ""
+
+#: scripts/totalopenstation-cli-parser.py:161
+#, python-format
+msgid "Downloaded data saved to out file %s"
+msgstr ""
+
+#: scripts/totalopenstation-cli-parser.py:165
+#, python-format
+msgid "Downloaded data saved to file %s,"
+msgstr ""
+
+#: scripts/totalopenstation-cli-parser.py:166
+msgid "overwriting the existing file"
+msgstr ""
+
+#: scripts/totalopenstation-cli-parser.py:168
+msgid "Specified output file already exists\n"
+msgstr ""
+
+#: scripts/totalopenstation-gui.py:121
+msgid ""
+"\n"
+"Total Open Station is copyright 2008-2015 Luca Bianconi, Stefano Costa\n"
+"and the IOSA project, under the GNU GPL v3 or any later version.\n"
+"\n"
+"http://tops.iosa.it/\n"
+"\n"
+"The application logo is copyright 2008 Lapo Calamandrei under the same\n"
+"license."
+msgstr ""
+
+#: scripts/totalopenstation-gui.py:154
+msgid ""
+"\n"
+"Press OK when you're ready to download.\n"
+"\n"
+"Depending on your device, you may need to start the transfer from\n"
+"\n"
+"the total station menu."
+msgstr ""
+
+#: scripts/totalopenstation-gui.py:176
+msgid "waiting for data from device"
+msgstr ""
+
+#: scripts/totalopenstation-gui.py:177
+msgid "Connection initialized with the following parameters:\n"
+msgstr ""
+
+#: scripts/totalopenstation-gui.py:179
+msgid ""
+"\n"
+"Start the download procedure on the device.\n"
+msgstr ""
+
+#: scripts/totalopenstation-gui.py:180
+msgid "Press OK when done."
+msgstr ""
+
+#: scripts/totalopenstation-gui.py:199
+msgid "Choose output format and destination file"
+msgstr ""
+
+#: scripts/totalopenstation-gui.py:200
+msgid "Output format:\n"
+msgstr ""
+
+#: scripts/totalopenstation-gui.py:222
+msgid "Input format"
+msgstr ""
+
+#: scripts/totalopenstation-gui.py:227 scripts/totalopenstation-gui.py:246
+msgid "choose a format"
+msgstr ""
+
+#: scripts/totalopenstation-gui.py:241
+msgid "Output format"
+msgstr ""
+
+#: scripts/totalopenstation-gui.py:280 scripts/totalopenstation-gui.py:293
+#: scripts/totalopenstation-gui.py:725
+msgid "Import error"
+msgstr ""
+
+#: scripts/totalopenstation-gui.py:281
+#, python-format
+msgid "Error loading the required input module: %s"
+msgstr ""
+
+#: scripts/totalopenstation-gui.py:294
+#, python-format
+msgid "Error loading the required output module: %s"
+msgstr ""
+
+#: scripts/totalopenstation-gui.py:305
+msgid "No output file specified"
+msgstr ""
+
+#: scripts/totalopenstation-gui.py:306
+msgid "No processing settings entered!\n"
+msgstr ""
+
+#: scripts/totalopenstation-gui.py:323
+msgid "Error"
+msgstr ""
+
+#: scripts/totalopenstation-gui.py:324
+msgid "Connection failed with the following error message:\n"
+msgstr ""
+
+#: scripts/totalopenstation-gui.py:325
+msgid ""
+"\n"
+"Check your connection parameters and try again.\n"
+msgstr ""
+
+#: scripts/totalopenstation-gui.py:337
+msgid "Cancel"
+msgstr ""
+
+#: scripts/totalopenstation-gui.py:372 scripts/totalopenstation-gui.py:618
+msgid "Connect"
+msgstr ""
+
+#: scripts/totalopenstation-gui.py:373 scripts/totalopenstation-gui.py:634
+msgid "Process data"
+msgstr ""
+
+#: scripts/totalopenstation-gui.py:375
+msgid "Quit"
+msgstr ""
+
+#: scripts/totalopenstation-gui.py:378
+msgid "Open file"
+msgstr ""
+
+#: scripts/totalopenstation-gui.py:379 scripts/totalopenstation-gui.py:626
+msgid "Save raw data"
+msgstr ""
+
+#: scripts/totalopenstation-gui.py:382
+msgid "About TOPS"
+msgstr ""
+
+#: scripts/totalopenstation-gui.py:433
+msgid "Port"
+msgstr ""
+
+#: scripts/totalopenstation-gui.py:471
+msgid "Total Station"
+msgstr ""
+
+#: scripts/totalopenstation-gui.py:514 scripts/totalopenstation-gui.py:539
+#: scripts/totalopenstation-gui.py:562 scripts/totalopenstation-gui.py:585
+msgid "choose a value"
+msgstr ""
+
+#: scripts/totalopenstation-gui.py:533
+msgid "Bytesize"
+msgstr ""
+
+#: scripts/totalopenstation-gui.py:556
+msgid "Parity setting"
+msgstr ""
+
+#: scripts/totalopenstation-gui.py:579
+msgid "Stop bit"
+msgstr ""
+
+#: scripts/totalopenstation-gui.py:602
+msgid "Time lapse between data packets"
+msgstr ""
+
+#: scripts/totalopenstation-gui.py:650
+msgid ""
+"Welcome.\n"
+"Turn your device on."
+msgstr ""
+
+#: scripts/totalopenstation-gui.py:739
+msgid "Waiting for data: please start transfer from your total station menu."
+msgstr ""
+
+#: scripts/totalopenstation-gui.py:750
+#, python-format
+msgid "Downloaded %d bytes"
+msgstr ""
+
+#: scripts/totalopenstation-gui.py:754
+msgid "Success!"
+msgstr ""
+
+#: scripts/totalopenstation-gui.py:755
+#, python-format
+msgid ""
+"Download finished!\n"
+"You have %d bytes of data."
+msgstr ""
