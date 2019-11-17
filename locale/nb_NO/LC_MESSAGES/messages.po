@@ -3,52 +3,51 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
-# Stefano Costa <steko@iosa.it>, 2013
-# Wasilis Mandratzis <inactive+Wasilis@transifex.com>, 2013
+# Allan Nordhøy <epost@anotheragency.no>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: Total Open Station\n"
 "Report-Msgid-Bugs-To: info@iosa.it\n"
 "POT-Creation-Date: 2015-02-28 22:54+0100\n"
-"PO-Revision-Date: 2017-09-19 09:05+0000\n"
-"Last-Translator: Stefano Costa <steko@iosa.it>\n"
-"Language-Team: Greek (http://www.transifex.com/iosa/totalopenstation/language/el/)\n"
+"PO-Revision-Date: 2017-11-21 00:59+0000\n"
+"Last-Translator: Allan Nordhøy <epost@anotheragency.no>\n"
+"Language-Team: Norwegian Bokmål (Norway) (http://www.transifex.com/iosa/totalopenstation/language/nb_NO/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: el\n"
+"Language: nb_NO\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: scripts/totalopenstation-cli-connector.py:70
 #: scripts/totalopenstation-gui.py:726
 #, python-format
 msgid "Error loading the required model module: %s"
-msgstr ""
+msgstr "Feil ved innlasting av påkrevd modellmodul: %s"
 
 #: scripts/totalopenstation-cli-parser.py:36
 msgid "usage: %prog [option] arg1 [option] arg2 ..."
-msgstr "Χρήση: %prog [επιλογή] arg1 [επιλογή] arg2 ..."
+msgstr "bruk: %prog [valg] arg1 [valg] arg2 ..."
 
 #: scripts/totalopenstation-cli-parser.py:44
 msgid "select input FILE  (do not specify for stdin)"
-msgstr "επιλέξτε το αρχείο εισόδου (δεν προσδιορίζει για stdin) "
+msgstr "velg inndata- FILE (ikke angi for stdin)"
 
 #: scripts/totalopenstation-cli-parser.py:51
 msgid "select output FILE (do not specify for stdout)"
-msgstr "επιλέξτε το αρχείο εξόδου (δεν προσδιορίζει για stdout)"
+msgstr "velg utdata- FILE (ikke angi for stdout)"
 
 #: scripts/totalopenstation-cli-parser.py:58
 #: scripts/totalopenstation-cli-parser.py:65
 msgid "select input FORMAT"
-msgstr "Επιλέξτε τη μορφή εισόδου "
+msgstr "Velg inndata- FORMAT"
 
 #: scripts/totalopenstation-cli-parser.py:72
 msgid "overwrite existing output file"
-msgstr "αντικατάσταση υπάρχοντος αρχείου"
+msgstr "overskrift eksisterende utdatafil"
 
 #: scripts/totalopenstation-cli-parser.py:78
 msgid "list the available input and output formats"
-msgstr ""
+msgstr "liste over tilgjengelige inndata- og utdata-formater"
 
 #: scripts/totalopenstation-cli-parser.py:104
 #, python-format
@@ -58,38 +57,38 @@ msgid ""
 "%(message)s\n"
 "\n"
 "%(formats)s"
-msgstr ""
+msgstr "\nFeil:\n%(message)s\n\n%(formats)s"
 
 #: scripts/totalopenstation-cli-parser.py:111
 #, python-format
 msgid "%s is not a valid input format"
-msgstr ""
+msgstr "%s er ikke et gyldig inndataformat"
 
 #: scripts/totalopenstation-cli-parser.py:121
 msgid "Please specify an input format"
-msgstr "Παρακαλώ προσδιορίστε τον τύπο του αρχείου εισόδου"
+msgstr "Angi et inndataformat"
 
 #: scripts/totalopenstation-cli-parser.py:141
 msgid "No input data!"
-msgstr ""
+msgstr "Ingen inndata."
 
 #: scripts/totalopenstation-cli-parser.py:161
 #, python-format
 msgid "Downloaded data saved to out file %s"
-msgstr "Τα ληφθέντα δεδομένα αποθηκεύτηκαν στο αρχείο %s,"
+msgstr "Nedlastet data lagret til utdatafil %s"
 
 #: scripts/totalopenstation-cli-parser.py:165
 #, python-format
 msgid "Downloaded data saved to file %s,"
-msgstr "Τα ληφθέντα δεδομένα αποθηκεύτηκαν στο αρχείο %s,"
+msgstr "Nedlastet data lagret til filen %s,"
 
 #: scripts/totalopenstation-cli-parser.py:166
 msgid "overwriting the existing file"
-msgstr "Αντικατάσταση υπάρχοντος αρχείου"
+msgstr "overskriver eksisterende fil"
 
 #: scripts/totalopenstation-cli-parser.py:168
 msgid "Specified output file already exists\n"
-msgstr "Σφάλμα: Το αρχείο υπάρχει ήδη\n"
+msgstr "Angitt utdatafil finnes allerede\n"
 
 #: scripts/totalopenstation-gui.py:121
 msgid ""
@@ -101,7 +100,7 @@ msgid ""
 "\n"
 "The application logo is copyright 2008 Lapo Calamandrei under the same\n"
 "license."
-msgstr ""
+msgstr "\nTotal Open Station kopirett © 2008-2015 Luca Bianconi, Stefano Costa\nog IOSA-prosjektet, under GNU GPL v3 eller enhver senere versjon.\n\nhttp://tops.iosa.it/\n\nProgrammets logo, kopirett © 2008 Lapo Calamandrei under samme lisens."
 
 #: scripts/totalopenstation-gui.py:154
 msgid ""
@@ -111,162 +110,162 @@ msgid ""
 "Depending on your device, you may need to start the transfer from\n"
 "\n"
 "the total station menu."
-msgstr ""
+msgstr "\nTrykk OK når du er klart til å laste ned.\n\nAvhengig av enheten din, kan det hende du trenger å starte overføringen fra\n\ntotalstasjonsmenyen."
 
 #: scripts/totalopenstation-gui.py:176
 msgid "waiting for data from device"
-msgstr "αναμονή δεδομένων..."
+msgstr "venter på data fra enhet"
 
 #: scripts/totalopenstation-gui.py:177
 msgid "Connection initialized with the following parameters:\n"
-msgstr "Η σύνδεση γίνεται με τις ακόλουθες παραμέτρους:\n"
+msgstr "Tilkobling igangsatt med følgende parameter:\n"
 
 #: scripts/totalopenstation-gui.py:179
 msgid ""
 "\n"
 "Start the download procedure on the device.\n"
-msgstr "\nΞεκινήστε από το όργανο τη διαδικασία αποστολής αρχείου.\n"
+msgstr "\nStart nedlastingsprosedyren fra enheten.\n"
 
 #: scripts/totalopenstation-gui.py:180
 msgid "Press OK when done."
-msgstr "Πατήστε ΟΚ όταν ολοκληρωθεί η διαδικασία."
+msgstr "Trykk OK når du er ferdig."
 
 #: scripts/totalopenstation-gui.py:199
 msgid "Choose output format and destination file"
-msgstr "Επιλέξτε τύπο αρχείου και αρχείο προορισμού"
+msgstr "Velg utdataformat og målfil"
 
 #: scripts/totalopenstation-gui.py:200
 msgid "Output format:\n"
-msgstr "Μορφή εξαγωγής:\n"
+msgstr "Utdataformat:\n"
 
 #: scripts/totalopenstation-gui.py:222
 msgid "Input format"
-msgstr "Μορφη εισαγωγης"
+msgstr "Inndataformat"
 
 #: scripts/totalopenstation-gui.py:227 scripts/totalopenstation-gui.py:246
 msgid "choose a format"
-msgstr ""
+msgstr "velg et format"
 
 #: scripts/totalopenstation-gui.py:241
 msgid "Output format"
-msgstr ""
+msgstr "Utdataformat"
 
 #: scripts/totalopenstation-gui.py:280 scripts/totalopenstation-gui.py:293
 #: scripts/totalopenstation-gui.py:725
 msgid "Import error"
-msgstr ""
+msgstr "Importeringsfeil"
 
 #: scripts/totalopenstation-gui.py:281
 #, python-format
 msgid "Error loading the required input module: %s"
-msgstr ""
+msgstr "Feil ved innlasting av påkrevd inndatamodul: %s"
 
 #: scripts/totalopenstation-gui.py:294
 #, python-format
 msgid "Error loading the required output module: %s"
-msgstr ""
+msgstr "Feil ved innlasting av påkrevd utdatamodul: %s"
 
 #: scripts/totalopenstation-gui.py:305
 msgid "No output file specified"
-msgstr "Δεν καθορίσθηκε αρχείο προορισμού"
+msgstr "Ingen utdatafil valgt"
 
 #: scripts/totalopenstation-gui.py:306
 msgid "No processing settings entered!\n"
-msgstr "Δεν δόθηκαν παράμετροι επεξεργασίας!\n"
+msgstr "Ingen behandlingsinnstillinger oppgitt.\n"
 
 #: scripts/totalopenstation-gui.py:323
 msgid "Error"
-msgstr "Σφάλμα"
+msgstr "Feil"
 
 #: scripts/totalopenstation-gui.py:324
 msgid "Connection failed with the following error message:\n"
-msgstr "Η επικοινωνία απέτυχε με το ακόλουθο μήνυμα σφάλματος:\n"
+msgstr "Tilkoblingen mislyktes med følgende feilmelding:\n"
 
 #: scripts/totalopenstation-gui.py:325
 msgid ""
 "\n"
 "Check your connection parameters and try again.\n"
-msgstr "\nΕλέγξτε τις παραμέτρους επικοινωνίας και δοκιμάστε ξανά.\n"
+msgstr "\nSjekk tilkoblingsparameterne og prøv igjen.\n"
 
 #: scripts/totalopenstation-gui.py:337
 msgid "Cancel"
-msgstr "Ακύρωση"
+msgstr "Avbryt"
 
 #: scripts/totalopenstation-gui.py:372 scripts/totalopenstation-gui.py:618
 msgid "Connect"
-msgstr "Σύνδεση"
+msgstr "Koble til"
 
 #: scripts/totalopenstation-gui.py:373 scripts/totalopenstation-gui.py:634
 msgid "Process data"
-msgstr "Τα στοιχεία της διαδικασίας "
+msgstr "Behandle data"
 
 #: scripts/totalopenstation-gui.py:375
 msgid "Quit"
-msgstr "Έξοδος"
+msgstr "Avslutt"
 
 #: scripts/totalopenstation-gui.py:378
 msgid "Open file"
-msgstr "Άνοιγμα αρχείου"
+msgstr "Åpne fil"
 
 #: scripts/totalopenstation-gui.py:379 scripts/totalopenstation-gui.py:626
 msgid "Save raw data"
-msgstr "Αποθήκευση ανεπεξέργαστων δεδομένων "
+msgstr "Lagre rådata"
 
 #: scripts/totalopenstation-gui.py:382
 msgid "About TOPS"
-msgstr "Σχετικά με το TOPS"
+msgstr "Om TOPS"
 
 #: scripts/totalopenstation-gui.py:433
 msgid "Port"
-msgstr "Θύρα"
+msgstr "Port"
 
 #: scripts/totalopenstation-gui.py:471
 msgid "Total Station"
-msgstr "Γεωδαιτικός Σταθμός"
+msgstr "Totalstasjon/elektronisk takymeter"
 
 #: scripts/totalopenstation-gui.py:514 scripts/totalopenstation-gui.py:539
 #: scripts/totalopenstation-gui.py:562 scripts/totalopenstation-gui.py:585
 msgid "choose a value"
-msgstr "επιλογή τιμής"
+msgstr "Velg en verdi"
 
 #: scripts/totalopenstation-gui.py:533
 msgid "Bytesize"
-msgstr "Bytesize"
+msgstr "Bytestørrelse"
 
 #: scripts/totalopenstation-gui.py:556
 msgid "Parity setting"
-msgstr "Ρύθμιση ισοτιμιας"
+msgstr "Paritetsinnstilling"
 
 #: scripts/totalopenstation-gui.py:579
 msgid "Stop bit"
-msgstr "Stop bit"
+msgstr "Stoppbit"
 
 #: scripts/totalopenstation-gui.py:602
 msgid "Time lapse between data packets"
-msgstr ""
+msgstr "Tid mellom datapakker"
 
 #: scripts/totalopenstation-gui.py:650
 msgid ""
 "Welcome.\n"
 "Turn your device on."
-msgstr "Καλωσήρθατε.\nΑνοίξτε το Γεωδαιτικό σταθμό."
+msgstr "Velkomen.\nSkru enheten din på."
 
 #: scripts/totalopenstation-gui.py:739
 msgid "Waiting for data: please start transfer from your total station menu."
-msgstr ""
+msgstr "Venter på data: Start overføringen fra din totalstasjons meny."
 
 #: scripts/totalopenstation-gui.py:750
 #, python-format
 msgid "Downloaded %d bytes"
-msgstr ""
+msgstr "Lastet ned %d byte"
 
 #: scripts/totalopenstation-gui.py:754
 msgid "Success!"
-msgstr ""
+msgstr "Vellykket!"
 
 #: scripts/totalopenstation-gui.py:755
 #, python-format
 msgid ""
 "Download finished!\n"
 "You have %d bytes of data."
-msgstr ""
+msgstr "Nedlasting fullført!\nDu har %d byte med data."
