@@ -21,6 +21,14 @@ Total Open Station is a program for downloading and processing survey data from 
 
 .. image:: https://tops.iosa.it/img/totalopenstation-gui.gif
 
+Total Open Station is a good choice if:
+
+- you work with total stations on GNU/Linux (and MacOS, probably)
+- you work with old devices that are unsupported by vendors
+- you need to process hundreds of data files at once
+
+We think Total Open Station is small but great because:
+
 - it is *free/libre open source software*
 - it works on *any* operating system where Python is available
 - it is designed to support as many devices and formats as possible, all
@@ -36,12 +44,17 @@ files.
 Installing
 ==========
 
+If you're comfortable with the command line:
+
 .. code-block:: bash
 
     pip install totalopenstation
 
 Windows users can download the portable app from the 
 GitHub `releases page <https://github.com/steko/totalopenstation/releases>`_.
+
+GNU/Linux users can find the `totalopenstation` package in some distributions
+(OpenSUSE, Debian, Ubuntu).
 
 Documentation
 =============
@@ -50,6 +63,13 @@ Documentation is online at http://totalopenstation.readthedocs.io/ with
 an user guide, details on the application structure, supported models
 and other interesting stuff.
 
+Development
+===========
+
+Total Open Station is developed by @steko, @psolyca and other contributors, including
+translators and providers of sample data. We are not professional software developers
+but we do our best to follow modern good practice. Feel free to submit a feature request
+or a pull request on GitHub.
 
 The application icons are copyright by Lapo Calamandrei 2008, under the
 same license as Total Open Station.
