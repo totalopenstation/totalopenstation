@@ -24,8 +24,6 @@ import time
 import re
 import os
 
-from . import Parser
-
 # Template string
 TEMPLATE = '''<?xml version=\"1.0\"?>
                 <LandXML xmlns=\"http://www.landxml.org/schema/LandXML-1.1\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://www.landxml.org/schema/LandXML-1.1 http://www.landxml.org/schema/LandXML-1.1/LandXML-1.1.xsd\" date=\"\" time=\"\" version=\"1.1\">
