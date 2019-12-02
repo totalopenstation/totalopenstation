@@ -52,6 +52,8 @@ class OutputFormat:
         for feature in self.data:
             kwargs = self._get_feature(feature)
 
+            if feature.desc == "PO":
+                root.raw_observation(**kwargs)
             if feature.desc == "PT":
                 root.cg_point(**kwargs)
             if feature.desc == "ST":

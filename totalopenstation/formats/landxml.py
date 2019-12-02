@@ -201,6 +201,87 @@ class Survey:
         # ID can be raise
         self.id += 1
 
+    def raw_observation(self, **kwargs):
+        """
+        Populate the RawObservation tag.
+
+        No attribut is mandatory so kwargs can be empty.
+
+        Arguments in kwargs for RawObservation:
+            - th              -> targetHeight        attrib  of RawObservation
+            - angle           -> horizAngle          attrib  of RawObservation
+            - z_angle         -> zenithAngle         attrib  of RawObservation
+            - slope_dist      -> slopeDistance       attrib  of RawObservation
+            - horizontal_dist -> horizDistance       attrib  of RawObservation
+            - point_name      -> desc                attrib  of TargetPoint part of RawObservation
+            - pid             -> pntRef              attrib  of TargetPoint part of RawObservation
+            - x               -> x coordinate        element of TargetPoint part of RawObservation
+            - y               -> y coordinate        element of TargetPoint part of RawObservation
+            - z               -> z coordinate        element of TargetPoint part of RawObservation
+            - ih              -> instrumentHeight    attrib  of Property part of Feature
+            - ppm             -> edmAccuracyppm      attrib  of Property part of Feature
+            - prism_constant  -> edmAccuracyConstant attrib  of Property part of Feature
+            - attrib          -> attribX             attrib  of Property part of Feature
+        """
+
+        # kwargs = {key: str(value) if value is not None else value for key,value in kwargs.items()}
+        # When creating a RawObservation tag, it should verified that an ObservationGroup tag exists
+        if self.survey.find("./ObservationGroup[@id='o0']") is None:
+            self.setup()
+        observation_group = self.survey.find("./ObservationGroup[@id='o%s']" % str(self.id - 1))
+        # Creation of RawObservation tag, subelement of ObservationGroup
+        raw_observation = xml.SubElement(observation_group, "RawObservation")
+        # Fill of RawObservation attributes
+        if "th" in kwargs:
+            raw_observation.set("targetHeight", str(kwargs["th"]))
+        if "angle" in kwargs:
+            raw_observation.set("horizAngle", str(kwargs["angle"]))
+        if "z_angle" in kwargs:
+            raw_observation.set("zenithAngle", str(kwargs["z_angle"]))
+        if "slope_dist" in kwargs and kwargs["slope_dist"] is not None:
+            raw_observation.set("slopeDistance", str(kwargs["slope_dist"]))
+        if "horizontal_dist" in kwargs and kwargs["horizontal_dist"] is not None:
+            raw_observation.set("horizDistance", str(kwargs["horizontal_dist"]))
+        # Creation of TargetPoint tag, subelement of RawObservation
+        target_point = xml.SubElement(raw_observation, "TargetPoint")
+        # Fill of TargetPoint attributes
+        if "point_name" in kwargs:
+            target_point.set("desc", str(kwargs["point_name"]))
+        if "pid" in kwargs:
+            target_point.set("pntRef", str(kwargs["pid"]))
+        if "x" in kwargs:
+            target_point.text = "%s %s %s" % (str(kwargs["x"]),
+                                              str(kwargs["y"]),
+                                              str(kwargs["z"]))
+        # targetHeight is not mandatory in RawObservation so this is a feature
+        if "ih" in kwargs and kwargs["ih"] is not None:
+            if raw_observation.find("./Feature") is None:
+                feature = xml.SubElement(raw_observation, "Feature")
+            # feature_property
+            xml.SubElement(feature, "Property",
+                           label="instrumentHeight",
+                           value=str(kwargs["ih"]))
+        # ppm or prism_constant are not mandatory in RawObservation so this is a feature
+        if "ppm" in kwargs and kwargs["ppm"] is not None:
+            if raw_observation.find("./Feature") is None:
+                feature = xml.SubElement(raw_observation, "Feature")
+            # feature_property
+            xml.SubElement(feature, "Property",
+                           label="edmAccuracyppm",
+                           value=str(kwargs["ppm"]))
+            xml.SubElement(feature, "Property",
+                           label="edmAccuracyConstant",
+                           value=str(kwargs["prism_constant"]))
+        # attrib is not mandatory in RawObservation so this is a feature
+        if "attrib" in kwargs:
+            if raw_observation.find("./Feature") is None:
+                feature = xml.SubElement(raw_observation, "Feature")
+            # feature_property
+            for i in range(len(kwargs["attrib"])):
+                xml.SubElement(feature, "Property",
+                               label="attrib%s" % (i + 1),
+                               value=str(kwargs["attrib"][i]))
+
     def to_string(self):
         """
         :return:
