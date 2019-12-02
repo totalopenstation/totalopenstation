@@ -63,6 +63,23 @@ class Survey:
 
         return pos
 
+    def equipment(self, **kwargs):
+        """
+        Populate the Equipment tag.
+
+        No attribut is mandatory so kwargs can be empty.
+
+        Arguments in kwargs for Equipment:
+            TODO
+        """
+        # kwargs = {key: str(value) if value is not None else value for key,value in kwargs.items()}
+        # Verification of position of the element
+        pos = self._tag_position('Equipment')
+
+        # Creation of Equipment tag, subelement of Survey
+        equipment = xml.Element("Equipment")
+        self.survey.insert(pos, equipment)
+
     def cg_point(self, **kwargs):
         """
         Populate the CgPoints and CgPoint tags.
