@@ -63,7 +63,52 @@ class Survey:
 
         return pos
 
+    def cg_point(self, **kwargs):
+        """
+        Populate the CgPoints and CgPoint tags.
 
+        No attribut is mandatory so kwargs can be empty.
+
+        Arguments in kwargs for CgPoint:
+            - point_name -> name          attrib  of CgPoint part of CgPoints
+            - pid        -> pntRef        attrib  of CgPoint part of CgPoints
+            - x          -> x coordinate  element of CgPoint part of CgPoints
+            - y          -> y coordinate  element of CgPoint part of CgPoints
+            - z          -> z coordinate  element of CgPoint part of CgPoints
+            - attrib     -> attribX       attrib  of Property part of Feature
+        """
+
+        # kwargs = {key: str(value) if value is not None else value for key,value in kwargs.items()}
+        # Verification of position of the element
+        pos = self._tag_position('CgPoints')
+
+        # Creation of CgPoints tag, subelement of Survey if it does not exist
+        cgpoints = self.survey.find("./CgPoints")
+        if cgpoints is None:
+            cgpoints = xml.Element("CgPoints")
+            self.survey.insert(pos, cgpoints)
+
+        # Creation of CgPoint tag, subelement of CgPoints
+        cgpoint = xml.SubElement(cgpoints, "CgPoint")
+        # Fill of CgPoint attributes
+        if "point_name" in kwargs:
+            cgpoint.set("name", str(kwargs["point_name"]))
+        if "pid" in kwargs:
+            cgpoint.set("pntRef", str(kwargs["pid"]))
+        if "x" in kwargs:
+            cgpoint.text = "%s %s %s" % (str(kwargs["x"]),
+                                         str(kwargs["y"]),
+                                         str(kwargs["z"]))
+        # attrib is not mandatory in CgPoints so this is a feature
+        if "attrib" in kwargs:
+            if cgpoints.find("./Feature") is None:
+                feature = xml.SubElement(cgpoints, "Feature")
+            feature = cgpoints.find("./Feature")
+            # feature_property
+            for i in range(len(kwargs["attrib"])):
+                xml.SubElement(feature, "Property",
+                               label="attrib%s" % (i + 1),
+                               value=str(kwargs["attrib"][i]))
 
     def setup(self, **kwargs):
         """
