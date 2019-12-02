@@ -19,5 +19,5 @@ class TestXMLOutput(unittest.TestCase):
 
     def test_output(self):
         self.output = OutputFormat(self.data).process()
-        self.assertEqual(self.output.splitlines()[9], '\t\t\t<CgPoint name="TEST POINT">12.8 76.3 56.2</CgPoint>')
-        self.assertEqual(self.output.splitlines()[10], '\t\t\t<CgPoint name="TEST POINT #2">19.8 26.3 46.2</CgPoint>')
+        self.assertEqual(self.output.splitlines()[9], b'\t\t\t<CgPoint name="TEST POINT">12.8 76.3 56.2</CgPoint>')
+        self.assertEqual(self.output.splitlines()[10], b'\t\t\t<CgPoint name="TEST POINT #2">19.8 26.3 46.2</CgPoint>')
