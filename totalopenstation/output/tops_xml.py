@@ -19,7 +19,7 @@
 # along with Total Open Station.  If not, see
 # <http://www.gnu.org/licenses/>.
 
-from totalopenstation.formats.landxml import Survey
+from totalopenstation.formats.landxml import Survey, LandXML
 
 class OutputFormat:
 
@@ -59,4 +59,7 @@ class OutputFormat:
             if feature.desc == "ST":
                 root.setup(**kwargs)
 
-        return root.to_string()
+        xml = LandXML()
+        xml.append(root.survey)
+
+        return xml.to_string()

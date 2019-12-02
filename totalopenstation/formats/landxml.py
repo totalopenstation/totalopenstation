@@ -20,8 +20,42 @@
 # <http://www.gnu.org/licenses/>.
 
 import xml.etree.ElementTree as xml
+import time
+import re
+import os
 
 from . import Parser
+
+# Template file relativ to this file path
+TEMPLATE = "../../data/template.xml"
+
+DEFAULT_NS = "http://www.landxml.org/schema/LandXML-1.1"
+DECLARATION = '<?xml version="1.0" encoding="UTF-8"?>'
+
+
+def _indent(elem, level=0):
+    """
+    A function to indent a XML Element for pretty printing
+    :param elem: The element to parse
+    :param level: The level of the element in the hierarchy
+    :return: The element ready to be pretty printed
+    """
+    i = "\n" + (level + 1)*"\t"
+    j = "\n" + level*"\t"
+    count = 1
+    if len(elem):
+        if elem.text is None or elem.text.strip() is None:
+            elem.text = i
+        for subelem in elem:
+            _indent(subelem, level+1)
+            if subelem.tail is None or subelem.tail.strip() is None:
+                subelem.tail = i
+            elif re.match(r"\s", subelem.tail):
+                subelem.tail = i
+            count += 1
+        if count == len(elem) + 1:
+            subelem.tail = j
+    return elem
 
 
 class Survey:
@@ -305,3 +339,22 @@ class Survey:
         """
         return xml.tostring(self.survey)
 
+
+class LandXML:
+    """
+    Create the LandXML file.
+    """
+
+    def __init__(self):
+        xml.register_namespace('', DEFAULT_NS)
+        tree = xml.parse(os.path.join(os.path.dirname(__file__), TEMPLATE))
+        self.root = tree.getroot()
+
+    def append(self, xml_data):
+        self.root.append(xml_data)
+
+    def to_string(self):
+        self.root.set("date", time.strftime("%Y-%m-%d"))
+        self.root.set("time", time.strftime("%H:%M:%S"))
+        pretty_xml = _indent(self.root)
+        return xml.tostring(pretty_xml)
