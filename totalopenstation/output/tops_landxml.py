@@ -1,6 +1,6 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
-# filename: tops_xml.py
+# filename: tops_landxml.py
 # Copyright 2015 Damien Gaignon <damien.gaignon@gmail.com>
 #
 # This file is part of Total Open Station.

@@ -1,9 +1,9 @@
 import unittest
 
 from totalopenstation.formats import Feature, Point
-from totalopenstation.output.tops_xml import OutputFormat
+from totalopenstation.output.tops_landxml import OutputFormat
 
-class TestXMLOutput(unittest.TestCase):
+class TestLandXMLOutput(unittest.TestCase):
 
     def setUp(self):
         self.data = [

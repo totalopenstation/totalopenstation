@@ -1,6 +1,6 @@
 #! /usr/bin/env python
 
-__all__ = ["tops_csv", "tops_dxf", "tops_dat", "tops_sql", "tops_txt", "tops_geojson", "tops_xml"]
+__all__ = ["tops_csv", "tops_dxf", "tops_dat", "tops_sql", "tops_txt", "tops_geojson", "tops_landxml"]
 
 class Builder:
 
@@ -38,5 +38,5 @@ BUILTIN_OUTPUT_FORMATS = {
     'dat': ('tops_dat', 'OutputFormat', 'DAT'),
     'txt': ('tops_txt', 'OutputFormat', 'Text'),
     'geojson': ('tops_geojson', 'OutputFormat', 'GeoJSON'),
-    'xml': ('tops_xml', 'OutputFormat', 'LandXML')
+    'landxml': ('tops_landxml', 'OutputFormat', 'LandXML')
     }
