@@ -18,7 +18,7 @@ If you were using a previous version of the program you can:
 
 - wait for your Linux distribution to upgrade
 - install with `pip install --upgrade totalopenstation` if you know your way around the command line on Linux or MacOS
-- download the Windows portable app: this release is the first to support the Windows portable app from the start
+- [download the Windows portable app from the release page](https://github.com/steko/totalopenstation/releases/tag/v0.5.0): this release is the first to support the Windows portable app from the start - for the moment this release supports 64-bit operating systems but we are working to add a version for older 32-bit systems.
 
 But there's more. This release marks a renewed development process and the full onboarding of @psolyca in the team. With the 0.6 release we are planning to move the repository from the personal "steko" account to an organization account and improve the contribution guidelines so that the future of Total Open Station is not dependent on a single person. Of course we have already great plans for new features, as always listed on our issue tracker.
 
