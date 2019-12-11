@@ -1,7 +1,7 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
 # filename: upref.py
-# Copyright 2015 Stefano Costa <steko@iosa.it>
+# Copyright 2019 Stefano Costa <steko@iosa.it>
 # Copyright 2010 Luca Bianconi <luxetluc@yahoo.it>
 #
 # This file is part of Total Open Station.
@@ -27,7 +27,7 @@ import os.path
 
 from configparser import ConfigParser, NoSectionError, NoOptionError
 
-logger = logging.getLogger(__name__).addHandler(logging.NullHandler())
+logger = logging.getLogger(__name__)
 
 class UserPrefs(ConfigParser):
     '''Manage user preferences for GUI options and last used values.
@@ -52,20 +52,25 @@ class UserPrefs(ConfigParser):
 
         self.upref = os.path.expanduser(USER_PREFS_PATH)
 
-        if os.path.exists(self.upref):
-            self.read(self.upref)
+        try:
+            with open(self.upref) as f:
+                self.read(f)
+        except FileNotFoundError:
+                self.initfile()
+        else:
             try:
                 self.getvalue('model')
             except NoSectionError:
                 self.initfile()
-        elif not os.path.exists(os.path.dirname(self.upref)):
-            os.mkdir(os.path.dirname(self.upref))
-            self.initfile()
-        else:
-            self.initfile()
+
 
     def initfile(self):
-        self.write()
+        try:
+            self.write()
+        except FileNotFoundError:
+            os.mkdir(os.path.dirname(self.upref))
+        finally:
+            self.write()
         logger.info('User preferences do not exist!')
         self.add_section('topsconfig')
         for k,v in list(self.OPTIONS.items()):
