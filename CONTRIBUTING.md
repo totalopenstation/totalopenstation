@@ -23,7 +23,8 @@
 
 This document explains how to contribute changes to the Total Open Station project.
 It assumes you have followed the
-[installation instructions](https://totalopenstation.readthedocs.io/).
+[installation instructions](https://totalopenstation.readthedocs.io/en/stable/installing.html),
+with particular reference to the section detailing the use of pip and virtualenv.
 
 ## Bug reports
 
@@ -71,7 +72,7 @@ Here's how to run the test suite:
 ## Translation
 
 We do all translation work inside [Transifex](https://www.transifex.com/projects/p/totalopenstation/resource/totalopenstation-app/). Once a translation has reached
-A SATISFACTORY PERCENTAGE it will be synced back into this repo and
+100% it will be synced back into this repo and
 included in the next released version.
 
 ## Building Total Open Station
@@ -123,7 +124,7 @@ To maintain understandable code it is important to have a good structure of the 
 
 We consider the act of contributing to the code by submitting a Pull
 Request as the "Sign off" or agreement to the certifications and terms
-of the [DCO](DCO) and [GNU General Public License](LICENSE). No further action is required.
+of the DCO and GNU General Public License. No further action is required.
 Additionally you could add a line at the end of your commit message.
 
 ```
