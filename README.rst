@@ -15,6 +15,10 @@
   :target: https://totalopenstation.readthedocs.io/
   :alt: Read the Docs
 
+.. image:: https://img.shields.io/matrix/totalopenstation:matrix.org
+   :target: https://matrix.to/#/#totalopenstation:matrix.org
+   :alt: Matrix
+
 |
 
 Total Open Station is a program for downloading and processing survey data from total station devices.
