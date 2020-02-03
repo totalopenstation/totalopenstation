@@ -1,3 +1,9 @@
+---
+layout: post
+title: "Total Open Station 0.5 release, based on Python 3"
+date: 2019-11-25 18:10 CEST
+---
+
 Total Open Station 0.5 is here!
 
 This release is the result of a short and intense development cycle.
