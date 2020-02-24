@@ -3,8 +3,8 @@
 ====================
 
 
-.. image:: https://travis-ci.org/steko/totalopenstation.svg?branch=master
-  :target: https://travis-ci.org/steko/totalopenstation
+.. image:: https://travis-ci.com/totalopenstation/totalopenstation.svg?branch=master
+  :target: https://travis-ci.com/totalopenstation/totalopenstation
   :alt: Travis
 
 .. image:: https://img.shields.io/pypi/v/totalopenstation
