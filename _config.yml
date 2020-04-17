@@ -10,7 +10,7 @@ author:
   name: 'Stefano Costa'
   url: https://steko.iosa.it/
 
-gems:
+plugins:
   - jekyll-feed
   - jekyll-mentions
   - jekyll-seo-tag
