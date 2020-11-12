@@ -115,6 +115,7 @@ class Connector(serial.Serial, Thread):
 BUILTIN_MODELS = {
     'leica_tcr_1205': ('leica_tcr_1205', 'ModelConnector', 'Leica TCR 1205'),
     'zeiss_elta_r55': ('zeiss_elta_r55', 'ModelConnector', 'Zeiss Elta R55'),
+    'nikon_npl_322+': ('nikon_npl_322+', 'ModelConnector','Nikon NPL 322+'),
     'nikon_npl_350': ('nikon_npl_350', 'ModelConnector','Nikon NPL 350'),
     'leica_tcr_705': ('leica_tcr_705', 'ModelConnector', 'Leica TCR 705'),
     'trimble': ('trimble', 'ModelConnector', 'Trimble'), 
