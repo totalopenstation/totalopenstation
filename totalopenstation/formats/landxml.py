@@ -152,9 +152,10 @@ class Survey:
         if "pid" in kwargs:
             cgpoint.set("pntRef", str(kwargs["pid"]))
         if "x" in kwargs:
-            cgpoint.text = "%s %s %s" % (str(kwargs["x"]),
-                                         str(kwargs["y"]),
-                                         str(kwargs["z"]))
+            cgpoint.text = "%s %s" % (str(kwargs["x"]),
+                                         str(kwargs["y"]))
+            if "z" in kwargs:
+                cgpoint.text += " %s" % (str(kwargs["z"]))
         # attrib is not mandatory in CgPoints so this is a feature
         if "attrib" in kwargs:
             if cgpoints.find("./Feature") is None:
@@ -306,9 +307,10 @@ class Survey:
         if "pid" in kwargs:
             target_point.set("pntRef", str(kwargs["pid"]))
         if "x" in kwargs:
-            target_point.text = "%s %s %s" % (str(kwargs["x"]),
-                                              str(kwargs["y"]),
-                                              str(kwargs["z"]))
+            target_point.text = "%s %s" % (str(kwargs["x"]),
+                                           str(kwargs["y"]))
+            if "z" in kwargs:
+                target_point.text += " %s" % (str(kwargs["z"]))
         # targetHeight is not mandatory in RawObservation so this is a feature
         if "ih" in kwargs and kwargs["ih"] is not None:
             if raw_observation.find("./Feature") is None:

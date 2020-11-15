@@ -38,7 +38,10 @@ class OutputFormat:
         kwargs = {}
         kwargs["x"] = feature.geometry.x
         kwargs["y"] = feature.geometry.y
-        kwargs["z"] = feature.geometry.z
+        try:
+            kwargs["z"] = feature.geometry.z
+        except ValueError:
+            pass
 
         for key,value in feature.properties.items():
             kwargs[key] = value
