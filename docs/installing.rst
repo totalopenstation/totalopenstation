@@ -16,6 +16,8 @@ depending on your operating system.
 GNU/Linux distributions
 =======================
 
+To install the latest release, see :ref:`using-pip` below.
+
 OpenSUSE
 --------
 
@@ -76,6 +78,8 @@ hardware, drivers for Windows can be downloaded from the `Prolific
 website <http://www.prolific.com.tw/eng/downloads.asp?ID=31>`_.
 
 
+.. _using-pip:
+
 Using pip
 =========
 
@@ -90,26 +94,36 @@ software). Here follows a detailed step-by-step guide.
 .. _pip: http://www.pip-installer.org/
 .. _virtualenv: http://pypi.python.org/pypi/virtualenv
 
+Tkinter
+-------
+
+On Linux, make sure that the ``python3-tk`` or ``python3-tkinter`` package is
+installed on your system, otherwise install it with your package manager, for
+example on Debian-based systems like Ubuntu::
+
+    sudo apt install python3-tk
+
+Tkinter is the library used for the graphical interface of Total Open Station.
+
 Install ``pip`` and ``virtualenv``
 ----------------------------------
 
-First of all, make sure you have ``pip`` and ``virtualenv``
-installed. All major GNU/Linux distributions have them packaged:
+Get ``pip`` and ``virtualenv`` installed. All major distributions have them packaged:
 
 - Debian and derivatives (including Ubuntu)::
 
-    apt-get install  python-pip python-virtualenv
+    sudo apt install  python-pip python-virtualenv
 
 - Fedora::
 
-    yum install python-pip python-virtualenv
+    sudo dnf install python-pip python-virtualenv
 
 Create a virtual environment
 ----------------------------
 
 Creating a virtual environment is as easy as typing in a terminal::
 
-    virtualenv tops-environment
+    python3 -m venv tops-environment
 
 A new directory named ``tops-environment`` has been created. It contains a
 minimal set of files needed to manage a Python installation that is
@@ -171,7 +185,14 @@ From your terminal, type::
 
     totalopenstation-gui.py
 
-and the program should start. Please report any errors to the `bug tracker`_.
+and the program should start.
+
+Of course you can also run the command line programs:
+
+- totalopenstation-cli-connector.py downloads data from your total station
+- totalopenstation-cli-parser converts raw data in common formats like DXF and CSV
+
+Please report any errors to the `bug tracker`_.
 
 The next time you want to run the program, follow these steps:
 
