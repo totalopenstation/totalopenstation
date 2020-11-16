@@ -44,6 +44,8 @@ def _indent(elem, level=0):
     :param elem: The element to parse
     :param level: The level of the element in the hierarchy
     :return: The element ready to be pretty printed
+
+    Note : Taken from https://stackoverflow.com/questions/749796/pretty-printing-xml-in-python/4590052#4590052
     """
     i = "\n" + (level + 1)*"\t"
     j = "\n" + level*"\t"
