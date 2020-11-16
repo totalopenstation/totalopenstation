@@ -20,8 +20,9 @@
 # <http://www.gnu.org/licenses/>.
 
 from totalopenstation.formats.landxml import Survey, LandXML
+from . import Builder
 
-class OutputFormat:
+class OutputFormat(Builder):
 
     """
     Exports points data in LandXML format.
