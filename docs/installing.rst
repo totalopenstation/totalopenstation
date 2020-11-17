@@ -16,6 +16,11 @@ depending on your operating system.
 GNU/Linux distributions
 =======================
 
+Installing Total Open Station through your Linux package manager, if available,
+is the only way to get automatic updates to the most recent version. All other
+installation methods require you to keep track of new releases and manually update.
+Total Open Station will not notify you when a new release is available.
+
 To install the latest release, see :ref:`using-pip` below.
 
 OpenSUSE
@@ -52,6 +57,8 @@ that will help you choosing the correct version of Python to use
    Do not use the pre-installed Python that comes with the OSX operating system
    which has serious bugs that can cause application crashes.
 
+Then follow the section :ref:`using-pip` below.
+
 Microsoft Windows
 =================
 
@@ -86,16 +93,18 @@ Using pip
 Until your operating system's packaging tools (e.g. apt or
 yum) allow you to install Total Open Station along with other
 programs, the recommended way to install is using pip_ (a package
-manager for Python) and virtualenv_ (which creates isolated
-software environments: basically you don't mix packages installed
-system-wise with your package manager and user-installed
-software). Here follows a detailed step-by-step guide.
+manager for Python) and a virtual environment: basically you
+don't mix packages installed system-wise with your package manager
+and user-installed software). Here follows a detailed step-by-step guide
+using a terminal.
 
 .. _pip: http://www.pip-installer.org/
-.. _virtualenv: http://pypi.python.org/pypi/virtualenv
 
-Tkinter
--------
+Requirements
+------------
+
+You need to have Python installed on your machine. Total Open Station runs
+on all supported Python versions (from 3.6 to 3.9).
 
 On Linux, make sure that the ``python3-tk`` or ``python3-tkinter`` package is
 installed on your system, otherwise install it with your package manager, for
@@ -103,20 +112,11 @@ example on Debian-based systems like Ubuntu::
 
     sudo apt install python3-tk
 
+or for ArchLinux::
+
+    pacman -S tk
+
 Tkinter is the library used for the graphical interface of Total Open Station.
-
-Install ``pip`` and ``virtualenv``
-----------------------------------
-
-Get ``pip`` and ``virtualenv`` installed. All major distributions have them packaged:
-
-- Debian and derivatives (including Ubuntu)::
-
-    sudo apt install  python-pip python-virtualenv
-
-- Fedora::
-
-    sudo dnf install python-pip python-virtualenv
 
 Create a virtual environment
 ----------------------------
@@ -133,6 +133,8 @@ clean.
 Now, activate the environment with::
 
     source tops-environment/bin/activate
+
+(On Windows, this will be tops-environment/Scripts/activate)
 
 From now on, all Python-related actions will be executed within the
 newly created environment, and not on the system-wide
@@ -169,7 +171,7 @@ Using the procedure described above it is fairly easy to create
 another, separate environment. Once the new environment is *active*,
 the command for installing a development version is::
 
-    pip install -e git+https://github.com/steko/totalopenstation#egg=totalopenstation
+    pip install -e git+https://github.com/totalopenstation/totalopenstation#egg=totalopenstation
 
 Developers may ask you to install from another repository, but the
 concept stays the same. This mechanism is very flexible and allows to
