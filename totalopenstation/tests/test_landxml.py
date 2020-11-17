@@ -24,9 +24,11 @@ class TestLandXMLOutput(unittest.TestCase):
                     desc='PO',
                     id=4,
                     point_name='TEST POINT #3',
+                    z_angle_type='z',
+                    dist_type='s',
                     angle=0,
                     z_angle=90.585,
-                    slope_dist=1718.28,
+                    dist=1718.28,
                     th=1.5,
                     station_name="STATION")
         ]

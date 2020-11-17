@@ -19,6 +19,8 @@
 # along with Total Open Station.  If not, see
 # <http://www.gnu.org/licenses/>.
 
+from totalopenstation.formats.conversion import vertical_to_zenithal
+
 import xml.etree.ElementTree as xml
 import time
 import re
@@ -270,8 +272,8 @@ class Survey:
             - th              -> targetHeight        attrib  of RawObservation
             - angle           -> horizAngle          attrib  of RawObservation
             - z_angle         -> zenithAngle         attrib  of RawObservation
-            - slope_dist      -> slopeDistance       attrib  of RawObservation
-            - horizontal_dist -> horizDistance       attrib  of RawObservation
+            - dist            -> Distance            attrib  of RawObservation
+            - dist_type       -> Type of distance    attrib  of RawObservation
             - point_name      -> desc                attrib  of TargetPoint part of RawObservation
             - pid             -> pntRef              attrib  of TargetPoint part of RawObservation
             - x               -> x coordinate        element of TargetPoint part of RawObservation
@@ -296,11 +298,17 @@ class Survey:
         if "angle" in kwargs:
             raw_observation.set("horizAngle", str(kwargs["angle"]))
         if "z_angle" in kwargs:
-            raw_observation.set("zenithAngle", str(kwargs["z_angle"]))
-        if "slope_dist" in kwargs and kwargs["slope_dist"] is not None:
-            raw_observation.set("slopeDistance", str(kwargs["slope_dist"]))
-        if "horizontal_dist" in kwargs and kwargs["horizontal_dist"] is not None:
-            raw_observation.set("horizDistance", str(kwargs["horizontal_dist"]))
+            if kwargs["z_angle_type"] == "dh":
+                raw_observation.set("vertDistance", str(kwargs["z_angle"]))
+            if kwargs["z_angle_type"] == "z":
+                raw_observation.set("zenithAngle", str(kwargs["z_angle"]))
+            if kwargs["z_angle_type"] == "v":
+                raw_observation.set("zenithAngle", str(vertical_to_zenithal(kwargs["z_angle"],kwargs["angle_unit"])))
+        if "dist" in kwargs:
+            if kwargs["dist_type"] == 's':
+                raw_observation.set("slopeDistance", str(kwargs["dist"]))
+            if kwargs and kwargs["dist_type"] == 'h':
+                raw_observation.set("horizDistance", str(kwargs["dist"]))
         # Creation of TargetPoint tag, subelement of RawObservation
         target_point = xml.SubElement(raw_observation, "TargetPoint")
         # Fill of TargetPoint attributes
