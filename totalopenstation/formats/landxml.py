@@ -27,16 +27,16 @@ import re
 import os
 
 # Template string
-TEMPLATE = '''<?xml version=\"1.0\"?>
-                <LandXML xmlns=\"http://www.landxml.org/schema/LandXML-1.1\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://www.landxml.org/schema/LandXML-1.1 http://www.landxml.org/schema/LandXML-1.1/LandXML-1.1.xsd\" date=\"\" time=\"\" version=\"1.1\">
+TEMPLATE = '''<?xml version="1.0"?>
+                <LandXML xmlns="http://www.landxml.org/schema/LandXML-1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.landxml.org/schema/LandXML-1.2 http://www.landxml.org/schema/LandXML-1.1/LandXML-1.1.xsd" date="" time="" version="1.1">
                     <Units>
-                        <Metric areaUnit=\"squareMeter\" linearUnit=\"meter\" volumeUnit=\"cubicMeter\" temperatureUnit=\"celsius\" pressureUnit=\"milliBars\" angularUnit=\"grads\" directionUnit=\"grads\"></Metric>
+                        <Metric areaUnit="squareMeter" linearUnit="meter" volumeUnit="cubicMeter" temperatureUnit="celsius" pressureUnit="milliBars" angularUnit="grads" directionUnit="grads"></Metric>
                     </Units>
-                    <Project name=\"Template\"></Project>
-                    <Application name=\"TotalOpen Station\" desc=\"TOPS\" manufacturer=\"\" version=\"\" manufacturerURL=\"http://tops.iosa.it/\" timeStamp=\"\"></Application>
+                    <Project name="Template"></Project>
+                    <Application name="TotalOpen Station" desc="TOPS" manufacturer="" version="" manufacturerURL="http://tops.iosa.it/" timeStamp=""></Application>
                 </LandXML>'''
 
-DEFAULT_NS = "http://www.landxml.org/schema/LandXML-1.1"
+DEFAULT_NS = "http://www.landxml.org/schema/LandXML-1.2"
 DECLARATION = '<?xml version="1.0" encoding="UTF-8"?>'
 
 
