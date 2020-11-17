@@ -26,6 +26,9 @@ import time
 import re
 import os
 
+from . import Feature, Parser, Point, UNKNOWN_STATION, UNKNOWN_POINT
+from .polar import BasePoint, PolarPoint
+
 # Template string
 TEMPLATE = '''<?xml version="1.0"?>
                 <LandXML xmlns="http://www.landxml.org/schema/LandXML-1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.landxml.org/schema/LandXML-1.2 http://www.landxml.org/schema/LandXML-1.1/LandXML-1.1.xsd" date="" time="" version="1.1">
@@ -295,19 +298,21 @@ class Survey:
         # Fill of RawObservation attributes
         if "th" in kwargs:
             raw_observation.set("targetHeight", str(kwargs["th"]))
-        if "angle" in kwargs:
+        if "angle" in kwargs and kwargs["angle"] is not None:
             raw_observation.set("horizAngle", str(kwargs["angle"]))
-        if "z_angle" in kwargs:
+        if "azimuth" in kwargs and kwargs["azimuth"] is not None:
+            raw_observation.set("azimuth", str(kwargs["azimuth"]))
+        if "z_angle" in kwargs and kwargs["z_angle"] is not None:
             if kwargs["z_angle_type"] == "dh":
                 raw_observation.set("vertDistance", str(kwargs["z_angle"]))
             if kwargs["z_angle_type"] == "z":
                 raw_observation.set("zenithAngle", str(kwargs["z_angle"]))
             if kwargs["z_angle_type"] == "v":
                 raw_observation.set("zenithAngle", str(vertical_to_zenithal(kwargs["z_angle"],kwargs["angle_unit"])))
-        if "dist" in kwargs:
+        if "dist" in kwargs and kwargs["dist"] is not None:
             if kwargs["dist_type"] == 's':
                 raw_observation.set("slopeDistance", str(kwargs["dist"]))
-            if kwargs and kwargs["dist_type"] == 'h':
+            if kwargs["dist_type"] == 'h':
                 raw_observation.set("horizDistance", str(kwargs["dist"]))
         # Creation of TargetPoint tag, subelement of RawObservation
         target_point = xml.SubElement(raw_observation, "TargetPoint")
@@ -375,3 +380,221 @@ class LandXML:
         self.root.set("time", time.strftime("%H:%M:%S"))
         pretty_xml = _indent(self.root)
         return xml.tostring(pretty_xml).decode()
+
+
+class FormatParser(Parser):
+    """
+    A FormatParser for LandXML data format.
+
+    As the model data is in LandXML format, only Survey tags is kept.
+
+    It doesn't inherit from the base Parser class because the internal
+    procedure is quite different, but it implements the same API so it
+    can work nicely with other parts of the library.
+    """
+
+    def __init__(self, data):
+        data = re.sub('(\\n|\\t)', '', data)
+        self.line = xml.fromstring(data) 
+
+    @property
+    def points(self):
+        '''Compute raw data to get points coordinates.
+
+        This parser is based on the information in :ref:`if_landxml`
+        
+        Returns:
+            A list of GeoJSON-like Feature object representing points coordinates.
+    
+        Raises:
+            KeyError: An error occured during computation, the data does not exist.
+        
+        Notes:
+        '''
+        points = []
+        stations = {}
+        pointsFeature = self.raw_line
+
+        for point in pointsFeature:
+            if point.desc == 'PT':
+                points.append(point)
+            if point.desc == 'ST':
+                stations[point.point_name] = point
+            if point.desc == 'PO':
+                pp = point.properties
+                coords = stations[pp['station_name']].geometry
+                bp = BasePoint(x=coords.x, y=coords.y, z=coords.z, ih=pp['ih'], b_zero_st=0.0)
+                p = PolarPoint(angle_unit=pp['angle_unit'],
+                                z_angle_type=pp['z_angle_type'],
+                                dist_type=pp['dist_type'],
+                                dist=pp['dist'],
+                                angle=pp['angle'],
+                                z_angle=pp['z_angle'],
+                                th=pp['th'],
+                                base_point=bp,
+                                pid=point.id,
+                                text='',
+                                coordorder='ENZ')
+                f = Feature(p.to_point(),
+                            desc='PT',
+                            id=point.id,
+                            point_name=point.point_name)
+                points.append(f)
+
+        return points
+
+    @property
+    def raw_line(self):
+        '''Extract all LandXML data.
+
+        This parser is based on the information in :ref:`if_landxml`
+
+        Returns:
+            A list of GeoJSON-like Feature object representing raw data
+            i.e. polar coordinates and other informations.
+
+        Raises:
+
+        Notes:
+        '''
+
+        ns = {"default": DEFAULT_NS}
+        stations = {}
+        points = []
+        points_coord = {}
+        pid = 0
+        station_id = 1
+
+        # These values are mandatory by the LandXML schema
+        units = self.line.find("default:Units", ns)
+        dist_unit = units.find("default:Metric", ns).attrib["linearUnit"]
+        angle_unit = units.find("default:Metric", ns).attrib["angularUnit"]
+
+        survey = self.line.find("default:Survey", ns)
+        cgpoints = survey.find("default:CgPoints", ns)
+        point_id = 100
+        for cgpoint in cgpoints.findall("default:CgPoint", ns):
+            p = Point(cgpoint.text.split(" "))
+            try:
+                point_name = cgpoint.attrib["name"]
+            except KeyError:
+                point_name = "point_" + str(point_id)
+                point_id += 1
+            points_coord[point_name] = p
+            feature = cgpoints.find(f"""default:Feature[@name='{cgpoint.attrib["featureRef"]}']""", ns)
+            if feature is not None:
+               attrib = [prop.attrib["value"] for prop in feature.findall("default:Property", ns)]
+            f = Feature(p,
+                        desc='PT',
+                        id=pid,
+                        point_name=point_name,
+                        dist_unit=dist_unit,
+                        attrib=attrib)
+            points.append(f)
+            pid += 1
+        for station in survey.findall("default:InstrumentSetup", ns):
+            station_id = station.attrib["id"]
+            point_name = station.attrib["stationName"]
+            p = points_coord[point_name] 
+            ih = station.attrib["instrumentHeight"]
+            stations[station_id] = [point_name, ih]
+            try :
+                hz0 = station.attrib["orientationAzimuth"]
+            except KeyError:
+                try :
+                    hz0 = station.attrib["circleAzimuth"]
+                except KeyError:
+                    hz0 = None
+            feature = station.find("default:Feature", ns)
+            if feature is not None:
+                attrib = [prop.attrib["value"] for prop in feature.findall("default:Property", ns)]
+            f = Feature(p,
+                        desc='ST',
+                        id=pid,
+                        point_name=point_name,
+                        angle_unit=angle_unit,
+                        dist_unit=dist_unit,
+                        ih=ih,
+                        hz0=hz0,
+                        attrib=attrib)
+            points.append(f)
+            pid += 1
+        point_id = 100
+        for observation in survey.findall("default:ObservationGroup", ns):
+            try:
+                station_id = observation.attrib["setupID"]
+            except:
+                station_id = ''
+            for rawobservation in observation.findall("default:RawObservation", ns):
+                if not station_id:
+                    try:
+                        station_id = rawobservation.attrib["setupID"]
+                    except:
+                        pass
+                target_point = rawobservation.find("default:TargetPoint", ns)
+                if target_point is not None:
+                    try:
+                        point_name = target_point.attrib["desc"]
+                    except KeyError:
+                        try:
+                            point_name = target_point.attrib["name"]
+                        except KeyError:
+                            point_name = "point_" + point_id
+                            point_id += 1
+                    p = Point(target_point.text.split(" "))
+                try:
+                    azimuth = rawobservation.attrib["azimuth"]
+                except KeyError:
+                    azimuth = None
+                try:
+                    angle = rawobservation.attrib["horizAngle"]
+                except KeyError:
+                    angle = None
+                try:
+                    z_angle = rawobservation.attrib["zenithAngle"]
+                    z_angle_type = 'z'
+                except KeyError:
+                    z_angle = None
+                # dZ
+                #     z_angle = rawobservation.attrib["vertDistance"]
+                #     z_angle_type = 'dh'
+                try:
+                    dist = rawobservation.attrib["slopeDistance"]
+                    dist_type = 's'
+                except KeyError:
+                    try:
+                        dist =  rawobservation.attrib["horizDistance"]
+                        dist_type = 'h'
+                    except KeyError:
+                        dist = None
+                try:
+                    th = rawobservation.attrib["targetHeight"]
+                except KeyError:
+                    th = None
+                # ih is integrated in point values to simplify possible computation
+                ih = stations[station_id][1]
+                station_name = stations[station_id][0]
+                
+                feature = rawobservation.find("default:Feature", ns)
+                if feature is not None:
+                    attrib = [prop.attrib["value"] for prop in feature.findall("default:Property", ns)]
+                f = Feature(p,
+                            desc='PO',
+                            id=pid,
+                            point_name=point_name,
+                            angle_unit=angle_unit,
+                            z_angle_type=z_angle_type,
+                            dist_unit=dist_unit,
+                            dist_type=dist_type,
+                            azimuth=azimuth,
+                            angle=angle,
+                            z_angle=z_angle,
+                            dist=dist,
+                            ih=ih,
+                            th=th,
+                            station_name=station_name,
+                            attrib=attrib)
+                points.append(f)
+                pid += 1
+
+        return points
