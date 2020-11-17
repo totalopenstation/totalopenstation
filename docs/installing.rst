@@ -50,7 +50,7 @@ Mac OSX
 Download Python3 from the `official website <https://www.python.org/downloads/mac-osx/>`_,
 and follow `this document on the Python.org website <https://www.python.org/download/mac/tcltk/>`_,
 that will help you choosing the correct version of Python to use
-(Python 3.7.2+, 3.6.8, or 2.7.16+ have builtin Tcl/Tk).
+(Python 3.6.8, 3.7.2 and later have builtin Tcl/Tk).
 
 .. warning::
 
@@ -63,14 +63,12 @@ Microsoft Windows
 =================
 
 Download the most recent version of Total Open Station from `Github download
-<https://github.com/steko/totalopenstation/releases>`_ and install it.
+<https://github.com/totalopenstation/totalopenstation/releases>`_ and run it.
 
 The Windows version of Total Open Station is portable and everything is
-included in the executable.
+included in the executable, without need to install.
 
-To upgrade to a newer version, just go to the Github download page again
-and install it. |br|
-The old version will get overwritten. |br|
+To upgrade to a newer version, just go to the Github download page again.
 No data will be lost!
 
 
