@@ -286,6 +286,9 @@ class Survey:
             - ppm             -> edmAccuracyppm      attrib  of Property part of Feature
             - prism_constant  -> edmAccuracyConstant attrib  of Property part of Feature
             - attrib          -> attribX             attrib  of Property part of Feature
+        
+        TODO:
+            Add backsight observation
         """
 
         # kwargs = {key: str(value) if value is not None else value for key,value in kwargs.items()}
