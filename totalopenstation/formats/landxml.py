@@ -391,8 +391,12 @@ class LandXML:
         self.root.append(xml_data)
 
     def to_string(self):
-        self.root.set("date", time.strftime("%Y-%m-%d"))
-        self.root.set("time", time.strftime("%H:%M:%S"))
+        cdate = time.strftime("%Y-%m-%d")
+        ctime = time.strftime("%H:%M:%S")
+        self.root.set("date", cdate)
+        self.root.set("time", ctime)
+        application = self.root.find("{%s}Application" % (DEFAULT_NS))
+        application.set("timeStamp", "%sT%s" % (cdate, ctime))
         pretty_xml = _indent(self.root)
         return xml.tostring(pretty_xml).decode()
 
