@@ -374,4 +374,4 @@ class LandXML:
         self.root.set("date", time.strftime("%Y-%m-%d"))
         self.root.set("time", time.strftime("%H:%M:%S"))
         pretty_xml = _indent(self.root)
-        return xml.tostring(pretty_xml)
+        return xml.tostring(pretty_xml).decode()
