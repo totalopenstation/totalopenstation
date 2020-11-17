@@ -161,7 +161,7 @@ def to_gon(angle, angle_unit):
 
 def to_dms(angle, angle_unit):
     '''Conversion function for angles to degree'''
-    if angle_unit == "gon":
+    if angle_unit == "gon" or angle_unit == "grads":
         return gon_to_dms(angle)
     elif angle_unit == "mil":
         return mil_to_dms(angle)
@@ -175,7 +175,7 @@ def to_mil(angle, angle_unit):
     '''Conversion function for angles to degree'''
     if angle_unit == "dms":
         return dms_to_mil(angle)
-    elif angle_unit == "gon":
+    elif angle_unit == "gon" or angle_unit == "grads":
         return gon_to_mil(angle)
     elif angle_unit == "rad":
         return rad_to_mil(angle)
@@ -188,7 +188,7 @@ def vertical_to_zenithal(angle, angle_unit):
     zenithal (reference is north)'''
     if angle_unit == "dms":
         return to_dms(90 - to_deg(angle, angle_unit), "deg")
-    elif angle_unit == "gon":
+    elif angle_unit == "gon" or angle_unit == "grads":
         return 100 - angle
     elif angle_unit == "rad":
         return (pi / 2) - angle

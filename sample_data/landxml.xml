@@ -1,0 +1,51 @@
+<LandXML xmlns="http://www.landxml.org/schema/LandXML-1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" date="2017-12-23" time="15:44:40" version="1.2" xsi:schemaLocation="http://www.landxml.org/schema/LandXML-1.2 http://www.landxml.org/schema/LandXML-1.2/LandXML-1.2.xsd">
+	<Units>
+		<Metric angularUnit="grads" areaUnit="squareMeter" directionUnit="grads" linearUnit="meter" pressureUnit="milliBars" temperatureUnit="celsius" volumeUnit="cubicMeter" />
+	</Units>
+	<Project name="Template" />
+	<Application desc="TOPS" manufacturer="" manufacturerURL="http://tops.iosa.it/" name="TotalOpen Station" timeStamp="2017-12-23T15:44:40" version="" />
+	<Survey>
+		<SurveyHeader name="from TOPS" />
+		<CgPoints>
+			<CgPoint featureRef="featureSTAZLIB3" name="STAZLIB3">519.659 465.244 -0.588</CgPoint>
+			<CgPoint featureRef="featureSTAZLIB4" name="STAZLIB4">524.441 445.069 0.388</CgPoint>
+			<Feature name="featureSTAZLIB3">
+				<Property label="attrib1" value="" />
+			</Feature>
+			<Feature name="featureSTAZLIB4">
+				<Property label="attrib1" value="" />
+			</Feature>
+		</CgPoints>
+		<InstrumentSetup id="setup0" instrumentHeight="1.35" orientationAzimuth="0.0" stationName="STAZLIB3">
+			<Feature>
+				<Property label="attrib1" value="" />
+			</Feature>
+			<InstrumentPoint />
+		</InstrumentSetup>
+		<InstrumentSetup id="setup1" instrumentHeight="1.33" orientationAzimuth="0.0" stationName="STAZLIB4">
+			<InstrumentPoint />
+		</InstrumentSetup>
+		<ObservationGroup id="o0" setupID="setup0">
+			<RawObservation azimuth="0.0" horizAngle="281.9919" slopeDistance="72.875" targetHeight="1.3" zenithAngle="97.8425">
+				<TargetPoint desc="850">449.72 444.915 1.932</TargetPoint>
+				<Feature>
+					<Property label="attrib1" value="FENCE1" />
+				</Feature>
+			</RawObservation>
+		</ObservationGroup>
+		<ObservationGroup id="o1">
+			<RawObservation azimuth="0.0" horizAngle="283.4593" slopeDistance="9.573" targetHeight="1.3" zenithAngle="114.1871" setupID="setup1">
+				<TargetPoint desc="901">515.429 442.66 -1.734</TargetPoint>
+				<Feature>
+					<Property label="attrib1" value="LIGHT POLE" />
+				</Feature>
+			</RawObservation>
+			<RawObservation azimuth="0.0" horizAngle="283.9958" slopeDistance="9.74" targetHeight="1.3" zenithAngle="114.183" setupID="setup1">
+				<TargetPoint desc="902">515.251 442.696 -1.77</TargetPoint>
+				<Feature>
+					<Property label="attrib1" value="FENCE1" />
+				</Feature>
+			</RawObservation>
+		</ObservationGroup>
+	</Survey>
+</LandXML>
