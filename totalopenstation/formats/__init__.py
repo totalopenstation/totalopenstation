@@ -201,6 +201,7 @@ UNITS_CIRCLE = {
     'gon': 400,
     'mil': 6400,
     'rad': 2 * pi,
+    'grads': 400
     }
 
 UNKNOWN_STATION = Point(10000, 10000, 100)
