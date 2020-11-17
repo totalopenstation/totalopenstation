@@ -95,19 +95,27 @@ class Survey:
         self.id = 0
 
     def _tag_position(self, tag):
-        tags = ("SurveyHeader", "Equipment", "CgPoints", "InstrumentSetup")
-        pos = 0
-
-        for index in range(tags.index(tag)):
-            if self.survey.find("./%s" % tags[index]) is not None:
-                pos += 1
-            else:
-                pos = 1
-
-        if tag == "InstrumentSetup":
-            pos += len(self.survey.findall("./InstrumentSetup"))
-
-        return pos
+        """
+        Search the position of the tag to be in the right order
+        """
+        mainTags = ("SurveyHeader", "Equipment", "CgPoints", "InstrumentSetup")
+        if tag in mainTags:
+            pos = 0
+    
+            for index in range(mainTags.index(tag)):
+                if self.survey.find("./%s" % mainTags[index]) is not None:
+                    pos += 1
+                else:
+                    pos = 1
+    
+            if tag == "InstrumentSetup":
+                pos += len(self.survey.findall("./InstrumentSetup"))
+    
+            return pos
+        if tag == "CgPoint":
+            cgpoints = self.survey.find("CgPoints")
+            pos = len(cgpoints.findall("./CgPoint"))
+            return pos
 
     def equipment(self, **kwargs):
         """
@@ -139,6 +147,8 @@ class Survey:
             - y          -> y coordinate  element of CgPoint part of CgPoints
             - z          -> z coordinate  element of CgPoint part of CgPoints
             - attrib     -> attribX       attrib  of Property part of Feature
+        
+        All Feature tags should be after Cgpoint ones
         """
 
         # kwargs = {key: str(value) if value is not None else value for key,value in kwargs.items()}
@@ -152,7 +162,8 @@ class Survey:
             self.survey.insert(pos, cgpoints)
 
         # Creation of CgPoint tag, subelement of CgPoints
-        cgpoint = xml.SubElement(cgpoints, "CgPoint")
+        cgpoint = xml.Element("CgPoint")
+        cgpoints.insert(self._tag_position('CgPoint'), cgpoint)
         # Fill of CgPoint attributes
         if "point_name" in kwargs:
             cgpoint.set("name", str(kwargs["point_name"]))
@@ -165,14 +176,15 @@ class Survey:
                 cgpoint.text += " %s" % (str(kwargs["z"]))
         # attrib is not mandatory in CgPoints so this is a feature
         if "attrib" in kwargs:
-            if cgpoints.find("./Feature") is None:
-                feature = xml.SubElement(cgpoints, "Feature")
-            feature = cgpoints.find("./Feature")
+            cgpoint.set("featureRef", "feature%s" % (str(kwargs["point_name"])))
+            feature = xml.Element("Feature")
+            feature.set("name", "feature%s" % (str(kwargs["point_name"])))
             # feature_property
             for i in range(len(kwargs["attrib"])):
                 xml.SubElement(feature, "Property",
-                               label="attrib%s" % (i + 1),
-                               value=str(kwargs["attrib"][i]))
+                              label="attrib%s" % (i + 1),
+                              value=str(kwargs["attrib"][i]))
+            cgpoints.append(feature)
 
     def setup(self, **kwargs):
         """
