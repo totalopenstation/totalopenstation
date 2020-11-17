@@ -1,7 +1,31 @@
 import unittest
 
 from totalopenstation.formats import Feature, Point
+from totalopenstation.formats.landxml import FormatParser
 from totalopenstation.output.tops_landxml import OutputFormat
+
+class TestLandXMLParser(unittest.TestCase):
+
+    def setUp(self):
+        with open('sample_data/landxml.xml') as testdata:
+            self.fp = FormatParser(testdata.read())
+
+    def test_point(self):
+        self.assertAlmostEqual(self.fp.points[3].geometry.x, 515.41808873)
+        self.assertAlmostEqual(self.fp.points[3].geometry.y, 442.67044336)
+        self.assertAlmostEqual(self.fp.points[3].geometry.z, -1.69773328)
+
+    def test_feature(self):
+        self.assertEqual(self.fp.points[1].id, 1)
+        self.assertEqual(self.fp.points[1].point_name, 'STAZLIB4')
+        self.assertEqual(self.fp.points[1].desc, 'PT')
+        self.assertEqual(self.fp.points[4].point_name, '902')
+        self.assertEqual(self.fp.points[4].desc, 'PT')
+
+    def test_linestring(self):
+        self.ls = self.fp.build_linestring()
+        self.assertAlmostEqual(self.ls.coords[2][0], 449.72036753)
+
 
 class TestLandXMLOutput(unittest.TestCase):
 
