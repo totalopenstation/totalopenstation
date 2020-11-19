@@ -251,12 +251,12 @@ class Survey:
 
         # Creation of ObservationGroup tag, subelement of Survey
         observation_group = xml.Element("ObservationGroup",
-                                        id="o" + str(self.id))
+                                        id="o" + str(self.id),
+                                        setupID="setup" + str(self.id))
         # Creation of Backsight tag, subelement of ObservationGroup
         if "circle" in kwargs or "back_x" in kwargs:
             backsight = xml.SubElement(observation_group, "Backsight",
-                                       circle="0.",
-                                       setupID="setup" + str(self.id))
+                                       circle="0.")
             # Fill of Backsight attributes
             if "circle" in kwargs:
                 backsight.set("circle", str(kwargs["circle"]))
