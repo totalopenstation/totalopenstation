@@ -270,8 +270,6 @@ class Survey:
                     backsight_point.text = "%s %s %s" % (str(kwargs["back_x"]),
                                                          str(kwargs["back_y"]),
                                                          str(kwargs["back_z"]))
-        # backsight.append(backsight_point)
-        # observation_group.append(backsight)
         self.survey.insert(pos * 2, observation_group)
 
         # ID can be raise
@@ -298,9 +296,6 @@ class Survey:
             - ppm             -> edmAccuracyppm      attrib  of Property part of Feature
             - prism_constant  -> edmAccuracyConstant attrib  of Property part of Feature
             - attrib          -> attribX             attrib  of Property part of Feature
-        
-        TODO:
-            Add backsight observation
         """
 
         # kwargs = {key: str(value) if value is not None else value for key,value in kwargs.items()}
