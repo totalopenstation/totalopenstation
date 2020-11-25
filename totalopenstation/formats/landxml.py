@@ -31,7 +31,7 @@ from .polar import BasePoint, PolarPoint
 
 # Template string
 TEMPLATE = '''<?xml version="1.0"?>
-                <LandXML xmlns="http://www.landxml.org/schema/LandXML-1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.landxml.org/schema/LandXML-1.2 http://www.landxml.org/schema/LandXML-1.1/LandXML-1.1.xsd" date="" time="" version="1.1">
+                <LandXML xmlns="http://www.landxml.org/schema/LandXML-1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.landxml.org/schema/LandXML-1.2 http://www.landxml.org/schema/LandXML-1.2/LandXML-1.2.xsd" date="" time="" version="1.2">
                     <Units>
                         <Metric areaUnit="squareMeter" linearUnit="meter" volumeUnit="cubicMeter" temperatureUnit="celsius" pressureUnit="milliBars" angularUnit="grads" directionUnit="grads"></Metric>
                     </Units>
@@ -251,12 +251,12 @@ class Survey:
 
         # Creation of ObservationGroup tag, subelement of Survey
         observation_group = xml.Element("ObservationGroup",
-                                        id="o" + str(self.id))
+                                        id="o" + str(self.id),
+                                        setupID="setup" + str(self.id))
         # Creation of Backsight tag, subelement of ObservationGroup
         if "circle" in kwargs or "back_x" in kwargs:
             backsight = xml.SubElement(observation_group, "Backsight",
-                                       circle="0.",
-                                       setupID="setup" + str(self.id))
+                                       circle="0.")
             # Fill of Backsight attributes
             if "circle" in kwargs:
                 backsight.set("circle", str(kwargs["circle"]))
@@ -270,8 +270,6 @@ class Survey:
                     backsight_point.text = "%s %s %s" % (str(kwargs["back_x"]),
                                                          str(kwargs["back_y"]),
                                                          str(kwargs["back_z"]))
-        # backsight.append(backsight_point)
-        # observation_group.append(backsight)
         self.survey.insert(pos * 2, observation_group)
 
         # ID can be raise
@@ -298,9 +296,6 @@ class Survey:
             - ppm             -> edmAccuracyppm      attrib  of Property part of Feature
             - prism_constant  -> edmAccuracyConstant attrib  of Property part of Feature
             - attrib          -> attribX             attrib  of Property part of Feature
-        
-        TODO:
-            Add backsight observation
         """
 
         # kwargs = {key: str(value) if value is not None else value for key,value in kwargs.items()}
