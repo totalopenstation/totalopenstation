@@ -16,6 +16,13 @@ depending on your operating system.
 GNU/Linux distributions
 =======================
 
+Installing Total Open Station through your Linux package manager, if available,
+is the only way to get automatic updates to the most recent version. All other
+installation methods require you to keep track of new releases and manually update.
+Total Open Station will not notify you when a new release is available.
+
+To install the latest release, see :ref:`using-pip` below.
+
 OpenSUSE
 --------
 
@@ -43,25 +50,25 @@ Mac OSX
 Download Python3 from the `official website <https://www.python.org/downloads/mac-osx/>`_,
 and follow `this document on the Python.org website <https://www.python.org/download/mac/tcltk/>`_,
 that will help you choosing the correct version of Python to use
-(Python 3.7.2+, 3.6.8, or 2.7.16+ have builtin Tcl/Tk).
+(Python 3.6.8, 3.7.2 and later have builtin Tcl/Tk).
 
 .. warning::
 
    Do not use the pre-installed Python that comes with the OSX operating system
    which has serious bugs that can cause application crashes.
 
+Then follow the section :ref:`using-pip` below.
+
 Microsoft Windows
 =================
 
 Download the most recent version of Total Open Station from `Github download
-<https://github.com/steko/totalopenstation/releases>`_ and install it.
+<https://github.com/totalopenstation/totalopenstation/releases>`_ and run it.
 
 The Windows version of Total Open Station is portable and everything is
-included in the executable.
+included in the executable, without need to install.
 
-To upgrade to a newer version, just go to the Github download page again
-and install it. |br|
-The old version will get overwritten. |br|
+To upgrade to a newer version, just go to the Github download page again.
 No data will be lost!
 
 
@@ -76,40 +83,45 @@ hardware, drivers for Windows can be downloaded from the `Prolific
 website <http://www.prolific.com.tw/eng/downloads.asp?ID=31>`_.
 
 
+.. _using-pip:
+
 Using pip
 =========
 
 Until your operating system's packaging tools (e.g. apt or
 yum) allow you to install Total Open Station along with other
 programs, the recommended way to install is using pip_ (a package
-manager for Python) and virtualenv_ (which creates isolated
-software environments: basically you don't mix packages installed
-system-wise with your package manager and user-installed
-software). Here follows a detailed step-by-step guide.
+manager for Python) and a virtual environment: basically you
+don't mix packages installed system-wise with your package manager
+and user-installed software). Here follows a detailed step-by-step guide
+using a terminal.
 
 .. _pip: http://www.pip-installer.org/
-.. _virtualenv: http://pypi.python.org/pypi/virtualenv
 
-Install ``pip`` and ``virtualenv``
-----------------------------------
+Requirements
+------------
 
-First of all, make sure you have ``pip`` and ``virtualenv``
-installed. All major GNU/Linux distributions have them packaged:
+You need to have Python installed on your machine. Total Open Station runs
+on all supported Python versions (from 3.6 to 3.9).
 
-- Debian and derivatives (including Ubuntu)::
+On Linux, make sure that the ``python3-tk`` or ``python3-tkinter`` package is
+installed on your system, otherwise install it with your package manager, for
+example on Debian-based systems like Ubuntu::
 
-    apt-get install  python-pip python-virtualenv
+    sudo apt install python3-tk
 
-- Fedora::
+or for ArchLinux::
 
-    yum install python-pip python-virtualenv
+    pacman -S tk
+
+Tkinter is the library used for the graphical interface of Total Open Station.
 
 Create a virtual environment
 ----------------------------
 
 Creating a virtual environment is as easy as typing in a terminal::
 
-    virtualenv tops-environment
+    python3 -m venv tops-environment
 
 A new directory named ``tops-environment`` has been created. It contains a
 minimal set of files needed to manage a Python installation that is
@@ -119,6 +131,8 @@ clean.
 Now, activate the environment with::
 
     source tops-environment/bin/activate
+
+(On Windows, this will be tops-environment/Scripts/activate)
 
 From now on, all Python-related actions will be executed within the
 newly created environment, and not on the system-wide
@@ -155,7 +169,7 @@ Using the procedure described above it is fairly easy to create
 another, separate environment. Once the new environment is *active*,
 the command for installing a development version is::
 
-    pip install -e git+https://github.com/steko/totalopenstation#egg=totalopenstation
+    pip install -e git+https://github.com/totalopenstation/totalopenstation#egg=totalopenstation
 
 Developers may ask you to install from another repository, but the
 concept stays the same. This mechanism is very flexible and allows to
@@ -171,7 +185,14 @@ From your terminal, type::
 
     totalopenstation-gui.py
 
-and the program should start. Please report any errors to the `bug tracker`_.
+and the program should start.
+
+Of course you can also run the command line programs:
+
+- totalopenstation-cli-connector.py downloads data from your total station
+- totalopenstation-cli-parser converts raw data in common formats like DXF and CSV
+
+Please report any errors to the `bug tracker`_.
 
 The next time you want to run the program, follow these steps:
 
