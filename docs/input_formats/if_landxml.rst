@@ -22,7 +22,7 @@ Land Development and Transportation Industries.
 For example::
 
     <?xml version="1.0" encoding="utf-8"?>
-    <LandXML xmlns="http://www.landxml.org/schema/LandXML-1.1" time="15:49:09" date="2006-06-19" version="0" language="English" readOnly="false">
+    <LandXML xmlns="http://www.landxml.org/schema/LandXML-1.2" time="15:49:09" date="2006-06-19" version="0" language="English" readOnly="false">
     <Units>
     <Metric linearUnit="meter" temperatureUnit="celsius" volumeUnit="cubicMeter" areaUnit="squareMeter" pressureUnit="milliBars" angularUnit="decimal dd.mm.ss" directionUnit="decimal dd.mm.ss">
     </Metric>
@@ -114,13 +114,13 @@ Tags and attributs
 +------------------+--------------------+------------------+--------------------------+
 |                  | setupID            |                  | station_id               |
 +------------------+--------------------+------------------+--------------------------+
-| Backsight*       |                    | ObservationGroup |                          |
+| Backsight        |                    | ObservationGroup |                          |
 +------------------+--------------------+------------------+--------------------------+
 |                  | circle             |                  | circle                   |
 +------------------+--------------------+------------------+--------------------------+
 |                  | setupID            |                  | "setup" + id             |
 +------------------+--------------------+------------------+--------------------------+
-| BacksightPoint*  |                    | ObservationGroup |                          |
+| BacksightPoint   |                    | ObservationGroup |                          |
 +------------------+--------------------+------------------+--------------------------+
 |                  | name               |                  |                          |
 +------------------+--------------------+------------------+--------------------------+

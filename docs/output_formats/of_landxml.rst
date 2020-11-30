@@ -1,10 +1,10 @@
 .. _LandXML website: http://www.landxml.org/
 
-.. _if_landxml:
+.. _of_landxml:
 
-=========================
+==============================
 :mod:`tops_landxml` -- LandXML
-=========================
+==============================
 
 .. moduleauthor:: Damien Gaignon
 .. versionadded:: 0.6
