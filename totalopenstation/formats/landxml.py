@@ -553,7 +553,7 @@ class FormatParser(Parser):
                         try:
                             point_name = target_point.attrib["name"]
                         except KeyError:
-                            point_name = "point_" + point_id
+                            point_name = "point_" + str(point_id)
                             point_id += 1
                     p = Point(target_point.text.split(" "))
                 try:
