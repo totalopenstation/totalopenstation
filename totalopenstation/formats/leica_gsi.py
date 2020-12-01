@@ -20,7 +20,7 @@
 # <http://www.gnu.org/licenses/>.
 
 import logging
- 
+
 from . import Feature, Parser, Point, UNKNOWN_STATION, UNKNOWN_POINT
 from .polar import BasePoint, PolarPoint
 
@@ -337,6 +337,7 @@ class FormatParser(Parser):
         # GSI files handles 8 or 16 bits data block. This will check the size
         ldata = len(self.rows[0].split()[0].lstrip('*')[7:])
         station_id = 1
+        station_name = None  # type: str
 
         for row in self.rows:
             tokens = row.split()
