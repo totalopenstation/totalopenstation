@@ -459,7 +459,7 @@ class FormatParser(Parser):
                             station_name
                         except UnboundLocalError:
                             logger.info('There is no known station')
-                            station_name = 'station_' + str(station_id)
+                            station_name = f'station_{station_id}'
                             station_id += 1
                         f = Feature(p,
                                     desc='PO',
@@ -494,7 +494,7 @@ class FormatParser(Parser):
                     else:
                         logger.info('There is no known station')
                         p = UNKNOWN_STATION
-                        station_name = "station_" + str(station_id)
+                        station_name = f"station_{station_id}"
                         station_id += 1
                     f = Feature(p,
                                 desc='ST',

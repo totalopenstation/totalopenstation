@@ -52,8 +52,8 @@ def _indent(elem, level=0):
 
     Note : Taken from https://stackoverflow.com/questions/749796/pretty-printing-xml-in-python/4590052#4590052
     """
-    i = "\n" + (level + 1)*"\t"
-    j = "\n" + level*"\t"
+    i = f"\n{(level + 1)*'\t'}"
+    j = f"\n{level*'\t'}"
     count = 1
     if len(elem):
         if elem.text is None or elem.text.strip() is None:
@@ -217,7 +217,7 @@ class Survey:
 
         # Creation of InstrumentSetup tag, subelement of Survey
         instrument_setup = xml.Element("InstrumentSetup",
-                                       id="setup" + str(self.id),
+                                       id=f"setup{self.id}",
                                        stationName="",
                                        instrumentHeight="")
         # Fill of InstrumentSetup attributes
@@ -251,8 +251,8 @@ class Survey:
 
         # Creation of ObservationGroup tag, subelement of Survey
         observation_group = xml.Element("ObservationGroup",
-                                        id="o" + str(self.id),
-                                        setupID="setup" + str(self.id))
+                                        id=f"o{self.id}",
+                                        setupID=f"setup{self.id}")
         # Creation of Backsight tag, subelement of ObservationGroup
         if "circle" in kwargs or "back_x" in kwargs:
             backsight = xml.SubElement(observation_group, "Backsight",
@@ -492,7 +492,7 @@ class FormatParser(Parser):
             try:
                 point_name = cgpoint.attrib["name"]
             except KeyError:
-                point_name = "point_" + str(point_id)
+                point_name = f"point_{point_id}"
                 point_id += 1
             points_coord[point_name] = p
             feature = cgpoints.find(f"""default:Feature[@name='{cgpoint.attrib["featureRef"]}']""", ns)
@@ -553,7 +553,7 @@ class FormatParser(Parser):
                         try:
                             point_name = target_point.attrib["name"]
                         except KeyError:
-                            point_name = "point_" + str(point_id)
+                            point_name = f"point_{point_id}"
                             point_id += 1
                     p = Point(target_point.text.split(" "))
                 try:

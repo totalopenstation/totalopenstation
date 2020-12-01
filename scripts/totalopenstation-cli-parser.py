@@ -119,14 +119,14 @@ logger.addHandler(handler)
 def list_formats():
     '''Print a list of the supported input and output formats.'''
 
-    mod_string = "List of supported input formats:\n" + "-" * 30 + "\n"
+    mod_string = f"List of supported input formats:\n{'-' * 30}\n"
     for k, v in sorted(totalopenstation.formats.BUILTIN_INPUT_FORMATS.items()):
-        mod_string += k.ljust(20) + v[2] + "\n"
+        mod_string += f"{k.ljust(20)}{v[2]}\n"
     mod_string += "\n\n"
 
-    mod_string += "List of supported output formats:\n" + "-" * 30 + "\n"
+    mod_string += "List of supported output formats:\n{'-' * 30}\n"
     for k, v in sorted(totalopenstation.output.BUILTIN_OUTPUT_FORMATS.items()):
-        mod_string += k.ljust(20) + v[2] + "\n"
+        mod_string += f"{k.ljust(20)}{v[2]}\n"
     mod_string += "\n"
     return mod_string
 
@@ -148,7 +148,7 @@ if options.informat:
             try:
                 # builtin format parser
                 mod, cls, name = inputclass
-                inputclass = getattr(importlib.import_module('totalopenstation.formats.' + mod), cls)
+                inputclass = getattr(importlib.import_module(f'totalopenstation.formats.{mod}'), cls)
             except ImportError as message:
                 exit_with_error(message)
 else:
@@ -164,7 +164,7 @@ if options.outformat:
             try:
                 # builtin output builder
                 mod, cls, name = outputclass
-                outputclass = getattr(importlib.import_module('totalopenstation.output.' + mod), cls)
+                outputclass = getattr(importlib.import_module(f'totalopenstation.output.{mod}'), cls)
             except ImportError as message:
                 exit_with_error(message)
 

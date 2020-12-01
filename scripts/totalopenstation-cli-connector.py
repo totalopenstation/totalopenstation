@@ -72,7 +72,7 @@ if isinstance(modelclass, tuple):
         # builtin format parser
         mod, cls, name = modelclass
         modelclass = getattr(
-            __import__('totalopenstation.models.' + mod, None, None, [cls]), cls)
+            __import__(f'totalopenstation.models.{mod}', None, None, [cls]), cls)
     except ImportError as msg:
         sys.exit(_('Error loading the required model module: %s' % msg))
 

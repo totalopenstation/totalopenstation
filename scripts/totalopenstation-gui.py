@@ -276,7 +276,7 @@ class ProcessDialog(tkinter.simpledialog.Dialog):
                 # builtin format parser
                 mod, cls, name = inputclass
                 inputclass = getattr(
-                    __import__('totalopenstation.formats.' + mod, None, None, [cls]), cls)
+                    __import__(f'totalopenstation.formats.{mod}', None, None, [cls]), cls)
             except ImportError as msg:
                 showwarning(_('Import error'),
                             _('Error loading the required input module: %s' % msg))
@@ -289,7 +289,7 @@ class ProcessDialog(tkinter.simpledialog.Dialog):
                 # builtin output builder
                 mod, cls, name = outputclass
                 outputclass = getattr(
-                    __import__('totalopenstation.output.' + mod, None, None, [cls]), cls)
+                    __import__(f'totalopenstation.output.{mod}', None, None, [cls]), cls)
             except ImportError as msg:
                 showwarning(_('Import error'),
                             _('Error loading the required output module: %s' % msg))
@@ -721,7 +721,7 @@ class Tops:
                     # builtin model builder
                     mod, cls, name = modelclass
                     modelclass = getattr(
-                        __import__('totalopenstation.models.' + mod, None, None, [cls]), cls)
+                        __import__(f'totalopenstation.models.{mod}', None, None, [cls]), cls)
                 except ImportError as msg:
                     showwarning(_('Import error'),
                                 _('Error loading the required model module: %s' % msg))

@@ -298,7 +298,7 @@ class FormatParser:
                 except NameError:
                     logger.info('There is no known station')
                     station_point = UNKNOWN_STATION
-                    station_name = 'station_' + str(station_id)
+                    station_name = f'station_{station_id}'
                     points_coord[station_name] = station_point
                 stf = Feature(station_point,
                               desc='ST',
@@ -407,7 +407,7 @@ class FormatParser:
                     station_name
                 except UnboundLocalError:
                     logger.info('There is no known station')
-                    station_name = 'station_' + str(station_id)
+                    station_name = f'station_{station_id}'
                     station_id += 1
                 f = Feature(point,
                             desc='PO',
