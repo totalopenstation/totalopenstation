@@ -27,13 +27,9 @@ class GUID(ctypes.Structure):
         ('Data4', ctypes.c_ubyte*8),
     ]
     def __str__(self):
-        return "{%08x-%04x-%04x-%s-%s}" % (
-            self.Data1,
-            self.Data2,
-            self.Data3,
-            ''.join(["%02x" % d for d in self.Data4[:2]]),
-            ''.join(["%02x" % d for d in self.Data4[2:]]),
-        )
+        data4 = ''.join([f"{d:02x}" for d in self.Data4[:2]])
+        data5 = ''.join([f"{d:02x}" for d in self.Data4[2:]])
+        return f"{{{self.Data1:08x}-{self.Data2:04x}-{self.Data3:04x}-{data4}-{data5}}}"
 
 class SP_DEVINFO_DATA(ctypes.Structure):
     _fields_ = [
@@ -43,7 +39,7 @@ class SP_DEVINFO_DATA(ctypes.Structure):
         ('Reserved', ULONG_PTR),
     ]
     def __str__(self):
-        return "ClassGuid:%s DevInst:%s" % (self.ClassGuid, self.DevInst)
+        return f"ClassGuid:{self.ClassGuid} DevInst:{self.DevInst}"
 PSP_DEVINFO_DATA = ctypes.POINTER(SP_DEVINFO_DATA)
 
 class SP_DEVICE_INTERFACE_DATA(ctypes.Structure):
@@ -54,7 +50,7 @@ class SP_DEVICE_INTERFACE_DATA(ctypes.Structure):
         ('Reserved', ULONG_PTR),
     ]
     def __str__(self):
-        return "InterfaceClassGuid:%s Flags:%s" % (self.InterfaceClassGuid, self.Flags)
+        return f"InterfaceClassGuid:{self.InterfaceClassGuid} Flags:{self.Flags}"
 PSP_DEVICE_INTERFACE_DATA = ctypes.POINTER(SP_DEVICE_INTERFACE_DATA)
 
 PSP_DEVICE_INTERFACE_DETAIL_DATA = ctypes.c_void_p
@@ -132,7 +128,7 @@ def comports(available_only=True):
                 ('DevicePath', CHAR*(dwNeeded.value - ctypes.sizeof(DWORD))),
             ]
             def __str__(self):
-                return "DevicePath:%s" % (self.DevicePath,)
+                return f"DevicePath:{self.DevicePath}"
         idd = SP_DEVICE_INTERFACE_DETAIL_DATA_A()
         idd.cbSize = 5
         devinfo = SP_DEVINFO_DATA()
@@ -183,10 +179,10 @@ def comports(available_only=True):
 if __name__ == '__main__':
     import serial
     for port, desc, hwid in comports():
-        print("%s: %s (%s)" % (port, desc, hwid))
+        print(f"{port}: {desc} ({hwid})")
         print(" "*10, serial.Serial(port)) #test open
     
     # list of all ports the system knows
     print("-"*60)
     for port, desc, hwid in comports(False):
-        print("%-10s: %s (%s)" % (port, desc, hwid))
+        print(f"{port:-10s}: {desc} ({hwid})"
