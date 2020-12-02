@@ -52,8 +52,9 @@ def _indent(elem, level=0):
 
     Note : Taken from https://stackoverflow.com/questions/749796/pretty-printing-xml-in-python/4590052#4590052
     """
-    i = f"\n{(level + 1)*'\t'}"
-    j = f"\n{level*'\t'}"
+    tab = '\t'
+    i = f"\n{(level + 1)*tab}"
+    j = f"\n{level*tab}"
     count = 1
     if len(elem):
         if elem.text is None or elem.text.strip() is None:
