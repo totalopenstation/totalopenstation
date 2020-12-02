@@ -45,9 +45,9 @@ def to_wkt(point):
     try:
         point.geometry.z
     except ValueError:
-        wkt_representation = 'POINT ({g.x} {g.y})'.format(g=point.geometry)
+        wkt_representation = f'POINT ({point.geometry.x} {point.geometry.y})'
     else:
-        wkt_representation = 'POINT Z ({g.x} {g.y} {g.z})'.format(g=point.geometry)
+        wkt_representation = f'POINT Z ({point.geometry.x} {point.geometry.y} {point.geometry.z})'
     return wkt_representation
 
 

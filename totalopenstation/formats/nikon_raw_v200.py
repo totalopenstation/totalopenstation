@@ -90,7 +90,7 @@ class FormatParser:
                         ih = ih
                     coih = True
                 if cocircle and coih:
-                    station_name = "st{}".format(st)
+                    station_name = f"st{st}"
                     try:
                         station_point = points_coord[station_name]
                     except KeyError:
@@ -305,7 +305,7 @@ class FormatParser:
                         ih = ih
                     coih = True
             if cocircle and coih:
-                station_name = "st{}".format(st)
+                station_name = f"st{st}"
                 try:
                     station_point = points_coord[station_name]
                 except KeyError:
