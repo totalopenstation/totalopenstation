@@ -83,7 +83,7 @@ try:
 except serial.SerialException as detail:
     sys.exit(detail)
 
-print("Now you can start download from %s device" % options.model)
+print(f"Now you can start download from {options.model} device")
 
 station.start()
 station.dl_started.wait()
@@ -97,7 +97,7 @@ if options.outfile:
         e = open(options.outfile, 'w')
         e.write(result)
         e.close()
-        print("Downloaded data saved to out file %s" % options.outfile)
+        print(f"Downloaded data saved to out file {options.outfile}")
     else:
         sys.exit("Specified output file already exists\n")
 else:

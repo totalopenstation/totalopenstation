@@ -33,9 +33,9 @@ def to_sql(point, tablename):
         'tablename': tablename,
         'pid': point.id,
         'text': point.desc}
-    sql_string = "INSERT INTO %(tablename)s" % params
+    sql_string = f"INSERT INTO {params['tablename']}"
     sql_string += "(point_id, point_geom, point_text) VALUES"
-    sql_string += "(%(pid)s,GeomFromText('%(wkt)s'),'%(text)s');\n" % params
+    sql_string += f"({params['pid']},GeomFromText('{params['wkt']}'),'{params['text']}');\n"
     return sql_string
 
 

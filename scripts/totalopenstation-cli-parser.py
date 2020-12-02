@@ -158,7 +158,7 @@ if options.outformat:
     try:
         outputclass = totalopenstation.output.BUILTIN_OUTPUT_FORMATS[options.outformat]
     except KeyError as message:
-        exit_with_error('%s is not a valid output format' % message)
+        exit_with_error(f'{message} is not a valid output format')
     else:
         if isinstance(outputclass, tuple):
             try:

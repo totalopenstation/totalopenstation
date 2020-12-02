@@ -117,7 +117,7 @@ class StatusBar(Frame):
 class AboutDialog(tkinter.simpledialog.Dialog):
 
     def body(self, master):
-        title = "Total Open Station %s" % totalopenstation.__version__
+        title = f"Total Open Station {totalopenstation.__version__}"
         message = _("""
 Total Open Station is copyright 2008-2019 Stefano Costa, Damien
 Gaignon, Luca Bianconi and the IOSA project, under the GNU GPL v3
@@ -176,7 +176,7 @@ class ConnectDialog(tkinter.simpledialog.Dialog):
     def body(self, master):
         title = _("waiting for data from device")
         message1 = _("Connection initialized with the following parameters:\n")
-        params = "%s\n" % self.conn_str
+        params = f"{self.conn_str}\n"
         message2 = _("\nStart the download procedure on the device.\n")
         message2 = message2 + _("Press OK when done.")
         Label(master, bitmap="hourglass").pack()
@@ -218,7 +218,7 @@ class ProcessDialog(tkinter.simpledialog.Dialog):
         input_frame.pack(side=TOP)
         output_frame.pack(side=TOP)
 
-        params = "%s\n" % self.data
+        params = f"{self.data}\n"
 
         Label(input_frame, text=_('Input format'), width=20).pack(side=LEFT)
 
@@ -298,7 +298,7 @@ class ProcessDialog(tkinter.simpledialog.Dialog):
         parsed_data = inputclass(self.data)
         parsed_points = parsed_data.points
         output = outputclass(parsed_points)
-        sd = tkinter.filedialog.asksaveasfilename(defaultextension='.%s' % of_lower)
+        sd = tkinter.filedialog.asksaveasfilename(defaultextension=f'.{of_lower}')
 
         try:
             sd_file = open(sd, 'w')
@@ -520,7 +520,7 @@ class Tops:
             self.option2_entry["menu"] = self.option2_entry.menu
             for key in sorted(serial.baudrate_constants.keys()): # dynamic list
                 self.option2_entry.menu.add_radiobutton(
-                    label="%s" % key,
+                    label=f"{key}",
                     variable=self.option2_value,
                     value=key,
                     )

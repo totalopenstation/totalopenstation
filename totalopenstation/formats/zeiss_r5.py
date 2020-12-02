@@ -54,7 +54,7 @@ class FormatParser:
                         record_fields[coord] = value
             elif record_fields['type'] == 'TR':
                 record_fields['desc'] = reco[3:10]
-            logger.info("record_fields : %s" % (record_fields))
+            logger.info(f"record_fields : {record_fields}")
             return record_fields
 
         for row in self.rows:

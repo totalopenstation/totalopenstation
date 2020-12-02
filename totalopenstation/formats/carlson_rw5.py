@@ -50,7 +50,7 @@ def _record(recstr):
         record_fields['note'] = ''
     else:
         record_fields['note'] = record_fields['--']
-    logger.debug("record_fields : %s" % (record_fields))
+    logger.debug(f"record_fields : {record_fields}")
     return record_fields
 
 class FormatParser:
