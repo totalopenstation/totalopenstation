@@ -178,7 +178,7 @@ class ConnectDialog(tkinter.simpledialog.Dialog):
         message1 = _("Connection initialized with the following parameters:\n")
         params = f"{self.conn_str}\n"
         message2 = _("\nStart the download procedure on the device.\n")
-        message2 = message2 + _("Press OK when done.")
+        message2 += _("Press OK when done.")
         Label(master, bitmap="hourglass").pack()
         Label(master, text=title, font=("Helvetica", "16", "bold")).pack()
         Label(master, text=message1).pack()
