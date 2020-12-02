@@ -208,7 +208,7 @@ def main(infile):
         else:
             if options.overwrite:
                 write_to_file(options.outfile)
-                logger.info(_("Downloaded data saved to file %s,") % (options.outfile))
+                logger.info(_("Downloaded data saved to file %s,") % options.outfile)
                 logger.info(_("overwriting the existing file"))
             else:
                 sys.exit(_("Specified output file already exists\n"))

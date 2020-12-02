@@ -74,7 +74,7 @@ if isinstance(modelclass, tuple):
         modelclass = getattr(
             __import__(f'totalopenstation.models.{mod}', None, None, [cls]), cls)
     except ImportError as msg:
-        sys.exit(_('Error loading the required model module: %s' % msg))
+        sys.exit(_('Error loading the required model module: %s') % msg)
 
 station = modelclass(options.port)
 try:

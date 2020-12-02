@@ -279,7 +279,7 @@ class ProcessDialog(tkinter.simpledialog.Dialog):
                     __import__(f'totalopenstation.formats.{mod}', None, None, [cls]), cls)
             except ImportError as msg:
                 showwarning(_('Import error'),
-                            _('Error loading the required input module: %s' % msg))
+                            _('Error loading the required input module: %s') % msg)
 
         # import output format writer
         of_lower = str(self.output_format.get()).lower()
@@ -292,7 +292,7 @@ class ProcessDialog(tkinter.simpledialog.Dialog):
                     __import__(f'totalopenstation.output.{mod}', None, None, [cls]), cls)
             except ImportError as msg:
                 showwarning(_('Import error'),
-                            _('Error loading the required output module: %s' % msg))
+                            _('Error loading the required output module: %s') % msg)
 
         # no point in parsing before the output format has been imported
         parsed_data = inputclass(self.data)
@@ -724,7 +724,7 @@ class Tops:
                         __import__(f'totalopenstation.models.{mod}', None, None, [cls]), cls)
                 except ImportError as msg:
                     showwarning(_('Import error'),
-                                _('Error loading the required model module: %s' % msg))
+                                _('Error loading the required model module: %s') % msg)
 
                 mc = modelclass(chosen_port, **self.options)
 
@@ -748,7 +748,7 @@ class Tops:
                         while mc.inWaiting() > 0:
                             newdata = mc.read(mc.inWaiting())
                             result += newdata
-                            self.status.set(_('Downloaded %d bytes'), len(result))
+                            self.status.set(_('Downloaded %d bytes') % len(result))
                             self.replace_text(result.decode())
                             sleep(sleeptime) # TODO determine sleep time from baudrate
                         mc.close()
