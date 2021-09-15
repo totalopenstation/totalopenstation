@@ -116,6 +116,7 @@ BUILTIN_MODELS = {
     'zeiss_elta_r55': ('zeiss_elta_r55', 'ModelConnector', 'Zeiss Elta R55'),
     'nikon_npl_350': ('nikon_npl_350', 'ModelConnector','Nikon NPL 350'),
     'leica_tcr_705': ('leica_tcr_705', 'ModelConnector', 'Leica TCR 705'),
-    'trimble': ('trimble', 'ModelConnector', 'Trimble'),
+    'trimble': ('trimble', 'ModelConnector', 'Trimble'), 
+    'topcon': ('topcon', 'ModelConnector', 'TOPCON'),
     'custom': ('custom', 'CustomConnector', 'Custom/Unknown'),
     }
