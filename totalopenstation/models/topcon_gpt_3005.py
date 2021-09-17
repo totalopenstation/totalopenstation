@@ -1,7 +1,7 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
 # filename: topcon gpt 3005.py
-# Copyright 2008 Enzo Cocca <enzo.ccc@gmail.com>
+# Copyright 2021 Enzo Cocca <enzo.ccc@gmail.com>
 
 
 # This file is part of Total Open Station.
