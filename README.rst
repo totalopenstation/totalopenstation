@@ -58,7 +58,8 @@ Windows users can download the portable app from the
 GitHub `releases page <https://github.com/steko/totalopenstation/releases>`_.
 
 GNU/Linux users can find the `totalopenstation` package in some distributions
-(OpenSUSE, Debian, Ubuntu).
+(OpenSUSE, Debian, Ubuntu). Make sure that `python3-tk` or `python3-tkinter` is
+installed on your system, otherwise install it with your package manager (apt, dnf, pacman).
 
 Documentation
 =============
