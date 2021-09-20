@@ -23,8 +23,8 @@ from . import Feature, Parser, Point
 
 class FormatParser(Parser):
 
-    def is_point(self, line):
-        if line[2:4] == ('TP'):
+    def is_point(self, line) :
+        if line[2:4] == ('TP')and line[0:2] != '07':
             return True
         else:
             return False
@@ -39,7 +39,7 @@ class FormatParser(Parser):
             desc = line[78:86].strip()
         if line[0:2] == '08':   # Measurement
             desc = line[63:70].strip()
-
+        
         point = Point(x, y, z)
         feature = Feature(point, desc=desc, id=id)
         return feature
