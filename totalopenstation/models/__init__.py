@@ -1,4 +1,4 @@
-Mi# -*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 # filename: formats/__init__.py
 # Copyright 2008-2009 Luca Bianconi <luxetluc@yahoo.it>
 # Copyright 2008-2011 Stefano Costa <steko@iosa.it>
