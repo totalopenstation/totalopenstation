@@ -30,7 +30,7 @@ class FormatParser(Parser):
             return False
 
     def get_point(self, line):
-        id = int(line[12:20])
+        id = str(line[12:20])
         y = float(line[20:32])  # Northing
         x = float(line[32:48])  # Easting
         z = float(line[48:63])  # Elevation
