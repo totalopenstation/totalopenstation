@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+Mi# -*- coding: utf-8 -*-
 # filename: formats/__init__.py
 # Copyright 2008-2009 Luca Bianconi <luxetluc@yahoo.it>
 # Copyright 2008-2011 Stefano Costa <steko@iosa.it>
@@ -118,9 +118,6 @@ BUILTIN_MODELS = {
     'leica_tcr_705': ('leica_tcr_705', 'ModelConnector', 'Leica TCR 705'),
     'trimble': ('trimble', 'ModelConnector', 'Trimble'), 
     'topcon_gpt_3005': ('topcon_gpt_3005', 'ModelConnector', 'Topcon GPT 3005'),
-
     'sokkia_rku_630': ('sokkia_rku_630', 'ModelConnector', 'Sokkia RKU 630'),
-
->>>>
     'custom': ('custom', 'CustomConnector', 'Custom/Unknown'),
     }
