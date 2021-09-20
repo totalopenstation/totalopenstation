@@ -118,7 +118,7 @@ html_theme = 'alabaster'
 # further.  For a list of options available for each theme, see the
 # documentation.
 html_theme_options = {
-    'github_user': 'steko',
+    'github_user': 'totalopenstation',
     'github_repo': 'totalopenstation',
     'github_type': 'star',
     'github_count': 'true',
