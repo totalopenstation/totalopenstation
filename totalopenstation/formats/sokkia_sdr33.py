@@ -24,7 +24,7 @@ from . import Feature, Parser, Point
 class FormatParser(Parser):
 
     def is_point(self, line) :
-        if line[2:4] == ('TP':
+        if line[2:4] == ('TP'):
             return True
         else:
             return False
