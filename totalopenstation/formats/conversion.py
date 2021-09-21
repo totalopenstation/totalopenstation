@@ -161,7 +161,7 @@ def to_gon(angle, angle_unit):
 
 def to_dms(angle, angle_unit):
     '''Conversion function for angles to degree'''
-    if angle_unit == "gon":
+    if angle_unit == "gon" or angle_unit == "grads":
         return gon_to_dms(angle)
     elif angle_unit == "mil":
         return mil_to_dms(angle)
@@ -169,37 +169,24 @@ def to_dms(angle, angle_unit):
         return rad_to_dms(angle)
     else:
         return deg_to_dms(angle)
-
-
 def to_mil(angle, angle_unit):
     '''Conversion function for angles to degree'''
     if angle_unit == "dms":
         return dms_to_mil(angle)
-    elif angle_unit == "gon":
+    elif angle_unit == "gon" or angle_unit == "grads":
         return gon_to_mil(angle)
     elif angle_unit == "rad":
         return rad_to_mil(angle)
     else:
         return deg_to_mil(angle)
-
-
 def vertical_to_zenithal(angle, angle_unit):
     '''Convert angle from vertical (reference is horizontal) to
     zenithal (reference is north)'''
     if angle_unit == "dms":
         return to_dms(90 - to_deg(angle, angle_unit), "deg")
-    elif angle_unit == "gon":
+    elif angle_unit == "gon" or angle_unit == "grads":
         return 100 - angle
     elif angle_unit == "rad":
         return (pi / 2) - angle
     else:
         return 90 - angle
-
-def horizontal_to_slope(dist, angle, angle_unit, angle_type="z"):
-    '''Convert distance to slope from horizontal
-    Angle is considered zenithal by default'''
-    angle = to_rad(angle, angle_unit)
-    if angle_type == "z":
-        return dist / sin (angle)
-    else:
-        return dist / cos (angle)

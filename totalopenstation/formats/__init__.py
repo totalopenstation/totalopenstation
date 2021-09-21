@@ -183,6 +183,7 @@ def check_coordorder(coordorder):
 
 BUILTIN_INPUT_FORMATS = {
     'carlson_rw5': ('carlson_rw5', 'FormatParser', 'Carlson RW5'),
+    'landxml': ('landxml', 'FormatParser', 'LandXML'),
     'leica_gsi': ('leica_gsi', 'FormatParser', 'Leica GSI'),
     'leica_tcr_705': ('leica_tcr_705', 'FormatParser', 'Leica TCR 705'),
     'leica_tcr_1205': ('leica_tcr_1205', 'FormatParser', 'Leica TCR 1205'),
@@ -193,13 +194,14 @@ BUILTIN_INPUT_FORMATS = {
     'zeiss_r5': ('zeiss_r5', 'FormatParser', 'Zeiss R5'),
     'zeiss_rec_500': ('zeiss_rec_500', 'FormatParser', 'Zeiss REC 500'),
     }
-
+    
 UNITS_CIRCLE = {
     'dms': 360,
     'deg': 360,
     'gon': 400,
     'mil': 6400,
     'rad': 2 * pi,
+    'grads': 400
     }
 
 UNKNOWN_STATION = Point(10000, 10000, 100)
