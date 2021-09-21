@@ -190,3 +190,11 @@ def vertical_to_zenithal(angle, angle_unit):
         return (pi / 2) - angle
     else:
         return 90 - angle
+def horizontal_to_slope(dist, angle, angle_unit, angle_type="z"):
+    '''Convert distance to slope from horizontal
+    Angle is considered zenithal by default'''
+    angle = to_rad(angle, angle_unit)
+    if angle_type == "z":
+        return dist / sin (angle)
+    else:
+        return dist / cos (angle)
