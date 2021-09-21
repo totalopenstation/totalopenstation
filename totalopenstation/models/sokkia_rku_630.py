@@ -20,7 +20,7 @@
 # <http://www.gnu.org/licenses/>.
 
 
-from . import *
+from . import Connector
 
 
 class ModelConnector(Connector):
