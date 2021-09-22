@@ -26,5 +26,5 @@ from . import Connector
 
 class ModelConnector(Connector):
 
-    def __init__(self, port):
-        Connector.__init__(self, port=port, bytesize=7)
+    def __init__(self, url):
+        Connector.__init__(self, url=url, bytesize=7)

@@ -23,8 +23,9 @@
 import serial
 import gettext
 import atexit
+import tempfile
 
-from time import sleep
+from time import sleep, time
 
 from tkinter import *
 from tkinter.messagebox import showwarning, showinfo, askokcancel
@@ -738,10 +739,12 @@ class Tops:
                     sleeptime = float(self.option6_value.get())
                     if st.result:
                         self.status.set(_("Waiting for data: Please start the transfer from your total station menu."))
+                        
                         while mc.inWaiting() == 0:
                             sleep(sleeptime)
                         n = mc.inWaiting()
                         result = mc.read(n)
+                        
                         self.replace_text(result.decode())
                         sleep(sleeptime)
 

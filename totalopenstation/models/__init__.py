@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # filename: formats/__init__.py
 # Copyright 2008-2009 Luca Bianconi <luxetluc@yahoo.it>
-# Copyright 2008-2011 Stefano Costa <steko@iosa.it>
+# Copyright 2021 Stefano Costa <steko@iosa.it>
 
 # This file is part of Total Open Station.
 
@@ -23,13 +23,14 @@
 import serial
 import sys
 
-from time import sleep
+from contextlib import ExitStack
+from time import sleep, time
 from threading import Event, Thread
 from threading.exceptions import KeyboardInterrupt
 
 from totalopenstation.utils.upref import UserPrefs
 
-class Connector(serial.Serial, Thread):
+class Connector(Thread):
     '''Connect to a total station.
 
     For more information : `Pyserial documentation <https://pythonhosted.org/pyserial/pyserial_api.html#native-ports>`_
@@ -47,9 +48,7 @@ class Connector(serial.Serial, Thread):
         writeTimeout (float): Set a write timeout value.
     '''
 
-    def __init__(self, port=None, baudrate=9600, bytesize=8, parity='N',
-                stopbits=1, timeout=None, xonxoff=0, rtscts=0,
-                writeTimeout=None, dsrdtr=None):
+    def __init__(self, url, *args, **kwargs):
 
         self.upref = UserPrefs()
         self.sleeptime = float(self.upref.getvalue('sleeptime'))
@@ -58,37 +57,48 @@ class Connector(serial.Serial, Thread):
         self.dl_started = Event()
         self.dl_finished = Event()
 
-        serial.Serial.__init__(self, port=port, baudrate=baudrate,
-        bytesize=bytesize, parity=parity, stopbits=stopbits, timeout=timeout,
-        xonxoff=xonxoff, rtscts=rtscts, writeTimeout=writeTimeout,
-        dsrdtr=dsrdtr)
+        self.ser = serial.serial_for_url(url, *args, **kwargs)
 
     def open(self):
         '''Open the serial link.
         '''
 
-        serial.Serial.open(self)
+        self.ser.open()
 
     def download(self):
         '''Download method for user interfaces.
 
         First the class must be instantiated, then the port is open and the
         transfer from the device can start. Once the transfer is finished
-        the user interface should call this method.'''
+        the user interface should call this method.
 
-        n = self.inWaiting()
-        result = self.read(n)
+        Supports an optional auto-save of the downloaded data to a file on disk,
+        to avoid losing data when something goes wrong with the data transfer.'''
 
-        # looks like there is a maximum buffer of 4096 characters, so we have
-        # to wait for a short time and iterate the process until finished
 
-        sleep(self.sleeptime)
+        with ExitStack() as stack:
+            autosave_timestamp = int(time())
+            autosave_filename = f"autosave-{autosave_timestamp}.tops"
+            autosave = stack.enter_context(open(autosave_filename, "ab"))
 
-        while self.inWaiting() > 0:
-            result = result + self.read(self.inWaiting())
+            n = self.ser.in_waiting
+            result = []  # type: typing.List[bytes]
+            read_block = self.ser.read(n)
+            result.append(read_block)
+            autosave.write(read_block)
+
+            # looks like there is a maximum buffer of 4096 characters, so we have
+            # to wait for a short time and iterate the process until finished
+
             sleep(self.sleeptime)
 
-        self.result = result
+            while self.ser.in_waiting > 0:
+                read_block = self.ser.read(self.ser.in_waiting)
+                result.append(read_block)
+                autosave.write(read_block)
+                sleep(self.sleeptime)
+
+                self.result = result
 
     def fast_download(self):
         '''Implement a *fast* download method that requires less user input.
@@ -98,7 +108,7 @@ class Connector(serial.Serial, Thread):
         when data become to appear, download() can start.
         '''
 
-        while self.inWaiting() == 0:
+        while self.ser.in_waiting == 0:
             sleep(self.sleeptime)
         self.dl_started.set()
         try:
