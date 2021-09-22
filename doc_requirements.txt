@@ -9,7 +9,7 @@ Jinja2>=2.10.1
 MarkupSafe==1.0
 pudb==2017.1.4
 pygeoif==0.7
-Pygments==2.2.0
+Pygments==2.7.4
 pyserial==3.4
 pytz==2017.2
 requests>=2.20.0
