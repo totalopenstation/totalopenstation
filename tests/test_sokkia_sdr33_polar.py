@@ -2,9 +2,9 @@ import unittest
 
 import pytest
 
-from totalopenstation.formats.sokkia_sdr33 import FormatParser
+from totalopenstation.formats.sokkia_sdr33_polar import FormatParser
 
-from . import BaseTestOutput
+from __init__ import BaseTestOutput
 
 
 class TestSokkiaParser(unittest.TestCase):
