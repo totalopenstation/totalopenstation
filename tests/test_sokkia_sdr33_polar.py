@@ -4,7 +4,7 @@ import pytest
 
 from totalopenstation.formats.sokkia_sdr33_polar import FormatParser
 
-from __init__ import BaseTestOutput
+from . import BaseTestOutput
 
 
 class TestSokkiaParser(unittest.TestCase):
