@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # filename: formats/sokkia_sdr33.py
 # Copyright 2014 Stefano Costa <steko@iosa.it>
-# Copyright 2021 enzo Cocca <enzo.ccc@gmail.co>
+# Copyright 2021 enzo Cocca <enzo.ccc@gmail.com>
 # This file is part of Total Open Station.
 
 # Total Open Station is free software: you can redistribute it and/or
