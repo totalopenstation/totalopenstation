@@ -1,0 +1,78 @@
+00NMSDR33 V04-04.02     05-Nov-20 08:00 213111
+10NMCOLOSSEO5/11    121111
+06NM1.00000000      
+01NM:SET630RK V33-02 161917SET630RK V33-02 16191731                                0.000           
+02TP         STZTEMP0.000           0.000           0.000           1.475           STZTEMP         
+11KI         STZTEMP              OR0.0000                                          OR              
+07TP         STZTEMP              OR0.0000          0.0000          
+03NM1.530           
+09F1         STZTEMP              OR                94.6990         0.0000          OR              
+03NM0.000           
+09F1         STZTEMP               121.949          101.4508        27.5962         SOGLIA NORD     
+08TP               119.914          9.217           0.975           SOGLIA NORD     
+09F1         STZTEMP               22.640           112.8528        162.9752        SOGLIA SUD      
+08TP               2-2.161          1.421           0.946           SOGLIA SUD      
+09F1         STZTEMP               322.225          99.4740         64.1306         CP12            
+08TP               311.870          18.789          1.659           CP12            
+09F1         STZTEMP               422.306          102.2278        64.0860         CP09            
+08TP               411.919          18.838          0.695           CP09            
+09F1         STZTEMP               512.736          101.5436        70.7136         CP015           
+08TP               55.653           11.409          1.166           CP015           
+03NM1.530           
+09F1         STZTEMP               613.878          102.9952        314.8086        CHIODO          
+08TP               63.196           -13.489         -0.708          CHIODO          
+09F1         STZTEMP               77.271           89.2504         58.9818         FOSSA CIST      
+08TP               74.305           5.731           1.167           FOSSA CIST      
+09F1         STZTEMP               89.901           89.6320         54.2510         FOSSA CIST      
+08TP               86.432           7.354           1.550           FOSSA CIST      
+09F1         STZTEMP               912.280          90.4092         53.2796         FOSSA CIST      
+08TP               98.131           9.016           1.788           FOSSA CIST      
+09F1         STZTEMP              1014.944          90.7482         51.5248         FOSSA CIST      
+08TP              1010.202          10.703          2.109           FOSSA CIST      
+09F1         STZTEMP              1118.636          91.4944         50.7390         FOSSA CIST      
+08TP              1112.908          13.211          2.427           FOSSA CIST      
+09F1         STZTEMP              1222.140          91.4986         52.5786         FOSSA CIST      
+08TP              1214.875          16.132          2.893           FOSSA CIST      
+09F1         STZTEMP              1322.640          92.6064         60.0578         FOSSA CIST      
+08TP              1313.201          18.205          2.568           FOSSA CIST      
+09F1         STZTEMP              1422.415          93.9674         66.0850         FOSSA CIST      
+08TP              1411.333          19.222          2.066           FOSSA CIST      
+09F1         STZTEMP              1520.210          92.2644         68.0404         FOSSA CIST      
+08TP              159.653           17.586          2.395           FOSSA CIST      
+09F1         STZTEMP              1617.346          91.6146         68.4924         FOSSA CIST      
+08TP              168.167           15.132          2.223           FOSSA CIST      
+09F1         STZTEMP              1714.935          92.7256         70.3366         FOSSA CIST      
+08TP              176.666           13.256          1.648           FOSSA CIST      
+09F1         STZTEMP              1811.765          91.1642         73.0002         FOSSA CIST      
+08TP              184.795           10.620          1.573           FOSSA CIST      
+09F1         STZTEMP              198.106           87.7738         76.6416         FOSSA CIST      
+08TP              192.854           7.427           1.492           FOSSA CIST      
+03NM2.500           
+09F1         STZTEMP              2015.248          94.2218         57.2362         US2             
+08TP              209.450           11.886          0.357           US2             
+09F1         STZTEMP              2118.602          95.0856         57.6358         US2             
+08TP              2111.451          14.589          0.410           US2             
+09F1         STZTEMP              2221.613          95.2468         57.5904         US2             
+08TP              2213.319          16.945          0.587           US2             
+09F1         STZTEMP              2321.751          96.8006         64.8888         QUOTE           
+08TP              2311.383          18.503          0.068           QUOTE           
+09F1         STZTEMP              2417.777          96.6812         65.3306         QUOTE           
+08TP              249.197           15.185          -0.099          QUOTE           
+09F1         STZTEMP              2521.643          96.9544         61.9368         QUOTE           
+08TP              2512.169          17.868          0.010           QUOTE           
+09F1         STZTEMP              2617.637          96.7998         61.7578         QUOTE           
+08TP              269.956           14.531          -0.139          QUOTE           
+09F1         STZTEMP              2715.336          96.6214         62.0986         QUOTE           
+08TP              278.588           12.680          -0.211          QUOTE           
+09F1         STZTEMP              2815.474          96.5118         58.1122         QUOTE           
+08TP              289.448           12.225          -0.178          QUOTE           
+09F1         STZTEMP              2918.844          96.8418         58.3604         QUOTE           
+08TP              2911.451          14.936          -0.091          QUOTE           
+09F1         STZTEMP              3021.652          96.8424         58.3806         QUOTE           
+08TP              3013.152          17.166          0.048           QUOTE           
+09F1         STZTEMP              3121.574          95.1696         53.9866         QUOTE           
+08TP              3114.229          16.133          0.610           QUOTE           
+09F1         STZTEMP              3218.439          94.5288         53.5024         QUOTE           
+08TP              3212.256          13.685          0.558           QUOTE           
+09F1         STZTEMP              3315.257          94.0098         52.6212         QUOTE           
+08TP              3310.289          11.174          0.408           QUOTE           
