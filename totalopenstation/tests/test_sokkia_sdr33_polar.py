@@ -4,7 +4,7 @@ import pytest
 
 from totalopenstation.formats.sokkia_sdr33_polar import FormatParser
 
-from . import BaseTestOutput
+from __init__ import BaseTestOutput
 
 
 class TestSokkiaParser(unittest.TestCase):
@@ -20,7 +20,7 @@ class TestSokkiaParser(unittest.TestCase):
         self.assertAlmostEqual(self.fp.points[0].geometry.coords[0][2], 0.000)
 
     def test_feature(self):
-        self.assertEqual(self.fp.points[0].id, ' STZTEMP')
+        self.assertEqual(self.fp.points[0].id, ' ST')
         self.assertEqual(self.fp.points[0].desc, 'STZTEMP')
         self.assertEqual(self.fp.points[1].desc, 'STZTEMP')
 
