@@ -27,4 +27,4 @@ from . import Connector
 class ModelConnector(Connector):
 
     def __init__(self, port):
-        Connector.__init__(self, port=port, baudrate=9600 , bytesize=8)
+        Connector.__init__(self, port=port, baudrate=9600)
