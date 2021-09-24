@@ -22,7 +22,7 @@ class TestSokkiaParser(unittest.TestCase):
     def test_feature(self):
         self.assertEqual(self.fp.points[0].id, ' STZTEMP')
         self.assertEqual(self.fp.points[0].desc, 'ST')
-        self.assertEqual(self.fp.points[1].desc, 'ST')
+        self.assertEqual(self.fp.points[1].desc, 'SO')
 
     def test_linestring(self):
         self.ls = self.fp.build_linestring()
