@@ -72,7 +72,7 @@ if isinstance(modelclass, tuple):
         # builtin format parser
         mod, cls, name = modelclass
         modelclass = getattr(
-            __import__(f'totalopenstation.models.{mod}', None, None, [cls]), cls)
+            __import__('totalopenstation.models.%s' % mod, None, None, [cls]), cls)
     except ImportError as msg:
         sys.exit(_('Error loading the required model module: %s') % msg)
 
@@ -83,7 +83,7 @@ try:
 except serial.SerialException as detail:
     sys.exit(detail)
 
-print(f"Now you can start download from {options.model} device")
+print("Now you can start download from %s device" % options.model)
 
 station.start()
 station.dl_started.wait()
@@ -97,7 +97,7 @@ if options.outfile:
         e = open(options.outfile, 'w')
         e.write(result)
         e.close()
-        print(f"Downloaded data saved to out file {options.outfile}")
+        print("Downloaded data saved to out file %s" % options.outfile)
     else:
         sys.exit("Specified output file already exists\n")
 else:

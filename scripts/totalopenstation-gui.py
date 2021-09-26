@@ -117,7 +117,7 @@ class StatusBar(Frame):
 class AboutDialog(tkinter.simpledialog.Dialog):
 
     def body(self, master):
-        title = f"Total Open Station {totalopenstation.__version__}"
+        title = "Total Open Station %s" % totalopenstation.__version__
         message = _("""
 Total Open Station is copyright 2008-2019 Stefano Costa, Damien
 Gaignon, Luca Bianconi and the IOSA project, under the GNU GPL v3
@@ -176,7 +176,7 @@ class ConnectDialog(tkinter.simpledialog.Dialog):
     def body(self, master):
         title = _("waiting for data from device")
         message1 = _("Connection initialized with the following parameters:\n")
-        params = f"{self.conn_str}\n"
+        params = "%s\n" % self.conn_str
         message2 = _("\nStart the download procedure on the device.\n")
         message2 += _("Press OK when done.")
         Label(master, bitmap="hourglass").pack()
@@ -218,7 +218,7 @@ class ProcessDialog(tkinter.simpledialog.Dialog):
         input_frame.pack(side=TOP)
         output_frame.pack(side=TOP)
 
-        params = f"{self.data}\n"
+        params = "%s\n" % self.data
 
         Label(input_frame, text=_('Input format'), width=20).pack(side=LEFT)
 
@@ -276,7 +276,7 @@ class ProcessDialog(tkinter.simpledialog.Dialog):
                 # builtin format parser
                 mod, cls, name = inputclass
                 inputclass = getattr(
-                    __import__(f'totalopenstation.formats.{mod}', None, None, [cls]), cls)
+                    __import__('totalopenstation.formats.%s' % mod, None, None, [cls]), cls)
             except ImportError as msg:
                 showwarning(_('Import error'),
                             _('Error loading the required input module: %s') % msg)
@@ -289,7 +289,7 @@ class ProcessDialog(tkinter.simpledialog.Dialog):
                 # builtin output builder
                 mod, cls, name = outputclass
                 outputclass = getattr(
-                    __import__(f'totalopenstation.output.{mod}', None, None, [cls]), cls)
+                    __import__('totalopenstation.output.%s' % mod, None, None, [cls]), cls)
             except ImportError as msg:
                 showwarning(_('Import error'),
                             _('Error loading the required output module: %s') % msg)
@@ -298,7 +298,7 @@ class ProcessDialog(tkinter.simpledialog.Dialog):
         parsed_data = inputclass(self.data)
         parsed_points = parsed_data.points
         output = outputclass(parsed_points)
-        sd = tkinter.filedialog.asksaveasfilename(defaultextension=f'.{of_lower}')
+        sd = tkinter.filedialog.asksaveasfilename(defaultextension='.%s' % of_lower)
 
         try:
             sd_file = open(sd, 'w')
@@ -520,7 +520,7 @@ class Tops:
             self.option2_entry["menu"] = self.option2_entry.menu
             for key in sorted(serial.baudrate_constants.keys()): # dynamic list
                 self.option2_entry.menu.add_radiobutton(
-                    label=f"{key}",
+                    label="%s" % key,
                     variable=self.option2_value,
                     value=key,
                     )
@@ -721,7 +721,7 @@ class Tops:
                     # builtin model builder
                     mod, cls, name = modelclass
                     modelclass = getattr(
-                        __import__(f'totalopenstation.models.{mod}', None, None, [cls]), cls)
+                        __import__('totalopenstation.models.%s' % mod, None, None, [cls]), cls)
                 except ImportError as msg:
                     showwarning(_('Import error'),
                                 _('Error loading the required model module: %s') % msg)

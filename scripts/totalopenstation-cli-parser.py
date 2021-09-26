@@ -119,14 +119,14 @@ logger.addHandler(handler)
 def list_formats():
     '''Print a list of the supported input and output formats.'''
 
-    mod_string = f"List of supported input formats:\n{'-' * 30}\n"
+    mod_string = "List of supported input formats:\n%s\n" % ('-' * 30)
     for k, v in sorted(totalopenstation.formats.BUILTIN_INPUT_FORMATS.items()):
-        mod_string += f"{k.ljust(20)}{v[2]}\n"
+        mod_string += "%s%s\n" % (k.ljust(20), v[2])
     mod_string += "\n\n"
 
-    mod_string += "List of supported output formats:\n{'-' * 30}\n"
+    mod_string += "List of supported output formats:\n%s\n" % ('-' * 30)
     for k, v in sorted(totalopenstation.output.BUILTIN_OUTPUT_FORMATS.items()):
-        mod_string += f"{k.ljust(20)}{v[2]}\n"
+        mod_string += "%s%s\n" % (k.ljust(20), v[2])
     mod_string += "\n"
     return mod_string
 
@@ -148,7 +148,7 @@ if options.informat:
             try:
                 # builtin format parser
                 mod, cls, name = inputclass
-                inputclass = getattr(importlib.import_module(f'totalopenstation.formats.{mod}'), cls)
+                inputclass = getattr(importlib.import_module('totalopenstation.formats.%s' % mod), cls)
             except ImportError as message:
                 exit_with_error(message)
 else:
@@ -158,13 +158,13 @@ if options.outformat:
     try:
         outputclass = totalopenstation.output.BUILTIN_OUTPUT_FORMATS[options.outformat]
     except KeyError as message:
-        exit_with_error(f'{message} is not a valid output format')
+        exit_with_error('%s is not a valid output format' % message)
     else:
         if isinstance(outputclass, tuple):
             try:
                 # builtin output builder
                 mod, cls, name = outputclass
-                outputclass = getattr(importlib.import_module(f'totalopenstation.output.{mod}'), cls)
+                outputclass = getattr(importlib.import_module('totalopenstation.output.%s' % mod), cls)
             except ImportError as message:
                 exit_with_error(message)
 
