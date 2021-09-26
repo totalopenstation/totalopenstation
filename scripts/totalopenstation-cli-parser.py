@@ -119,12 +119,12 @@ logger.addHandler(handler)
 def list_formats():
     '''Print a list of the supported input and output formats.'''
 
-    mod_string = "List of supported input formats:\n%s\n" % ('-' * 30)
+    mod_string = _("List of supported input formats:\n%s\n") % ('-' * 30)
     for k, v in sorted(totalopenstation.formats.BUILTIN_INPUT_FORMATS.items()):
         mod_string += "%s%s\n" % (k.ljust(20), v[2])
     mod_string += "\n\n"
 
-    mod_string += "List of supported output formats:\n%s\n" % ('-' * 30)
+    mod_string += _("List of supported output formats:\n%s\n") % ('-' * 30)
     for k, v in sorted(totalopenstation.output.BUILTIN_OUTPUT_FORMATS.items()):
         mod_string += "%s%s\n" % (k.ljust(20), v[2])
     mod_string += "\n"
@@ -158,7 +158,7 @@ if options.outformat:
     try:
         outputclass = totalopenstation.output.BUILTIN_OUTPUT_FORMATS[options.outformat]
     except KeyError as message:
-        exit_with_error('%s is not a valid output format' % message)
+        exit_with_error(_('%s is not a valid output format') % message)
     else:
         if isinstance(outputclass, tuple):
             try:

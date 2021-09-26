@@ -388,9 +388,9 @@ class Tops:
         languagemenu.add_radiobutton(label="Italiano",variable=language,value="it")
 
         self.menubar.add_cascade(label="Total Station", menu=topsmenu)
-        self.menubar.add_cascade(label="File", menu=filemenu)
+        self.menubar.add_cascade(label=_("File"), menu=filemenu)
         #self.menubar.add_cascade(label="Language", menu=languagemenu)
-        self.menubar.add_cascade(label="Help", menu=helpmenu)
+        self.menubar.add_cascade(label=_("Help"), menu=helpmenu)
 
         self.upper_frame = Frame(self.main_frame) ###
         self.upper_frame.pack(side=TOP, expand=NO, padx=10,
@@ -478,7 +478,7 @@ class Tops:
         self.optionMODEL_value.set(self.upref.getvalue('model'))
 
         self.optionMODEL_entry = Menubutton(self.optionMODEL_frame,
-                                        text="choose a model",
+                                        text=_("choose a model"),
                                         textvariable=self.optionMODEL_value,
                                         relief=RAISED,
                                         width=20)
@@ -498,7 +498,7 @@ class Tops:
         self.option2_frame.pack(side=TOP)
 
         self.option2_label = Label(self.option2_frame,
-                                   text="Baudrate",
+                                   text=_("Baudrate"),
                                    width=30)
         self.option2_label.pack(side=LEFT)
         self.option2_value = IntVar()
@@ -640,7 +640,7 @@ class Tops:
         self.process_button.bind("<Return>", self.process_action)
 
         self.status = StatusBar(self.main_frame)
-        self.status.set('Welcome to Total Open Station')
+        self.status.set(_('Welcome to Total Open Station'))
         self.status.pack(side=BOTTOM, fill=X)
 
         # text frame
@@ -672,7 +672,7 @@ class Tops:
     def on_app_close(self):
         '''Callback function to ask for confirmation before quitting the application.'''
 
-        if askokcancel("Quit","Do you really want to quit application ?"):
+        if askokcancel(_("Quit"), _("Do you really want to quit application ?")):
             self.myParent.destroy()
 
     def exit_action(self, event):
