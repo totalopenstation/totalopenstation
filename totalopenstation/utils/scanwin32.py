@@ -185,4 +185,4 @@ if __name__ == '__main__':
     # list of all ports the system knows
     print("-"*60)
     for port, desc, hwid in comports(False):
-        print(f"{port:-10s}: {desc} ({hwid})"
+        print(f"{port:-10s}: {desc} ({hwid})")
