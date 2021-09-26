@@ -34,7 +34,7 @@ from totalopenstation.models import BUILTIN_MODELS
 t = gettext.translation('totalopenstation', './locale', fallback=True)
 _ = t.gettext
 
-usage = _("usage: %prog [option] arg1 [option] arg2 ...")
+usage = _("Usage: %prog [option] arg1 [option] arg2 ...")
 
 parser = OptionParser(usage=usage)
 parser.add_option("-m",
@@ -42,21 +42,21 @@ parser.add_option("-m",
                 action="store",
                 type="string",
                 dest="model",
-                help=_("select input MODEL"),
+                help=_("Select input MODEL"),
                 metavar="MODEL")
 parser.add_option("-p",
                 "--port",
                 action="store",
                 type="string",
                 dest="port",
-                help=_("select input SERIAL PORT"),
+                help=_("Select input SERIAL PORT"),
                 metavar="PORT")
 parser.add_option("-o",
                 "--outfile",
                 action="store",
                 type="string",
                 dest="outfile",
-                help=_("select output FILE (do not specify for stdout)"),
+                help=_("Select output FILE (do not specify for stdout)"),
                 metavar="FILE")
 
 (options, args) = parser.parse_args()

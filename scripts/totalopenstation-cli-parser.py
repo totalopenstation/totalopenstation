@@ -36,7 +36,7 @@ import totalopenstation.output
 t = gettext.translation('totalopenstation', './locale', fallback=True)
 _ = t.gettext
 
-usage = _("usage: %prog [option] arg1 [option] arg2 ...")
+usage = _("Usage: %prog [option] arg1 [option] arg2 ...")
 
 parser = OptionParser(usage=usage)
 parser.add_option("-i",
@@ -44,21 +44,21 @@ parser.add_option("-i",
                 action="store",
                 type="string",
                 dest="infile",
-                help=_("select input FILE  (do not specify for stdin)"),
+                help=_("Select input FILE  (do not specify for stdin)"),
                 metavar="FILE")
 parser.add_option("-o",
                 "--outfile",
                 action="store",
                 type="string",
                 dest="outfile",
-                help=_("select output FILE (do not specify for stdout)"),
+                help=_("Select output FILE (do not specify for stdout)"),
                 metavar="FILE")
 parser.add_option("-f",
                 "--input-format",
                 action="store",
                 type="string",
                 dest="informat",
-                help=_("select input FORMAT"),
+                help=_("Select input FORMAT"),
                 metavar="FORMAT")
 parser.add_option("--2d",
                   action="store_true",
@@ -70,7 +70,7 @@ parser.add_option("-t",
                 action="store",
                 type="string",
                 dest="outformat",
-                help=_("select input FORMAT"),
+                help=_("Select input FORMAT"),
                 metavar="FORMAT")
 parser.add_option("-r",
                 "--raw",
@@ -82,26 +82,26 @@ parser.add_option(
                 action="store_true",
                 dest="overwrite",
                 default=False,
-                help=_("overwrite existing output file"))
+                help=_("Overwrite existing output file"))
 parser.add_option(
     "--list",
     action="store_true",
     dest="list",
     default=False,
-    help=_("list the available input and output formats"))
+    help=_("List the available input and output formats"))
 parser.add_option(
                 "--log",
                 action="store",
                 dest="loglevel",
                 default="WARNING",
                 type="string",
-                help=_("minimum log level"))
+                help=_("Minimum log level"))
 parser.add_option(
                 "--logtofile",
                 action="store_true",
                 dest="logotfile",
                 default=False,
-                help=_("log to file"))
+                help=_("Log to file"))
 
 
 (options, args) = parser.parse_args()
@@ -209,7 +209,7 @@ def main(infile):
             if options.overwrite:
                 write_to_file(options.outfile)
                 logger.info(_("Downloaded data saved to file %s,") % options.outfile)
-                logger.info(_("overwriting the existing file"))
+                logger.info(_("Overwriting the existing file"))
             else:
                 sys.exit(_("Specified output file already exists\n"))
     else:

@@ -174,7 +174,7 @@ class ConnectDialog(tkinter.simpledialog.Dialog):
         tkinter.simpledialog.Dialog.__init__(self, parent)
 
     def body(self, master):
-        title = _("waiting for data from device")
+        title = _("Waiting for data from device")
         message1 = _("Connection initialized with the following parameters:\n")
         params = "%s\n" % self.conn_str
         message2 = _("\nStart the download procedure on the device.\n")
@@ -225,7 +225,7 @@ class ProcessDialog(tkinter.simpledialog.Dialog):
         self.input_format = StringVar()
         self.input_format.set(self.format)
         input_format_entry = Menubutton(input_frame,
-                                        text=_("choose a format"),
+                                        text=_("Choose a format"),
                                         textvariable=self.input_format,
                                         relief=RAISED,
                                         width=24)
@@ -244,7 +244,7 @@ class ProcessDialog(tkinter.simpledialog.Dialog):
         self.output_format = StringVar()
         self.output_format.set(self.format)
         output_format_entry = Menubutton(output_frame,
-                                        text=_("choose a format"),
+                                        text=_("Choose a format"),
                                         textvariable=self.output_format,
                                         relief=RAISED,
                                         width=24)
@@ -478,7 +478,7 @@ class Tops:
         self.optionMODEL_value.set(self.upref.getvalue('model'))
 
         self.optionMODEL_entry = Menubutton(self.optionMODEL_frame,
-                                        text=_("choose a model"),
+                                        text=_("Choose a model"),
                                         textvariable=self.optionMODEL_value,
                                         relief=RAISED,
                                         width=20)
@@ -512,7 +512,7 @@ class Tops:
                                        width=20)
         else:
             self.option2_entry = Menubutton(self.option2_frame,
-                                            text=_("choose a value"),
+                                            text=_("Choose a value"),
                                             textvariable=self.option2_value,
                                             relief=RAISED,
                                             width=20)
@@ -537,7 +537,7 @@ class Tops:
         self.option3_label.pack(side=LEFT, anchor=E)
         self.option3_value = IntVar()
         self.option3_entry = Menubutton(self.option3_frame,
-                                        text=_("choose a value"),
+                                        text=_("Choose a value"),
                                         textvariable=self.option3_value,
                                         relief=RAISED,
                                         width=20)
@@ -560,7 +560,7 @@ class Tops:
         self.option4_label.pack(side=LEFT, anchor=E)
         self.option4_value = StringVar()
         self.option4_entry = Menubutton(self.option4_frame,
-                                        text=_("choose a value"),
+                                        text=_("Choose a value"),
                                         textvariable=self.option4_value,
                                         relief=RAISED,
                                         width=20)
@@ -583,7 +583,7 @@ class Tops:
         self.option5_label.pack(side=LEFT, anchor=E)
         self.option5_value = IntVar()
         self.option5_entry = Menubutton(self.option5_frame,
-                                        text=_("choose a value"),
+                                        text=_("Choose a value"),
                                         textvariable=self.option5_value,
                                         relief=RAISED,
                                         width=20)
