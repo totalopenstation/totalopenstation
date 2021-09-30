@@ -41,7 +41,7 @@ class FormatParser(Parser):
         if line[0:2] == '02':   # Base point
             desc = line[78:86].strip()
         if line[0:2] == '08':   # Measurement
-            desc = line[63:70].strip()
+            desc = line[63:-1].strip()
         
         point = Point(x, y, z)
         feature = Feature(point, desc=desc, id=id)
