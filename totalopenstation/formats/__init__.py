@@ -91,6 +91,8 @@ class Parser:
 
         self.data = data
 
+    def value(self):
+        pass
     def is_point(self, line):
         """Action for finding which parts of the source file are points.
 
@@ -114,6 +116,16 @@ class Parser:
 
         pass
 
+    def split_points_m(self):
+        """Action for splitting points.
+
+        Defaults to ``splitlines()`` because most formats have one
+        point per line.
+
+        Override this method if the format is different."""
+
+        return self.data.splitlines()
+    
     def split_points(self):
         """Action for splitting points.
 
