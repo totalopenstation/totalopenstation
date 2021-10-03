@@ -25,6 +25,7 @@ import sys
 
 from time import sleep
 from threading import Event, Thread
+from threading.exceptions import KeyboardInterrupt
 
 from totalopenstation.utils.upref import UserPrefs
 
@@ -51,7 +52,7 @@ class Connector(serial.Serial, Thread):
                 writeTimeout=None, dsrdtr=None):
 
         self.upref = UserPrefs()
-        sleeptime = float(self.upref.getvalue('sleeptime'))
+        self.sleeptime = float(self.upref.getvalue('sleeptime'))
 
         Thread.__init__(self)
         self.dl_started = Event()
@@ -81,11 +82,11 @@ class Connector(serial.Serial, Thread):
         # looks like there is a maximum buffer of 4096 characters, so we have
         # to wait for a short time and iterate the process until finished
 
-        sleep(sleeptime)
+        sleep(self.sleeptime)
 
         while self.inWaiting() > 0:
             result = result + self.read(self.inWaiting())
-            sleep(sleeptime)
+            sleep(self.sleeptime)
 
         self.result = result
 
@@ -98,11 +99,11 @@ class Connector(serial.Serial, Thread):
         '''
 
         while self.inWaiting() == 0:
-            sleep(sleeptime)
+            sleep(self.sleeptime)
         self.dl_started.set()
         try:
             self.download()
-        except threading.exceptions.KeyboardInterrupt:
+        except KeyboardInterrupt:
             sys.exit()
         else:
             self.dl_finished.set()
@@ -116,6 +117,7 @@ BUILTIN_MODELS = {
     'zeiss_elta_r55': ('zeiss_elta_r55', 'ModelConnector', 'Zeiss Elta R55'),
     'nikon_npl_350': ('nikon_npl_350', 'ModelConnector','Nikon NPL 350'),
     'leica_tcr_705': ('leica_tcr_705', 'ModelConnector', 'Leica TCR 705'),
-    'trimble': ('trimble', 'ModelConnector', 'Trimble'),
+    'trimble': ('trimble', 'ModelConnector', 'Trimble'), 
+    'topcon_gpt_3005': ('topcon_gpt_3005', 'ModelConnector', 'Topcon GPT 3005'),
     'custom': ('custom', 'CustomConnector', 'Custom/Unknown'),
     }
