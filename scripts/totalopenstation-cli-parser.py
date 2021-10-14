@@ -1,4 +1,4 @@
-#! /usr/bin/env python
+#! /usr/bin/env python3
 # -*- coding: utf-8 -*-
 # filename: totalopenstation-cli-parser.py
 # Copyright 2008-2013 Stefano Costa <steko@iosa.it>
