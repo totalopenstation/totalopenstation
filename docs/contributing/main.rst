@@ -16,11 +16,33 @@ encouraged to clone our repository and go crazy with new features,
 formats.
 
 
-Coding standards
-================
+Coding guidelines
+=================
 
 We try to follow as much as possible `PEP-8 <http://www.python.org/dev/peps/pep-0008/>`_
 
+String formatting
+-----------------
+
+A lot of the functionality of Total Open Station is centered around text manipulation,
+both when parsing input data and exporting to output formats. For this reason the
+maintainters decided to standardize on usage of string formatting with the aim of
+making the code more readable and consistent.
+
+In short:
+
+- use f-strings_ everywhere in the ``totalopenstation`` package
+- the scripts in the ``scripts`` directory are the three user-facing programs that
+  need their messages translated (see *Translations* below): use old-style string
+  formatting (also known as %-formatting or printf-style string formatting) for
+  all string formatting in these scripts
+- do not use the ``str.format()`` method
+
+F-strings were introduced in Python 3.6, they are faster than other methods and
+allow writing code that is both more readable and less verbose. However f-strings
+are not compatible with gettext, the module used for translation.
+
+.. _f-strings: https://www.python.org/dev/peps/pep-0498/
 
 Translations
 ============
