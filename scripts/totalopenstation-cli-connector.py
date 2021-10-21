@@ -1,4 +1,4 @@
-#! /usr/bin/env python
+#! /usr/bin/env python3
 # -*- coding: utf-8 -*-
 # filename: totalopenstation-cli-connector.py
 # Copyright 2008,2011 Stefano Costa <steko@iosa.it>
