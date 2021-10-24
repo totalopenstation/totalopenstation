@@ -33,7 +33,7 @@ In short:
 
 - use f-strings_ everywhere in the ``totalopenstation`` package
 - the scripts in the ``scripts`` directory are the three user-facing programs that
-  need their messages translated (see *Translations* below): use old-style string
+  need their messages translated (see translations_ below): use old-style string
   formatting (also known as %-formatting or printf-style string formatting) for
   all string formatting in these scripts
 - do not use the ``str.format()`` method
@@ -43,6 +43,8 @@ allow writing code that is both more readable and less verbose. However f-string
 are not compatible with gettext, the module used for translation.
 
 .. _f-strings: https://www.python.org/dev/peps/pep-0498/
+
+.. _translations:
 
 Translations
 ============
