@@ -71,6 +71,17 @@ included in the executable, without need to install.
 To upgrade to a newer version, just go to the Github download page again.
 No data will be lost!
 
+.. warning::
+   
+   In some cases, there may be a warning about a potential virus
+   threat in the downloaded ``.exe`` file. This is a false positive
+   and we are actively reaching out to antivirus vendors to make sure
+   that Total Open Station is recnognized as genuine software. On a
+   technical level, the Windows version is created by an automated
+   procedure run on GitHub, based solely on the open source code. See
+   `issue #140`_ for more details.
+
+.. _`issue #140`: https://github.com/totalopenstation/totalopenstation/issues/140
 
 Install the Prolific PL2032 drivers
 -----------------------------------

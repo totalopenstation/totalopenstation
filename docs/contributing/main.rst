@@ -332,20 +332,22 @@ distributing sources and *wheels*.
 Windows portable app
 ====================
 
-A portable Windows app is built with PyInstaller. From the root
-directory of the source repository of Total Open Station:
+A portable Windows app is built with PyInstaller. Using Git Bash, from
+the root directory of the source repository of Total Open Station::
 
-```
-python.exe -m venv pyinst-env
-source pyinst-env/Scripts/activate
-pip.exe install -e .
-pip.exe install PyInstaller
-pyinstaller.exe totalopenstation-gui.spec
-```
+    python.exe -m venv pyinst-env
+    source pyinst-env/Scripts/activate
+    pip.exe install -e .
+    pip.exe install PyInstaller
+    pyinstaller.exe totalopenstation-gui.spec
+
 
 This will create the file ``dist/totalopenstation.exe``, a portable
 single-file executable that will run from any compatible Windows system,
-even from USB sticks
+even from USB sticks.
+
+There is a GitHub action setup to automatically build the portable app
+for each release.
 
 .. warning::
 
