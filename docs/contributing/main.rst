@@ -38,11 +38,11 @@ In short:
   all string formatting in these scripts
 - do not use the ``str.format()`` method
 
-F-strings were introduced in Python 3.6, they are faster than other methods and
+F-strings_ were introduced in Python 3.6, they are faster than other methods and
 allow writing code that is both more readable and less verbose. However f-strings
 are not compatible with gettext, the module used for translation.
 
-.. _f-strings: https://www.python.org/dev/peps/pep-0498/
+.. _f-strings: https://docs.python.org/3.6/whatsnew/3.6.html#whatsnew36-pep498
 
 .. _translations:
 
