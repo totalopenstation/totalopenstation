@@ -20,5 +20,5 @@ class BaseTestOutput:
     def test_output_format(self, output_format, setup):
         tup = BUILTIN_OUTPUT_FORMATS[output_format]
         mod, cls, name = tup
-        outputclass = getattr(importlib.import_module('totalopenstation.output.' + mod), cls)
+        outputclass = getattr(importlib.import_module(f"totalopenstation.output.{mod}"), cls)
         assert outputclass(self.fp.points).process()

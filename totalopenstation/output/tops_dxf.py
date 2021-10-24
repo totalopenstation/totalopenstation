@@ -71,30 +71,30 @@ class OutputFormat(Builder):
             if self.separate_layers is True:
                 result += '  0\nLAYER\n'           # start definition of LAYER
                 result += '  5\n10\n'              # LAYER handle
-                result += '  2\n%s_POINTS\n' % l    # LAYER name
+                result += f'  2\n{l}_POINTS\n'    # LAYER name
                 result += ' 70\n0\n'              # LAYER is not frozen
-                result += ' 62\n%s\n' % (int(colors[l]) + 1) # LAYER color
+                result += f' 62\n{int(colors[l]) + 1}\n' # LAYER color
                 result += '  6\nCONTINUOUS\n'      # LAYER linetype
 
                 result += '  0\nLAYER\n'           # same as above
                 result += '  5\n10\n'
-                result += '  2\n%s_Z_COORDS\n' % l
+                result +=  f'  2\n{l}_Z_COORDS\n'
                 result += ' 70\n0\n'
-                result += ' 62\n%s\n' % (int(colors[l]) + 1)
+                result += f' 62\n{int(colors[l]) + 1}\n'
                 result += '  6\nCONTINUOUS\n'
 
                 result += '  0\nLAYER\n'           # ditto
                 result += '  5\n10\n'
-                result += '  2\n%s_LABELS\n' % l
+                result += f'  2\n{l}_LABELS\n'
                 result += ' 70\n0\n'
-                result += ' 62\n%s\n' % (int(colors[l]) + 1)
+                result += f' 62\n{int(colors[l]) + 1}\n'
                 result += '  6\nCONTINUOUS\n'
             else:
                 result += '  0\nLAYER\n'           # ditto
                 result += '  5\n10\n'
-                result += '  2\n%s\n' % l          # LAYER name w/o any suffix
+                result += f'  2\n{l}\n'          # LAYER name w/o any suffix
                 result += ' 70\n0\n'
-                result += ' 62\n%s\n' % (int(colors[l]) + 1)
+                result += f' 62\n{int(colors[l]) + 1}\n'
                 result += '  6\nCONTINUOUS\n'
 
         result += '  0\nENDTAB\n  0\nENDSEC\n'
@@ -107,26 +107,26 @@ class OutputFormat(Builder):
             geom = p.geometry
             if geom.geom_type == 'Point':
                 if self.separate_layers is True:
-                    layer_point = "%s_POINTS" % p_layer
-                    layer_z_text = "%s_Z_COORD" % p_layer
-                    layer_id_text = "%s_LABELS" % p_layer
+                    layer_point = f"{p_layer}_POINTS"
+                    layer_z_text = f"{p_layer}_Z_COORD"
+                    layer_id_text = f"{p_layer}_LABELS"
                 else:
                     layer_point = layer_z_text = layer_id_text = p_layer
                 p_yz = str(float(geom.y) - (self.text_height * 1.2))
 
                 # add point
                 result += '  0\nPOINT\n'
-                result += '  8\n%s\n' % layer_point
-                result += ' 10\n%s\n' % geom.x
-                result += ' 20\n%s\n' % geom.y
+                result += f'  8\n{layer_point}\n'
+                result += f' 10\n{geom.x}\n'
+                result += f' 20\n{geom.y}\n'
 
                 # add ID number
                 result += '  0\nTEXT\n'
-                result += '  1\n%s\n' % p.id
-                result += '  8\n%s\n' % layer_id_text
-                result += ' 10\n%s\n' % geom.x
-                result += ' 20\n%s\n' % geom.y
-                result += ' 40\n%01.2f\n' % self.text_height
+                result +=  f'  1\n{p.id}\n'
+                result +=  f'  8\n{layer_id_text}\n'
+                result +=  f' 10\n{geom.x}\n'
+                result +=  f' 20\n{geom.y}\n'
+                result += f' 40\n{self.text_height:01.2f}\n' 
                 result += ' 62\n256\n'
 
                 try:
@@ -136,27 +136,27 @@ class OutputFormat(Builder):
                 else:
                     # add Z value as string
                     result += '  0\nTEXT\n'
-                    result += '  1\n%s\n' % geom.z
-                    result += '  8\n%s\n' % layer_z_text
-                    result += ' 10\n%s\n' % geom.x
-                    result += ' 20\n%s\n' % p_yz
-                    result += ' 40\n%01.2f\n' % self.text_height
+                    result +=  f'  1\n{geom.z}\n'
+                    result +=  f'  8\n{layer_z_text}\n'
+                    result +=  f' 10\n{geom.x}\n'
+                    result +=  f' 20\n{p_yz}\n'
+                    result += f' 40\n{self.text_height:01.2f}\n'
                     result += ' 62\n256\n'
 
             elif geom.geom_type == 'LineString':
                 result += '  0\nPOLYLINE\n'
-                result += '  8\n%s\n' % p_layer
+                result +=  f'  8\n{p_layer}\n'
                 result += '  6\nCONTINUOUS\n'
                 result += ' 62\n256\n'
                 result += ' 66\n1\n'
                 result += ' 70\n0\n'
                 for v in geom.coords:
                     result += '  0\nVERTEX\n'
-                    result += '  8\n%s\n' % p_layer
-                    result += ' 10\n%s\n' % v[0] # x
-                    result += ' 20\n%s\n' % v[1] # y
+                    result +=  f'  8\n{p_layer}\n'
+                    result +=  f' 10\n{v[0]}\n' # x
+                    result +=  f' 20\n{v[1]}\n' # y
                     try:
-                        result += ' 30\n%s\n' % v[2] # z
+                        result +=  f' 30\n{v[2]}\n' # z
                     except IndexError:
                         result += ' 30\n0\n'
                 result += '  0\nSEQEND\n'

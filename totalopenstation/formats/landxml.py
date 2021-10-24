@@ -52,8 +52,9 @@ def _indent(elem, level=0):
 
     Note : Taken from https://stackoverflow.com/questions/749796/pretty-printing-xml-in-python/4590052#4590052
     """
-    i = "\n" + (level + 1)*"\t"
-    j = "\n" + level*"\t"
+    tab = '\t'
+    i = f"\n{(level + 1)*tab}"
+    j = f"\n{level*tab}"
     count = 1
     if len(elem):
         if elem.text is None or elem.text.strip() is None:
@@ -103,7 +104,7 @@ class Survey:
             pos = 0
     
             for index in range(mainTags.index(tag)):
-                if self.survey.find("./%s" % mainTags[index]) is not None:
+                if self.survey.find(f"./{mainTags[index]}") is not None:
                     pos += 1
                 else:
                     pos = 1
@@ -170,19 +171,18 @@ class Survey:
         if "pid" in kwargs:
             cgpoint.set("pntRef", str(kwargs["pid"]))
         if "x" in kwargs:
-            cgpoint.text = "%s %s" % (str(kwargs["x"]),
-                                         str(kwargs["y"]))
+            cgpoint.text = f"{kwargs['x']} {kwargs['y']}"
             if "z" in kwargs:
-                cgpoint.text += " %s" % (str(kwargs["z"]))
+                cgpoint.text += f" {kwargs['z']}"
         # attrib is not mandatory in CgPoints so this is a feature
         if "attrib" in kwargs:
-            cgpoint.set("featureRef", "feature%s" % (str(kwargs["point_name"])))
+            cgpoint.set("featureRef", f"feature{kwargs['point_name']}")
             feature = xml.Element("Feature")
-            feature.set("name", "feature%s" % (str(kwargs["point_name"])))
+            feature.set("name", f"feature{kwargs['point_name']}")
             # feature_property
             for i in range(len(kwargs["attrib"])):
                 xml.SubElement(feature, "Property",
-                              label="attrib%s" % (i + 1),
+                              label=f"attrib{i + 1}",
                               value=str(kwargs["attrib"][i]))
             cgpoints.append(feature)
 
@@ -217,7 +217,7 @@ class Survey:
 
         # Creation of InstrumentSetup tag, subelement of Survey
         instrument_setup = xml.Element("InstrumentSetup",
-                                       id="setup" + str(self.id),
+                                       id=f"setup{self.id}",
                                        stationName="",
                                        instrumentHeight="")
         # Fill of InstrumentSetup attributes
@@ -234,7 +234,7 @@ class Survey:
             # feature_property
             for i in range(len(kwargs["attrib"])):
                 xml.SubElement(feature, "Property",
-                               label="attrib%s" % (i + 1),
+                               label=f"attrib{i + 1}",
                                value=str(kwargs["attrib"][i]))
 
         # Creation of InstrumentPoint tag, subelement of InstrumentSetup
@@ -243,16 +243,14 @@ class Survey:
         if "pid" in kwargs:
             instrument_point.set("pntRef", str(kwargs["pid"]))
         if "instru_x" in kwargs:
-            instrument_point.text = "%s %s %s" % (str(kwargs["instru_x"]),
-                                                  str(kwargs["instru_y"]),
-                                                  str(kwargs["instru_z"]))
+            instrument_point.text = f"{kwargs['instru_x']} {kwargs['instru_y']} {kwargs['instru_z']}"
         # instrument_setup.append(instrument_point)
         self.survey.insert(pos, instrument_setup)
 
         # Creation of ObservationGroup tag, subelement of Survey
         observation_group = xml.Element("ObservationGroup",
-                                        id="o" + str(self.id),
-                                        setupID="setup" + str(self.id))
+                                        id=f"o{self.id}",
+                                        setupID=f"setup{self.id}")
         # Creation of Backsight tag, subelement of ObservationGroup
         if "circle" in kwargs or "back_x" in kwargs:
             backsight = xml.SubElement(observation_group, "Backsight",
@@ -267,9 +265,7 @@ class Survey:
                 if "back_name" in kwargs:
                     backsight_point.set("name", str(kwargs["back_name"]))
                 if "back_x" in kwargs:
-                    backsight_point.text = "%s %s %s" % (str(kwargs["back_x"]),
-                                                         str(kwargs["back_y"]),
-                                                         str(kwargs["back_z"]))
+                    backsight_point.text = f"{kwargs['back_x']} {kwargs['back_y']} {kwargs['back_z']}"
         self.survey.insert(pos * 2, observation_group)
 
         # ID can be raise
@@ -302,7 +298,7 @@ class Survey:
         # When creating a RawObservation tag, it should verified that an ObservationGroup tag exists
         if self.survey.find("./ObservationGroup[@id='o0']") is None:
             self.setup()
-        observation_group = self.survey.find("./ObservationGroup[@id='o%s']" % str(self.id - 1))
+        observation_group = self.survey.find(f"./ObservationGroup[@id='o{self.id - 1}']")
         # Creation of RawObservation tag, subelement of ObservationGroup
         raw_observation = xml.SubElement(observation_group, "RawObservation")
         # Fill of RawObservation attributes
@@ -332,10 +328,9 @@ class Survey:
         if "pid" in kwargs:
             target_point.set("pntRef", str(kwargs["pid"]))
         if "x" in kwargs:
-            target_point.text = "%s %s" % (str(kwargs["x"]),
-                                           str(kwargs["y"]))
+            target_point.text = f"{kwargs['x']} {kwargs['y']}"
             if "z" in kwargs:
-                target_point.text += " %s" % (str(kwargs["z"]))
+                target_point.text += f" {kwargs['z']}"
         # targetHeight is not mandatory in RawObservation so this is a feature
         if "ih" in kwargs and kwargs["ih"] is not None:
             if raw_observation.find("./Feature") is None:
@@ -362,7 +357,7 @@ class Survey:
             # feature_property
             for i in range(len(kwargs["attrib"])):
                 xml.SubElement(feature, "Property",
-                               label="attrib%s" % (i + 1),
+                               label=f"attrib{i + 1}",
                                value=str(kwargs["attrib"][i]))
 
     def to_string(self):
@@ -390,8 +385,8 @@ class LandXML:
         ctime = time.strftime("%H:%M:%S")
         self.root.set("date", cdate)
         self.root.set("time", ctime)
-        application = self.root.find("{%s}Application" % (DEFAULT_NS))
-        application.set("timeStamp", "%sT%s" % (cdate, ctime))
+        application = self.root.find(f"{{{DEFAULT_NS}}}Application")
+        application.set("timeStamp", f"{cdate}T{ctime}")
         pretty_xml = _indent(self.root)
         return xml.tostring(pretty_xml).decode()
 
@@ -492,7 +487,7 @@ class FormatParser(Parser):
             try:
                 point_name = cgpoint.attrib["name"]
             except KeyError:
-                point_name = "point_" + str(point_id)
+                point_name = f"point_{point_id}"
                 point_id += 1
             points_coord[point_name] = p
             feature = cgpoints.find(f"""default:Feature[@name='{cgpoint.attrib["featureRef"]}']""", ns)
@@ -553,7 +548,7 @@ class FormatParser(Parser):
                         try:
                             point_name = target_point.attrib["name"]
                         except KeyError:
-                            point_name = "point_" + point_id
+                            point_name = f"point_{point_id}"
                             point_id += 1
                     p = Point(target_point.text.split(" "))
                 try:

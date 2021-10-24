@@ -33,9 +33,9 @@ def to_sql(point, tablename):
         'tablename': tablename,
         'pid': point.id,
         'text': point.desc}
-    sql_string = "INSERT INTO %(tablename)s" % params
+    sql_string = f"INSERT INTO {params['tablename']}"
     sql_string += "(point_id, point_geom, point_text) VALUES"
-    sql_string += "(%(pid)s,GeomFromText('%(wkt)s'),'%(text)s');\n" % params
+    sql_string += f"({params['pid']},GeomFromText('{params['wkt']}'),'{params['text']}');\n"
     return sql_string
 
 
@@ -45,9 +45,9 @@ def to_wkt(point):
     try:
         point.geometry.z
     except ValueError:
-        wkt_representation = 'POINT ({g.x} {g.y})'.format(g=point.geometry)
+        wkt_representation = f'POINT ({point.geometry.x} {point.geometry.y})'
     else:
-        wkt_representation = 'POINT Z ({g.x} {g.y} {g.z})'.format(g=point.geometry)
+        wkt_representation = f'POINT Z ({point.geometry.x} {point.geometry.y} {point.geometry.z})'
     return wkt_representation
 
 

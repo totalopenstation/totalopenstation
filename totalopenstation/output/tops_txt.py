@@ -25,9 +25,9 @@ from . import Builder
 
 def to_txt(d):
     try:
-        string = "{geom.x} {geom.y} {geom.z}\n".format(geom=d.geometry)
+        string = f"{d.geometry.x} {d.geometry.y} {d.geometry.z}\n"
     except ValueError:
-        string = "{geom.x} {geom.y}\n".format(geom=d.geometry)
+        string = f"{d.geometry.x} {d.geometry.y}\n"
     return string
 
 class OutputFormat(Builder):

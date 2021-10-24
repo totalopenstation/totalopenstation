@@ -59,7 +59,7 @@ class FormatParser(Parser):
         comments = []
         for i in range(1, 10):
             try:
-                comments.append(self.tdict['4%s' % i]['data'].lstrip('0'))
+                comments.append(self.tdict[f'4{i}']['data'].lstrip('0'))
             except KeyError:
                 break
 
@@ -75,7 +75,7 @@ class FormatParser(Parser):
         attrib = []
         for i in range(1, 10):
             try:
-                attrib.append(self.tdict['7%s' % i]['data'].lstrip('0'))
+                attrib.append(self.tdict[ f'7{i}']['data'].lstrip('0'))
             except KeyError:
                 break
 
@@ -359,8 +359,7 @@ class FormatParser(Parser):
                 try:
                     comments = self.tdict['41']
                 except KeyError:
-                    logger.info("The line %s will not be computed as the code '%s' is not known"\
-                          % (pid, row[0:2]))
+                    logger.info(f"The line {pid} will not be computed as the code '{row[0:2]}' is not known")
                 else:
                     # Compute comments
                     comments = self._get_comments()
@@ -409,7 +408,7 @@ class FormatParser(Parser):
                                 attrib = self.tdict['71']
                             except KeyError:
                                 # No more possibilities
-                                logger.info("These data can not be compute : %s" % (self.tdict))
+                                logger.info(f"These data can not be compute : {self.tdict}")
                             else:
                                 # Compute remark or Attrib
                                 attrib = self._get_attrib()
@@ -460,7 +459,7 @@ class FormatParser(Parser):
                             station_name
                         except UnboundLocalError:
                             logger.info('There is no known station')
-                            station_name = 'station_' + str(station_id)
+                            station_name = f'station_{station_id}'
                             station_id += 1
                         f = Feature(p,
                                     desc='PO',
@@ -495,7 +494,7 @@ class FormatParser(Parser):
                     else:
                         logger.info('There is no known station')
                         p = UNKNOWN_STATION
-                        station_name = "station_" + str(station_id)
+                        station_name = f"station_{station_id}"
                         station_id += 1
                     f = Feature(p,
                                 desc='ST',

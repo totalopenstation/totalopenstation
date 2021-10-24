@@ -34,7 +34,7 @@ from totalopenstation.models import BUILTIN_MODELS
 t = gettext.translation('totalopenstation', './locale', fallback=True)
 _ = t.gettext
 
-usage = "usage: %prog [option] arg1 [option] arg2 ..."
+usage = _("Usage: %prog [option] arg1 [option] arg2 ...")
 
 parser = OptionParser(usage=usage)
 parser.add_option("-m",
@@ -42,27 +42,27 @@ parser.add_option("-m",
                 action="store",
                 type="string",
                 dest="model",
-                help="select input MODEL",
+                help=_("Select input MODEL"),
                 metavar="MODEL")
 parser.add_option("-p",
                 "--port",
                 action="store",
                 type="string",
                 dest="port",
-                help="select input SERIAL PORT",
+                help=_("Select input SERIAL PORT"),
                 metavar="PORT")
 parser.add_option("-o",
                 "--outfile",
                 action="store",
                 type="string",
                 dest="outfile",
-                help="select output FILE (do not specify for stdout)",
+                help=_("Select output FILE (do not specify for stdout)"),
                 metavar="FILE")
 
 (options, args) = parser.parse_args()
 
 if not (options.model and options.port):
-    sys.exit("Please specify your model and the port to download from")
+    sys.exit(_("Please specify your model and the port to download from"))
 
 modelclass = BUILTIN_MODELS[options.model]
 
@@ -72,9 +72,9 @@ if isinstance(modelclass, tuple):
         # builtin format parser
         mod, cls, name = modelclass
         modelclass = getattr(
-            __import__('totalopenstation.models.' + mod, None, None, [cls]), cls)
+            __import__('totalopenstation.models.%s' % mod, None, None, [cls]), cls)
     except ImportError as msg:
-        sys.exit(_('Error loading the required model module: %s' % msg))
+        sys.exit(_('Error loading the required model module: %s') % msg)
 
 station = modelclass(options.port)
 try:
@@ -83,13 +83,13 @@ try:
 except serial.SerialException as detail:
     sys.exit(detail)
 
-print("Now you can start download from %s device" % options.model)
+print(_("Now you can start download from %s device") % options.model)
 
 station.start()
 station.dl_started.wait()
-print("Download started...")
+print(_("Download started..."))
 station.dl_finished.wait()
-print("Download finished...")
+print(_("Download finished..."))
 result = station.result
 
 if options.outfile:
@@ -97,8 +97,8 @@ if options.outfile:
         e = open(options.outfile, 'w')
         e.write(result)
         e.close()
-        print("Downloaded data saved to out file %s" % options.outfile)
+        print(_("Downloaded data saved to out file %s") % options.outfile)
     else:
-        sys.exit("Specified output file already exists\n")
+        sys.exit(_("Specified output file already exists\n"))
 else:
     sys.stdout.write(result)
