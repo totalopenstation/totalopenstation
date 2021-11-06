@@ -7,11 +7,9 @@ Installing Total Open Station
 There are a few different ways to install Total Open Station,
 depending on your operating system.
 
-.. warning::
+.. note::
 
-    Version 0.4.0 of Total Open Station is the last version built on Python2. |br|
-    **Thus no support will be done on this version after 0.5 release as Python2 has reached his EOL.** |br|
-    Version 0.5+ will be Python3 only. |br|
+    Since version 0.5, Total Open Station is based on Python 3 only. Python 2 is now unsupported.
 
 GNU/Linux distributions
 =======================
