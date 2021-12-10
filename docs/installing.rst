@@ -7,11 +7,9 @@ Installing Total Open Station
 There are a few different ways to install Total Open Station,
 depending on your operating system.
 
-.. warning::
+.. note::
 
-    Version 0.4.0 of Total Open Station is the last version built on Python2. |br|
-    **Thus no support will be done on this version after 0.5 release as Python2 has reached his EOL.** |br|
-    Version 0.5+ will be Python3 only. |br|
+    Since version 0.5, Total Open Station is based on Python 3 only. Python 2 is now unsupported.
 
 GNU/Linux distributions
 =======================
@@ -71,6 +69,21 @@ included in the executable, without need to install.
 To upgrade to a newer version, just go to the Github download page again.
 No data will be lost!
 
+.. warning::
+   
+   In some cases, there may be a warning about a potential virus
+   threat in the downloaded ``.exe`` file. This is a false positive
+   and we are actively reaching out to antivirus vendors to make sure
+   that Total Open Station is recognized as genuine software. See
+   `issue #140`_ for more details.
+
+   On a technical level, the Windows version is created by an
+   automated procedure run on GitHub, based solely on the open source
+   code of Total Open Station and PyInstaller. See Github Action
+   workflow `pyinstaller.yml`_.
+
+.. _`issue #140`: https://github.com/totalopenstation/totalopenstation/issues/140
+.. _`pyinstaller.yml`: https://github.com/totalopenstation/totalopenstation/actions/workflows/pyinstaller.yml
 
 Install the Prolific PL2032 drivers
 -----------------------------------
