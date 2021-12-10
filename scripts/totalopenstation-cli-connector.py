@@ -1,7 +1,7 @@
 #! /usr/bin/env python3
 # -*- coding: utf-8 -*-
 # filename: totalopenstation-cli-connector.py
-# Copyright 2008,2011 Stefano Costa <steko@iosa.it>
+# Copyright 2021 Stefano Costa <steko@iosa.it>
 
 # This file is part of Total Open Station.
 
@@ -94,7 +94,7 @@ result = station.result
 
 if options.outfile:
     if not os.path.exists(options.outfile):
-        e = open(options.outfile, 'w')
+        e = open(options.outfile, "wb")
         e.write(result)
         e.close()
         print(_("Downloaded data saved to out file %s") % options.outfile)
