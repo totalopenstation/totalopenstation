@@ -26,7 +26,6 @@ import sys
 from contextlib import ExitStack
 from time import sleep, time
 from threading import Event, Thread
-from threading.exceptions import KeyboardInterrupt
 
 from totalopenstation.utils.upref import UserPrefs
 
@@ -71,16 +70,15 @@ class Connector(Thread):
         Supports an optional auto-save of the downloaded data to a file on disk,
         to avoid losing data when something goes wrong with the data transfer.'''
 
-
         with ExitStack() as stack:
             autosave_timestamp = int(time())
             autosave_filename = f"autosave-{autosave_timestamp}.tops"
             autosave = stack.enter_context(open(autosave_filename, "ab"))
 
             n = self.ser.in_waiting
-            result = []  # type: typing.List[bytes]
+            blocks = []
             read_block = self.ser.read(n)
-            result.append(read_block)
+            blocks.append(read_block)
             autosave.write(read_block)
 
             # looks like there is a maximum buffer of 4096 characters, so we have
@@ -90,11 +88,10 @@ class Connector(Thread):
 
             while self.ser.in_waiting > 0:
                 read_block = self.ser.read(self.ser.in_waiting)
-                result.append(read_block)
+                blocks.append(read_block)
                 autosave.write(read_block)
                 sleep(self.sleeptime)
-
-                self.result = result
+            self.result = b"".join(blocks)
 
     def fast_download(self):
         '''Implement a *fast* download method that requires less user input.
