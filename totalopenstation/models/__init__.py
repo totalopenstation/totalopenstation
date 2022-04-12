@@ -25,7 +25,6 @@ import sys
 
 from time import sleep
 from threading import Event, Thread
-from threading.exceptions import KeyboardInterrupt
 
 from totalopenstation.utils.upref import UserPrefs
 
