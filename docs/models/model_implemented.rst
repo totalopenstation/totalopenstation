@@ -36,6 +36,7 @@ measures.
 
 
 .. moduleauthor:: Sebastian Gutwein 
+.. versionadded:: 0.6
 
 Description
 -----------
