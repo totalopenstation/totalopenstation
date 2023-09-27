@@ -1,4 +1,3 @@
-  
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
 # filename: nikon_npl_322plus.py
