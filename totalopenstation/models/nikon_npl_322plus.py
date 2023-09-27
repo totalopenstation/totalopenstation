@@ -1,8 +1,8 @@
   
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
-# filename: nikon_npl_322+.py
-# Copyright 2008,2011 Stefano Costa <steko@iosa.it>
+# filename: nikon_npl_322plus.py
+# Copyright 2023 Sebastian Gutwein <bas@rdgland.com>
 
 # This file is part of Total Open Station.
 

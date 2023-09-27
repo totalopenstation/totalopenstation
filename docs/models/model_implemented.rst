@@ -31,7 +31,7 @@ measures.
 :ref:`if_leica_tcr_1205`
 
 =====================================
-:mod:`nikon_npl_322+` -- Nikon NPL-322+
+:mod:`nikon_npl_322plus` -- Nikon NPL-322+
 =====================================
 
 
