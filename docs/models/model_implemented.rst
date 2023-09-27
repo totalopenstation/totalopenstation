@@ -40,6 +40,7 @@ measures.
 Description
 -----------
 Tested on a NPL 322+ but should also work with other NPL 322 models. 
+
 Connection
 ----------
 Tested using a serial cable with an usb adaptor.
