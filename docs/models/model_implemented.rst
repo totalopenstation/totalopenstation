@@ -30,6 +30,34 @@ measures.
 
 :ref:`if_leica_tcr_1205`
 
+=====================================
+:mod:`nikon_npl_322plus` -- Nikon NPL-322+
+=====================================
+
+
+.. moduleauthor:: Sebastian Gutwein 
+.. versionadded:: 0.6
+
+Description
+-----------
+Tested on a NPL 322+ but should also work with other NPL 322 models. 
+
+Connection
+----------
+Tested using a serial cable with an usb adaptor.
+
+:Baudrate: 9600
+:Bytesize: 8
+:StopBits: 1
+:Parity: None
+
+Data format
+-----------
+
+The data format is in ASCII format.
+
+:ref:`if_nikon_raw`
+
 
 =====================================
 :mod:`nikon_npl_350` -- Nikon NPL-350
