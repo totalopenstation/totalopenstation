@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # filename: formats/__init__.py
 # Copyright 2008-2009 Luca Bianconi <luxetluc@yahoo.it>
-# Copyright 2008-2011 Stefano Costa <steko@iosa.it>
+# Copyright 2023 Stefano Costa <steko@iosa.it>
 
 # This file is part of Total Open Station.
 
@@ -25,7 +25,6 @@ import sys
 
 from time import sleep
 from threading import Event, Thread
-from threading.exceptions import KeyboardInterrupt
 
 from totalopenstation.utils.upref import UserPrefs
 
@@ -101,12 +100,8 @@ class Connector(serial.Serial, Thread):
         while self.inWaiting() == 0:
             sleep(self.sleeptime)
         self.dl_started.set()
-        try:
-            self.download()
-        except KeyboardInterrupt:
-            sys.exit()
-        else:
-            self.dl_finished.set()
+        self.download()
+        self.dl_finished.set()
 
     def run(self):
         self.fast_download()
