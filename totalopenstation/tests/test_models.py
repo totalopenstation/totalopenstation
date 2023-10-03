@@ -12,15 +12,17 @@ from totalopenstation.models import zeiss_elta_r55
 class TestModelSerialInputZeiss(unittest.TestCase):
     def setUp(self):
         with open(
-            "sample_data/zeiss_elta_r55/zeiss_elta_r55-REC_500.tops", "rb"
+            "sample_data/zeiss_elta_r55/zeiss_elta_r55-REC_500.tops",
+            "rb",
+            buffering=1
         ) as testdata:
-            self.testdata = testdata.read(4096)  # maximum buffer size of 4096
+            self.testdata = testdata.read() 
             print(len(self.testdata))
 
-    # @pytest.mark.parametrize(
-    #         "baudrate", [ 4800, 9600, 19200, 38400 ]
-    #     )
-    def test_download(self, baudrate=19200):
+    @pytest.mark.parametrize(
+             "baudrate", [ 4800, 9600, 19200, 38400 ]
+    )
+    def test_download(self, baudrate):
         conn = Connector("loop://", baudrate=baudrate)
         conn.ser.write(self.testdata)
         conn.download()
