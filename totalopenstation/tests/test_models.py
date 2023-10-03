@@ -14,15 +14,13 @@ class TestModelSerialInputZeiss(unittest.TestCase):
         with open(
             "sample_data/zeiss_elta_r55/zeiss_elta_r55-REC_500.tops",
             "rb",
-            buffering=1
+            buffering=0
         ) as testdata:
             self.testdata = testdata.read() 
             print(len(self.testdata))
 
-    @pytest.mark.parametrize(
-             "baudrate", [ 4800, 9600, 19200, 38400 ]
-    )
-    def test_download(self, baudrate):
+    @pytest.mark.parametrize("baudrate", [ 4800, 9600, 19200, 38400 ])
+    def test_download(self, baudrate=baudrate):
         conn = Connector("loop://", baudrate=baudrate)
         conn.ser.write(self.testdata)
         conn.download()
