@@ -19,8 +19,8 @@ class TestModelSerialInputZeiss(unittest.TestCase):
             self.testdata = testdata.read() 
             print(len(self.testdata))
 
-    @pytest.mark.parametrize("baudrate", [ 4800, 9600, 19200, 38400 ])
-    def test_download(self, baudrate=baudrate):
+    @pytest.fixture(scope="module", params= [ 4800, 9600, 19200, 38400 ])
+    def test_download(self, baudrate=request.param):
         conn = Connector("loop://", baudrate=baudrate)
         conn.ser.write(self.testdata)
         conn.download()
