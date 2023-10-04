@@ -1,5 +1,4 @@
 import serial
-import unittest
 import time
 import typing
 
@@ -8,23 +7,21 @@ import pytest
 from totalopenstation.models import Connector
 from totalopenstation.models import zeiss_elta_r55
 
-
-class TestModelSerialInputZeiss:
-    def setUp(self):
-        with open(
+@pytest.fixture
+def zeiss_data():
+    with open(
             "sample_data/zeiss_elta_r55/zeiss_elta_r55-REC_500.tops",
             "rb",
             buffering=0
         ) as testdata:
-            self.testdata = testdata.read() 
-            print(len(self.testdata))
+        return testdata.read() 
 
-    @pytest.mark.parametrize("baudrate", [ (4800), (9600), (19200), (38400) ])
-    def test_download(self, baudrate=baudrate): # noqa
+@pytest.mark.parametrize("baudrate", [ (4800), (9600), (19200), (38400) ])
+def test_download(zeiss_data, baudrate): # noqa
         conn = Connector("loop://", baudrate=baudrate) # noqa
-        conn.ser.write(self.testdata)
+        conn.ser.write(zeiss_data)
         conn.download()
-        assert conn.result == self.testdata
+        assert conn.result == zeiss_data
 
 
 # class TestAutoSave(unittest.TestCase):
