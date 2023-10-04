@@ -19,7 +19,7 @@ class TestModelSerialInputZeiss(unittest.TestCase):
             self.testdata = testdata.read() 
             print(len(self.testdata))
 
-    @pytest.mark.parametrize("baudrate", [ 4800, 9600, 19200, 38400 ])
+    @pytest.mark.parametrize("baudrate", [ (4800), (9600), (19200), (38400) ])
     def test_download(self, baudrate=baudrate): # noqa
         conn = Connector("loop://", baudrate=baudrate) # noqa
         conn.ser.write(self.testdata)
