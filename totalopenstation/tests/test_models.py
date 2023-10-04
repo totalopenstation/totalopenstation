@@ -9,7 +9,7 @@ from totalopenstation.models import Connector
 from totalopenstation.models import zeiss_elta_r55
 
 
-class TestModelSerialInputZeiss(unittest.TestCase):
+class TestModelSerialInputZeiss:
     def setUp(self):
         with open(
             "sample_data/zeiss_elta_r55/zeiss_elta_r55-REC_500.tops",
