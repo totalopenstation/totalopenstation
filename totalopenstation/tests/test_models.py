@@ -14,12 +14,18 @@ def zeiss_data():
             "rb",
             buffering=0
         ) as testdata:
-        return testdata.read() 
+        elta_r55 = testdata.read()
+        print(elta_r55)
+        return elta_r55
 
 @pytest.mark.parametrize("baudrate", [ (4800), (9600), (19200), (38400) ])
 def test_download(zeiss_data, baudrate): # noqa
-        conn = Connector("loop://", baudrate=baudrate) # noqa
-        conn.ser.write(zeiss_data)
+        conn = Connector("loop://", baudrate=baudrate, timeout=1) # noqa
+        print(conn, conn.ser)
+        print(conn.ser.is_open)
+        conn.ser.write(zeiss_data[0:4095])
+        conn.download()
+        conn.ser.write(zeiss_data[4096:8191])
         conn.download()
         assert conn.result == zeiss_data
 
