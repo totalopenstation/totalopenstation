@@ -3,9 +3,8 @@
 ====================
 
 
-.. image:: https://travis-ci.com/totalopenstation/totalopenstation.svg?branch=master
-  :target: https://travis-ci.com/totalopenstation/totalopenstation
-  :alt: Travis
+.. image:: https://github.com/totalopenstation/totalopenstation/actions/workflows/pytest.yml/badge.svg
+  :alt: pytest continuous integration 
 
 .. image:: https://img.shields.io/pypi/v/totalopenstation
   :target: https://pypi.org/project/totalopenstation/
@@ -14,10 +13,6 @@
 .. image:: https://img.shields.io/readthedocs/totalopenstation
   :target: https://totalopenstation.readthedocs.io/
   :alt: Read the Docs
-
-.. image:: https://img.shields.io/matrix/totalopenstation:matrix.org
-   :target: https://matrix.to/#/#totalopenstation:matrix.org
-   :alt: Matrix
 
 |
 
