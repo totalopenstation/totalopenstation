@@ -27,13 +27,20 @@ class FormatParser(Parser):
 
     def is_point(self, line):
         is_point = False
+
         if "5=" and "4=" and "37=" and "38=" and "39=" in line:
             is_point = True
-        return is_point
 
+        return is_point
+    def value(self):
+        value = False
+        if "0=" in self.data:
+            value = True
+        return value
     def get_point(self, chunk):
         tokens = {}
         rows = chunk.splitlines()
+
         for i in rows:
             if i.startswith('5='):
                 tokens['n'] = i.split('=')[1]
@@ -45,20 +52,32 @@ class FormatParser(Parser):
                 tokens['y'] = i.split('=')[1]
             if i.startswith('39='):
                 tokens['z'] = i.split('=')[1]
+
         tokens['text'] = rows[0]
 
         try:
-            p = Point(tokens['y'],
-                      tokens['x'],
-                      tokens['z'])
-            f = Feature(p,
-                        desc=tokens['p'],
-                        id=tokens['n'])
+            if self.value():
+                p = Point(tokens['y'],
+                          tokens['x'],
+                          tokens['z'])
+                f = Feature(p,
+                            desc=tokens['p'],
+                            id=tokens['n'])
+
+            else:
+                p = Point(tokens['y'],
+                          tokens['x'],
+                          tokens['z'])
+                f = Feature(p,
+                            desc=tokens['p'],
+                            id=+1)
         except KeyError:
             pass
         else:
             return f
-
     def split_points(self):
-        splitted_points = self.data.split('0=')
+        if self.value():
+            splitted_points = self.data.split("0=")
+        else:
+            splitted_points = self.data.split("5=")
         return splitted_points

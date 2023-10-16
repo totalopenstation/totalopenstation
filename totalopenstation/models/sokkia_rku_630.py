@@ -1,8 +1,7 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
-# filename: topcon gpt 3005.py
+# filename: trimble.py
 # Copyright 2021 Enzo Cocca <enzo.ccc@gmail.com>
-
 
 # This file is part of Total Open Station.
 
@@ -26,5 +25,10 @@ from . import Connector
 
 class ModelConnector(Connector):
 
+    """Sokkia RKU 630"""
+
     def __init__(self, port):
-        Connector.__init__(self, port=port, baudrate=9600)
+        Connector.__init__(
+            self,
+            port=port,
+            baudrate=9600)

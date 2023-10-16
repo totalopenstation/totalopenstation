@@ -20,7 +20,7 @@ class TestSokkiaParser(unittest.TestCase):
         self.assertAlmostEqual(self.fp.points[0].geometry.coords[0][2], 20.053)
 
     def test_feature(self):
-        self.assertEqual(self.fp.points[0].id, 31)
+        self.assertEqual(self.fp.points[0].id, '00000031')
         self.assertEqual(self.fp.points[0].desc, '11')
         self.assertEqual(self.fp.points[1].desc, '11')
 

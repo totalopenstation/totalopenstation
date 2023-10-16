@@ -17,6 +17,8 @@ type of measurements:
 - prism height is marked by code ``03NM``
 - polar measurements are marked by the ``09F1`` code
 - cartesian measurements are marked by ``08TP``
+- backsight observation (foresight reference observation is defined using notes)
+  are marked by ``07TP``
 - base stations are marked by ``02TP``, because their coordinates are
   entered by hand as cartesian coordinates
 
