@@ -22,28 +22,29 @@
 
 import logging
 
-from pygeoif import geometry as g
+import pygeoif
+import pygeoif.geometry
 from math import pi
 
 
 logger = logging.getLogger(__name__).addHandler(logging.NullHandler())
 
-class Point(g.Point):
+class Point(geometry.Point):
     pass
 
 
-class LineString(g.LineString):
+class LineString(geometry.LineString):
     pass
 
 
-class Feature(g.Feature):
+class Feature(pygeoif.Feature):
     '''A GeoJSON-like Feature object.'''
 
     def __init__(self, geom, desc, id=None, **properties):
-        g.Feature.__init__(self, geom, properties, feature_id=id)
+        pygeoif.Feature.__init__(self, geom, properties, feature_id=id)
         self.properties['desc'] = desc
 
-    @g.Feature.geometry.setter
+    @pygeoif.Feature.geometry.setter
     def geometry(self, value):
         '''Set the geometry attribute.
 
@@ -67,7 +68,7 @@ class Feature(g.Feature):
         return self.properties['point_name']
 
 
-class FeatureCollection(g.FeatureCollection):
+class FeatureCollection(pygeoif.FeatureCollection):
     pass
 
 
