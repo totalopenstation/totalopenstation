@@ -137,7 +137,8 @@ class Parser:
             A :class:`formats.LineString` object.
         '''
 
-        return LineString([f.geometry for f in self.points])
+        points = [f.geometry for f in self.points]
+        return LineString.from_points(*points)
 
     @property
     def points(self):
