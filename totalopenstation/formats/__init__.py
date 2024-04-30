@@ -29,11 +29,11 @@ from math import pi
 
 logger = logging.getLogger(__name__).addHandler(logging.NullHandler())
 
-class Point(geometry.Point):
+class Point(pygeoif.geometry.Point):
     pass
 
 
-class LineString(geometry.LineString):
+class LineString(pygeoif.geometry.LineString):
     pass
 
 
