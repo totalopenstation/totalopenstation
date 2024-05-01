@@ -483,7 +483,7 @@ class FormatParser(Parser):
         cgpoints = survey.find("default:CgPoints", ns)
         point_id = 100
         for cgpoint in cgpoints.findall("default:CgPoint", ns):
-            p = Point(cgpoint.text.split(" "))
+            p = Point(*cgpoint.text.split(" ")) # unpack values
             try:
                 point_name = cgpoint.attrib["name"]
             except KeyError:
@@ -550,7 +550,7 @@ class FormatParser(Parser):
                         except KeyError:
                             point_name = f"point_{point_id}"
                             point_id += 1
-                    p = Point(target_point.text.split(" "))
+                    p = Point(*target_point.text.split(" ")) # unpack values
                 try:
                     azimuth = rawobservation.attrib["azimuth"]
                 except KeyError:
