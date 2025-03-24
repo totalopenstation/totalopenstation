@@ -22,28 +22,34 @@
 
 import logging
 
-from pygeoif import geometry as g
+import pygeoif
 from math import pi
 
 
 logger = logging.getLogger(__name__).addHandler(logging.NullHandler())
 
-class Point(g.Point):
+class Point(pygeoif.Point):
+    def __init__(self, *args, **kwargs):
+        try:
+            pygeoif.Point.__init__(self, *args, **kwargs)
+        except TypeError:
+            float_args = (float(a) for a in args)
+            float_kwargs = dict([a, float(x)] for a, x in kwargs.items())
+            pygeoif.Point.__init__(self, *float_args, **float_kwargs)
+
+
+class LineString(pygeoif.LineString):
     pass
 
 
-class LineString(g.LineString):
-    pass
-
-
-class Feature(g.Feature):
+class Feature(pygeoif.Feature):
     '''A GeoJSON-like Feature object.'''
 
     def __init__(self, geom, desc, id=None, **properties):
-        g.Feature.__init__(self, geom, properties, feature_id=id)
+        pygeoif.Feature.__init__(self, geom, properties, feature_id=id)
         self.properties['desc'] = desc
 
-    @g.Feature.geometry.setter
+    @pygeoif.Feature.geometry.setter
     def geometry(self, value):
         '''Set the geometry attribute.
 
@@ -67,7 +73,7 @@ class Feature(g.Feature):
         return self.properties['point_name']
 
 
-class FeatureCollection(g.FeatureCollection):
+class FeatureCollection(pygeoif.FeatureCollection):
     pass
 
 
@@ -131,7 +137,8 @@ class Parser:
             A :class:`formats.LineString` object.
         '''
 
-        return LineString([f.geometry for f in self.points])
+        points = [f.geometry for f in self.points]
+        return LineString.from_points(*points)
 
     @property
     def points(self):
