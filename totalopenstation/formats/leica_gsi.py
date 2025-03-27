@@ -208,7 +208,15 @@ class FormatParser(Parser):
                     'data': t[7:],
                 }
                 self.tdict[data['wordindex']] = data
-
+            
+            if list(self.tdict.keys()) == (['11', '21', '22', '31', '32']):
+                self.tdict['84'] = {'wordindex': '84', 'info': '...0', 'sign': '+', 'data': '00000000'}
+                self.tdict['85'] = {'wordindex': '85', 'info': '...0', 'sign': '+', 'data': '00000000'}
+                self.tdict['86'] = {'wordindex': '86', 'info': '...0', 'sign': '+', 'data': '00000000'}
+                self.tdict['87'] = {'wordindex': '87', 'info': '...0', 'sign': '+', 'data': '00000000'}
+                self.tdict['88'] = {'wordindex': '88', 'info': '...0', 'sign': '+', 'data': '00000000'}
+                logger.info(f"Old GSI version detected, some values have been set to 0 by default")
+                logger.info(f"see https://github.com/totalopenstation/totalopenstation/issues/168")
             try:
                 pid = int(self.tdict['11']['info'])
                 text = self.tdict['11']['data'].lstrip('0')

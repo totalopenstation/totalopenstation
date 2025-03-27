@@ -70,3 +70,20 @@ class TestLeicaGSI8Output(BaseTestOutput):
     def setup(self):
         with open('sample_data/leica_gsi/leica_gsi16_gurob.gsi') as testdata:
             self.fp = FormatParser(testdata.read())
+
+
+class TestLeicaGSIOldParser(unittest.TestCase):
+    def setUp(self):
+        with open('sample_data/leica_gsi/RILIEVO.gsi') as testdata:
+            self.fp = FormatParser(testdata.read())
+
+    def test_all_points_processed(self):
+        self.assertEqual(len(self.fp.points), 23)
+
+    def test_values(self):
+        self.assertEqual(self.fp.points[2].id, 3)
+        self.assertEqual(self.fp.points[2].desc, 'PT')
+        self.assertEqual(self.fp.points[2].point_name, '102')
+        self.assertAlmostEqual(self.fp.points[2].geometry.x, 4.49963916)
+        self.assertAlmostEqual(self.fp.points[2].geometry.y, -2.51722711)
+        self.assertAlmostEqual(self.fp.points[2].geometry.z, -0.30665937)
