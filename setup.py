@@ -31,7 +31,7 @@ setup(
         'Programming Language :: Python :: 3.12',
         'Topic :: Scientific/Engineering :: GIS',
         ],
-    keywords='survey geodimeter fieldwork',
+    keywords='survey, geodimeter, fieldwork, format conversion',
     install_requires=['pyserial==3.5', 'pygeoif==1.4.0'],
     tests_require=['pytest>=5.1'],
     include_package_data = True,
