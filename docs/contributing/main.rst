@@ -107,21 +107,6 @@ independently, with the exception of the user interfaces.
 In other words, the classes for reading specific formats and those for writing
 well-known formats are entirely usable on their own.
 
-This is a feature.
-
-Example: a web app for converting total station data
-====================================================
-
-If you want to see how to write a web app to convert total station
-data in 50 lines of Python code, check out `TOPS in the Cloud
-<https://bitbucket.org/steko/tops-cloud/overview>`_. It is made with
-`Flask <http://flask.pocoo.org/>`_ and shows how to use Total Open
-Station as a programming library.
-
-.. warning::
-    TOPS in the Cloud is not maintained and does not receive security
-    updates. Please don't use it in production.
-
 ==================================
 Developing with Total Open Station
 ==================================
@@ -304,8 +289,8 @@ For more in-depth knowledge of classes, we encourage reading the code @ `Github`
 Documentation
 =============
 
-The documentation is included in the source tree, and is published
-online at `http://totalopenstation.readthedocs.org/ <http://totalopenstation.readthedocs.org/>`_.
+The documentation is included in the ``docs`` directory of the source tree, and is published
+online at `http://totalopenstation.readthedocs.io/ <http://totalopenstation.readthedocs.io/>`_.
 
 Manual pages for the three scripts provided with TOPS are not
 available at the moment.
@@ -321,12 +306,12 @@ A *source distribution* is made using::
 
   python setup.py sdist
 
-A *built distribution* is made using (e.g. for Windows installer)::
+A *built distribution* is made using the *wheel* format (this requires the ``wheel`` package)::
 
-  python setup.py bdist --formats wininst
+  python setup.py bdist_wheel
 
 We are currently following the `Python Packaging User Guide
-<https://packaging.python.org/en/latest/distributing.html>`_ and
+<https://packaging.python.org/>`_ and
 distributing sources and *wheels*.
 
 Windows portable app
