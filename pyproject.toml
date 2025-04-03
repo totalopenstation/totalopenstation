@@ -43,11 +43,11 @@ Repository = "https://github.com/totalopenstation/totalopenstation.git"
 Issues = "https://github.com/totalopenstation/totalopenstation/issues"
 
 [project.scripts]
-totalopenstation-cli-parser: "scripts/totalopenstation-cli-parser.py",
-totalopenstation-cli-connector: "scripts/totalopenstation-cli-connector.py",
+totalopenstation-cli-parser = "scripts/totalopenstation-cli-parser.py"
+totalopenstation-cli-connector = "scripts/totalopenstation-cli-connector.py"
 
 [project.gui-scripts]
-totalopenstation-gui: "scripts/totalopenstation-gui.py"
+totalopenstation-gui = "scripts/totalopenstation-gui.py"
 
 [tool.setuptools.dynamic]
 version = {attr = "totalopenstation.__version__"}
