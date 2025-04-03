@@ -58,6 +58,13 @@ Yet, this format is not parametric and values return are the following::
 
     PID, type, Point Name, x, y, angle, z_angle, distance, th, ih, circle, station
 
+Trimble CSV
+-----------
+
+.. versionadded:: 0.7
+
+This module contains also a variant CSV output with the same data columns,
+but in a different order, Trimble CSV (used for LandSurveyCodesImport QGIS plugin)::
 
 ======================
 :mod:`tops_dat` -- DAT
