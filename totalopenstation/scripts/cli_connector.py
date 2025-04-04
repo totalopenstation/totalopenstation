@@ -1,7 +1,7 @@
 #! /usr/bin/env python3
 # -*- coding: utf-8 -*-
 # filename: totalopenstation-cli-connector.py
-# Copyright 2021 Stefano Costa <steko@iosa.it>
+# Copyright 2025 Stefano Costa <steko@iosa.it>
 
 # This file is part of Total Open Station.
 
@@ -34,71 +34,76 @@ from totalopenstation.models import BUILTIN_MODELS
 t = gettext.translation('totalopenstation', './locale', fallback=True)
 _ = t.gettext
 
-usage = _("Usage: %prog [option] arg1 [option] arg2 ...")
+def cli_connector():
+    usage = _("Usage: %prog [option] arg1 [option] arg2 ...")
 
-parser = OptionParser(usage=usage)
-parser.add_option("-m",
-                "--model",
-                action="store",
-                type="string",
-                dest="model",
-                help=_("Select input MODEL"),
-                metavar="MODEL")
-parser.add_option("-p",
-                "--port",
-                action="store",
-                type="string",
-                dest="port",
-                help=_("Select input SERIAL PORT"),
-                metavar="PORT")
-parser.add_option("-o",
-                "--outfile",
-                action="store",
-                type="string",
-                dest="outfile",
-                help=_("Select output FILE (do not specify for stdout)"),
-                metavar="FILE")
+    parser = OptionParser(usage=usage)
+    parser.add_option("-m",
+                    "--model",
+                    action="store",
+                    type="string",
+                    dest="model",
+                    help=_("Select input MODEL"),
+                    metavar="MODEL")
+    parser.add_option("-p",
+                    "--port",
+                    action="store",
+                    type="string",
+                    dest="port",
+                    help=_("Select input SERIAL PORT"),
+                    metavar="PORT")
+    parser.add_option("-o",
+                    "--outfile",
+                    action="store",
+                    type="string",
+                    dest="outfile",
+                    help=_("Select output FILE (do not specify for stdout)"),
+                    metavar="FILE")
 
-(options, args) = parser.parse_args()
+    (options, args) = parser.parse_args()
 
-if not (options.model and options.port):
-    sys.exit(_("Please specify your model and the port to download from"))
+    if not (options.model and options.port):
+        sys.exit(_("Please specify your model and the port to download from"))
 
-modelclass = BUILTIN_MODELS[options.model]
+    modelclass = BUILTIN_MODELS[options.model]
 
-# import input format parser
-if isinstance(modelclass, tuple):
+    # import input format parser
+    if isinstance(modelclass, tuple):
+        try:
+            # builtin format parser
+            mod, cls, name = modelclass
+            modelclass = getattr(
+                __import__('totalopenstation.models.%s' % mod, None, None, [cls]), cls)
+        except ImportError as msg:
+            sys.exit(_('Error loading the required model module: %s') % msg)
+
+    station = modelclass(options.port)
     try:
-        # builtin format parser
-        mod, cls, name = modelclass
-        modelclass = getattr(
-            __import__('totalopenstation.models.%s' % mod, None, None, [cls]), cls)
-    except ImportError as msg:
-        sys.exit(_('Error loading the required model module: %s') % msg)
+        station.close()  # sometimes the port will be already open for no reason
+        station.open()
+    except serial.SerialException as detail:
+        sys.exit(detail)
 
-station = modelclass(options.port)
-try:
-    station.close()  # sometimes the port will be already open for no reason
-    station.open()
-except serial.SerialException as detail:
-    sys.exit(detail)
+    print(_("Now you can start download from %s device") % options.model)
 
-print(_("Now you can start download from %s device") % options.model)
+    station.start()
+    station.dl_started.wait()
+    print(_("Download started..."))
+    station.dl_finished.wait()
+    print(_("Download finished..."))
+    result = station.result
 
-station.start()
-station.dl_started.wait()
-print(_("Download started..."))
-station.dl_finished.wait()
-print(_("Download finished..."))
-result = station.result
-
-if options.outfile:
-    if not os.path.exists(options.outfile):
-        e = open(options.outfile, "wb")
-        e.write(result)
-        e.close()
-        print(_("Downloaded data saved to out file %s") % options.outfile)
+    if options.outfile:
+        if not os.path.exists(options.outfile):
+            e = open(options.outfile, "wb")
+            e.write(result)
+            e.close()
+            print(_("Downloaded data saved to out file %s") % options.outfile)
+        else:
+            sys.exit(_("Specified output file already exists\n"))
     else:
-        sys.exit(_("Specified output file already exists\n"))
-else:
-    sys.stdout.write(result)
+        sys.stdout.write(result)
+
+
+if __name__ == '__main__':
+    cli_connector()

@@ -40,10 +40,10 @@ Issues = "https://github.com/totalopenstation/totalopenstation/issues"
 
 [project.scripts]
 totalopenstation-cli-parser = "totalopenstation.scripts.cli_parser:cli_parser"
-#totalopenstation-cli-connector = "scripts/totalopenstation-cli-connector.py"
+totalopenstation-cli-connector = "totalopenstation.scripts.cli_connector:cli_connector"
 
 [project.gui-scripts]
-#totalopenstation-gui = "scripts/totalopenstation-gui.py"
+totalopenstation-gui = "totalopenstation.scripts.gui:gui"
 
 [tool.setuptools.dynamic]
 version = { attr = "totalopenstation.__version__" }

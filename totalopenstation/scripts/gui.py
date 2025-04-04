@@ -1,7 +1,7 @@
 #! /usr/bin/env python3
 # -*- coding: utf-8 -*-
 # filename: totalopenstation-gui.py
-# Copyright 2008-2019 Stefano Costa <steko@iosa.it>
+# Copyright 2008-2025 Stefano Costa <steko@iosa.it>
 # Copyright 2010,2012 Luca Bianconi <luxetluc@yahoo.it>
 #
 # This file is part of Total Open Station.
@@ -119,7 +119,7 @@ class AboutDialog(tkinter.simpledialog.Dialog):
     def body(self, master):
         title = "Total Open Station %s" % totalopenstation.__version__
         message = _("""
-Total Open Station is copyright 2008-2019 Stefano Costa, Damien
+Total Open Station is copyright 2008-2025 Stefano Costa, Damien
 Gaignon, Luca Bianconi and the IOSA project, under the GNU GPL v3
 or any later version.
 
@@ -802,14 +802,14 @@ class Tops:
         self.text_area.update_idletasks()
 
 
-root = Tk()
-Tops = Tops(root)
+def gui():
+    root = Tk()
+    app = Tops(root)
 
+    #save user's preferences (model, port and sleeptime if custom model)
 
-#save user's preferences (model, port and sleeptime if custom model)
-
-atexit.register(Tops.upref.setvalues,
-                {'model': Tops.optionMODEL_value.get(),
-                 'port': Tops.option1_value.get(),
-                 'sleeptime': Tops.option6_value.get(),
-                 })
+    atexit.register(app.upref.setvalues,
+                    {'model': app.optionMODEL_value.get(),
+                    'port': app.option1_value.get(),
+                    'sleeptime': app.option6_value.get(),
+                    })
