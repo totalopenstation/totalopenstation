@@ -7,19 +7,19 @@ class Builder:
     def __init__(self, data):
         """Init method which **must** be overridden in the child class
         to have a working builder.
-        
+
         Args:
         data (:class:`formats.Parser`): A list of :class:`formats.Feature`
         """
 
         self.data = data
-    
+
     def process(self):
         """Action for building the output string.
-        
+
         This method **must** be overridden in the child class
         to have a working builder.
-        
+
         Process the input data (processing data).
         This is because we want to keep the generation of output separated from
         saving it to disk.
@@ -38,5 +38,6 @@ BUILTIN_OUTPUT_FORMATS = {
     'dat': ('tops_dat', 'OutputFormat', 'DAT'),
     'txt': ('tops_txt', 'OutputFormat', 'Text'),
     'geojson': ('tops_geojson', 'OutputFormat', 'GeoJSON'),
-    'landxml': ('tops_landxml', 'OutputFormat', 'LandXML')
+    'landxml': ('tops_landxml', 'OutputFormat', 'LandXML'),
+    'trimblecsv': ('tops_csv', 'TrimbleOutputFormat', 'Trimble CSV')
     }

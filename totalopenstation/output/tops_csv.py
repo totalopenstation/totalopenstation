@@ -75,3 +75,72 @@ class OutputFormat(Builder):
             self.writer.writerow(row)
 
         return self.output.getvalue()
+
+class TrimbleOutputFormat(OutputFormat):
+    """
+    Exports points data in Trimble CSV format,
+    used for LandSurveyCodesImport QGIS plugin.
+
+    ``data`` should be an iterable containing Feature objects.
+    """
+
+    def __init__(self, data):
+        self.data = data
+        self.output = io.StringIO()
+        fieldnames = [
+            "id",
+            "x",
+            "y",
+            "z",
+            "type",
+            "point_name",
+            "angle",
+            "z_angle",
+            "distance",
+            "th",
+            "ih",
+            "circle",
+            "station",
+        ]
+        self.writer = csv.DictWriter(
+            self.output, quoting=csv.QUOTE_NONNUMERIC, fieldnames=fieldnames
+        )
+        self.writer.writeheader()
+
+    def process(self):
+
+        for feature in self.data:
+            row = {
+                "id": feature.id,
+                "type": feature.desc,
+                "x": feature.geometry.x,
+                "y": feature.geometry.y,
+            }
+
+            try:  # not all input formats include z coordinates
+                row["z"] = feature.geometry.z
+            except ValueError:
+                row["z"] = ""
+
+            # a few cases with simple yes/no logic
+            for prop in ["point_name", "ih", "circle", "z_angle", "th"]:
+                row[prop] = feature.properties.get(
+                    prop, ""
+                )  # empty string as default value
+
+            # not all input formats include azimuth/angle
+            row["angle"] = feature.properties.get(
+                "azimuth", feature.properties.get("angle", "")
+            )
+
+            # not all input formats include distance
+            row["distance"] = feature.properties.get(
+                "slope_dist", feature.properties.get("horizontal_dist", "")
+            )
+
+            # not all input formats include station name
+            row["station"] = feature.properties.get("st_name", "")
+
+            self.writer.writerow(row)
+
+        return self.output.getvalue()
