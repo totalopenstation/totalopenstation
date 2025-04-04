@@ -36,149 +36,148 @@ import totalopenstation.output
 t = gettext.translation('totalopenstation', './locale', fallback=True)
 _ = t.gettext
 
-usage = _("Usage: %prog [option] arg1 [option] arg2 ...")
+def  cli_parser():
+    usage = _("Usage: %prog [option] arg1 [option] arg2 ...")
 
-parser = OptionParser(usage=usage)
-parser.add_option("-i",
-                "--infile",
-                action="store",
-                type="string",
-                dest="infile",
-                help=_("Select input FILE  (do not specify for stdin)"),
-                metavar="FILE")
-parser.add_option("-o",
-                "--outfile",
-                action="store",
-                type="string",
-                dest="outfile",
-                help=_("Select output FILE (do not specify for stdout)"),
-                metavar="FILE")
-parser.add_option("-f",
-                "--input-format",
-                action="store",
-                type="string",
-                dest="informat",
-                help=_("Select input FORMAT"),
-                metavar="FORMAT")
-parser.add_option("--2d",
-                  action="store_true",
-                  dest="xy_only",
-                  help=_("Exclude Z coordinates, output only 2D data"),
-                  metavar="ONLY2D")
-parser.add_option("-t",
-                "--output-format",
-                action="store",
-                type="string",
-                dest="outformat",
-                help=_("Select input FORMAT"),
-                metavar="FORMAT")
-parser.add_option("-r",
-                "--raw",
-                action="store_true",
-                dest="raw",
-                help=_("Enhanced parsed file process"))
-parser.add_option(
-                "--overwrite",
-                action="store_true",
-                dest="overwrite",
-                default=False,
-                help=_("Overwrite existing output file"))
-parser.add_option(
-    "--list",
-    action="store_true",
-    dest="list",
-    default=False,
-    help=_("List the available input and output formats"))
-parser.add_option(
-                "--log",
-                action="store",
-                dest="loglevel",
-                default="WARNING",
-                type="string",
-                help=_("Minimum log level"))
-parser.add_option(
-                "--logtofile",
-                action="store_true",
-                dest="logotfile",
-                default=False,
-                help=_("Log to file"))
+    parser = OptionParser(usage=usage)
+    parser.add_option("-i",
+                    "--infile",
+                    action="store",
+                    type="string",
+                    dest="infile",
+                    help=_("Select input FILE  (do not specify for stdin)"),
+                    metavar="FILE")
+    parser.add_option("-o",
+                    "--outfile",
+                    action="store",
+                    type="string",
+                    dest="outfile",
+                    help=_("Select output FILE (do not specify for stdout)"),
+                    metavar="FILE")
+    parser.add_option("-f",
+                    "--input-format",
+                    action="store",
+                    type="string",
+                    dest="informat",
+                    help=_("Select input FORMAT"),
+                    metavar="FORMAT")
+    parser.add_option("--2d",
+                    action="store_true",
+                    dest="xy_only",
+                    help=_("Exclude Z coordinates, output only 2D data"),
+                    metavar="ONLY2D")
+    parser.add_option("-t",
+                    "--output-format",
+                    action="store",
+                    type="string",
+                    dest="outformat",
+                    help=_("Select input FORMAT"),
+                    metavar="FORMAT")
+    parser.add_option("-r",
+                    "--raw",
+                    action="store_true",
+                    dest="raw",
+                    help=_("Enhanced parsed file process"))
+    parser.add_option(
+                    "--overwrite",
+                    action="store_true",
+                    dest="overwrite",
+                    default=False,
+                    help=_("Overwrite existing output file"))
+    parser.add_option(
+        "--list",
+        action="store_true",
+        dest="list",
+        default=False,
+        help=_("List the available input and output formats"))
+    parser.add_option(
+                    "--log",
+                    action="store",
+                    dest="loglevel",
+                    default="WARNING",
+                    type="string",
+                    help=_("Minimum log level"))
+    parser.add_option(
+                    "--logtofile",
+                    action="store_true",
+                    dest="logotfile",
+                    default=False,
+                    help=_("Log to file"))
 
 
-(options, args) = parser.parse_args()
+    (options, args) = parser.parse_args()
 
-logger = logging.getLogger()
-logger.setLevel(options.loglevel.upper())
-if options.logotfile:
-    handler = logging.FileHandler("tops.log")
-else:
-    handler = logging.StreamHandler()
-formatter = logging.Formatter('%(asctime)s -- %(filename)s -- %(levelname)s -- %(funcName)s -- %(message)s')
-handler.setFormatter(formatter)
-logger.addHandler(handler)
-
-def list_formats():
-    '''Print a list of the supported input and output formats.'''
-
-    mod_string = _("List of supported input formats:\n%s\n") % ('-' * 30)
-    for k, v in sorted(totalopenstation.formats.BUILTIN_INPUT_FORMATS.items()):
-        mod_string += "%s%s\n" % (k.ljust(20), v[2])
-    mod_string += "\n\n"
-
-    mod_string += _("List of supported output formats:\n%s\n") % ('-' * 30)
-    for k, v in sorted(totalopenstation.output.BUILTIN_OUTPUT_FORMATS.items()):
-        mod_string += "%s%s\n" % (k.ljust(20), v[2])
-    mod_string += "\n"
-    return mod_string
-
-if options.list:
-    sys.stdout.write(list_formats())
-    sys.exit()
-
-def exit_with_error(message):
-    sys.exit(_("\nError:\n%(message)s\n\n%(formats)s") % {'message': message,
-                                                          'formats': list_formats()})
-
-if options.informat:
-    try:
-        inputclass = totalopenstation.formats.BUILTIN_INPUT_FORMATS[options.informat]
-    except KeyError as message:
-        exit_with_error(_('%s is not a valid input format') % message)
+    logger = logging.getLogger()
+    logger.setLevel(options.loglevel.upper())
+    if options.logotfile:
+        handler = logging.FileHandler("tops.log")
     else:
-        if isinstance(inputclass, tuple):
-            try:
-                # builtin format parser
-                mod, cls, name = inputclass
-                inputclass = getattr(importlib.import_module('totalopenstation.formats.%s' % mod), cls)
-            except ImportError as message:
-                exit_with_error(message)
-else:
-    sys.exit(_("Please specify an input format"))
+        handler = logging.StreamHandler()
+    formatter = logging.Formatter('%(asctime)s -- %(filename)s -- %(levelname)s -- %(funcName)s -- %(message)s')
+    handler.setFormatter(formatter)
+    logger.addHandler(handler)
 
-if options.outformat:
-    try:
-        outputclass = totalopenstation.output.BUILTIN_OUTPUT_FORMATS[options.outformat]
-    except KeyError as message:
-        exit_with_error(_('%s is not a valid output format') % message)
+    def list_formats():
+        '''Print a list of the supported input and output formats.'''
+
+        mod_string = _("List of supported input formats:\n%s\n") % ('-' * 30)
+        for k, v in sorted(totalopenstation.formats.BUILTIN_INPUT_FORMATS.items()):
+            mod_string += "%s%s\n" % (k.ljust(20), v[2])
+        mod_string += "\n\n"
+
+        mod_string += _("List of supported output formats:\n%s\n") % ('-' * 30)
+        for k, v in sorted(totalopenstation.output.BUILTIN_OUTPUT_FORMATS.items()):
+            mod_string += "%s%s\n" % (k.ljust(20), v[2])
+        mod_string += "\n"
+        return mod_string
+
+    if options.list:
+        sys.stdout.write(list_formats())
+        sys.exit()
+
+    def exit_with_error(message):
+        sys.exit(_("\nError:\n%(message)s\n\n%(formats)s") % {'message': message,
+                                                            'formats': list_formats()})
+
+    if options.informat:
+        try:
+            inputclass = totalopenstation.formats.BUILTIN_INPUT_FORMATS[options.informat]
+        except KeyError as message:
+            exit_with_error(_('%s is not a valid input format') % message)
+        else:
+            if isinstance(inputclass, tuple):
+                try:
+                    # builtin format parser
+                    mod, cls, name = inputclass
+                    inputclass = getattr(importlib.import_module('totalopenstation.formats.%s' % mod), cls)
+                except ImportError as message:
+                    exit_with_error(message)
     else:
-        if isinstance(outputclass, tuple):
-            try:
-                # builtin output builder
-                mod, cls, name = outputclass
-                outputclass = getattr(importlib.import_module('totalopenstation.output.%s' % mod), cls)
-            except ImportError as message:
-                exit_with_error(message)
+        sys.exit(_("Please specify an input format"))
 
-if options.infile:
-    infile = open(options.infile, 'r').read()
-else:
-    if sys.stdin.isatty():
-        sys.exit(_('No input data!'))
+    if options.outformat:
+        try:
+            outputclass = totalopenstation.output.BUILTIN_OUTPUT_FORMATS[options.outformat]
+        except KeyError as message:
+            exit_with_error(_('%s is not a valid output format') % message)
+        else:
+            if isinstance(outputclass, tuple):
+                try:
+                    # builtin output builder
+                    mod, cls, name = outputclass
+                    outputclass = getattr(importlib.import_module('totalopenstation.output.%s' % mod), cls)
+                except ImportError as message:
+                    exit_with_error(message)
+
+    if options.infile:
+        infile = open(options.infile, 'r').read()
     else:
-        infile = sys.stdin.read()
+        if sys.stdin.isatty():
+            sys.exit(_('No input data!'))
+        else:
+            infile = sys.stdin.read()
 
-
-def main(infile):
-    '''After setting up all parameters, finally try to process input data.'''
+    # After setting up all parameters, finally try to process input data.
 
     parsed_data = inputclass(infile)
     if options.raw:
@@ -216,4 +215,4 @@ def main(infile):
         sys.stdout.write(output.process())
 
 if __name__ == '__main__':
-    main(infile)
+    cli_parser()
