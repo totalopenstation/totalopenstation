@@ -1,0 +1,55 @@
+[build-system]
+requires = ["setuptools >= 77.0.3"]
+build-backend = "setuptools.build_meta"
+
+[project]
+dynamic = ["version", "readme"]
+name = "totalopenstation"
+dependencies = ["pyserial==3.5", "pygeoif==1.4.0"]
+requires-python = ">= 3.9"
+authors = [
+    { name = "Stefano Costa" },
+    { name = "Damien Gaignon" },
+    { name = "Luca Bianconi" },
+]
+description = "Download and export survey data from your total station"
+license = "GPL-3.0"
+keywords = ["survey", "geodimeter", "fieldwork", "format conversion"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Environment :: Console",
+    "Environment :: X11 Applications",
+    "Intended Audience :: End Users/Desktop",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Scientific/Engineering :: GIS",
+]
+
+[project.urls]
+Homepage = "https://tops.iosa.it/"
+Documentation = "https://totalopenstation.readthedocs.io/"
+Repository = "https://github.com/totalopenstation/totalopenstation.git"
+Issues = "https://github.com/totalopenstation/totalopenstation/issues"
+
+[project.scripts]
+totalopenstation-cli-parser = "totalopenstation.scripts.cli_parser:cli_parser"
+totalopenstation-cli-connector = "totalopenstation.scripts.cli_connector:cli_connector"
+
+[project.gui-scripts]
+totalopenstation-gui = "totalopenstation.scripts.gui:gui"
+
+[tool.setuptools.dynamic]
+version = { attr = "totalopenstation.__version__" }
+readme = { file = ["README.rst"] }
+
+[tool.setuptools]
+packages = ["totalopenstation"]
+
+[dependency-groups]
+test = ["pytest>=5.1"]
