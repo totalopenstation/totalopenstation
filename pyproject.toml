@@ -6,7 +6,7 @@ build-backend = "setuptools.build_meta"
 dynamic = ["version", "readme"]
 name = "totalopenstation"
 dependencies = ["pyserial==3.5", "pygeoif==1.4.0"]
-requires-python = ">= 3.8"
+requires-python = ">= 3.9"
 authors = [
     { name = "Stefano Costa" },
     { name = "Damien Gaignon" },
@@ -23,7 +23,6 @@ classifiers = [
     "Operating System :: OS Independent",
     "Programming Language :: Python",
     "Programming Language :: Python :: 3 :: Only",
-    "Programming Language :: Python :: 3.8",
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
