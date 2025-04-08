@@ -1,5 +1,5 @@
 # -*- mode: python -*-
-a = Analysis(['scripts/totalopenstation-gui.py'],
+a = Analysis(['./totalopenstation/scripts/gui.py'],
              pathex=['.'],
              hiddenimports=[
                  'csv',
