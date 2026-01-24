@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 # filename: formats/zeiss_rec_500.py
-# Copyright 2008-2011 Stefano Costa <steko@iosa.it>
+# Copyright 2026 Stefano Costa <steko@iosa.it>
 # Copyright 2008 Luca Bianconi <luxetluc@yahoo.it>
 
 # This file is part of Total Open Station.
@@ -57,28 +57,18 @@ class FormatParser(Parser):
         tokens = {
             'pid': line[8:27].strip(),   # the result is more elegant than
             'text': line[27:32].strip(), # the code (Heisenberg rocks!)
-            'x': line[38:50].strip(),
-            'y': line[53:66].strip(),
-            'z': line[69:80].strip(),
+            'x': float(line[38:50].strip()),
+            'y': float(line[53:66].strip()),
+            'z': float(line[69:80].strip()),
             }
 
         point_id = int(tokens['pid'])
         text = str(tokens['text'])
 
-        # note that for now we keep floats into strings to avoid approximation
-        # problems, provided that for writing DXF a string is sufficient.
-        # FIXME before introducing new output formats.
-        # We could use string formatting operations to store data as floats
-        # and convert them to strings with the needed precision on the fly.
-
-        x = str(tokens['x'])
-        y = str(tokens['y'])
-        z = str(tokens['z'])
-
         # Even here it would have been better not giving x and y the
         # wrong values(the inverted ones)but directly the right ones!
 
-        p = Point(y, x, z)
+        p = Point(tokens['y'], tokens['x'], tokens['z'])
         f = Feature(p, id=point_id, desc=text)
 
         return f

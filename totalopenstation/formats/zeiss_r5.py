@@ -1,6 +1,6 @@
 ## -*- coding: utf-8 -*-
 # filename: formats/zeiss_r5.py
-# Copyright 2015 Stefano Costa <steko@iosa.it>
+# Copyright 2026 Stefano Costa <steko@iosa.it>
 
 # This file is part of Total Open Station.
 
@@ -64,13 +64,13 @@ class FormatParser:
                 rec = record(row)
                 if rec['type'] == 'KR':
                     try:
-                        point = Point(rec['X'],
-                                      rec['Y'],
-                                      rec['Z'])
+                        point = Point(float(rec['X']),
+                                      float(rec['Y']),
+                                      float(rec['Z']))
                     except KeyError:
                         try:
-                            point = Point(rec['X'],
-                                          rec['Y'])
+                            point = Point(float(rec['X']),
+                                          float(rec['Y']))
                         except KeyError:
                             continue
                     finally:

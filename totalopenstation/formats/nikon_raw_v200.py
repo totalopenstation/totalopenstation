@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 # filename: formats/nikon_raw_v200.py
-# Copyright 2010 Stefano Costa <steko@iosa.it>
+# Copyright 2026 Stefano Costa <steko@iosa.it>
 #
 # This file is part of Total Open Station.
 #
@@ -105,7 +105,11 @@ class FormatParser:
                             ih=ih)
                     points.append(f)
                     b_zero_st = 0.0
-                    bp = BasePoint(x=station_point.x, y=station_point.y, z=station_point.z, ih=ih, b_zero_st=b_zero_st)
+                    bp = BasePoint(x=float(station_point.x),
+                                   y=float(station_point.y),
+                                   z=float(station_point.z),
+                                   ih=float(ih),
+                                   b_zero_st=float(b_zero_st))
                     base_points[station_name] = bp
                     st += 1
                     pid += 1
@@ -119,7 +123,9 @@ class FormatParser:
                 if coordorder == "NEZ":
                     easting, northing = northing, easting
                 elevation = float(fs[5])
-                point = Point(easting, northing, elevation)
+                point = Point(float(easting),
+                              float(northing),
+                              float(elevation))
                 attrib = [fs[6]]
                 f = Feature(point,
                             desc='PT',
