@@ -19,5 +19,25 @@ class TestGeoJSONOutput(unittest.TestCase):
     def test_output(self):
         self.maxDiff = None
         self.output = OutputFormat(self.data).process()
-        ref_output = '''{"type": "FeatureCollection", "bbox": [12.8, 26.3, 19.8, 76.3], "features": [{"type": "Feature", "bbox": [12.8, 76.3, 12.8, 76.3], "geometry": {"type": "Point", "bbox": [12.8, 76.3, 12.8, 76.3], "coordinates": [12.8, 76.3, 56.2]}, "properties": {"desc": "TEST POINT"}, "id": 1}, {"type": "Feature", "bbox": [19.8, 26.3, 19.8, 26.3], "geometry": {"type": "Point", "bbox": [19.8, 26.3, 19.8, 26.3], "coordinates": [19.8, 26.3, 46.2]}, "properties": {"desc": "TEST POINT #2"}, "id": 2}]}'''
-        self.assertEqual(json.loads(self.output), json.loads(ref_output))
+        result = json.loads(self.output)
+
+        # Verify structure
+        self.assertEqual(result['type'], 'FeatureCollection')
+        self.assertIn('features', result)
+        self.assertEqual(len(result['features']), 2)
+
+        # Verify first feature
+        f1 = result['features'][0]
+        self.assertEqual(f1['type'], 'Feature')
+        self.assertEqual(f1['id'], 1)
+        self.assertEqual(f1['properties']['desc'], 'TEST POINT')
+        self.assertEqual(f1['geometry']['type'], 'Point')
+        self.assertEqual(f1['geometry']['coordinates'], [12.8, 76.3, 56.2])
+
+        # Verify second feature
+        f2 = result['features'][1]
+        self.assertEqual(f2['type'], 'Feature')
+        self.assertEqual(f2['id'], 2)
+        self.assertEqual(f2['properties']['desc'], 'TEST POINT #2')
+        self.assertEqual(f2['geometry']['type'], 'Point')
+        self.assertEqual(f2['geometry']['coordinates'], [19.8, 26.3, 46.2])

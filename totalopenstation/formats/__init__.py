@@ -132,13 +132,20 @@ class Parser:
 
     def build_linestring(self):
         '''Join all Point objects into a LineString.
-        
+
         Returns:
             A :class:`formats.LineString` object.
         '''
 
         points = [f.geometry for f in self.points]
-        return LineString.from_points(*points)
+        # Extract coordinates from Point objects for LineString constructor
+        coords = []
+        for p in points:
+            try:
+                coords.append((p.x, p.y, p.z))
+            except (AttributeError, ValueError):
+                coords.append((p.x, p.y))
+        return LineString(coords)
 
     @property
     def points(self):
@@ -190,11 +197,12 @@ def check_coordorder(coordorder):
 
 BUILTIN_INPUT_FORMATS = {
     'carlson_rw5': ('carlson_rw5', 'FormatParser', 'Carlson RW5'),
+    'geomax_txt': ('geomax_txt', 'FormatParser', 'Geomax TXT'),
     'landxml': ('landxml', 'FormatParser', 'LandXML'),
     'leica_gsi': ('leica_gsi', 'FormatParser', 'Leica GSI'),
     'leica_tcr_705': ('leica_tcr_705', 'FormatParser', 'Leica TCR 705'),
     'leica_tcr_1205': ('leica_tcr_1205', 'FormatParser', 'Leica TCR 1205'),
-    'nikon_raw_v200': ('nikon_raw_v200', 'FormatParser','Nikon RAW V2.00'),
+    'nikon_raw_v200': ('nikon_raw_v200', 'FormatParser', 'Nikon RAW V2.00'),
     'sokkia_sdr33': ('sokkia_sdr33', 'FormatParser', 'Sokkia SDR33'),
     'topcon_gts': ('topcon_gts', 'FormatParser', 'Topcon GTS'),
     'trimble_are': ('trimble_are', 'FormatParser', 'Trimble AREA'),
