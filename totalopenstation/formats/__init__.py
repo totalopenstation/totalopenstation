@@ -197,6 +197,7 @@ def check_coordorder(coordorder):
 
 BUILTIN_INPUT_FORMATS = {
     'carlson_rw5': ('carlson_rw5', 'FormatParser', 'Carlson RW5'),
+    'geomax_gsi': ('geomax_gsi', 'FormatParser', 'Geomax GSI'),
     'geomax_txt': ('geomax_txt', 'FormatParser', 'Geomax TXT'),
     'landxml': ('landxml', 'FormatParser', 'LandXML'),
     'leica_gsi': ('leica_gsi', 'FormatParser', 'Leica GSI'),
