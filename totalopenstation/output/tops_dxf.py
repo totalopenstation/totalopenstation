@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 # filename: tops_dxf.py
 # Copyright 2008-2009 Stefano Costa <steko@iosa.it>
+# Copyright 2025 Enzo Cocca <enzo.ccc@gmail.com>
 
 # This file is part of Total Open Station.
 
@@ -19,148 +20,127 @@
 # along with Total Open Station.  If not, see
 # <http://www.gnu.org/licenses/>.
 
+import io
+import ezdxf
+from ezdxf.enums import TextEntityAlignment
 
 from . import Builder
 
 
 class OutputFormat(Builder):
-
     """
-    Exports points data in AutoCAD DXF format.
+    Exports points data in AutoCAD DXF format using ezdxf library.
 
-    It is based on the official DXF2000 documentation. Works with AutoCAD
-    versions ranging at least from 2005 up to 2009, and QCAD.
+    This implementation uses ezdxf for robust DXF file generation,
+    supporting modern AutoCAD versions while maintaining compatibility.
 
-    ``data`` should be an iterable (e.g. list) containing one iterable (e.g.
-    tuple) for each point. The default order is PID, x, y, z, TEXT.
-
-    This is consistent with our current standard.
+    ``data`` should be an iterable (e.g. list) containing Feature objects.
+    Each Feature has geometry (Point or LineString) and metadata (id, desc).
     """
 
     def __init__(self, data, separate_layers=True):
-
         self.data = data
         self.separate_layers = separate_layers
         self.text_height = 0.05
 
     def process(self):
-        '''Process the input data and return a string as output.
+        """Process the input data and return a string as output.
 
         This is because we want to keep the generation of output
-        separated from saving it to disk.'''
+        separated from saving it to disk.
+        """
+        # Create a new DXF document (R12 format for maximum compatibility)
+        doc = ezdxf.new('R12')
+        doc.header['$INSUNITS'] = 0  # Unitless
+        msp = doc.modelspace()
 
-        result = ''
-
-        # header
-        result += '999\nDXF created from Total Open Station\n'
-        result += '  0\nSECTION\n'
-        result += '  2\nHEADER\n'
-        result += '  9\n$ACADVER\n'
-        result += '  1\nAC1009\n' # R11
-        result += '  0\nENDSEC\n'
-
-        # extract layer list
+        # Extract unique layer codes and assign colors
         codes = set([p.desc for p in self.data])
-        codes = [c.replace('.','_') for c in codes]
-        layers = dict(enumerate(codes))
-        colors = dict((i, j % 255) for i, j in zip(list(layers.values()), list(layers.keys())))
+        codes = [c.replace('.', '_') for c in codes]
+        colors = {code: (i % 255) + 1 for i, code in enumerate(codes)}
 
-        # layer table
-        result += '  0\nSECTION\n  2\nTABLES\n  0\nTABLE\n  2\nLAYER\n'
-        for l in codes:
-            if self.separate_layers is True:
-                result += '  0\nLAYER\n'           # start definition of LAYER
-                result += '  5\n10\n'              # LAYER handle
-                result += f'  2\n{l}_POINTS\n'    # LAYER name
-                result += ' 70\n0\n'              # LAYER is not frozen
-                result += f' 62\n{int(colors[l]) + 1}\n' # LAYER color
-                result += '  6\nCONTINUOUS\n'      # LAYER linetype
-
-                result += '  0\nLAYER\n'           # same as above
-                result += '  5\n10\n'
-                result +=  f'  2\n{l}_Z_COORDS\n'
-                result += ' 70\n0\n'
-                result += f' 62\n{int(colors[l]) + 1}\n'
-                result += '  6\nCONTINUOUS\n'
-
-                result += '  0\nLAYER\n'           # ditto
-                result += '  5\n10\n'
-                result += f'  2\n{l}_LABELS\n'
-                result += ' 70\n0\n'
-                result += f' 62\n{int(colors[l]) + 1}\n'
-                result += '  6\nCONTINUOUS\n'
+        # Create layers
+        for code in codes:
+            color = colors[code]
+            if self.separate_layers:
+                doc.layers.add(f"{code}_POINTS", color=color)
+                doc.layers.add(f"{code}_Z_COORDS", color=color)
+                doc.layers.add(f"{code}_LABELS", color=color)
             else:
-                result += '  0\nLAYER\n'           # ditto
-                result += '  5\n10\n'
-                result += f'  2\n{l}\n'          # LAYER name w/o any suffix
-                result += ' 70\n0\n'
-                result += f' 62\n{int(colors[l]) + 1}\n'
-                result += '  6\nCONTINUOUS\n'
+                doc.layers.add(code, color=color)
 
-        result += '  0\nENDTAB\n  0\nENDSEC\n'
-
-        # drawing entities
-        result += '  0\nSECTION\n  2\nENTITIES\n'
-
+        # Add entities
         for p in self.data:
-            p_layer = p.desc
+            p_layer = p.desc.replace('.', '_')
             geom = p.geometry
+
             if geom.geom_type == 'Point':
-                if self.separate_layers is True:
-                    layer_point = f"{p_layer}_POINTS"
-                    layer_z_text = f"{p_layer}_Z_COORD"
-                    layer_id_text = f"{p_layer}_LABELS"
-                else:
-                    layer_point = layer_z_text = layer_id_text = p_layer
-                p_yz = str(float(geom.y) - (self.text_height * 1.2))
-
-                # add point
-                result += '  0\nPOINT\n'
-                result += f'  8\n{layer_point}\n'
-                result += f' 10\n{geom.x}\n'
-                result += f' 20\n{geom.y}\n'
-
-                # add ID number
-                result += '  0\nTEXT\n'
-                result +=  f'  1\n{p.id}\n'
-                result +=  f'  8\n{layer_id_text}\n'
-                result +=  f' 10\n{geom.x}\n'
-                result +=  f' 20\n{geom.y}\n'
-                result += f' 40\n{self.text_height:01.2f}\n' 
-                result += ' 62\n256\n'
-
-                try:
-                    geom.z
-                except ValueError:
-                    pass
-                else:
-                    # add Z value as string
-                    result += '  0\nTEXT\n'
-                    result +=  f'  1\n{geom.z}\n'
-                    result +=  f'  8\n{layer_z_text}\n'
-                    result +=  f' 10\n{geom.x}\n'
-                    result +=  f' 20\n{p_yz}\n'
-                    result += f' 40\n{self.text_height:01.2f}\n'
-                    result += ' 62\n256\n'
-
+                self._add_point_entity(msp, p, p_layer, geom)
             elif geom.geom_type == 'LineString':
-                result += '  0\nPOLYLINE\n'
-                result +=  f'  8\n{p_layer}\n'
-                result += '  6\nCONTINUOUS\n'
-                result += ' 62\n256\n'
-                result += ' 66\n1\n'
-                result += ' 70\n0\n'
-                for v in geom.coords:
-                    result += '  0\nVERTEX\n'
-                    result +=  f'  8\n{p_layer}\n'
-                    result +=  f' 10\n{v[0]}\n' # x
-                    result +=  f' 20\n{v[1]}\n' # y
-                    try:
-                        result +=  f' 30\n{v[2]}\n' # z
-                    except IndexError:
-                        result += ' 30\n0\n'
-                result += '  0\nSEQEND\n'
+                self._add_linestring_entity(msp, p, p_layer, geom)
             else:
-                raise NotImplementedError
-        result += '  0\nENDSEC\n  0\nEOF\n'
-        return result
+                raise NotImplementedError(
+                    f"Geometry type '{geom.geom_type}' is not supported"
+                )
+
+        # Export to string
+        stream = io.StringIO()
+        doc.write(stream)
+        return stream.getvalue()
+
+    def _add_point_entity(self, msp, feature, p_layer, geom):
+        """Add a Point entity with associated text labels."""
+        if self.separate_layers:
+            layer_point = f"{p_layer}_POINTS"
+            layer_z_text = f"{p_layer}_Z_COORDS"
+            layer_id_text = f"{p_layer}_LABELS"
+        else:
+            layer_point = layer_z_text = layer_id_text = p_layer
+
+        x, y = float(geom.x), float(geom.y)
+
+        # Add point entity
+        try:
+            z = float(geom.z)
+            msp.add_point((x, y, z), dxfattribs={'layer': layer_point})
+        except (ValueError, AttributeError):
+            z = None
+            msp.add_point((x, y), dxfattribs={'layer': layer_point})
+
+        # Add ID text
+        msp.add_text(
+            str(feature.id),
+            dxfattribs={
+                'layer': layer_id_text,
+                'height': self.text_height,
+            }
+        ).set_placement((x, y), align=TextEntityAlignment.LEFT)
+
+        # Add Z value text (below the point)
+        if z is not None:
+            y_offset = y - (self.text_height * 1.2)
+            msp.add_text(
+                str(z),
+                dxfattribs={
+                    'layer': layer_z_text,
+                    'height': self.text_height,
+                }
+            ).set_placement((x, y_offset), align=TextEntityAlignment.LEFT)
+
+    def _add_linestring_entity(self, msp, feature, p_layer, geom):
+        """Add a LineString entity as a polyline."""
+        layer = p_layer if not self.separate_layers else p_layer
+
+        # Build list of vertices with 3D coordinates
+        vertices = []
+        for coord in geom.coords:
+            if len(coord) >= 3:
+                vertices.append((coord[0], coord[1], coord[2]))
+            else:
+                vertices.append((coord[0], coord[1], 0))
+
+        # Add 3D polyline
+        msp.add_polyline3d(
+            vertices,
+            dxfattribs={'layer': layer}
+        )
