@@ -23,7 +23,7 @@
 import csv
 import io
 
-from . import Builder
+from . import Builder, OutputOption
 
 
 class OutputFormat(Builder):
@@ -32,15 +32,61 @@ class OutputFormat(Builder):
     Exports points data in CSV format.
 
     ``data`` should be an iterable containing Feature objects.
+
+    Options:
+        separator: Field separator character (default: ',')
+        include_z: Include Z coordinates (default: True)
+        include_header: Include header row (default: True)
     """
 
-    def __init__(self, data):
-        self.data = data
+    OPTIONS = [
+        OutputOption(
+            name='separator',
+            label='Field Separator',
+            option_type='choice',
+            default=',',
+            choices=[',', ';', '\t', '|'],
+            description='Character used to separate fields'
+        ),
+        OutputOption(
+            name='include_z',
+            label='Include Z Coordinates',
+            option_type='bool',
+            default=True,
+            description='Include elevation/Z values in output'
+        ),
+        OutputOption(
+            name='include_header',
+            label='Include Header Row',
+            option_type='bool',
+            default=True,
+            description='Include column names as first row'
+        ),
+    ]
+
+    def __init__(self, data, **options):
+        super().__init__(data, **options)
         self.output = io.StringIO()
-        fieldnames = ['pid', 'type', 'point_name', 'x', 'y', 'z', 'angle', 'z_angle', 'distance',
-                      'th', 'ih', 'circle', 'station']
-        self.writer = csv.DictWriter(self.output, quoting=csv.QUOTE_NONNUMERIC, fieldnames=fieldnames)
-        self.writer.writeheader()
+
+        # Build fieldnames based on options
+        fieldnames = ['pid', 'type', 'point_name', 'x', 'y']
+        if self.get_option('include_z'):
+            fieldnames.append('z')
+        fieldnames.extend(['angle', 'z_angle', 'distance', 'th', 'ih', 'circle', 'station'])
+
+        self.fieldnames = fieldnames
+        separator = self.get_option('separator') or ','
+
+        # Use custom delimiter
+        self.writer = csv.DictWriter(
+            self.output,
+            quoting=csv.QUOTE_NONNUMERIC,
+            fieldnames=fieldnames,
+            delimiter=separator
+        )
+
+        if self.get_option('include_header'):
+            self.writer.writeheader()
 
     def process(self):
 
@@ -52,10 +98,11 @@ class OutputFormat(Builder):
                 'y': feature.geometry.y
             }
 
-            try:  # not all input formats include z coordinates
-                row['z'] = feature.geometry.z
-            except ValueError:
-                row['z'] = ''
+            if self.get_option('include_z'):
+                try:  # not all input formats include z coordinates
+                    row['z'] = feature.geometry.z
+                except ValueError:
+                    row['z'] = ''
 
             # a few cases with simple yes/no logic
             for prop in ['point_name', 'ih', 'circle', 'z_angle', 'th']:

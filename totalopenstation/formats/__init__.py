@@ -132,13 +132,20 @@ class Parser:
 
     def build_linestring(self):
         '''Join all Point objects into a LineString.
-        
+
         Returns:
             A :class:`formats.LineString` object.
         '''
 
         points = [f.geometry for f in self.points]
-        return LineString.from_points(*points)
+        # Extract coordinates from Point objects for LineString constructor
+        coords = []
+        for p in points:
+            try:
+                coords.append((p.x, p.y, p.z))
+            except (AttributeError, ValueError):
+                coords.append((p.x, p.y))
+        return LineString(coords)
 
     @property
     def points(self):
