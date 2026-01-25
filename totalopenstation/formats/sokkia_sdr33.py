@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 # filename: formats/sokkia_sdr33.py
 # Copyright 2014 Stefano Costa <steko@iosa.it>
+# Copyright 2021 Enzo Cocca <enzo.ccc@gmail.com>
 
 # This file is part of Total Open Station.
 
@@ -24,13 +25,20 @@ from . import Feature, Parser, Point
 class FormatParser(Parser):
 
     def is_point(self, line):
-        if line[2:4] == ('TP'):
+        # TP records are points, but exclude record type 07
+        if line[2:4] == 'TP' and line[0:2] != '07':
             return True
         else:
             return False
 
     def get_point(self, line):
-        id = int(line[12:20])
+        # Handle id as string, strip leading zeros
+        id_str = line[12:20].strip().lstrip('0')
+        try:
+            id = int(id_str) if id_str else 0
+        except ValueError:
+            id = id_str
+
         y = float(line[20:32])  # Northing
         x = float(line[32:48])  # Easting
         z = float(line[48:63])  # Elevation
@@ -38,7 +46,8 @@ class FormatParser(Parser):
         if line[0:2] == '02':   # Base point
             desc = line[78:86].strip()
         if line[0:2] == '08':   # Measurement
-            desc = line[63:70].strip()
+            # Extended desc field to include full description
+            desc = line[63:-1].strip()
 
         point = Point(x, y, z)
         feature = Feature(point, desc=desc, id=id)
