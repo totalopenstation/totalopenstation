@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 # filename: landxml.py
 # Copyright 2015 Damien Gaignon <damien.gaignon@gmail.com>
+# Copyright 2026 Stefano Costa <steko@iosa.it>
 #
 # This file is part of Total Open Station.
 #
@@ -483,7 +484,9 @@ class FormatParser(Parser):
         cgpoints = survey.find("default:CgPoints", ns)
         point_id = 100
         for cgpoint in cgpoints.findall("default:CgPoint", ns):
-            p = Point(*cgpoint.text.split(" ")) # unpack values
+            coords = cgpoint.text.split(" ")  # unpack values
+            x, y, z = [float(coord) for coord in coords]
+            p = Point(x, y, z)
             try:
                 point_name = cgpoint.attrib["name"]
             except KeyError:
@@ -550,7 +553,9 @@ class FormatParser(Parser):
                         except KeyError:
                             point_name = f"point_{point_id}"
                             point_id += 1
-                    p = Point(*target_point.text.split(" ")) # unpack values
+                    coords = target_point.text.split(" ")
+                    x, y, z = [float(coord) for coord in coords]
+                    p = Point(x, y, z)
                 try:
                     azimuth = rawobservation.attrib["azimuth"]
                 except KeyError:

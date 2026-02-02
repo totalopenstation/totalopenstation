@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 # filename: formats/leica_tcr_1205.py
-# Copyright 2008-2009 Stefano Costa <steko@iosa.it>
+# Copyright 2026 Stefano Costa <steko@iosa.it>
 # Copyright 2008 Luca Bianconi <luxetluc@yahoo.it>
 
 # This file is part of Total Open Station.
@@ -51,9 +51,9 @@ class FormatParser(Parser):
         else:
             text = ""
 
-        p = Point(tokens[1],
-                  tokens[2],
-                  tokens[3])
+        p = Point(float(tokens[1]),
+                  float(tokens[2]),
+                  float(tokens[3]))
         f = Feature(p,
                     desc=text,
                     id=tokens[0].strip())

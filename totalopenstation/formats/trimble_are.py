@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # filename: formats/trimble_are.py
 # Copyright 2009 Luca Bianconi <luxetluc@yahoo.it>
-# Copyright 2009 Stefano Costa <steko@iosa.it>
+# Copyright 2026 Stefano Costa <steko@iosa.it>
 # Copyright 2009 Alessandro Bezzi <alessandro.bezzi@arc-team.com>
 
 # This file is part of Total Open Station.
@@ -48,9 +48,9 @@ class FormatParser(Parser):
         tokens['text'] = rows[0]
 
         try:
-            p = Point(tokens['y'],
-                      tokens['x'],
-                      tokens['z'])
+            p = Point(float(tokens['y']),
+                      float(tokens['x']),
+                      float(tokens['z']))
             f = Feature(p,
                         desc=tokens['p'],
                         id=tokens['n'])

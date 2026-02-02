@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 # filename: formats/__init__.py
-# Copyright 2008-2010 Stefano Costa <steko@iosa.it>
+# Copyright 2026 Stefano Costa <steko@iosa.it>
 # Copyright 2008 Luca Bianconi <luxetluc@yahoo.it>
 # Copyright 2015-2016 Damien Gaignon <damien.gaignon@gmail.com>
 
@@ -29,14 +29,7 @@ from math import pi
 logger = logging.getLogger(__name__).addHandler(logging.NullHandler())
 
 class Point(pygeoif.Point):
-    def __init__(self, *args, **kwargs):
-        try:
-            pygeoif.Point.__init__(self, *args, **kwargs)
-        except TypeError:
-            float_args = (float(a) for a in args)
-            float_kwargs = dict([a, float(x)] for a, x in kwargs.items())
-            pygeoif.Point.__init__(self, *float_args, **float_kwargs)
-
+    pass
 
 class LineString(pygeoif.LineString):
     pass
