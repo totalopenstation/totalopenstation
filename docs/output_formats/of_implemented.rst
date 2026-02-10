@@ -154,3 +154,34 @@ Data format
 Format is points coordinates::
 
     x, y, z
+
+
+======================
+:mod:`tops_kml` -- KML
+======================
+
+.. versionadded:: 0.7
+
+Description
+-----------
+
+KML (Keyhole Markup Language) is an XML-based format for geographic data
+visualization in Google Earth, QGIS, and other GIS applications.
+
+This output format requires the ``simplekml`` library.
+
+Data format
+-----------
+
+Features are organized in the KML document as follows:
+
+- A root folder named "Total Open Station Export"
+- Sub-folders grouped by feature description
+- Point placemarks with coordinates and extended data properties
+- LineString placemarks for line geometries
+
+.. note::
+
+   KML uses geographic coordinates (longitude, latitude) in WGS84.
+   Survey data in local or projected coordinate systems may need
+   transformation for correct display on a map.
