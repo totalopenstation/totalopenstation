@@ -94,13 +94,27 @@ Description
 This format is a standard format for CAD softwares like AutoCAD, QCAD,
 LibreCAD...
 
+.. versionchanged:: 0.7
+
+The DXF output now uses the `ezdxf <https://ezdxf.mozman.at/>`_ library for
+robust DXF generation. Output uses the R12 format for maximum compatibility
+with CAD software.
+
 Data format
 -----------
 
-The format is based on the official `DXF R15 (2000) documentation
-<https://www.autodesk.com/techpubs/autocad/acad2000/dxf/index.htm>`_. |br|
-Layers can be separated for each point or not. |br|
-This format can describe points or lines.
+The output includes the following DXF entities:
+
+- **Point** entities for survey points
+- **Text** entities for point ID and elevation labels
+- **Polyline** entities for LineString geometries
+
+Layer organization:
+
+- When ``separate_layers`` is enabled (default), points are organized into
+  layers based on their description, with sub-layers for points, Z coordinates,
+  and labels (e.g. ``WALL_POINTS``, ``WALL_Z_COORDS``, ``WALL_LABELS``)
+- Each description group is assigned a distinct color
 
 
 ==============================
