@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<JOBFile jobName="SAMPLE" version="5.72" product="Trimble General Survey" productVersion="3.21" TimeStamp="2025-04-22T15:02:35">
+    <FieldBook>
+        <UnitsRecord ID="00000002" TimeStamp="2025-04-22T15:02:35">
+            <DistanceUnits>Metres</DistanceUnits>
+            <AngleUnits>DMSDegrees</AngleUnits>
+            <CoordinateOrder>North-East-Elevation</CoordinateOrder>
+        </UnitsRecord>
+
+        <InstrumentRecord ID="00000022" TimeStamp="2025-04-22T15:05:07">
+            <Model>Trimble C5 3"</Model>
+            <Serial>E091074</Serial>
+        </InstrumentRecord>
+
+        <PointRecord ID="00000027" TimeStamp="2025-04-22T15:05:30">
+            <Name>200</Name>
+            <Code>ST</Code>
+            <Method>KeyedIn</Method>
+            <Classification>Normal</Classification>
+            <Deleted>false</Deleted>
+            <Grid>
+                <North>374339.865</North>
+                <East>4128109.803</East>
+                <Elevation>64.623</Elevation>
+            </Grid>
+        </PointRecord>
+
+        <PointRecord ID="0000002d" TimeStamp="2025-04-22T15:06:32">
+            <Name>300</Name>
+            <Code>ST</Code>
+            <Method>KeyedIn</Method>
+            <Classification>Normal</Classification>
+            <Deleted>false</Deleted>
+            <Grid>
+                <North>374299.823</North>
+                <East>4128118.712</East>
+                <Elevation>63.189</Elevation>
+            </Grid>
+        </PointRecord>
+
+        <StationRecord ID="0000002b" TimeStamp="2025-04-22T15:06:28">
+            <StationName>200</StationName>
+            <TheodoliteHeight>1.635</TheodoliteHeight>
+            <StationType>StationSetupPlus</StationType>
+        </StationRecord>
+
+        <PointRecord ID="00000040" TimeStamp="2025-04-22T15:10:05">
+            <Name>700</Name>
+            <Code>ST</Code>
+            <Method>DirectReading</Method>
+            <Classification>Normal</Classification>
+            <Deleted>false</Deleted>
+            <Circle>
+                <HorizontalCircle>223.05664937315</HorizontalCircle>
+                <VerticalCircle>92.668194444444</VerticalCircle>
+                <EDMDistance>36.7784</EDMDistance>
+                <Face>Face1</Face>
+            </Circle>
+            <StationID>0000002b</StationID>
+            <ComputedGrid>
+                <North>374313.04603305</North>
+                <East>4128084.7442883</East>
+                <Elevation>63.247585932633</Elevation>
+            </ComputedGrid>
+        </PointRecord>
+
+        <PointRecord ID="00000044" TimeStamp="2025-04-22T15:11:06">
+            <Name>PQ_01</Name>
+            <Code>POINT</Code>
+            <Method>DirectReading</Method>
+            <Classification>Normal</Classification>
+            <Deleted>false</Deleted>
+            <Circle>
+                <HorizontalCircle>223.10809082876</HorizontalCircle>
+                <VerticalCircle>92.075260416667</VerticalCircle>
+                <EDMDistance>39.2598</EDMDistance>
+                <Face>Face1</Face>
+            </Circle>
+            <StationID>0000002b</StationID>
+            <ComputedGrid>
+                <North>374311.24665733</North>
+                <East>4128083.0148475</East>
+                <Elevation>63.537665074073</Elevation>
+            </ComputedGrid>
+        </PointRecord>
+
+        <PointRecord ID="deleted_point" TimeStamp="2025-04-22T15:12:00">
+            <Name>DELETED</Name>
+            <Code>DEL</Code>
+            <Deleted>true</Deleted>
+            <Grid>
+                <North>0</North>
+                <East>0</East>
+                <Elevation>0</Elevation>
+            </Grid>
+        </PointRecord>
+
+    </FieldBook>
+</JOBFile>
