@@ -191,6 +191,7 @@ BUILTIN_INPUT_FORMATS = {
     'sokkia_sdr33': ('sokkia_sdr33', 'FormatParser', 'Sokkia SDR33'),
     'topcon_gts': ('topcon_gts', 'FormatParser', 'Topcon GTS'),
     'trimble_are': ('trimble_are', 'FormatParser', 'Trimble AREA'),
+    'trimble_jxl': ('trimble_jxl', 'FormatParser', 'Trimble JobXML'),
     'zeiss_r5': ('zeiss_r5', 'FormatParser', 'Zeiss R5'),
     'zeiss_rec_500': ('zeiss_rec_500', 'FormatParser', 'Zeiss REC 500'),
     }
