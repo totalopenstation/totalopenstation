@@ -115,5 +115,6 @@ BUILTIN_MODELS = {
     'leica_tcr_705': ('leica_tcr_705', 'ModelConnector', 'Leica TCR 705'),
     'trimble': ('trimble', 'ModelConnector', 'Trimble'), 
     'topcon_gpt_3005': ('topcon_gpt_3005', 'ModelConnector', 'Topcon GPT 3005'),
+    'wild_t1000': ('wild_t1000', 'ModelConnector', 'Wild T1000'),
     'custom': ('custom', 'CustomConnector', 'Custom/Unknown'),
     }
