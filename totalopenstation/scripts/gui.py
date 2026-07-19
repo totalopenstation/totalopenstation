@@ -24,8 +24,6 @@ import serial
 import gettext
 import atexit
 
-from time import sleep
-
 from tkinter import *
 from tkinter.messagebox import showwarning, showinfo, askokcancel
 import tkinter.simpledialog
@@ -735,22 +733,18 @@ class Tops:
                     e = ErrorDialog(self.myParent, detail)
                 else:
                     st = DownloadDialog(self.myParent)
-                    sleeptime = float(self.option6_value.get())
                     if st.result:
                         self.status.set(_("Waiting for data: Please start the transfer from your total station menu."))
-                        while mc.inWaiting() == 0:
-                            sleep(sleeptime)
-                        n = mc.inWaiting()
-                        result = mc.read(n)
+                        # Honour the sleeptime currently shown in the GUI, not
+                        # the one stored in the preferences at startup.
+                        mc.sleeptime = float(self.option6_value.get())
+                        # Let the model drive the transfer: instruments such as
+                        # the Wild T1000 need a request sent for each record,
+                        # which a plain read loop cannot do.
+                        mc.fast_download()
+                        result = mc.result
+                        self.status.set(_('Downloaded %d bytes') % len(result))
                         self.replace_text(result.decode())
-                        sleep(sleeptime)
-
-                        while mc.inWaiting() > 0:
-                            newdata = mc.read(mc.inWaiting())
-                            result += newdata
-                            self.status.set(_('Downloaded %d bytes') % len(result))
-                            self.replace_text(result.decode())
-                            sleep(sleeptime) # TODO determine sleep time from baudrate
                         mc.close()
                         showinfo(_('Success!'),
                                  _('Download finished!\nYou have %d bytes of data.') % len(result))
